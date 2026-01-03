@@ -2,78 +2,52 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Masjid Nurut Taqwa</title>
+<title>Masjid Nurut Taqwa – Kejaksan, Kota Cirebon</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- RSS -->
-<link rel="alternate"
-      type="application/rss+xml"
-      title="Masjid Nurut Taqwa - Pengumuman"
-      href="index.xml">
+<link rel="alternate" type="application/rss+xml" title="Masjid Nurut Taqwa - Pengumuman" href="index.xml">
 
 <style>
+/* ================== BACKGROUND GEOMETRIS ISLAMI (SVG) ================== */
 body{
-  font-family: "Segoe UI", Arial, sans-serif;
-  max-width: 860px;
-  margin: 40px auto;
-  line-height: 1.9;
-  background: background:
-  repeating-linear-gradient(
-    45deg,
-    #fffdf7,
-    #fffdf7 20px,
-    #f7f1dc 20px,
-    #f7f1dc 40px
-  );
-  color: #2b2b2b;
+  font-family:"Segoe UI",Arial,sans-serif;
+  color:#2b2b2b;
+  max-width:900px;
+  margin:40px auto;
+  line-height:1.9;
+
+  background-color:#fffdf7;
+  background-image:
+    url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'>\
+<rect width='120' height='120' fill='%23fffdf7'/>\
+<path d='M60 0 L120 60 L60 120 L0 60 Z' fill='none' stroke='%23e9ddb6' stroke-width='1'/>\
+<path d='M60 20 L100 60 L60 100 L20 60 Z' fill='none' stroke='%23e9ddb6' stroke-width='0.8'/>\
+<circle cx='60' cy='60' r='6' fill='%23d4af37'/>\
+</svg>");
 }
 
-h1{
-  color: #8b6b1f;
-  text-align: center;
-  letter-spacing: 1px;
-}
-
-p{
-  font-size: 16px;
-}
-
-.card{
-  background: #ffffff;
-  border: 1px solid #f1e7c7;
-  padding: 26px;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  margin-top: 30px;
-}
-
-.card h2{
-  margin-top: 0;
-  color: #8b6b1f;
-}
-
-.footer{
-  text-align: center;
-  margin-top: 60px;
-  font-size: 14px;
-  color: #777;
-}
+/* ================== LOGO ================== */
 .logo{
-  text-align: center;
-  margin-bottom: 30px;
+  text-align:center;
+  margin-bottom:40px;
 }
-
+.logo-img{
+  width:90px;
+  margin-bottom:12px;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.15));
+}
 .logo-title{
-  font-size: 30px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: #8b6b1f;
+  font-size:30px;
+  font-weight:bold;
+  letter-spacing:2px;
+  color:#8b6b1f;
 }
-
 .logo-sub{
-  font-size: 14px;
-  color: #777;
-  margin-top: 6px;
+  font-size:14px;
+  color:#777;
+  margin-top:6px;
 }
 .logo:after{
   content:"";
@@ -84,29 +58,93 @@ p{
   margin:14px auto 0;
   border-radius:3px;
 }
+
+/* ================== CARD ================== */
+.card{
+  background:#ffffff;
+  border:1px solid #f1e7c7;
+  padding:26px;
+  border-radius:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  margin-top:30px;
+}
 .card h2{
+  margin-top:0;
+  color:#8b6b1f;
   display:flex;
   align-items:center;
   gap:6px;
+}
+
+/* ================== LIST ================== */
+ul{
+  padding-left:18px;
+}
+
+/* ================== FOOTER ================== */
+.footer{
+  text-align:center;
+  margin-top:60px;
+  font-size:14px;
+  color:#777;
 }
 </style>
 </head>
 
 <body>
 
+<!-- LOGO -->
 <div class="logo">
+  <img src="logo.png" alt="Logo Masjid Nurut Taqwa" class="logo-img">
   <div class="logo-title">MASJID NURUT TAQWA</div>
   <div class="logo-sub">Kejaksan, Kota Cirebon</div>
 </div>
 
+<!-- PROFIL -->
+<div class="card">
+  <h2>🕌 Profil Masjid</h2>
+  <p>
+    Masjid Nurut Taqwa merupakan pusat ibadah dan kegiatan keislaman masyarakat
+    Kejaksan, Kota Cirebon. Masjid ini aktif dalam pembinaan umat melalui
+    sholat berjamaah, pengajian, dan kegiatan sosial.
+  </p>
+</div>
+
+<!-- PENGUMUMAN -->
 <div class="card">
   <h2>📢 Pengumuman</h2>
   <p><b>Pengajian Rutin Malam Jumat</b></p>
-  <p>Pengajian rutin setiap malam Jumat ba’da Isya. Terbuka untuk umum.</p>
+  <p>
+    Dilaksanakan setiap malam Jumat ba’da Isya.
+    Terbuka untuk seluruh jamaah.
+  </p>
+</div>
+
+<!-- STRUKTUR DKM -->
+<div class="card">
+  <h2>👥 Struktur DKM</h2>
+  <ul>
+    <li><b>Ketua DKM:</b> H. Ahmad</li>
+    <li><b>Sekretaris:</b> Ahmad Fauzi</li>
+    <li><b>Bendahara:</b> Siti Aminah</li>
+    <li><b>Bidang Ibadah:</b> Ust. Ridwan</li>
+    <li><b>Bidang Sosial:</b> Abdul Karim</li>
+  </ul>
+</div>
+
+<!-- KONTAK -->
+<div class="card">
+  <h2>📞 Kontak</h2>
+  <p>
+    WhatsApp DKM: <b>0896-5408-4629</b><br>
+    Alamat: Kejaksan, Kota Cirebon
+  </p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  © Masjid Nurut Taqwa – Kejaksan, Kota Cirebon
 </div>
 
 </body>
 </html>
-<div class="footer">
-  © Masjid Nurut Taqwa – Kejaksan, Kota Cirebon
-</div>
