@@ -6,200 +6,139 @@
 <title>Masjid Nurut Taqwa | Cirebon</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- SEO -->
-<meta name="description" content="Website resmi Masjid Nurut Taqwa, Kejaksan – Kota Cirebon. Jadwal sholat, kegiatan, donasi, dan informasi jamaah.">
+<meta name="description" content="Website resmi Masjid Nurut Taqwa, Kejaksan – Kota Cirebon. Jadwal sholat, agenda, pengumuman, dan donasi.">
 <meta property="og:title" content="Masjid Nurut Taqwa – Cirebon">
-<meta property="og:description" content="Website resmi Masjid Nurut Taqwa. Jadwal sholat, kegiatan, donasi.">
-<meta property="og:type" content="website">
+<meta property="og:description" content="Website resmi Masjid Nurut Taqwa">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ===== THEME ===== */
 :root{
-  --green:#0f6b3f; --gold:#f5c542;
-  --bg:#f4f7f5; --card:#ffffff; --text:#1f2937;
-}
-@media (prefers-color-scheme: dark){
-  :root.auto{--bg:#0f1720;--card:#111827;--text:#e5e7eb}
+  --green:#0f6b3f;--gold:#f5c542;
+  --bg:#f4f7f5;--card:#fff;--text:#1f2937;
 }
 .dark{--bg:#0f1720;--card:#111827;--text:#e5e7eb}
-
 *{box-sizing:border-box}
+body{margin:0;font-family:Poppins,sans-serif;background:var(--bg);color:var(--text)}
 html{scroll-behavior:smooth}
-body{
-  margin:0;font-family:'Poppins',sans-serif;
-  background:var(--bg);color:var(--text);line-height:1.7
-}
 
-/* ===== NAVBAR ===== */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:999;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 18px;background:rgba(15,107,63,.95);color:#fff
-}
-nav .brand{font-weight:700;letter-spacing:1px}
-nav a{color:#fff;text-decoration:none;margin:0 10px;font-size:14px}
-nav .right{display:flex;gap:10px;align-items:center}
-nav a.active{border-bottom:2px solid var(--gold)}
-.toggle{background:#fff;border:none;border-radius:20px;padding:6px 12px;cursor:pointer}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:9;
+background:#0f6b3f;color:#fff;padding:12px 18px;
+display:flex;justify-content:space-between}
+nav a{color:#fff;text-decoration:none;margin:0 8px;font-size:14px}
+.toggle{background:#fff;border:none;border-radius:20px;padding:6px 12px}
 
-/* ===== HERO ===== */
+/* HERO */
 header{
-  background:linear-gradient(rgba(15,107,63,.85),rgba(15,107,63,.85)),
-  url('https://images.unsplash.com/photo-1607427293702-036933bbf746') center/cover;
-  color:#fff;text-align:center;padding:160px 20px 120px
+padding:160px 20px 120px;text-align:center;color:#fff;
+background:linear-gradient(rgba(15,107,63,.85),rgba(15,107,63,.85)),
+url('https://images.unsplash.com/photo-1607427293702-036933bbf746') center/cover
 }
-header h1{font-size:44px;letter-spacing:2px;margin:0}
-header p{opacity:.95}
-.btn{
-  display:inline-block;margin-top:24px;padding:12px 30px;
-  background:var(--gold);color:#000;text-decoration:none;
-  border-radius:30px;font-weight:600
-}
+.btn{background:var(--gold);padding:12px 28px;border-radius:30px;
+color:#000;text-decoration:none;font-weight:600}
 
-/* ===== SECTION ===== */
-section{max-width:1150px;margin:auto;padding:80px 20px}
-h2{text-align:center;color:var(--green);margin-bottom:40px;font-size:32px}
+/* SECTION */
+section{max-width:1100px;margin:auto;padding:80px 20px}
+h2{text-align:center;color:var(--green)}
+.card{background:var(--card);padding:28px;border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.alert{background:#fde68a;padding:12px;border-radius:10px;font-weight:600}
+iframe{width:100%;height:360px;border:none;border-radius:14px}
 
-/* ===== CARD / GRID ===== */
-.card{
-  background:var(--card);padding:34px;border-radius:16px;
-  box-shadow:0 14px 32px rgba(0,0,0,.08)
-}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+/* FOOTER */
+footer{background:#0f6b3f;color:#fff;text-align:center;padding:28px}
 
-/* ===== ALERT ===== */
-.alert{
-  background:#fde68a;color:#000;padding:14px 18px;border-radius:12px;
-  margin-bottom:24px;text-align:center;font-weight:600
-}
-
-/* ===== GALLERY ===== */
-.gallery img{
-  width:100%;height:220px;object-fit:cover;border-radius:14px
-}
-
-/* ===== IFRAME ===== */
-iframe{width:100%;height:380px;border:none;border-radius:16px}
-
-/* ===== FOOTER ===== */
-footer{
-  background:var(--green);color:#fff;text-align:center;
-  padding:28px 15px;font-size:14px
-}
-
-/* ===== ANIMATION ===== */
-.reveal{opacity:0;transform:translateY(28px);transition:.8s}
-.reveal.show{opacity:1;transform:none}
-
-/* ===== MOBILE ===== */
-@media(max-width:600px){
-  header h1{font-size:30px}
-  nav a{display:none}
-}
+/* TV MODE */
+.tv body *{font-size:1.3em}
 </style>
 </head>
 
-<body class="auto">
+<body>
 
+<!-- ===== NAV ===== -->
 <nav>
-  <div class="brand">Masjid Nurut Taqwa</div>
-  <div class="right">
-    <a href="#profil">Profil</a>
-    <a href="#jadwal">Jadwal</a>
+  <div>Masjid Nurut Taqwa</div>
+  <div>
+    <a href="#berita">Info</a>
     <a href="#agenda">Agenda</a>
     <a href="#donasi">Donasi</a>
-    <a href="#lokasi">Lokasi</a>
-    <button class="toggle" onclick="toggleTheme()">🌓</button>
+    <button class="toggle" onclick="toggleDark()">🌙</button>
   </div>
 </nav>
 
 <header>
   <h1>MASJID NURUT TAQWA</h1>
   <p>Kejaksan – Kota Cirebon</p>
-  <a class="btn" href="https://wa.me/6289654084629">Hubungi Pengurus</a>
+  <a class="btn" href="https://wa.me/6289654084629">Hubungi DKM</a>
 </header>
 
-<section id="profil" class="reveal">
-  <h2>Profil Masjid</h2>
-  <div class="card">
-    Masjid Nurut Taqwa adalah pusat ibadah, dakwah, dan kegiatan sosial umat Islam
-    di wilayah Kejaksan, Kota Cirebon.
-  </div>
+<!-- ================== DATA KONTEN (ADMIN EDIT DI SINI) ================== -->
+<script>
+const DATA = {
+  pengumuman: "📢 Pengajian rutin malam Jumat ba’da Isya",
+  berita: [
+    "Sholat Idul Adha dilaksanakan pukul 06.30 WIB",
+    "Penerimaan infaq Ramadhan dibuka",
+    "Kajian Ahad Pagi setiap pekan"
+  ],
+  agenda: [
+    {tanggal:"Jumat", acara:"Sholat Jumat"},
+    {tanggal:"Ahad", acara:"Kajian Pagi"},
+    {tanggal:"Ramadhan", acara:"Tadarus & Tarawih"}
+  ]
+};
+</script>
+<!-- ===================================================================== -->
+
+<section id="berita">
+  <h2>Pengumuman</h2>
+  <div class="alert" id="alertBox"></div>
+  <div class="grid" id="beritaList"></div>
 </section>
 
-<section id="jadwal" class="reveal">
-  <h2>Jadwal Sholat (Otomatis)</h2>
+<section id="agenda">
+  <h2>Agenda Masjid</h2>
+  <div class="grid" id="agendaList"></div>
+</section>
+
+<section>
+  <h2>Jadwal Sholat</h2>
   <div class="card">
     <iframe src="https://www.islamicfinder.org/world/indonesia/1646170/cirebon-prayer-times/"></iframe>
   </div>
 </section>
 
-<section id="agenda" class="reveal">
-  <h2>Agenda & Pengumuman</h2>
-  <div class="alert">📢 Pengajian rutin setiap malam Jumat ba’da Isya</div>
-  <div class="grid">
-    <div class="card">🕌 Sholat Jumat Berjamaah</div>
-    <div class="card">📖 Kajian & Pengajian</div>
-    <div class="card">🌙 Program Ramadhan</div>
-    <div class="card">🤲 Kegiatan Sosial</div>
-  </div>
-</section>
-
-<section class="reveal">
-  <h2>Galeri Masjid</h2>
-  <div class="grid gallery">
-    <img src="https://images.unsplash.com/photo-1542816417-0983c9c9ad53">
-    <img src="https://images.unsplash.com/photo-1591608516485-22b8c3a31c30">
-    <img src="https://images.unsplash.com/photo-1589820296156-2454bb8a6ad1">
-  </div>
-</section>
-
-<section id="donasi" class="reveal">
+<section id="donasi">
   <h2>Donasi Infaq & Sedekah</h2>
   <div class="card">
-    Mari bersama memakmurkan Masjid Nurut Taqwa melalui infaq dan sedekah terbaik Anda.
-    <br><br>
-    <a class="btn" href="https://wa.me/6289654084629">Informasi Donasi</a>
-  </div>
-</section>
-
-<section id="lokasi" class="reveal">
-  <h2>Kontak & Lokasi</h2>
-  <div class="card">
-    📍 Kejaksan, Kota Cirebon<br>
-    📱 WhatsApp: 0896-5408-4629
-    <br><br>
-    <iframe src="https://www.google.com/maps?q=Masjid%20Nurut%20Taqwa%20Cirebon&output=embed"></iframe>
+    Mari bersama memakmurkan masjid.<br><br>
+    <a class="btn" href="https://wa.me/6289654084629">Info Donasi</a>
   </div>
 </section>
 
 <footer>
-  © Masjid Nurut Taqwa – Cirebon • Website resmi • Gratis permanen
+  © Masjid Nurut Taqwa – Website Resmi
 </footer>
 
 <script>
-/* THEME */
-function toggleTheme(){document.body.classList.toggle('dark')}
+/* DARK MODE */
+function toggleDark(){document.body.classList.toggle('dark')}
 
-/* REVEAL */
-const els=document.querySelectorAll('.reveal');
-const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('show')));
-els.forEach(el=>io.observe(el));
-
-/* ACTIVE NAV */
-const links=[...document.querySelectorAll('nav a')];
-window.addEventListener('scroll',()=>{
-  let fromTop=window.scrollY+100;
-  links.forEach(l=>{
-    let s=document.querySelector(l.getAttribute('href'));
-    if(s&&s.offsetTop<=fromTop&&s.offsetTop+s.offsetHeight>fromTop){
-      links.forEach(a=>a.classList.remove('active'));
-      l.classList.add('active');
-    }
-  })
+/* RENDER DATA */
+document.getElementById('alertBox').innerText = DATA.pengumuman;
+DATA.berita.forEach(b=>{
+  document.getElementById('beritaList').innerHTML += `<div class="card">${b}</div>`;
 });
+DATA.agenda.forEach(a=>{
+  document.getElementById('agendaList').innerHTML += `<div class="card"><b>${a.tanggal}</b><br>${a.acara}</div>`;
+});
+
+/* TV MODE */
+if(new URLSearchParams(location.search).get('tv')==='1'){
+  document.documentElement.classList.add('tv');
+}
 </script>
 
 </body>
