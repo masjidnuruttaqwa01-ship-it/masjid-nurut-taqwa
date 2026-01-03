@@ -2,121 +2,184 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Masjid Nurut Taqwa – Kejaksan, Kota Cirebon</title>
+<title>Masjid Nurut Taqwa – Ramadhan</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- RSS -->
 <link rel="alternate" type="application/rss+xml" title="Masjid Nurut Taqwa - Pengumuman" href="index.xml">
 
 <style>
-/* ================== BACKGROUND GEOMETRIS ISLAMI (SVG) ================== */
+/* ================== TEMA RAMADHAN ================== */
 body{
   font-family:"Segoe UI",Arial,sans-serif;
-  color:#2b2b2b;
-  max-width:900px;
+  color:#1f2933;
+  max-width:920px;
   margin:40px auto;
   line-height:1.9;
 
-  background-color:#fffdf7;
+  /* Background Ramadhan: hijau lembut + geometris islami SVG */
+  background-color:#f7fbf6;
   background-image:
+    radial-gradient(circle at top right, rgba(212,175,55,.15), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(15,107,63,.12), transparent 45%),
     url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'>\
-<rect width='120' height='120' fill='%23fffdf7'/>\
-<path d='M60 0 L120 60 L60 120 L0 60 Z' fill='none' stroke='%23e9ddb6' stroke-width='1'/>\
-<path d='M60 20 L100 60 L60 100 L20 60 Z' fill='none' stroke='%23e9ddb6' stroke-width='0.8'/>\
-<circle cx='60' cy='60' r='6' fill='%23d4af37'/>\
+<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'>\
+<rect width='140' height='140' fill='%23f7fbf6'/>\
+<path d='M70 0 L140 70 L70 140 L0 70 Z' fill='none' stroke='%23e7f0ea' stroke-width='1'/>\
+<path d='M70 24 L116 70 L70 116 L24 70 Z' fill='none' stroke='%23e7f0ea' stroke-width='0.8'/>\
 </svg>");
+}
+
+/* ================== HEADER RAMADHAN ================== */
+.header-ramadhan{
+  text-align:center;
+  margin-bottom:44px;
+  padding:26px 18px 34px;
+  background:linear-gradient(135deg,#0f6b3f,#1a8a55);
+  color:#ffffff;
+  border-radius:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.18);
+  position:relative;
+  overflow:hidden;
+}
+.header-ramadhan:before{
+  content:"☪";
+  position:absolute;
+  top:-18px; right:18px;
+  font-size:120px;
+  opacity:.08;
+}
+.header-ramadhan h1{
+  margin:10px 0 6px;
+  letter-spacing:2px;
+}
+.header-ramadhan p{
+  margin:0;
+  opacity:.95;
 }
 
 /* ================== LOGO ================== */
 .logo{
   text-align:center;
-  margin-bottom:40px;
+  margin-bottom:22px;
 }
 .logo-img{
-  width:90px;
-  margin-bottom:12px;
-  filter:drop-shadow(0 4px 10px rgba(0,0,0,.15));
+  width:92px;
+  margin-bottom:10px;
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));
+  background:#ffffff;
+  border-radius:50%;
+  padding:8px;
 }
 .logo-title{
-  font-size:30px;
-  font-weight:bold;
+  font-size:28px;
+  font-weight:700;
   letter-spacing:2px;
-  color:#8b6b1f;
+  color:#ffffff;
 }
 .logo-sub{
   font-size:14px;
-  color:#777;
-  margin-top:6px;
+  opacity:.9;
 }
 .logo:after{
   content:"";
   display:block;
-  width:80px;
+  width:90px;
   height:3px;
   background:#d4af37;
-  margin:14px auto 0;
+  margin:12px auto 0;
   border-radius:3px;
 }
 
 /* ================== CARD ================== */
 .card{
   background:#ffffff;
-  border:1px solid #f1e7c7;
-  padding:26px;
-  border-radius:14px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
-  margin-top:30px;
+  border:1px solid #e7f0ea;
+  padding:28px;
+  border-radius:16px;
+  box-shadow:0 12px 28px rgba(0,0,0,.08);
+  margin-top:28px;
 }
 .card h2{
   margin-top:0;
-  color:#8b6b1f;
+  color:#0f6b3f;
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:8px;
+}
+
+/* ================== BADGE RAMADHAN ================== */
+.badge{
+  display:inline-block;
+  background:#d4af37;
+  color:#000;
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:600;
 }
 
 /* ================== LIST ================== */
-ul{
-  padding-left:18px;
-}
+ul{padding-left:18px}
 
 /* ================== FOOTER ================== */
 .footer{
   text-align:center;
   margin-top:60px;
   font-size:14px;
-  color:#777;
+  color:#4b5d52;
+}
+
+/* ================== MOBILE ================== */
+@media(max-width:600px){
+  body{margin:20px auto}
+  .logo-img{width:76px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGO -->
-<div class="logo">
-  <img src="logo.png" alt="Logo Masjid Nurut Taqwa" class="logo-img">
-  <div class="logo-title">MASJID NURUT TAQWA</div>
-  <div class="logo-sub">Kejaksan, Kota Cirebon</div>
+<!-- HEADER RAMADHAN -->
+<div class="header-ramadhan">
+  <div class="logo">
+    <!-- Ganti logo.png dengan logo masjid -->
+    <img src="logo.png" alt="Logo Masjid Nurut Taqwa" class="logo-img">
+    <div class="logo-title">MASJID NURUT TAQWA</div>
+    <div class="logo-sub">Kejaksan, Kota Cirebon</div>
+  </div>
+  <h1>Marhaban Ya Ramadhan</h1>
+  <p>Bulan penuh ampunan, rahmat, dan keberkahan</p>
 </div>
 
 <!-- PROFIL -->
 <div class="card">
   <h2>🕌 Profil Masjid</h2>
   <p>
-    Masjid Nurut Taqwa merupakan pusat ibadah dan kegiatan keislaman masyarakat
-    Kejaksan, Kota Cirebon. Masjid ini aktif dalam pembinaan umat melalui
-    sholat berjamaah, pengajian, dan kegiatan sosial.
+    Masjid Nurut Taqwa menjadi pusat ibadah dan kegiatan keislaman masyarakat
+    Kejaksan. Di bulan suci Ramadhan, masjid ini menjadi tempat berkumpulnya
+    jamaah untuk meningkatkan iman, takwa, dan kepedulian sosial.
   </p>
+</div>
+
+<!-- AGENDA RAMADHAN -->
+<div class="card">
+  <h2>🌙 Agenda Ramadhan <span class="badge">Ramadhan</span></h2>
+  <ul>
+    <li>Sholat Tarawih berjamaah setiap malam</li>
+    <li>Tadarus Al-Qur’an setelah Tarawih</li>
+    <li>Kajian Ramadhan ba’da Subuh</li>
+    <li>I’tikaf 10 malam terakhir</li>
+  </ul>
 </div>
 
 <!-- PENGUMUMAN -->
 <div class="card">
   <h2>📢 Pengumuman</h2>
-  <p><b>Pengajian Rutin Malam Jumat</b></p>
+  <p><b>Buka Puasa Bersama</b></p>
   <p>
-    Dilaksanakan setiap malam Jumat ba’da Isya.
-    Terbuka untuk seluruh jamaah.
+    Dilaksanakan setiap hari selama Ramadhan.
+    Jamaah dan masyarakat umum dipersilakan bergabung.
   </p>
 </div>
 
@@ -127,8 +190,7 @@ ul{
     <li><b>Ketua DKM:</b> H. Ahmad</li>
     <li><b>Sekretaris:</b> Ahmad Fauzi</li>
     <li><b>Bendahara:</b> Siti Aminah</li>
-    <li><b>Bidang Ibadah:</b> Ust. Ridwan</li>
-    <li><b>Bidang Sosial:</b> Abdul Karim</li>
+    <li><b>Koordinator Ramadhan:</b> Ust. Ridwan</li>
   </ul>
 </div>
 
@@ -143,7 +205,7 @@ ul{
 
 <!-- FOOTER -->
 <div class="footer">
-  © Masjid Nurut Taqwa – Kejaksan, Kota Cirebon
+  © Masjid Nurut Taqwa – Ramadhan Mubarak 🌙
 </div>
 
 </body>
