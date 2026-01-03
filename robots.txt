@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/sitemap.xml
