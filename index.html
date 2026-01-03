@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,92 +6,185 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- SEO -->
-<meta name="description" content="Website resmi Masjid Nurut Taqwa, Kejaksan – Kota Cirebon. Jadwal sholat, agenda, pengumuman, donasi, dan informasi jamaah.">
+<meta name="description" content="Website resmi Masjid Nurut Taqwa, Kejaksan – Kota Cirebon. Jadwal sholat, agenda, pengumuman, dan donasi.">
 <meta property="og:title" content="Masjid Nurut Taqwa – Cirebon">
-<meta property="og:description" content="Jadwal sholat, agenda, donasi, dan informasi resmi Masjid Nurut Taqwa.">
+<meta property="og:description" content="Website resmi Masjid Nurut Taqwa">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
 
 <style>
 :root{
-  --green:#0f6b3f;--gold:#f5c542;
-  --bg:#f4f7f5;--card:#ffffff;--text:#1f2937;--muted:#6b7280;
+  --green:#0f6b3f;
+  --gold:#f5c542;
+  --bg:#f4f7f5;
+  --card:#ffffff;
+  --text:#1f2937;
 }
-@media (prefers-color-scheme: dark){
-  :root.auto{--bg:#0f1720;--card:#111827;--text:#e5e7eb;--muted:#9ca3af}
+.dark{
+  --bg:#0f1720;
+  --card:#111827;
+  --text:#e5e7eb;
 }
-.dark{--bg:#0f1720;--card:#111827;--text:#e5e7eb;--muted:#9ca3af}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;font-family:Poppins,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
 
-/* NAV */
-nav{position:fixed;inset:0 0 auto 0;z-index:999;background:rgba(15,107,63,.96);
-display:flex;align-items:center;justify-content:space-between;padding:12px 18px}
-nav a{color:#fff;text-decoration:none;margin:0 8px;font-size:14px}
-nav a.active{border-bottom:2px solid var(--gold)}
-.brand{color:#fff;font-weight:700;letter-spacing:.5px}
-.toggle{background:#fff;border:none;border-radius:18px;padding:6px 10px;cursor:pointer}
+/* ===== FIX UTAMA HALAMAN KOSONG ===== */
+body{
+  margin:0;
+  padding-top:64px; /* FIX navbar fixed */
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+}
+
+/* NAVBAR */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:999;
+  background:#0f6b3f;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 18px;
+}
+nav a{
+  color:#fff;
+  text-decoration:none;
+  margin:0 8px;
+  font-size:14px;
+}
+nav a.active{
+  border-bottom:2px solid var(--gold);
+}
+.brand{
+  color:#fff;
+  font-weight:700;
+}
+.toggle{
+  background:#fff;
+  border:none;
+  border-radius:20px;
+  padding:6px 12px;
+  cursor:pointer;
+}
 
 /* HERO */
-header{padding:160px 20px 120px;text-align:center;color:#fff;
-background:linear-gradient(rgba(15,107,63,.85),rgba(15,107,63,.85)),
-url('https://images.unsplash.com/photo-1607427293702-036933bbf746') center/cover}
-header h1{margin:0;font-size:44px;letter-spacing:2px}
-header p{opacity:.95}
-.btn{display:inline-block;margin-top:22px;padding:12px 30px;background:var(--gold);
-color:#000;text-decoration:none;border-radius:30px;font-weight:600}
+header{
+  background:linear-gradient(rgba(15,107,63,.85),rgba(15,107,63,.85)),
+  url('https://images.unsplash.com/photo-1607427293702-036933bbf746') center/cover;
+  color:#fff;
+  text-align:center;
+  padding:160px 20px 120px;
+}
+header h1{
+  font-size:42px;
+  margin:0;
+}
+header p{
+  opacity:.95;
+}
+
+.btn{
+  display:inline-block;
+  margin-top:22px;
+  padding:12px 30px;
+  background:var(--gold);
+  color:#000;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+}
 
 /* SECTION */
-section{max-width:1200px;margin:auto;padding:84px 20px}
-h2{text-align:center;color:var(--green);margin-bottom:36px;font-size:32px}
+section{
+  max-width:1150px;
+  margin:auto;
+  padding:80px 20px;
+}
+h2{
+  text-align:center;
+  color:var(--green);
+  margin-bottom:36px;
+  font-size:30px;
+}
 
-/* CARDS */
-.card{background:var(--card);padding:28px;border-radius:16px;
-box-shadow:0 14px 32px rgba(0,0,0,.08)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-.muted{color:var(--muted)}
-.alert{background:#fde68a;color:#000;padding:14px 18px;border-radius:12px;font-weight:600}
+/* CARD & GRID */
+.card{
+  background:var(--card);
+  padding:28px;
+  border-radius:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px;
+}
+.alert{
+  background:#fde68a;
+  padding:14px;
+  border-radius:12px;
+  font-weight:600;
+  margin-bottom:20px;
+}
 
-/* MEDIA */
-img.lazy{width:100%;height:220px;object-fit:cover;border-radius:14px}
-iframe{width:100%;height:380px;border:none;border-radius:16px}
+iframe{
+  width:100%;
+  height:360px;
+  border:none;
+  border-radius:14px;
+}
 
 /* FOOTER */
-footer{background:#0f6b3f;color:#fff;text-align:center;padding:28px}
+footer{
+  background:#0f6b3f;
+  color:#fff;
+  text-align:center;
+  padding:28px;
+}
 
-/* ANIM */
-.reveal{opacity:0;transform:translateY(28px);transition:.8s}
-.reveal.show{opacity:1;transform:none}
+/* ANIMASI */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:.7s;
+}
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
 
 /* MOBILE */
-@media(max-width:640px){
-  header h1{font-size:30px}
+@media(max-width:600px){
+  header h1{font-size:28px}
   nav a{display:none}
 }
 </style>
 
-<!-- SCHEMA -->
+<!-- SCHEMA MASJID -->
 <script type="application/ld+json">
 {
- "@context":"https://schema.org",
- "@type":"PlaceOfWorship",
- "name":"Masjid Nurut Taqwa",
- "address":{"@type":"PostalAddress","addressLocality":"Kejaksan","addressRegion":"Kota Cirebon","addressCountry":"ID"},
- "telephone":"+6289654084629",
- "url":"https://USERNAME.github.io/masjid-nurut-taqwa/"
+  "@context": "https://schema.org",
+  "@type": "PlaceOfWorship",
+  "name": "Masjid Nurut Taqwa",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Kejaksan",
+    "addressRegion": "Kota Cirebon",
+    "addressCountry": "ID"
+  },
+  "telephone": "+6289654084629",
+  "url": "https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/"
 }
 </script>
-</head>
 
-<body class="auto">
+</head>
+<body>
+
 <nav>
   <div class="brand">Masjid Nurut Taqwa</div>
   <div>
@@ -101,7 +193,7 @@ footer{background:#0f6b3f;color:#fff;text-align:center;padding:28px}
     <a href="#jadwal">Jadwal</a>
     <a href="#donasi">Donasi</a>
     <a href="#lokasi">Lokasi</a>
-    <button class="toggle" onclick="toggleTheme()">🌓</button>
+    <button class="toggle" onclick="toggleDark()">🌙</button>
   </div>
 </nav>
 
@@ -111,40 +203,31 @@ footer{background:#0f6b3f;color:#fff;text-align:center;padding:28px}
   <a class="btn" href="https://wa.me/6289654084629">Hubungi DKM</a>
 </header>
 
-<!-- ================= ADMIN_DATA ================= -->
+<!-- ===== DATA ADMIN ===== -->
 <script>
-const ADMIN_DATA = {
-  priorityNotice: {
-    text: "📢 Pengajian rutin malam Jumat ba’da Isya",
-    until: "2099-12-31"
-  },
-  berita: [
-    "Sholat Idul Adha pukul 06.30 WIB",
-    "Penerimaan infaq Ramadhan dibuka",
-    "Kajian Ahad Pagi setiap pekan"
-  ],
+const DATA = {
+  pengumuman: "📢 Pengajian rutin malam Jumat ba’da Isya",
   agenda: [
-    {date:"Jumat", title:"Sholat Jumat"},
-    {date:"Ahad", title:"Kajian Pagi"},
-    {date:"Ramadhan", title:"Tadarus & Tarawih"}
-  ],
-  laporan: { masuk: "Rp 12.500.000", keluar: "Rp 8.200.000", saldo: "Rp 4.300.000" }
+    "Sholat Jumat berjamaah",
+    "Kajian Ahad pagi",
+    "Program Ramadhan",
+    "Kegiatan sosial & sedekah"
+  ]
 };
 </script>
-<!-- ============================================== -->
 
 <section id="profil" class="reveal">
   <h2>Profil Masjid</h2>
   <div class="card">
-    Masjid Nurut Taqwa merupakan pusat ibadah, dakwah, dan kegiatan sosial umat Islam
+    Masjid Nurut Taqwa merupakan pusat ibadah dan kegiatan umat Islam
     di wilayah Kejaksan, Kota Cirebon.
   </div>
 </section>
 
 <section id="agenda" class="reveal">
   <h2>Pengumuman & Agenda</h2>
-  <div id="notice" class="alert" hidden></div>
-  <div class="grid" id="agendaGrid"></div>
+  <div class="alert" id="alertBox"></div>
+  <div class="grid" id="agendaList"></div>
 </section>
 
 <section id="jadwal" class="reveal">
@@ -154,20 +237,12 @@ const ADMIN_DATA = {
   </div>
 </section>
 
-<section class="reveal">
-  <h2>Laporan Ringkas</h2>
-  <div class="grid">
-    <div class="card">Masuk<br><b id="in"></b></div>
-    <div class="card">Keluar<br><b id="out"></b></div>
-    <div class="card">Saldo<br><b id="bal"></b></div>
-  </div>
-</section>
-
 <section id="donasi" class="reveal">
   <h2>Donasi Infaq & Sedekah</h2>
   <div class="card">
-    Mari bersama memakmurkan masjid.<br><br>
-    <a class="btn" href="https://wa.me/6289654084629">Info Donasi</a>
+    Mari bersama memakmurkan Masjid Nurut Taqwa melalui infaq dan sedekah.
+    <br><br>
+    <a class="btn" href="https://wa.me/6289654084629">Informasi Donasi</a>
   </div>
 </section>
 
@@ -181,44 +256,40 @@ const ADMIN_DATA = {
   </div>
 </section>
 
-<footer>© Masjid Nurut Taqwa – Website Resmi</footer>
+<footer>
+  © Masjid Nurut Taqwa – Website Resmi
+</footer>
 
 <script>
-/* THEME */
-function toggleTheme(){document.body.classList.toggle('dark')}
+function toggleDark(){
+  document.body.classList.toggle('dark');
+}
 
-/* REVEAL */
-const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('show')));
+/* render data */
+document.getElementById('alertBox').innerText = DATA.pengumuman;
+DATA.agenda.forEach(a=>{
+  document.getElementById('agendaList').innerHTML += `<div class="card">${a}</div>`;
+});
+
+/* reveal animation */
+const io = new IntersectionObserver(e=>{
+  e.forEach(x=>x.isIntersecting && x.target.classList.add('show'));
+});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ACTIVE NAV */
+/* active nav */
 const links=[...document.querySelectorAll('nav a')];
 addEventListener('scroll',()=>{
   let y=scrollY+120;
   links.forEach(l=>{
     let s=document.querySelector(l.getAttribute('href'));
-    if(s&&s.offsetTop<=y&&s.offsetTop+s.offsetHeight>y){
-      links.forEach(a=>a.classList.remove('active'));l.classList.add('active')
+    if(s && s.offsetTop<=y && s.offsetTop+s.offsetHeight>y){
+      links.forEach(a=>a.classList.remove('active'));
+      l.classList.add('active');
     }
-  })
+  });
 });
-
-/* ADMIN RENDER */
-const n=ADMIN_DATA.priorityNotice;
-if(new Date(n.until)>=new Date()){
-  const box=document.getElementById('notice');box.hidden=false;box.textContent=n.text;
-}
-ADMIN_DATA.agenda.forEach(a=>{
-  agendaGrid.innerHTML+=`<div class="card"><b>${a.date}</b><br>${a.title}</div>`;
-});
-in.textContent=ADMIN_DATA.laporan.masuk;
-out.textContent=ADMIN_DATA.laporan.keluar;
-bal.textContent=ADMIN_DATA.laporan.saldo;
-
-/* TV MODE */
-if(new URLSearchParams(location.search).get('tv')==='1'){
-  document.documentElement.style.fontSize='1.2em';
-}
 </script>
+
 </body>
 </html>
