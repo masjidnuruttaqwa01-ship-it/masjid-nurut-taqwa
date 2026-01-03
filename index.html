@@ -6,12 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- SEO -->
-<meta name="description" content="Website resmi Masjid Nurut Taqwa Kejaksan Kota Cirebon. Informasi ibadah, agenda masjid, zakat, dan pelayanan umat.">
-<meta name="keywords" content="Masjid Nurut Taqwa, Masjid Cirebon, Masjid Kejaksan">
+<meta name="description" content="Website resmi Masjid Nurut Taqwa Kejaksan Kota Cirebon. Pusat ibadah, dakwah, pendidikan Islam, dan pelayanan umat.">
 <meta name="author" content="DKM Masjid Nurut Taqwa">
 
 <!-- RSS -->
 <link rel="alternate" type="application/rss+xml" title="Masjid Nurut Taqwa RSS" href="index.xml">
+
+<!-- FONT PREMIUM -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -23,64 +25,77 @@
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family:"Segoe UI",system-ui,sans-serif;
+  font-family:"Inter",system-ui,sans-serif;
   background:var(--light);
   color:var(--dark);
-  line-height:1.9;
+  line-height:1.95;
 }
-section{padding:70px 20px}
+section{padding:80px 20px}
 .container{max-width:1150px;margin:auto}
 
 /* HERO */
 .hero{
-  background:linear-gradient(rgba(14,95,58,.92),rgba(14,95,58,.92));
+  background:
+    linear-gradient(rgba(14,95,58,.93),rgba(14,95,58,.93)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='0.7' opacity='0.35'%3E%3Cpath d='M70 0 L140 70 L70 140 L0 70 Z'/%3E%3C/g%3E%3C/svg%3E");
   color:#fff;
   text-align:center;
 }
-.hero h1{font-size:42px;letter-spacing:3px}
-.hero p{font-size:18px;max-width:750px;margin:18px auto}
-.hero .line{width:140px;height:3px;background:var(--gold);margin:26px auto}
+.hero h1{
+  font-family:"Playfair Display",serif;
+  font-size:44px;
+  letter-spacing:3px;
+}
+.hero p{
+  max-width:760px;
+  margin:24px auto;
+  font-size:18px;
+}
+.hero .line{
+  width:150px;
+  height:3px;
+  background:var(--gold);
+  margin:28px auto;
+}
 
 /* TITLE */
 .title{
-  font-size:30px;
+  font-family:"Playfair Display",serif;
+  font-size:32px;
   color:var(--green);
   border-left:6px solid var(--gold);
-  padding-left:16px;
-  margin-bottom:35px;
+  padding-left:18px;
+  margin-bottom:40px;
 }
 
 /* CARD */
 .card{
-  background:#fff;
-  border-radius:22px;
-  padding:36px;
+  background:#ffffff;
+  border-radius:24px;
+  padding:40px;
   box-shadow:0 18px 40px rgba(0,0,0,.08);
 }
+
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:26px;
+  gap:28px;
 }
 
 /* HIGHLIGHT */
 .highlight{
-  background:linear-gradient(135deg,#fff7d8,#fff);
+  background:linear-gradient(135deg,#fff6d9,#ffffff);
   border-left:6px solid var(--gold);
 }
-
-/* TABLE */
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid #e4efe8;padding:12px;text-align:center}
-th{background:#f2f8f5}
 
 /* BUTTON */
 .btn{
   display:inline-block;
   background:var(--gold);
   color:#000;
-  padding:12px 22px;
-  border-radius:30px;
+  padding:14px 26px;
+  border-radius:32px;
   text-decoration:none;
   font-weight:600;
 }
@@ -90,7 +105,7 @@ footer{
   background:#0b3d27;
   color:#fff;
   text-align:center;
-  padding:35px 20px;
+  padding:40px 20px;
   font-size:14px;
 }
 
@@ -99,9 +114,6 @@ footer{
   background:
     linear-gradient(rgba(248,251,249,.96),rgba(248,251,249,.96)),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='0.6' opacity='0.35'%3E%3Cpath d='M60 0 L120 60 L60 120 L0 60 Z'/%3E%3C/g%3E%3C/svg%3E");
-}
-.ramadhan-on .hero{
-  background:linear-gradient(rgba(14,95,58,.95),rgba(14,95,58,.95));
 }
 </style>
 </head>
@@ -113,9 +125,11 @@ footer{
   <div class="container">
     <h1>MASJID NURUT TAQWA</h1>
     <div class="line"></div>
-    <p id="hero-text">
-      Masjid Jami’ sebagai pusat ibadah, dakwah, pendidikan Islam,
-      dan pelayanan umat di wilayah Kejaksan, Kota Cirebon.
+    <p>
+      Masjid Nurut Taqwa merupakan masjid jami’ yang berperan sebagai
+      pusat ibadah, dakwah, pendidikan Islam, serta pelayanan umat
+      yang berlandaskan nilai keikhlasan, kebersamaan, dan kemaslahatan
+      masyarakat di wilayah Kejaksan, Kota Cirebon.
     </p>
   </div>
 </section>
@@ -126,8 +140,14 @@ footer{
 <div class="title">Profil Masjid</div>
 <div class="card">
 <p>
-Masjid Nurut Taqwa adalah masjid wakaf yang dikelola oleh Dewan Kemakmuran Masjid (DKM)
-secara profesional, transparan, dan amanah untuk melayani kebutuhan umat.
+Masjid Nurut Taqwa adalah masjid wakaf yang berdiri sebagai amanah umat
+dan dikelola oleh Dewan Kemakmuran Masjid (DKM) secara profesional,
+transparan, dan bertanggung jawab.
+</p>
+<p>
+Selain sebagai tempat pelaksanaan ibadah mahdhah,
+masjid ini juga berfungsi sebagai pusat pembinaan keislaman,
+penguatan ukhuwah, serta pelayanan sosial kemasyarakatan.
 </p>
 </div>
 </div>
@@ -139,9 +159,14 @@ secara profesional, transparan, dan amanah untuk melayani kebutuhan umat.
 <div class="title">Persiapan Menyambut Ramadhan</div>
 <div class="card highlight">
 <p>
-Masjid Nurut Taqwa tengah mempersiapkan berbagai program ibadah dan kegiatan
-dalam rangka menyambut bulan suci Ramadhan.
-Informasi lengkap akan ditampilkan saat Ramadhan telah tiba.
+Dalam rangka menyambut bulan suci Ramadhan,
+Masjid Nurut Taqwa tengah mempersiapkan rangkaian program ibadah
+dan kegiatan keagamaan yang dirancang untuk meningkatkan
+keimanan, ketakwaan, dan kebersamaan jamaah.
+</p>
+<p>
+Informasi lengkap mengenai agenda Ramadhan akan diumumkan
+secara resmi saat memasuki bulan suci tersebut.
 </p>
 </div>
 </div>
@@ -152,10 +177,26 @@ Informasi lengkap akan ditampilkan saat Ramadhan telah tiba.
 <div class="container">
 <div class="title">Agenda Ramadhan</div>
 <div class="grid">
-<div class="card">🕌 Sholat Tarawih Berjamaah</div>
-<div class="card">📖 Tadarus Al-Qur’an</div>
-<div class="card">🎙️ Kajian & Kultum Ramadhan</div>
-<div class="card">🌙 I’tikaf 10 Malam Terakhir</div>
+  <div class="card">
+    <b>Sholat Tarawih Berjamaah</b><br>
+    Dilaksanakan setiap malam dengan suasana khusyuk dan tertib
+    sebagai sarana mempererat kebersamaan jamaah.
+  </div>
+  <div class="card">
+    <b>Tadarus Al-Qur’an</b><br>
+    Menghidupkan malam Ramadhan dengan lantunan ayat suci
+    Al-Qur’an secara berjamaah.
+  </div>
+  <div class="card">
+    <b>Kajian & Kultum Ramadhan</b><br>
+    Kajian tematik untuk memperdalam pemahaman keislaman
+    serta penguatan nilai spiritual.
+  </div>
+  <div class="card">
+    <b>I’tikaf 10 Malam Terakhir</b><br>
+    Kesempatan untuk meningkatkan kualitas ibadah
+    dalam menggapai malam Lailatul Qadar.
+  </div>
 </div>
 </div>
 </section>
@@ -163,12 +204,18 @@ Informasi lengkap akan ditampilkan saat Ramadhan telah tiba.
 <!-- ZAKAT -->
 <section id="zakat">
 <div class="container">
-<div class="title">Zakat & Infaq Ramadhan</div>
+<div class="title">Zakat, Infaq & Sedekah</div>
 <div class="card highlight">
 <p>
-Ramadhan adalah bulan kepedulian.
-Mari tunaikan zakat, infaq, dan sedekah melalui Masjid Nurut Taqwa
-sebagai amal jariyah yang berkelanjutan.
+Ramadhan merupakan momentum untuk meningkatkan kepedulian
+dan kepekaan sosial.
+Masjid Nurut Taqwa mengajak jamaah dan masyarakat
+untuk menunaikan zakat, infaq, dan sedekah
+sebagai wujud tanggung jawab sosial dan amal jariyah.
+</p>
+<p>
+Setiap amanah yang dititipkan akan dikelola secara transparan
+dan dipergunakan untuk kemaslahatan umat.
 </p>
 <a class="btn" href="https://wa.me/6289654084629">Hubungi DKM via WhatsApp</a>
 </div>
@@ -178,40 +225,27 @@ sebagai amal jariyah yang berkelanjutan.
 <!-- DKM -->
 <section>
 <div class="container">
-<div class="title">Struktur DKM</div>
-<div class="grid">
-<div class="card"><b>Ketua</b><br>H. Ahmad</div>
-<div class="card"><b>Sekretaris</b><br>Ahmad Fauzi</div>
-<div class="card"><b>Bendahara</b><br>Siti Aminah</div>
-<div class="card"><b>Koordinator Ramadhan</b><br>Ust. Ridwan</div>
-</div>
-</div>
-</section>
-
-<!-- LOKASI -->
-<section>
-<div class="container">
-<div class="title">Lokasi Masjid</div>
+<div class="title">Struktur Dewan Kemakmuran Masjid</div>
 <div class="card">
-<iframe
-src="https://www.google.com/maps?q=Masjid%20Nurut%20Taqwa%20Cirebon&output=embed"
-width="100%" height="320" style="border:0;border-radius:16px" loading="lazy">
-</iframe>
+<p>
+Dewan Kemakmuran Masjid (DKM) Masjid Nurut Taqwa merupakan pengurus
+yang diamanahi untuk mengelola masjid secara profesional,
+akuntabel, dan berorientasi pada pelayanan umat.
+</p>
 </div>
 </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
 © Masjid Nurut Taqwa – Kejaksan, Kota Cirebon
 </footer>
 
-<!-- AUTO RAMADHAN SCRIPT -->
+<!-- AUTO RAMADHAN -->
 <script>
 const today = new Date();
-
-/* SET PERKIRAAN RAMADHAN */
-const ramadhanStart = new Date("2026-02-18");
-const ramadhanEnd   = new Date("2026-03-21");
+const ramadhanStart = new Date("2026-03-01");
+const ramadhanEnd   = new Date("2026-03-30");
 
 if(today >= ramadhanStart && today <= ramadhanEnd){
   document.body.classList.add("ramadhan-on");
