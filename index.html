@@ -1,99 +1,155 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Masjid Nurut Taqwa | Cirebon</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f8f9f8;
-      color: #222;
-      line-height: 1.6;
-    }
-    header {
-      background: #0f6b3f;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    section {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    h2 {
-      color: #0f6b3f;
-      border-bottom: 2px solid #e0e0e0;
-      padding-bottom: 5px;
-    }
-    iframe {
-      width: 100%;
-      border: none;
-      height: 350px;
-    }
-    footer {
-      background: #eee;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 18px;
-      background: #0f6b3f;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>Masjid Nurut Taqwa | Cirebon</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --green:#0f6b3f; --gold:#f5c542; --bg:#f4f7f5; --card:#fff; --text:#222;
+}
+.dark{
+  --bg:#0f1720; --card:#111827; --text:#e5e7eb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+
+/* NAVBAR */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 18px;background:rgba(15,107,63,.95);color:#fff
+}
+nav .brand{font-weight:700;letter-spacing:1px}
+nav a{color:#fff;text-decoration:none;margin:0 10px;font-size:14px}
+nav .right{display:flex;align-items:center;gap:10px}
+.toggle{background:#fff;color:#000;border:none;border-radius:20px;padding:6px 12px;cursor:pointer}
+
+/* HERO */
+header{
+  background:linear-gradient(rgba(15,107,63,.85),rgba(15,107,63,.85)),
+  url('https://images.unsplash.com/photo-1607427293702-036933bbf746') center/cover;
+  color:#fff;padding:140px 20px 110px;text-align:center
+}
+header h1{font-size:42px;margin:0 0 8px;letter-spacing:2px}
+header p{opacity:.95}
+.btn{display:inline-block;margin-top:22px;padding:12px 28px;background:var(--gold);color:#000;text-decoration:none;border-radius:30px;font-weight:600}
+
+/* SECTION */
+section{max-width:1100px;margin:auto;padding:70px 20px}
+h2{text-align:center;color:var(--green);margin-bottom:36px;font-size:30px}
+
+/* CARD & GRID */
+.card{background:var(--card);padding:32px;border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.08);margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+
+/* GALLERY */
+.gallery img{width:100%;height:200px;object-fit:cover;border-radius:12px}
+
+/* MAP & IFRAME */
+iframe{width:100%;height:380px;border:none;border-radius:14px}
+
+/* FOOTER */
+footer{background:var(--green);color:#fff;text-align:center;padding:28px 15px;font-size:14px}
+
+/* ANIMATION */
+.reveal{opacity:0;transform:translateY(24px);transition:.7s}
+.reveal.show{opacity:1;transform:none}
+
+@media(max-width:600px){
+  header h1{font-size:28px}
+  nav a{display:none}
+}
+</style>
 </head>
+
 <body>
+
+<nav>
+  <div class="brand">Masjid Nurut Taqwa</div>
+  <div class="right">
+    <a href="#profil">Profil</a>
+    <a href="#jadwal">Jadwal</a>
+    <a href="#kegiatan">Kegiatan</a>
+    <a href="#donasi">Donasi</a>
+    <a href="#lokasi">Lokasi</a>
+    <button class="toggle" onclick="toggleDark()">🌙</button>
+  </div>
+</nav>
 
 <header>
   <h1>MASJID NURUT TAQWA</h1>
   <p>Kejaksan – Kota Cirebon</p>
+  <a class="btn" href="https://wa.me/6289654084629">Hubungi Pengurus</a>
 </header>
 
-<section>
+<section id="profil" class="reveal">
   <h2>Profil Masjid</h2>
-  <p>
-    Masjid Nurut Taqwa merupakan pusat ibadah dan kegiatan umat Islam
-    di wilayah Kejaksan, Kota Cirebon.
-  </p>
+  <div class="card">
+    Masjid Nurut Taqwa adalah pusat ibadah dan kegiatan umat Islam di wilayah Kejaksan,
+    Kota Cirebon. Berfungsi sebagai tempat sholat berjamaah, dakwah, pendidikan
+    keislaman, serta kegiatan sosial kemasyarakatan.
+  </div>
 </section>
 
-<section>
-  <h2>Jadwal Sholat (Cirebon)</h2>
-  <iframe src="https://www.islamicfinder.org/world/indonesia/1646170/cirebon-prayer-times/"></iframe>
+<section id="jadwal" class="reveal">
+  <h2>Jadwal Sholat (Otomatis)</h2>
+  <div class="card">
+    <iframe src="https://www.islamicfinder.org/world/indonesia/1646170/cirebon-prayer-times/"></iframe>
+  </div>
 </section>
 
-<section>
-  <h2>Agenda Kegiatan</h2>
-  <ul>
-    <li>Sholat Jumat berjamaah</li>
-    <li>Pengajian rutin</li>
-    <li>Kajian Islam</li>
-    <li>Kegiatan Ramadhan</li>
-  </ul>
+<section id="kegiatan" class="reveal">
+  <h2>Kegiatan & Program</h2>
+  <div class="grid">
+    <div class="card">🕌 Sholat Jumat Berjamaah</div>
+    <div class="card">📖 Pengajian & Kajian</div>
+    <div class="card">🌙 Program Ramadhan</div>
+    <div class="card">🤲 Sosial & Sedekah</div>
+  </div>
 </section>
 
-<section>
+<section class="reveal">
+  <h2>Galeri Masjid</h2>
+  <div class="grid gallery">
+    <img src="https://images.unsplash.com/photo-1542816417-0983c9c9ad53">
+    <img src="https://images.unsplash.com/photo-1591608516485-22b8c3a31c30">
+    <img src="https://images.unsplash.com/photo-1589820296156-2454bb8a6ad1">
+  </div>
+</section>
+
+<section id="donasi" class="reveal">
   <h2>Donasi Infaq & Sedekah</h2>
-  <p>Mari bersama memakmurkan masjid melalui infaq dan sedekah.</p>
-  <a class="btn" href="https://wa.me/6289654084629">Hubungi WhatsApp</a>
+  <div class="card">
+    Mari bersama memakmurkan Masjid Nurut Taqwa melalui infaq dan sedekah.
+    <br><br>
+    <a class="btn" href="https://wa.me/6289654084629">Informasi Donasi</a>
+  </div>
 </section>
 
-<section>
-  <h2>Kontak</h2>
-  <p>WhatsApp: 0896-5408-4629<br>Kejaksan, Kota Cirebon</p>
+<section id="lokasi" class="reveal">
+  <h2>Kontak & Lokasi</h2>
+  <div class="card">
+    📍 Kejaksan, Kota Cirebon<br>
+    📱 WhatsApp: 0896-5408-4629
+    <br><br>
+    <iframe src="https://www.google.com/maps?q=Masjid%20Nurut%20Taqwa%20Cirebon&output=embed"></iframe>
+  </div>
 </section>
 
 <footer>
-  © Masjid Nurut Taqwa – Cirebon
+  © Masjid Nurut Taqwa – Cirebon • Website resmi
 </footer>
+
+<script>
+function toggleDark(){document.body.classList.toggle('dark')}
+const els=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('show')));
+els.forEach(el=>io.observe(el));
+</script>
 
 </body>
 </html>
