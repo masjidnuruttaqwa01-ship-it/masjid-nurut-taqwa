@@ -1,6 +1,9 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://USERNAME.github.io/masjid-nurut-taqwa/</loc>
+    <loc>https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
 </urlset>
