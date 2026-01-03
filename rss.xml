@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Masjid Nurut Taqwa - Pengumuman & Berita</title>
+    <link>https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/</link>
+    <description>Update kegiatan & pengumuman terbaru Masjid Nurut Taqwa</description>
+    <language>id-ID</language>
+
+    <!-- Contoh entry -->
+    <item>
+      <title>Pengajian Rutin Malam Jumat</title>
+      <link>https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/#agenda</link>
+      <description>Pengajian rutin setiap malam Jumat ba’da Isya untuk umum.</description>
+      <pubDate>Wed, 07 Jan 2026 19:00:00 +0700</pubDate>
+      <guid>pengajian-rutin-20260107</guid>
+    </item>
+
+    <item>
+      <title>Penerimaan Infaq Ramadhan</title>
+      <link>https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/#donasi</link>
+      <description>Penerimaan infaq dan sedekah selama Ramadhan untuk program sosial.</description>
+      <pubDate>Mon, 05 Jan 2026 15:00:00 +0700</pubDate>
+      <guid>infaq-ramadhan-20260105</guid>
+    </item>
+
+  </channel>
+</rss>
