@@ -1,299 +1,42 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Masjid Nurut Taqwa | Kejaksan, Kota Cirebon</title>
+<title>Masjid Nurut Taqwa</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Website resmi Masjid Nurut Taqwa, Kejaksan, Kota Cirebon. Informasi jadwal sholat, kegiatan, struktur DKM, dan donasi masjid.">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- RSS -->
+<link rel="alternate"
+      type="application/rss+xml"
+      title="Masjid Nurut Taqwa - Pengumuman"
+      href="index.xml">
 
 <style>
-/* ===== TEMA GOLD + PUTIH ===== */
-:root{
-  --gold:#d4af37;
-  --gold-soft:#f3e6b3;
-  --bg:#ffffff;
-  --card:#ffffff;
-  --text:#1f2937;
-  --border:#f1e7c7;
-}
-
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-
 body{
-  margin:0;
-  padding-top:72px;
-  font-family:'Poppins',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.9;
+  font-family:Arial, sans-serif;
+  max-width:800px;
+  margin:40px auto;
+  line-height:1.8;
 }
-
-/* NAVBAR */
-nav{
-  position:fixed;top:0;left:0;right:0;
-  z-index:999;
-  background:linear-gradient(90deg,#ffffff,#fff8e1);
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 28px;
-  border-bottom:2px solid var(--border);
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-.brand{font-weight:700;letter-spacing:.6px}
-nav a{
-  color:#000;text-decoration:none;
-  margin:0 12px;font-size:14px;opacity:.85
-}
-nav a.active{border-bottom:2px solid var(--gold)}
-
-/* HERO */
-header{
-  background:
-    linear-gradient(rgba(255,255,255,.85),rgba(255,255,255,.95)),
-    url('https://images.unsplash.com/photo-1607427293702-036933bbf746') center/cover;
-  text-align:center;
-  padding:220px 24px 180px;
-}
-header h1{font-size:48px;margin:0;letter-spacing:2.5px}
-header p{
-  max-width:900px;margin:22px auto 0;
-  font-size:18px;color:#333
-}
-.btn{
-  display:inline-block;margin-top:38px;
-  padding:16px 42px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-soft));
-  color:#000;text-decoration:none;
-  border-radius:50px;font-weight:600;
-  box-shadow:0 14px 40px rgba(0,0,0,.18);
-}
-
-/* SECTION */
-section{
-  max-width:1250px;margin:auto;
-  padding:120px 26px;
-}
-section.alt{
-  background:#fffdf7;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-}
-
-/* TITLE */
-h2{
-  text-align:center;font-size:36px;
-  margin-bottom:60px;color:#000;
-}
-h2::after{
-  content:"";display:block;
-  width:90px;height:4px;
-  background:var(--gold);
-  margin:22px auto 0;border-radius:4px;
-}
-
-/* CARD */
+h1{color:#8b6b1f}
 .card{
-  background:var(--card);
-  padding:42px;border-radius:22px;
-  box-shadow:0 20px 45px rgba(0,0,0,.10);
-  border:1px solid var(--border);
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:32px;
-}
-.alert{
-  background:linear-gradient(135deg,#fff7d6,#fffdf3);
-  padding:26px;border-radius:22px;
-  font-weight:600;margin-bottom:44px;
-  border:1px solid var(--border);
-}
-
-/* MEDIA */
-iframe{
-  width:100%;height:420px;
-  border:none;border-radius:22px;
-  border:1px solid var(--border);
-}
-
-/* FOOTER */
-footer{
-  background:#ffffff;
-  color:#000;text-align:center;
-  padding:48px 22px;
-  border-top:2px solid var(--border);
-}
-
-/* ANIMASI */
-.reveal{opacity:0;transform:translateY(40px);transition:1s}
-.reveal.show{opacity:1;transform:none}
-
-/* MOBILE */
-@media(max-width:700px){
-  header h1{font-size:30px}
-  header p{font-size:15px}
-  nav a{display:none}
+  border:1px solid #e5d9b6;
+  padding:20px;
+  border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <div class="brand">Masjid Nurut Taqwa</div>
-  <div>
-    <a href="#profil">Profil</a>
-    <a href="#visi">Visi</a>
-    <a href="#dkm">Struktur DKM</a>
-    <a href="#agenda">Agenda</a>
-    <a href="#jadwal">Jadwal</a>
-    <a href="#donasi">Donasi</a>
-    <a href="#lokasi">Lokasi</a>
-  </div>
-</nav>
+<h1>Masjid Nurut Taqwa</h1>
+<p>Website resmi Masjid Nurut Taqwa – Kejaksan, Kota Cirebon</p>
 
-<header>
-  <h1>MASJID NURUT TAQWA</h1>
-  <p>
-    Website Resmi Masjid Nurut Taqwa, Kejaksan – Kota Cirebon.  
-    Pusat ibadah, dakwah, pendidikan Islam, dan kegiatan sosial umat.
-  </p>
-  <a class="btn" href="#donasi">Infaq & Sedekah</a>
-</header>
-
-<section id="profil" class="reveal alt">
-  <h2>Profil Masjid</h2>
-  <div class="card">
-    <p>
-      Masjid Nurut Taqwa merupakan pusat ibadah dan kegiatan keislaman umat Islam
-      di wilayah Kejaksan, Kota Cirebon. Masjid ini menjadi tempat sholat berjamaah,
-      pusat dakwah, pendidikan Islam, serta kegiatan sosial kemasyarakatan.
-    </p>
-    <p>
-      Dengan semangat memakmurkan masjid, Masjid Nurut Taqwa berkomitmen
-      meningkatkan pelayanan jamaah dan memperkuat ukhuwah Islamiyah.
-    </p>
-  </div>
-</section>
-
-<section id="visi" class="reveal">
-  <h2>Visi & Misi</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Visi</h3>
-      <p>
-        Menjadikan Masjid Nurut Taqwa sebagai pusat ibadah dan pembinaan umat
-        yang aktif, amanah, dan bermanfaat bagi masyarakat.
-      </p>
-    </div>
-    <div class="card">
-      <h3>Misi</h3>
-      <ul>
-        <li>Meningkatkan kualitas ibadah jamaah.</li>
-        <li>Menyelenggarakan dakwah dan pendidikan Islam.</li>
-        <li>Memperkuat ukhuwah dan kepedulian sosial.</li>
-        <li>Mengelola masjid secara profesional.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="dkm" class="reveal alt">
-  <h2>Struktur Dewan Kemakmuran Masjid (DKM)</h2>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Ketua DKM</h3>
-      <p><b>Nama Ketua</b></p>
-    </div>
-    <div class="card">
-      <h3>Sekretaris</h3>
-      <p><b>Nama Sekretaris</b></p>
-    </div>
-    <div class="card">
-      <h3>Bendahara</h3>
-      <p><b>Nama Bendahara</b></p>
-    </div>
-    <div class="card">
-      <h3>Bidang Ibadah</h3>
-      <p>Pengelolaan ibadah dan imam.</p>
-    </div>
-    <div class="card">
-      <h3>Bidang Dakwah</h3>
-      <p>Kajian dan pengajian.</p>
-    </div>
-    <div class="card">
-      <h3>Bidang Sosial</h3>
-      <p>Program sedekah dan sosial.</p>
-    </div>
-  </div>
-</section>
-
-<section id="agenda" class="reveal">
-  <h2>Agenda & Kegiatan</h2>
-  <div class="alert">📢 Pengajian rutin malam Jumat ba’da Isya.</div>
-  <div class="grid">
-    <div class="card">Sholat Jumat</div>
-    <div class="card">Kajian Ahad</div>
-    <div class="card">Kegiatan Ramadhan</div>
-    <div class="card">Program Sosial</div>
-  </div>
-</section>
-
-<section id="jadwal" class="reveal alt">
-  <h2>Jadwal Sholat</h2>
-  <div class="card">
-    <iframe src="https://www.islamicfinder.org/world/indonesia/1646170/cirebon-prayer-times/"></iframe>
-  </div>
-</section>
-
-<section id="donasi" class="reveal">
-  <h2>Infaq & Sedekah</h2>
-  <div class="card">
-    <p>
-      Infaq dan sedekah digunakan untuk operasional masjid,
-      kegiatan keagamaan, dan program sosial.
-    </p>
-    <a class="btn" href="https://wa.me/6289654084629">Hubungi Pengurus</a>
-  </div>
-</section>
-
-<section id="lokasi" class="reveal alt">
-  <h2>Kontak & Lokasi</h2>
-  <div class="card">
-    📍 Kejaksan, Kota Cirebon<br>
-    📱 WhatsApp: 0896-5408-4629
-    <br><br>
-    <iframe src="https://www.google.com/maps?q=Masjid%20Nurut%20Taqwa%20Cirebon&output=embed"></iframe>
-  </div>
-</section>
-
-<footer>
-  © Masjid Nurut Taqwa – Website Resmi
-</footer>
-
-<script>
-const io=new IntersectionObserver(e=>{
-  e.forEach(x=>x.isIntersecting && x.target.classList.add('show'))
-});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-const links=[...document.querySelectorAll('nav a')];
-addEventListener('scroll',()=>{
-  let y=scrollY+140;
-  links.forEach(l=>{
-    let s=document.querySelector(l.getAttribute('href'));
-    if(s && s.offsetTop<=y && s.offsetTop+s.offsetHeight>y){
-      links.forEach(a=>a.classList.remove('active'));
-      l.classList.add('active');
-    }
-  });
-});
-</script>
+<div class="card">
+  <h2>📢 Pengumuman</h2>
+  <p><b>Pengajian Rutin Malam Jumat</b></p>
+  <p>Pengajian rutin setiap malam Jumat ba’da Isya. Terbuka untuk umum.</p>
+</div>
 
 </body>
 </html>
