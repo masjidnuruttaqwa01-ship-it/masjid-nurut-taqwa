@@ -155,6 +155,51 @@ footer{
   padding:36px 18px;
   font-size:13px;
 }
+  /* ===== GALERI SLIDER ===== */
+.gallery-slider{
+  position:relative;
+  max-width:100%;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 26px rgba(0,0,0,.15);
+}
+
+.gallery-slide{
+  display:none;
+}
+
+.gallery-slide.active{
+  display:block;
+}
+
+.gallery-slide img{
+  width:100%;
+  height:360px;
+  object-fit:cover;
+}
+
+/* tombol */
+.gallery-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,.45);
+  color:#fff;
+  border:none;
+  font-size:28px;
+  padding:8px 14px;
+  cursor:pointer;
+  border-radius:50%;
+}
+.gallery-btn.prev{left:14px}
+.gallery-btn.next{right:14px}
+
+/* responsive */
+@media(max-width:600px){
+  .gallery-slide img{
+    height:220px;
+  }
+}
 </style>
 </head>
 
@@ -309,7 +354,28 @@ footer{
     </ul>
   </div>
 </section>
+<section id="galeri">
+  <div class="section-title">Galeri Kegiatan Masjid</div>
 
+  <div class="gallery-slider">
+    <div class="gallery-slide active">
+      <img src="images/kegiatan1.jpg" alt="Kegiatan Masjid">
+    </div>
+    <div class="gallery-slide">
+      <img src="images/kegiatan2.jpg" alt="Pengajian">
+    </div>
+    <div class="gallery-slide">
+      <img src="images/kegiatan3.jpg" alt="Kegiatan Sosial">
+    </div>
+    <div class="gallery-slide">
+      <img src="images/kegiatan4.jpg" alt="Ramadhan">
+    </div>
+
+    <button class="gallery-btn prev">‹</button>
+    <button class="gallery-btn next">›</button>
+  </div>
+</section>
+  
 <!-- ================= JADWAL SHOLAT ================= -->
 <section id="jadwal">
   <div class="section-title">Jadwal Sholat Hari Ini</div>
@@ -459,5 +525,33 @@ fetch(`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.g
    z-index:2000;">
 💬
 </a>
+  <script>
+/* ===== GALERI KEGIATAN ===== */
+const slidesGaleri = document.querySelectorAll('.gallery-slide');
+const prevBtn = document.querySelector('.gallery-btn.prev');
+const nextBtn = document.querySelector('.gallery-btn.next');
+let galeriIndex = 0;
+
+function showGaleri(index){
+  slidesGaleri.forEach(slide => slide.classList.remove('active'));
+  slidesGaleri[index].classList.add('active');
+}
+
+nextBtn.addEventListener('click', () => {
+  galeriIndex = (galeriIndex + 1) % slidesGaleri.length;
+  showGaleri(galeriIndex);
+});
+
+prevBtn.addEventListener('click', () => {
+  galeriIndex = (galeriIndex - 1 + slidesGaleri.length) % slidesGaleri.length;
+  showGaleri(galeriIndex);
+});
+
+/* auto slide */
+setInterval(() => {
+  galeriIndex = (galeriIndex + 1) % slidesGaleri.length;
+  showGaleri(galeriIndex);
+}, 5000);
+  </script>
 </body>
 </html>
