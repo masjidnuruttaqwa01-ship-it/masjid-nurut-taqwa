@@ -279,6 +279,31 @@ footer{
 .accordion.active .icon{
   transform:rotate(45deg);
 }
+/* ===== ACCORDION ICON & ACTIVE COLOR ===== */
+
+/* default header */
+.accordion-header{
+  background:#ffffff;
+  color:#0b5c3b;
+  transition:background .3s,color .3s;
+}
+
+/* icon panah */
+.accordion-header .icon{
+  font-size:22px;
+  transition:transform .3s;
+}
+
+/* saat aktif */
+.accordion.active .accordion-header{
+  background:#0f6b44;      /* hijau masjid */
+  color:#ffffff;
+}
+
+/* panah berubah arah */
+.accordion.active .icon{
+  transform:rotate(90deg); /* › jadi ↓ */
+}
 </style>
 </head>
 
@@ -319,14 +344,12 @@ footer{
     masyarakat di wilayah Kejaksan dan sekitarnya.
   </p>
 </div>
-
 <!-- ================= PROFIL ================= -->
 <section class="accordion">
   <div class="accordion-header">
     <span>PROFIL MASJID</span>
-    <span class="icon">+</span>
+    <span class="icon">›</span>
   </div>
-
   <div class="accordion-content">
     <p>
       Masjid Nurut Taqwa berdiri sebagai amanah umat dan dikelola oleh
@@ -356,14 +379,12 @@ footer{
   </div>
   </section>
 </section>
-
 <!-- ================= SEJARAH ================= -->
 <section class="accordion">
   <div class="accordion-header">
     <span>SEJARAH MASJID</span>
-    <span class="icon">+</span>
+    <span class="icon">›</span>
   </div>
-
   <div class="accordion-content">
     <p>
       Masjid Nurut Taqwa didirikan atas dasar semangat kebersamaan masyarakat
@@ -377,14 +398,12 @@ footer{
     </p>
   </div>
 </section>
-
 <!-- ================= VISI MISI ================= -->
 <section class="accordion">
   <div class="accordion-header">
     <span>VISI DAN MISI</span>
-    <span class="icon">+</span>
+    <span class="icon">›</span>
   </div>
-
   <div class="accordion-content">
       <b>Visi</b>
       <p>
@@ -392,7 +411,7 @@ footer{
         dalam membangun masyarakat yang beriman, berilmu, dan berakhlak mulia.
       </p>
     </div>
-    <div class="card">
+    <div class="accordion-content">
       <b>Misi</b>
       <ul>
         <li>Menyelenggarakan ibadah berjamaah secara tertib dan khusyuk</li>
@@ -479,11 +498,11 @@ footer{
         <th>Isya</th>
       </tr>
       <tr>
-        <td id="subuh">--:--</td>
-        <td id="dzuhur">--:--</td>
-        <td id="ashar">--:--</td>
-        <td id="maghrib">--:--</td>
-        <td id="isya">--:--</td>
+        <td id="subuh">04:13</td>
+        <td id="dzuhur">11:54</td>
+        <td id="ashar">15:20</td>
+        <td id="maghrib">18:09</td>
+        <td id="isya">19:24</td>
       </tr>
     </table>
   </div>
@@ -507,7 +526,7 @@ footer{
 <section class="accordion">
   <div class="accordion-header">
     <span>Struktur Dewan Kemakmuran Masjid</span>
-    <span class="icon">+</span>
+    <span class="icon">›</span>
   </div>
 
   <div class="accordion-content">
