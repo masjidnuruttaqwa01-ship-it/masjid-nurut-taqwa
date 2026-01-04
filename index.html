@@ -13,48 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://1-ship-it.github.io/">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-/* ===== ACCORDION GLOBAL ===== */
-.accordion{
-  margin-bottom:18px;
-}
 
-.accordion-header{
-  background:#fff;
-  padding:16px 18px;
-  border-radius:14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
-  font-weight:600;
-  color:#0b5c3b;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
-}
-
-.accordion .icon{
-  font-size:22px;
-  transition:.3s;
-}
-
-.accordion-content{
-  max-height:0;
-  overflow:hidden;
-  transition:max-height .4s ease, padding .3s;
-  background:#fff;
-  border-radius:14px;
-  margin-top:8px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
-  padding:0 18px;
-}
-
-.accordion.active .accordion-content{
-  max-height:1500px;
-  padding:18px;
-}
-
-.accordion.active .icon{
-  transform:rotate(45deg);
-}
 <style>
   .hero h1{
   letter-spacing:1px;
@@ -245,7 +204,6 @@ footer{
 .accordion{
   margin-bottom:24px;
 }
-
 .accordion-header{
   background:#fff;
   padding:16px 18px;
@@ -258,16 +216,13 @@ footer{
   color:#0b5c3b;
   box-shadow:0 6px 20px rgba(0,0,0,.08);
 }
-
 .accordion-header:hover{
   background:#f5f9f7;
 }
-
 .accordion .icon{
   font-size:22px;
   transition:.3s;
 }
-
 .accordion-content{
   display:none;
   padding:18px;
@@ -276,11 +231,9 @@ footer{
   border-radius:14px;
   box-shadow:0 6px 20px rgba(0,0,0,.08);
 }
-
 .accordion.active .accordion-content{
   display:block;
 }
-
 .accordion.active .icon{
   transform:rotate(45deg);
 }
@@ -326,6 +279,9 @@ footer{
 </div>
 
 <!-- ================= PROFIL ================= -->
+<section id="profil">
+  <div class="section-title">Profil Masjid</div>
+  <div class="card">
 <section class="accordion">
   <div class="accordion-header">
     <span>Profil Masjid</span>
@@ -334,14 +290,33 @@ footer{
   <div class="accordion-content">
     <p>
       Masjid Nurut Taqwa berdiri sebagai amanah umat dan dikelola oleh
-      Dewan Kemakmuran Masjid (DKM) secara profesional dan transparan.
+      Dewan Kemakmuran Masjid (DKM) secara profesional, transparan,
+      dan berorientasi pada pelayanan jamaah.
     </p>
     <p>
-      Masjid berfungsi sebagai pusat ibadah, dakwah, pendidikan,
-      dan kegiatan sosial kemasyarakatan.
+      Keberadaan masjid tidak hanya difungsikan sebagai tempat ibadah mahdhah,
+      tetapi juga sebagai pusat pembinaan keislaman, penguatan ukhuwah Islamiyah,
+      serta kegiatan sosial kemasyarakatan.
     </p>
   </div>
+  <section id="sambutan">
+  <div class="section-title">Sambutan Ketua DKM</div>
+  <div class="card">
+    <p>Assalamu’alaikum warahmatullahi wabarakatuh.</p>
+    <p>
+      Puji syukur ke hadirat Allah SWT. Masjid Nurut Taqwa berkomitmen
+      menjadi pusat ibadah, dakwah, dan pelayanan umat yang amanah,
+      transparan, dan berkesinambungan.
+    </p>
+    <p>
+      Kami mengajak seluruh jamaah untuk bersama-sama memakmurkan masjid
+      melalui ibadah, ilmu, dan kepedulian sosial.
+    </p>
+    <p><b>Ketua DKM<br>H. Ahmad</b></p>
+  </div>
+  </section>
 </section>
+
 <!-- ================= SEJARAH ================= -->
 <section id="sejarah">
   <div class="section-title">Sejarah Singkat</div>
@@ -443,7 +418,7 @@ footer{
     <button class="gallery-btn next">›</button>
   </div>
 </section>
-  
+
 <!-- ================= JADWAL SHOLAT ================= -->
 <section id="jadwal">
   <div class="section-title">Jadwal Sholat Hari Ini</div>
@@ -457,11 +432,11 @@ footer{
         <th>Isya</th>
       </tr>
       <tr>
-        <td id="subuh">04:13</td>
-        <td id="dzuhur">11:54</td>
-        <td id="ashar">15:20</td>
-        <td id="maghrib">18:09</td>
-        <td id="isya">19:24</td>
+        <td id="subuh">--:--</td>
+        <td id="dzuhur">--:--</td>
+        <td id="ashar">--:--</td>
+        <td id="maghrib">--:--</td>
+        <td id="isya">--:--</td>
       </tr>
     </table>
   </div>
@@ -482,16 +457,16 @@ footer{
 </section>
 
 <!-- ================= DKM ================= -->
-<section class="accordion">
-  <div class="accordion-header">
-    <span>Struktur DKM</span>
-    <span class="icon">+</span>
-  </div>
-  <div class="accordion-content">
+<section id="dkm">
+  <div class="section-title">Struktur Dewan Kemakmuran Masjid</div>
+  <div class="card">
     <ul>
-      <li>Ketua: H. Ahmad Syahrudi</li>
-      <li>Sekretaris: Hayadi</li>
-      <li>Bendahara: Moh Bayu Meydiansyah</li>
+      <li>Ketua DKM: H. Ahmad</li>
+      <li>Wakil Ketua: H. Muhammad Yusuf</li>
+      <li>Sekretaris: Ahmad Fauzi</li>
+      <li>Bendahara: Siti Aminah</li>
+      <li>Bidang Dakwah: Ust. Ridwan</li>
+      <li>Bidang Sosial: Ust. Hasan</li>
     </ul>
   </div>
 </section>
@@ -626,21 +601,6 @@ document.querySelectorAll('.accordion-header').forEach(header=>{
   header.addEventListener('click', ()=>{
     const acc = header.parentElement;
     acc.classList.toggle('active');
-  });
-});
-</script>
-<script>
-document.querySelectorAll('.accordion-header').forEach(header=>{
-  header.addEventListener('click', ()=>{
-    const current = header.parentElement;
-
-    document.querySelectorAll('.accordion').forEach(acc=>{
-      if(acc !== current){
-        acc.classList.remove('active');
-      }
-    });
-
-    current.classList.toggle('active');
   });
 });
 </script>
