@@ -35,6 +35,48 @@
   background:#d4af37; /* gold */
   border-radius:4px;
 }
+  .accordion{
+  margin-bottom:18px;
+}
+
+.accordion-header{
+  background:#fff;
+  padding:16px 18px;
+  border-radius:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  font-weight:600;
+  color:#0b5c3b;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.accordion .icon{
+  font-size:22px;
+  transition:.3s;
+}
+
+.accordion-content{
+  max-height:0;
+  overflow:hidden;
+  padding:0 18px;
+  background:#fff;
+  border-radius:14px;
+  margin-top:8px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  transition:max-height .4s ease, padding .3s;
+}
+
+/* HANYA MUNCUL SAAT DIKLIK */
+.accordion.active .accordion-content{
+  max-height:2000px;
+  padding:18px;
+}
+
+.accordion.active .icon{
+  transform:rotate(45deg);
+}
 /* ================== DASAR ================== */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -511,10 +553,10 @@ footer{
  <section id="kontak">
   <div class="section-title">Kontak dan Lokasi</div>
   <div class="card">
-    <p>Alamat: Kejaksan, Kota Cirebon</p>
+    <p>Alamat:Jl.Sukapura 1, Kelurahan Sukapura Kota Cirebon</p>
     <p>WhatsApp: 0896-5408-4629</p>
 
-    <!-- MAPS TEMPATKAN DI SINI -->
+    <!-- https://maps.app.goo.gl/dAkheeR4D79yx4A48?g_st=aw-->
     <iframe
       src="https://maps.app.goo.gl/dAkheeR4D79yx4A48?g_st=aw"
       width="100%"
@@ -610,6 +652,21 @@ document.querySelectorAll('.accordion-header').forEach(header=>{
   header.addEventListener('click', ()=>{
     const acc = header.parentElement;
     acc.classList.toggle('active');
+  });
+});
+</script>
+<script>
+document.querySelectorAll('.accordion-header').forEach(header=>{
+  header.addEventListener('click', ()=>{
+    const current = header.parentElement;
+
+    document.querySelectorAll('.accordion').forEach(acc=>{
+      if(acc !== current){
+        acc.classList.remove('active');
+      }
+    });
+
+    current.classList.toggle('active');
   });
 });
 </script>
