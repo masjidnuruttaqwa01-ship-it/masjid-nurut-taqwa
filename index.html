@@ -12,6 +12,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
+  .hero h1{
+  letter-spacing:1px;
+  text-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+.hero p{
+  max-width:820px;
+  opacity:.95;
+}
+.section-title{
+  position:relative;
+  padding-left:12px;
+}
+.section-title::before{
+  content:"";
+  position:absolute;
+  left:0;top:6px;
+  width:4px;height:24px;
+  background:#d4af37; /* gold */
+  border-radius:4px;
+}
 /* ================== DASAR ================== */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -188,6 +208,22 @@ footer{
       serta kegiatan sosial kemasyarakatan.
     </p>
   </div>
+  <section id="sambutan">
+  <div class="section-title">Sambutan Ketua DKM</div>
+  <div class="card">
+    <p>Assalamu’alaikum warahmatullahi wabarakatuh.</p>
+    <p>
+      Puji syukur ke hadirat Allah SWT. Masjid Nurut Taqwa berkomitmen
+      menjadi pusat ibadah, dakwah, dan pelayanan umat yang amanah,
+      transparan, dan berkesinambungan.
+    </p>
+    <p>
+      Kami mengajak seluruh jamaah untuk bersama-sama memakmurkan masjid
+      melalui ibadah, ilmu, dan kepedulian sosial.
+    </p>
+    <p><b>Ketua DKM<br>H. Ahmad</b></p>
+  </div>
+  </section>
 </section>
 
 <!-- ================= SEJARAH ================= -->
@@ -376,6 +412,17 @@ fetch(`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.g
   maghrib.innerText=t.Maghrib;
   isya.innerText=t.Isha;
 });
+  @media (max-width:600px){
+  .hero{
+    padding:50px 16px;
+  }
+  .hero h1{
+    font-size:24px;
+  }
+  section{
+    padding:36px 16px;
+  }
+  }
 </script>
 
 </body>
