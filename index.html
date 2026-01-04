@@ -518,24 +518,17 @@ section{
 
 <!-- ================= JADWAL SHOLAT ================= -->
 <section id="jadwal">
+<section class="section">
   <div class="section-title">Jadwal Sholat Hari Ini</div>
+
   <div class="card">
-    <table>
-      <tr>
-        <th>Subuh</th>
-        <th>Dzuhur</th>
-        <th>Ashar</th>
-        <th>Maghrib</th>
-        <th>Isya</th>
-      </tr>
-      <tr>
-        <td id="subuh">04:13</td>
-        <td id="dzuhur">11:54</td>
-        <td id="ashar">15:20</td>
-        <td id="maghrib">18:09</td>
-        <td id="isya">19:24</td>
-      </tr>
-    </table>
+    <ul id="jadwalSholat">
+      <li>Subuh: <b id="fajr">--:--</b></li>
+      <li>Dzuhur: <b id="dhuhr">--:--</b></li>
+      <li>Ashar: <b id="asr">--:--</b></li>
+      <li>Maghrib: <b id="maghrib">--:--</b></li>
+      <li>Isya: <b id="isha">--:--</b></li>
+    </ul>
   </div>
 </section>
 
@@ -724,6 +717,18 @@ document.querySelectorAll('.accordion-header').forEach(header=>{
     acc.classList.toggle('active');
   });
 });
+</script>
+<script>
+fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
+  .then(res => res.json())
+  .then(data => {
+    const t = data.data.timings;
+    document.getElementById("fajr").innerText = t.Fajr;
+    document.getElementById("dhuhr").innerText = t.Dhuhr;
+    document.getElementById("asr").innerText = t.Asr;
+    document.getElementById("maghrib").innerText = t.Maghrib;
+    document.getElementById("isha").innerText = t.Isha;
+  });
 </script>
 </body>
 </html>
