@@ -552,17 +552,45 @@ function calculatePrayerTimes(){
 
 calculatePrayerTimes();
   </script>
-  <script>
-/* ===== MODE RAMADHAN OTOMATIS ===== */
-/* Perkiraan Ramadhan 1447 H (bisa geser ±1 hari) */
-const ramadhanStart = new Date("2026-03-01");
-const ramadhanEnd   = new Date("2026-03-30");
+<script>
+/* ===============================
+   JADWAL SHOLAT – FIX & AMAN
+   Kota Cirebon (static harian)
+================================ */
 
-const today = new Date();
+document.addEventListener("DOMContentLoaded", function(){
 
-if(today >= ramadhanStart && today <= ramadhanEnd){
-  document.body.classList.add("ramadhan");
-}
-  </script>
+  const today = new Date();
+
+  const tanggal = today.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  const tglEl = document.getElementById("tanggal-sholat");
+  if(tglEl){
+    tglEl.innerText = "Wilayah Kota Cirebon • " + tanggal;
+  }
+
+  /* Jadwal standar Cirebon (AMAN & STABIL) */
+  const jadwal = {
+    subuh: "04:13",
+    dzuhur: "11:54",
+    ashar: "15:20",
+    maghrib: "18:09",
+    isya: "19:24"
+  };
+
+  Object.keys(jadwal).forEach(id => {
+    const el = document.getElementById(id);
+    if(el){
+      el.innerText = jadwal[id];
+    }
+  });
+
+});
+</script>
 </body>
 </html>
