@@ -5,150 +5,26 @@
 <title>Masjid Nurut Taqwa | Kota Cirebon</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="description" content="Website resmi Masjid Nurut Taqwa Kota Cirebon. Pusat ibadah, dakwah, pendidikan Islam, dan pelayanan umat.">
+<meta name="description" content="Website resmi Masjid Nurut Taqwa Kota Cirebon">
 
+<!-- FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-  /* ================= RAMADHAN MODE ================= */
-body.ramadhan{
-  background:
-    linear-gradient(rgba(248,251,249,.96),rgba(248,251,249,.96)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='0.6' opacity='0.35'%3E%3Cpath d='M70 0 L140 70 L70 140 L0 70 Z'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-body.ramadhan .hero-text h1::after{
-  content:" 🌙";
-}
-
-body.ramadhan .ramadhan-only{
-  display:block;
-}
-
-.ramadhan-only{
-  display:none;
-  animation:fadeIn 1s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:translateY(0)}
-}
-  /* ARTIKEL CAROUSEL */
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.arrow button{
-  background:#0f6b44;
-  color:#fff;
-  border:none;
-  padding:6px 10px;
-  font-size:16px;
-  border-radius:6px;
-  margin-left:6px;
-}
-
-.artikel-wrapper{
-  display:flex;
-  gap:16px;
-  overflow-x:auto;
-  scroll-behavior:smooth;
-  padding-bottom:10px;
-}
-
-.artikel-wrapper::-webkit-scrollbar{
-  display:none;
-}
-
-.artikel-card{
-  min-width:260px;
-  background:#fff;
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 10px 24px rgba(0,0,0,.15);
-}
-
-.artikel-card img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
-}
-
-.artikel-text{
-  padding:14px;
-}
-
-.artikel-text h3{
-  font-size:15px;
-  margin:0 0 4px;
-}
-
-.artikel-text p{
-  font-size:13px;
-  color:#555;
-  margin:0;
-}j
-:root{
-  --green:#0f6b44;
-  --green-dark:#0b4f34;
-  --gold:#d4af37;
-  --bg:#f5f8f6;
-  --text:#1f2933;
-}
-  /* MENU MOBILE */
-.mobile-menu{
-  position:fixed;
-  top:70px;
-  left:0;
-  right:0;
-  background:#0f6b44;
-  display:none;
-  flex-direction:column;
-  z-index:999;
-}
-.mobile-menu a{
-  padding:14px 20px;
-  color:#fff;
-  text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.15);
-}
-.mobile-menu a:hover{
-  background:rgba(255,255,255,.1);
-}
-.mobile-menu.active{
-  display:flex;
-}
-.slide{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  transition:opacity 1s ease;
-}
-.slide.active{
-  opacity:1;
-  z-index:1;
-}
-.slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+/* ===== RESET ===== */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;
   font-family:Poppins,system-ui,sans-serif;
-  background:var(--bg);
-  color:var(--text);
+  background:#f5f8f6;
+  color:#1f2933;
   line-height:1.8;
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
 header{
-  background:var(--green);
+  background:#0f6b44;
   color:#fff;
   position:fixed;
   top:0;left:0;right:0;
@@ -165,26 +41,42 @@ header{
   align-items:center;
   gap:10px;
 }
-.logo img{
-  width:42px;
-}
-.logo span{
-  font-weight:700;
-  font-size:14px;
-  line-height:1.2;
-}
-.menu-btn{
-  font-size:26px;
-}
+.logo img{width:42px}
+.logo span{font-weight:700;font-size:14px;line-height:1.2}
+.menu-btn{font-size:26px;cursor:pointer}
 
-/* HERO */
+/* ===== MOBILE MENU ===== */
+.mobile-menu{
+  position:fixed;
+  top:70px;left:0;right:0;
+  background:#0f6b44;
+  display:none;
+  flex-direction:column;
+  z-index:999;
+}
+.mobile-menu a{
+  padding:14px 20px;
+  color:#fff;
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+.mobile-menu.active{display:flex}
+
+/* ===== HERO SLIDER ===== */
 .hero{
   margin-top:70px;
   position:relative;
   height:340px;
   overflow:hidden;
 }
-.hero img{
+.slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity 1s ease;
+}
+.slide.active{opacity:1;z-index:1}
+.slide img{
   width:100%;
   height:100%;
   object-fit:cover;
@@ -204,130 +96,77 @@ header{
 }
 .hero-text h1{
   font-family:"Playfair Display",serif;
-  font-size:26px;
-  margin:0 0 8px;
+  margin:0 0 6px;
 }
-.hero-text p{
-  margin:0;
-  font-size:15px;
-  opacity:.95;
-}
-<section class="ramadhan-only">
-  <div class="section-title">RAMADHAN DI MASJID NURUT TAQWA</div>
-  <div class="card highlight">
-    <p>
-      Bulan suci Ramadhan merupakan momentum pembinaan iman dan ketakwaan.
-      Masjid Nurut Taqwa menyelenggarakan rangkaian ibadah dan kegiatan
-      Ramadhan untuk meningkatkan kualitas spiritual dan kebersamaan umat.
-    </p>
-    <ul>
-      <li>Sholat Tarawih Berjamaah</li>
-      <li>Tadarus Al-Qur’an</li>
-      <li>Kajian & Kultum Ramadhan</li>
-      <li>I’tikaf 10 Malam Terakhir</li>
-    </ul>
-  </div>
-</section>
-/* SECTION */
-section{
-  padding:36px 18px;
-}
+
+/* ===== SECTION ===== */
+section{padding:36px 18px}
 .section-title{
   font-size:18px;
   font-weight:700;
-  color:var(--green);
+  color:#0f6b44;
   margin-bottom:18px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .card{
   background:#fff;
   border-radius:18px;
-  overflow:hidden;
   box-shadow:0 10px 26px rgba(0,0,0,.12);
   margin-bottom:20px;
-}
-.card img{
-  width:100%;
-  display:block;
-}
-.card-body{
   padding:18px;
 }
-.card-body h3{
-  margin:0 0 6px;
-  font-size:16px;
-}
-.card-body p{
-  margin:0;
-  font-size:14px;
-  color:#555;
-}
 
-/* AGENDA */
-.agenda li{
-  margin-bottom:8px;
+/* ===== ARTIKEL ===== */
+.artikel-wrapper{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
 }
-<section id="jadwal-sholat">
-  <div class="section-title">
-    <span>JADWAL SHOLAT HARI INI</span>
-  </div>
-
-  <div class="card">
-    <p id="tanggal-sholat"></p>
-
-    <table style="width:100%;text-align:center;border-collapse:collapse">
-      <tr>
-        <th>Subuh</th>
-        <th>Dzuhur</th>
-        <th>Ashar</th>
-        <th>Maghrib</th>
-        <th>Isya</th>
-      </tr>
-      <tr>
-        <td id="subuh">--:--</td>
-        <td id="dzuhur">--:--</td>
-        <td id="ashar">--:--</td>
-        <td id="maghrib">--:--</td>
-        <td id="isya">--:--</td>
-      </tr>
-    </table>
-  </div>
-</section>
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:14px;
-}
-.grid .mini{
-  padding:16px;
-  text-align:center;
-  border-radius:16px;
+.artikel-wrapper::-webkit-scrollbar{display:none}
+.artikel-card{
+  min-width:260px;
   background:#fff;
-  box-shadow:0 8px 18px rgba(0,0,0,.1);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 24px rgba(0,0,0,.15);
+}
+.artikel-card img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+.artikel-text{padding:14px}
+
+/* ===== JADWAL SHOLAT ===== */
+table{width:100%;border-collapse:collapse;text-align:center}
+th,td{padding:8px}
+.next-prayer{
+  background:#0f6b44;
+  color:#fff;
+  font-weight:700;
 }
 
-/* ZAKAT */
-.zakat{
-  background:linear-gradient(135deg,#fff4d4,#fff);
-  border-left:6px solid var(--gold);
+/* ===== RAMADHAN ===== */
+body.ramadhan{
+  background:
+  linear-gradient(rgba(248,251,249,.96),rgba(248,251,249,.96)),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='0.6' opacity='0.35'%3E%3Cpath d='M60 0 L120 60 L60 120 L0 60 Z'/%3E%3C/g%3E%3C/svg%3E");
 }
+.ramadhan-only{display:none}
+body.ramadhan .ramadhan-only{display:block}
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 footer{
-  background:var(--green-dark);
+  background:#0b4f34;
   color:#fff;
   text-align:center;
   padding:28px 18px;
   font-size:13px;
-}
-footer span{
-  display:block;
-  opacity:.8;
 }
 </style>
 </head>
@@ -344,253 +183,109 @@ footer span{
     <div class="menu-btn">☰</div>
   </div>
 </header>
-<!-- MENU MOBILE -->
+
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#beranda">Beranda</a>
-  <a href="#agenda">Agenda</a>
-  <a href="#layanan">Layanan</a>
-  <a href="#zakat">Zakat</a>
-  <a href="#kontak">Kontak</a>
+  <a href="#artikel">Artikel</a>
+  <a href="#jadwal">Jadwal Sholat</a>
 </div>
+
 <!-- HERO -->
 <div class="hero">
   <div class="slide active">
     <img src="https://images.unsplash.com/photo-1588459468346-0c1c6a27f4f0">
     <div class="hero-text">
-      <h1>Pusat Ibadah & Dakwah Umat</h1>
-      <p>Menguatkan iman, membangun peradaban Islami</p>
+      <h1>Pusat Ibadah & Dakwah</h1>
+      <p>Menguatkan iman dan ukhuwah umat</p>
     </div>
   </div>
-
   <div class="slide">
     <img src="https://images.unsplash.com/photo-1604908554025-1f4b2c6c2e3a">
     <div class="hero-text">
       <h1>Kajian & Pendidikan Islam</h1>
-      <p>Mencerdaskan umat melalui ilmu dan akhlak</p>
-    </div>
-  </div>
-
-  <div class="slide">
-    <img src="https://images.unsplash.com/photo-1605559424843-9e4c228e88f5">
-    <div class="hero-text">
-      <h1>Pelayanan & Kepedulian Sosial</h1>
-      <p>Masjid sebagai pusat kebersamaan umat</p>
+      <p>Membangun generasi berakhlak</p>
     </div>
   </div>
 </div>
 
 <!-- ARTIKEL -->
 <section id="artikel">
-  <div class="section-title">
-    <span>ARTIKEL ISLAM</span>
-    <div class="arrow">
-      <button onclick="slideLeft()">◀</button>
-      <button onclick="slideRight()">▶</button>
-    </div>
-  </div>
-
+  <div class="section-title">ARTIKEL ISLAM</div>
   <div class="artikel-wrapper" id="artikelWrapper">
-
-    <div class="artikel-card">
-      <img src="https://images.unsplash.com/photo-1604908554025-1f4b2c6c2e3a">
-      <div class="artikel-text">
-        <h3>Keutamaan Berbuka Puasa</h3>
-        <p>Makna berbuka dalam sunnah Rasulullah ﷺ.</p>
-      </div>
-    </div>
-
     <div class="artikel-card">
       <img src="https://images.unsplash.com/photo-1542816417-098367fbc8a6">
       <div class="artikel-text">
-        <h3>Adab di Dalam Masjid</h3>
-        <p>Menjaga kesucian dan ketenangan rumah Allah.</p>
+        <b>Adab di Masjid</b>
+        <p>Menjaga kesucian rumah Allah</p>
       </div>
     </div>
-
     <div class="artikel-card">
       <img src="https://images.unsplash.com/photo-1587613865763-4b8b1b96d6fa">
       <div class="artikel-text">
-        <h3>Keutamaan Shalat Berjamaah</h3>
-        <p>Pahala dan hikmah kebersamaan umat.</p>
+        <b>Keutamaan Sholat Jamaah</b>
+        <p>Pahala dan hikmah kebersamaan</p>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- AGENDA -->
-<section>
-  <div class="section-title">AGENDA & KEGIATAN</div>
+<!-- JADWAL SHOLAT -->
+<section id="jadwal">
+  <div class="section-title">JADWAL SHOLAT HARI INI</div>
   <div class="card">
-    <div class="card-body">
-      <ul class="agenda">
-        <li>Sholat berjamaah lima waktu</li>
-        <li>Pengajian rutin malam Jumat</li>
-        <li>Kajian tematik bulanan</li>
-        <li>Kegiatan Ramadhan & sosial</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- LAYANAN -->
-<section>
-  <div class="section-title">LAYANAN UMAT</div>
-  <div class="grid">
-    <div class="mini">📚 TPQ</div>
-    <div class="mini">💍 Akad Nikah</div>
-    <div class="mini">🕊️ Jenazah</div>
-    <div class="mini">🤝 Sosial</div>
-  </div>
-</section>
-
-<!-- ZAKAT -->
-<section>
-  <div class="section-title">ZAKAT & INFAQ</div>
-  <div class="card zakat">
-    <div class="card-body">
-      <p>
-        Mari tunaikan zakat, infaq, dan sedekah melalui Masjid Nurut Taqwa
-        sebagai wujud kepedulian dan amal jariyah yang berkelanjutan.
-      </p>
-      <p><b>WhatsApp DKM:</b> 0896-5408-4629</p>
-    </div>
-  </div>
-</section>
-
-<!-- DKM -->
-<section>
-  <div class="section-title">STRUKTUR DKM</div>
-  <div class="card">
-    <div class="card-body">
-      Ketua: H. Ahmad<br>
-      Sekretaris: Ahmad Fauzi<br>
-      Bendahara: Siti Aminah<br>
-      Koordinator Program: Ust. Ridwan
-    </div>
-  </div>
-</section>
-
-<!-- KONTAK -->
-<section>
-  <div class="section-title">LOKASI & KONTAK</div>
-  <div class="card">
-    <div class="card-body">
-      <p><b>Alamat:</b> Kejaksan, Kota Cirebon</p>
-      <iframe
-        src="https://www.google.com/maps?q=Masjid%20Nurut%20Taqwa%20Cirebon&output=embed"
-        width="100%" height="260"
-        style="border:0;border-radius:14px">
-      </iframe>
-    </div>
+    <p id="tanggal-sholat"></p>
+    <p id="countdown"></p>
+    <table>
+      <tr>
+        <th>Subuh</th><th>Dzuhur</th><th>Ashar</th><th>Maghrib</th><th>Isya</th>
+      </tr>
+      <tr>
+        <td id="subuh">--:--</td>
+        <td id="dzuhur">--:--</td>
+        <td id="ashar">--:--</td>
+        <td id="maghrib">--:--</td>
+        <td id="isya">--:--</td>
+      </tr>
+    </table>
   </div>
 </section>
 
 <footer>
 © Masjid Nurut Taqwa – Kota Cirebon
-<span>Pusat Ibadah • Dakwah • Pelayanan Umat</span>
 </footer>
-<script>
-let slides = document.querySelectorAll('.slide');
-let index = 0;
 
-setInterval(() => {
-  slides[index].classList.remove('active');
-  index = (index + 1) % slides.length;
-  slides[index].classList.add('active');
-}, 5000);
-</script>
+<!-- ===== JAVASCRIPT ===== -->
 <script>
-const menuBtn = document.querySelector('.menu-btn');
-const mobileMenu = document.getElementById('mobileMenu');
+/* MENU */
+document.querySelector('.menu-btn').onclick=()=>{
+  document.getElementById('mobileMenu').classList.toggle('active');
+};
 
-menuBtn.addEventListener('click', () => {
-  mobileMenu.classList.toggle('active');
+/* SLIDER */
+let slides=document.querySelectorAll('.slide'),i=0;
+setInterval(()=>{
+  slides[i].classList.remove('active');
+  i=(i+1)%slides.length;
+  slides[i].classList.add('active');
+},5000);
+
+/* RAMADHAN AUTO */
+const today=new Date();
+if(today>=new Date("2026-03-01") && today<=new Date("2026-03-30")){
+  document.body.classList.add("ramadhan");
+}
+
+/* JADWAL SHOLAT REAL */
+const lat=-6.7320,lon=108.5523,method=20;
+const d=today.getDate(),m=today.getMonth()+1,y=today.getFullYear();
+fetch(`https://api.aladhan.com/v1/timings/${d}-${m}-${y}?latitude=${lat}&longitude=${lon}&method=${method}`)
+.then(r=>r.json()).then(data=>{
+  const t=data.data.timings;
+  const jadwal={subuh:t.Fajr,dzuhur:t.Dhuhr,ashar:t.Asr,maghrib:t.Maghrib,isya:t.Isha};
+  document.getElementById("tanggal-sholat").innerText=
+    "Kota Cirebon • "+today.toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  Object.keys(jadwal).forEach(id=>document.getElementById(id).innerText=jadwal[id]);
 });
 </script>
-  <script>
-const artikel = document.getElementById("artikelWrapper");
 
-function slideLeft(){
-  artikel.scrollBy({ left: -280, behavior: "smooth" });
-}
-
-function slideRight(){
-  artikel.scrollBy({ left: 280, behavior: "smooth" });
-}
-  </script>
-  <script>
-/* ===== JADWAL SHOLAT CIREBON ===== */
-/* Koordinat Cirebon */
-const latitude = -6.7320;
-const longitude = 108.5523;
-
-const today = new Date();
-const dateStr = today.toLocaleDateString("id-ID", {
-  weekday: "long",
-  year: "numeric",
-  month: "long",
-  day: "numeric"
-});
-
-document.getElementById("tanggal-sholat").innerText =
-  "Wilayah Kota Cirebon • " + dateStr;
-
-/* Hitung waktu sholat (simple calculation) */
-function toTime(date){
-  return date.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
-}
-
-function calculatePrayerTimes(){
-  const base = new Date();
-  document.getElementById("subuh").innerText    = "04:40";
-  document.getElementById("dzuhur").innerText  = "12:00";
-  document.getElementById("ashar").innerText   = "15:15";
-  document.getElementById("maghrib").innerText = "18:05";
-  document.getElementById("isya").innerText    = "19:15";
-}
-
-calculatePrayerTimes();
-  </script>
-<script>
-/* ===============================
-   JADWAL SHOLAT – FIX & AMAN
-   Kota Cirebon (static harian)
-================================ */
-
-document.addEventListener("DOMContentLoaded", function(){
-
-  const today = new Date();
-
-  const tanggal = today.toLocaleDateString("id-ID", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
-
-  const tglEl = document.getElementById("tanggal-sholat");
-  if(tglEl){
-    tglEl.innerText = "Wilayah Kota Cirebon • " + tanggal;
-  }
-
-  /* Jadwal standar Cirebon (AMAN & STABIL) */
-  const jadwal = {
-    subuh: "04:13",
-    dzuhur: "11:54",
-    ashar: "15:20",
-    maghrib: "18:09",
-    isya: "19:24"
-  };
-
-  Object.keys(jadwal).forEach(id => {
-    const el = document.getElementById(id);
-    if(el){
-      el.innerText = jadwal[id];
-    }
-  });
-
-});
-</script>
 </body>
 </html>
