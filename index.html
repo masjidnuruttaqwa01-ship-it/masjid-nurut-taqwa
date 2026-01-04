@@ -335,13 +335,40 @@ section{
 .card{
   margin-top:12px !important;
 }
+/* ===== RUNNING TEXT ===== */
+.running-text {
+  background: #f4c430;
+  color: #0f6b44;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px 0;
+  font-weight: 600;
+}
+
+.running-track {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scrollText 25s linear infinite;
+}
+
+@keyframes scrollText {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
 </style>
 </head>
 
 <body>
 
 <!-- ================= HEADER ================= -->
-<header>
+<header><div class="running-text">
+  <div class="running-track">
+    📢 Pengumuman: Kajian rutin setiap malam Jumat ba’da Isya • 
+    Sholat berjamaah 5 waktu • 
+    Mari makmurkan Masjid Nurut Taqwa • 
+    Infaq & sedekah dapat disalurkan melalui DKM
+  </div>
+</div>
   <div class="header-inner">
     <div class="logo">
       MASJID NURUT TAQWA<br>
