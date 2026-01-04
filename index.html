@@ -2,250 +2,287 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Masjid Nurut Taqwa | Kejaksan Kota Cirebon</title>
+<title>Masjid Nurut Taqwa | Kota Cirebon</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="description" content="Website resmi Masjid Nurut Taqwa Kejaksan Kota Cirebon. Pusat ibadah, dakwah, pendidikan Islam, dan pelayanan umat.">
-<meta name="author" content="DKM Masjid Nurut Taqwa">
+<meta name="description" content="Website resmi Masjid Nurut Taqwa Kota Cirebon. Pusat ibadah, dakwah, pendidikan Islam, dan pelayanan umat.">
 
-<link rel="alternate" type="application/rss+xml" title="Masjid Nurut Taqwa RSS" href="index.xml">
-
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --green:#0e5f3a;
+  --green:#0f6b44;
+  --green-dark:#0b4f34;
   --gold:#d4af37;
-  --bg:#f8fbf9;
-  --dark:#1f2933;
+  --bg:#f5f8f6;
+  --text:#1f2933;
 }
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;
-  font-family:"Inter",system-ui,sans-serif;
+  font-family:Poppins,system-ui,sans-serif;
   background:var(--bg);
-  color:var(--dark);
-  line-height:1.95;
+  color:var(--text);
+  line-height:1.8;
 }
 
-/* NAVBAR */
-nav{
-  position:fixed;top:0;left:0;right:0;
-  background:#0b4d30;
-  z-index:999;
+/* HEADER */
+header{
+  background:var(--green);
+  color:#fff;
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:1000;
 }
-nav .wrap{
-  max-width:1200px;margin:auto;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 20px;
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 18px;
 }
-nav a{
-  color:#fff;text-decoration:none;font-size:14px;opacity:.9;
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
-nav a:hover{opacity:1;border-bottom:2px solid var(--gold)}
-nav .brand{
-  font-family:"Playfair Display",serif;
-  font-size:18px;letter-spacing:1px;
+.logo img{
+  width:42px;
 }
-nav ul{list-style:none;display:flex;gap:20px;margin:0;padding:0}
-
-/* GENERAL */
-section{padding:90px 20px}
-.container{max-width:1200px;margin:auto}
-.title{
-  font-family:"Playfair Display",serif;
-  font-size:32px;
-  color:var(--green);
-  border-left:6px solid var(--gold);
-  padding-left:16px;
-  margin-bottom:36px;
+.logo span{
+  font-weight:700;
+  font-size:14px;
+  line-height:1.2;
 }
-.card{
-  background:#fff;
-  border-radius:22px;
-  padding:40px;
-  box-shadow:0 16px 36px rgba(0,0,0,.08);
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:26px;
-}
-.highlight{
-  background:linear-gradient(135deg,#fff6da,#fff);
-  border-left:6px solid var(--gold);
-}
-.btn{
-  display:inline-block;
-  background:var(--gold);
-  color:#000;
-  padding:14px 26px;
-  border-radius:30px;
-  font-weight:600;
-  text-decoration:none;
+.menu-btn{
+  font-size:26px;
 }
 
 /* HERO */
 .hero{
-  background:
-  linear-gradient(rgba(14,95,58,.94),rgba(14,95,58,.94)),
-  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='0.7' opacity='0.35'%3E%3Cpath d='M70 0 L140 70 L70 140 L0 70 Z'/%3E%3C/g%3E%3C/svg%3E");
+  margin-top:70px;
+  position:relative;
+  height:340px;
+  overflow:hidden;
+}
+.hero img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(15,107,68,.78);
+}
+.hero-text{
+  position:absolute;
+  bottom:26px;
+  left:18px;
+  right:18px;
   color:#fff;
-  text-align:center;
-  padding-top:140px;
 }
-.hero h1{
+.hero-text h1{
   font-family:"Playfair Display",serif;
-  font-size:44px;
-  letter-spacing:3px;
+  font-size:26px;
+  margin:0 0 8px;
 }
-.hero p{
-  max-width:780px;
-  margin:26px auto;
+.hero-text p{
+  margin:0;
+  font-size:15px;
+  opacity:.95;
+}
+
+/* SECTION */
+section{
+  padding:36px 18px;
+}
+.section-title{
   font-size:18px;
+  font-weight:700;
+  color:var(--green);
+  margin-bottom:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.hero .line{
-  width:150px;height:3px;background:var(--gold);margin:28px auto;
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 26px rgba(0,0,0,.12);
+  margin-bottom:20px;
+}
+.card img{
+  width:100%;
+  display:block;
+}
+.card-body{
+  padding:18px;
+}
+.card-body h3{
+  margin:0 0 6px;
+  font-size:16px;
+}
+.card-body p{
+  margin:0;
+  font-size:14px;
+  color:#555;
+}
+
+/* AGENDA */
+.agenda li{
+  margin-bottom:8px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;
+}
+.grid .mini{
+  padding:16px;
+  text-align:center;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 8px 18px rgba(0,0,0,.1);
+}
+
+/* ZAKAT */
+.zakat{
+  background:linear-gradient(135deg,#fff4d4,#fff);
+  border-left:6px solid var(--gold);
 }
 
 /* FOOTER */
 footer{
-  background:#0b3d27;
+  background:var(--green-dark);
   color:#fff;
   text-align:center;
-  padding:40px 20px;
-  font-size:14px;
+  padding:28px 18px;
+  font-size:13px;
 }
-
-/* RAMADHAN MODE */
-.ramadhan-on{
-  background:
-  linear-gradient(rgba(248,251,249,.96),rgba(248,251,249,.96)),
-  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='0.6' opacity='0.35'%3E%3Cpath d='M60 0 L120 60 L60 120 L0 60 Z'/%3E%3C/g%3E%3C/svg%3E");
+footer span{
+  display:block;
+  opacity:.8;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav>
-  <div class="wrap">
-    <div class="brand">Masjid Nurut Taqwa</div>
-    <ul>
-      <li><a href="#beranda">Beranda</a></li>
-      <li><a href="#profil">Profil</a></li>
-      <li><a href="#agenda">Agenda</a></li>
-      <li><a href="#layanan">Layanan</a></li>
-      <li><a href="#zakat">Zakat</a></li>
-      <li><a href="#kontak">Kontak</a></li>
-    </ul>
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Mosque_icon.svg">
+      <span>MASJID NURUT TAQWA<br><small>KOTA CIREBON</small></span>
+    </div>
+    <div class="menu-btn">☰</div>
   </div>
-</nav>
+</header>
 
 <!-- HERO -->
-<section class="hero" id="beranda">
-  <div class="container">
-    <h1>MASJID NURUT TAQWA</h1>
-    <div class="line"></div>
-    <p>
-      Masjid Nurut Taqwa merupakan masjid jami’ yang berperan sebagai
-      pusat ibadah, dakwah, pendidikan Islam, serta pelayanan umat
-      yang berlandaskan nilai keikhlasan, kebersamaan, dan kemaslahatan
-      masyarakat di wilayah Kejaksan, Kota Cirebon.
-    </p>
+<div class="hero">
+  <img src="https://images.unsplash.com/photo-1588459468346-0c1c6a27f4f0">
+  <div class="hero-text">
+    <h1>Pusat Ibadah & Dakwah Umat</h1>
+    <p>Menguatkan iman, membangun peradaban Islami</p>
   </div>
-</section>
+</div>
 
-<!-- PROFIL -->
-<section id="profil">
-  <div class="container">
-    <div class="title">Profil Masjid</div>
-    <div class="card">
-      <p>
-        Masjid Nurut Taqwa adalah masjid wakaf yang dikelola oleh
-        Dewan Kemakmuran Masjid (DKM) secara profesional, transparan,
-        dan bertanggung jawab.
-      </p>
-      <p>
-        Selain sebagai tempat pelaksanaan ibadah mahdhah, masjid ini
-        berfungsi sebagai pusat pembinaan keislaman, penguatan ukhuwah,
-        serta pelayanan sosial kemasyarakatan.
-      </p>
+<!-- ARTIKEL -->
+<section>
+  <div class="section-title">
+    <span>ARTIKEL ISLAM</span>
+  </div>
+
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1604908554025-1f4b2c6c2e3a">
+    <div class="card-body">
+      <h3>Keutamaan Berbuka Puasa</h3>
+      <p>Nilai spiritual dan sosial dalam sunnah Rasulullah ﷺ.</p>
     </div>
   </div>
 </section>
 
 <!-- AGENDA -->
-<section id="agenda">
-  <div class="container">
-    <div class="title">Agenda & Kegiatan</div>
-    <div class="grid">
-      <div class="card"><b>Sholat Berjamaah</b><br>Ibadah harian dan Jum’at yang tertib dan khusyuk.</div>
-      <div class="card"><b>Pengajian & Kajian</b><br>Kajian rutin untuk seluruh lapisan jamaah.</div>
-      <div class="card"><b>Kegiatan Ramadhan</b><br>Tarawih, tadarus, i’tikaf, dan buka puasa.</div>
-      <div class="card"><b>Kegiatan Sosial</b><br>Bakti sosial dan kepedulian umat.</div>
+<section>
+  <div class="section-title">AGENDA & KEGIATAN</div>
+  <div class="card">
+    <div class="card-body">
+      <ul class="agenda">
+        <li>Sholat berjamaah lima waktu</li>
+        <li>Pengajian rutin malam Jumat</li>
+        <li>Kajian tematik bulanan</li>
+        <li>Kegiatan Ramadhan & sosial</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <!-- LAYANAN -->
-<section id="layanan">
-  <div class="container">
-    <div class="title">Layanan Umat</div>
-    <div class="grid">
-      <div class="card">📚 TPQ & Pendidikan Islam</div>
-      <div class="card">💍 Akad Nikah</div>
-      <div class="card">🕊️ Layanan Jenazah</div>
-      <div class="card">🤝 Sosial & Kemanusiaan</div>
-    </div>
+<section>
+  <div class="section-title">LAYANAN UMAT</div>
+  <div class="grid">
+    <div class="mini">📚 TPQ</div>
+    <div class="mini">💍 Akad Nikah</div>
+    <div class="mini">🕊️ Jenazah</div>
+    <div class="mini">🤝 Sosial</div>
   </div>
 </section>
 
 <!-- ZAKAT -->
-<section id="zakat">
-  <div class="container">
-    <div class="title">Zakat, Infaq & Sedekah</div>
-    <div class="card highlight">
+<section>
+  <div class="section-title">ZAKAT & INFAQ</div>
+  <div class="card zakat">
+    <div class="card-body">
       <p>
-        Masjid Nurut Taqwa mengajak jamaah dan masyarakat
-        untuk menunaikan zakat, infaq, dan sedekah sebagai
-        wujud kepedulian sosial dan amal jariyah yang berkelanjutan.
+        Mari tunaikan zakat, infaq, dan sedekah melalui Masjid Nurut Taqwa
+        sebagai wujud kepedulian dan amal jariyah yang berkelanjutan.
       </p>
-      <a class="btn" href="https://wa.me/6289654084629">Hubungi DKM</a>
+      <p><b>WhatsApp DKM:</b> 0896-5408-4629</p>
+    </div>
+  </div>
+</section>
+
+<!-- DKM -->
+<section>
+  <div class="section-title">STRUKTUR DKM</div>
+  <div class="card">
+    <div class="card-body">
+      Ketua: H. Ahmad<br>
+      Sekretaris: Ahmad Fauzi<br>
+      Bendahara: Siti Aminah<br>
+      Koordinator Program: Ust. Ridwan
     </div>
   </div>
 </section>
 
 <!-- KONTAK -->
-<section id="kontak">
-  <div class="container">
-    <div class="title">Lokasi & Kontak</div>
-    <div class="card">
+<section>
+  <div class="section-title">LOKASI & KONTAK</div>
+  <div class="card">
+    <div class="card-body">
       <p><b>Alamat:</b> Kejaksan, Kota Cirebon</p>
-      <p><b>WhatsApp DKM:</b> 0896-5408-4629</p>
       <iframe
         src="https://www.google.com/maps?q=Masjid%20Nurut%20Taqwa%20Cirebon&output=embed"
-        width="100%" height="320" style="border:0;border-radius:16px" loading="lazy">
+        width="100%" height="260"
+        style="border:0;border-radius:14px">
       </iframe>
     </div>
   </div>
 </section>
 
 <footer>
-© Masjid Nurut Taqwa – Kejaksan, Kota Cirebon
+© Masjid Nurut Taqwa – Kota Cirebon
+<span>Pusat Ibadah • Dakwah • Pelayanan Umat</span>
 </footer>
-
-<script>
-const today = new Date();
-const ramadhanStart = new Date("2026-03-01");
-const ramadhanEnd   = new Date("2026-03-30");
-if(today >= ramadhanStart && today <= ramadhanEnd){
-  document.body.classList.add("ramadhan-on");
-}
-</script>
 
 </body>
 </html>
