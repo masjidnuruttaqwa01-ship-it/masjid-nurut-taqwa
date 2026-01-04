@@ -17,7 +17,21 @@
   --bg:#f5f8f6;
   --text:#1f2933;
 }
-
+.slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity 1s ease;
+}
+.slide.active{
+  opacity:1;
+  z-index:1;
+}
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -189,10 +203,28 @@ footer span{
 
 <!-- HERO -->
 <div class="hero">
-  <img src="https://images.unsplash.com/photo-1588459468346-0c1c6a27f4f0">
-  <div class="hero-text">
-    <h1>Pusat Ibadah & Dakwah Umat</h1>
-    <p>Menguatkan iman, membangun peradaban Islami</p>
+  <div class="slide active">
+    <img src="https://images.unsplash.com/photo-1588459468346-0c1c6a27f4f0">
+    <div class="hero-text">
+      <h1>Pusat Ibadah & Dakwah Umat</h1>
+      <p>Menguatkan iman, membangun peradaban Islami</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="https://images.unsplash.com/photo-1604908554025-1f4b2c6c2e3a">
+    <div class="hero-text">
+      <h1>Kajian & Pendidikan Islam</h1>
+      <p>Mencerdaskan umat melalui ilmu dan akhlak</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="https://images.unsplash.com/photo-1605559424843-9e4c228e88f5">
+    <div class="hero-text">
+      <h1>Pelayanan & Kepedulian Sosial</h1>
+      <p>Masjid sebagai pusat kebersamaan umat</p>
+    </div>
   </div>
 </div>
 
@@ -283,6 +315,15 @@ footer span{
 © Masjid Nurut Taqwa – Kota Cirebon
 <span>Pusat Ibadah • Dakwah • Pelayanan Umat</span>
 </footer>
+<script>
+let slides = document.querySelectorAll('.slide');
+let index = 0;
 
+setInterval(() => {
+  slides[index].classList.remove('active');
+  index = (index + 1) % slides.length;
+  slides[index].classList.add('active');
+}, 5000);
+</script>
 </body>
 </html>
