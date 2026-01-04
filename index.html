@@ -17,6 +17,29 @@
   --bg:#f5f8f6;
   --text:#1f2933;
 }
+  /* MENU MOBILE */
+.mobile-menu{
+  position:fixed;
+  top:70px;
+  left:0;
+  right:0;
+  background:#0f6b44;
+  display:none;
+  flex-direction:column;
+  z-index:999;
+}
+.mobile-menu a{
+  padding:14px 20px;
+  color:#fff;
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+.mobile-menu a:hover{
+  background:rgba(255,255,255,.1);
+}
+.mobile-menu.active{
+  display:flex;
+}
 .slide{
   position:absolute;
   inset:0;
@@ -200,7 +223,14 @@ footer span{
     <div class="menu-btn">☰</div>
   </div>
 </header>
-
+<!-- MENU MOBILE -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#beranda">Beranda</a>
+  <a href="#agenda">Agenda</a>
+  <a href="#layanan">Layanan</a>
+  <a href="#zakat">Zakat</a>
+  <a href="#kontak">Kontak</a>
+</div>
 <!-- HERO -->
 <div class="hero">
   <div class="slide active">
@@ -324,6 +354,14 @@ setInterval(() => {
   index = (index + 1) % slides.length;
   slides[index].classList.add('active');
 }, 5000);
+</script>
+<script>
+const menuBtn = document.querySelector('.menu-btn');
+const mobileMenu = document.getElementById('mobileMenu');
+
+menuBtn.addEventListener('click', () => {
+  mobileMenu.classList.toggle('active');
+});
 </script>
 </body>
 </html>
