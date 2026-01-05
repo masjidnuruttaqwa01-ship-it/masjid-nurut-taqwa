@@ -491,34 +491,36 @@ section{
   /* === AYAT BACKGROUND UPGRADE === */
 /* ================= AYAT AL-QUR'AN HARI INI (SATU KOTAK) ================= */
 
-.ayat-box {
-  background: linear-gradient(135deg, #0f6b44, #1f8f5f);
-  border-radius: 20px;
-  padding: 26px 22px;
-  margin: 24px 0;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.18);
-  color: #ffffff;
-  text-align: center;
+.ayat-box{
+  background: linear-gradient(135deg,#0f6b44,#0a4f33);
+  padding:22px;
+  border-radius:18px;
+  margin:40px auto;
+  max-width:680px;
+  color:#fff;
+  box-shadow:0 12px 30px rgba(0,0,0,.2);
+  text-align:center;
 }
 
-.ayat-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #c8ffe5;
-  margin-bottom: 16px;
+.ayat-title{
+  font-size:18px;
+  font-weight:700;
+  color:#b7ffda;
+  margin-bottom:14px;
 }
 
-.ayat-arab {
-  font-size: 30px;
-  line-height: 2;
-  margin-bottom: 14px;
-  font-weight: 600;
+.ayat-arab{
+  font-size:28px;
+  line-height:1.8;
+  font-family:'Amiri','Scheherazade',serif;
+  color:#eafff5;
+  margin-bottom:14px;
 }
 
-.ayat-arti {
-  font-size: 15px;
-  color: #eafff4;
-  opacity: 0.95;
+.ayat-arti{
+  font-size:15px;
+  color:#d9f5e8;
+  line-height:1.6;
 }
 </style>
 </head>
@@ -708,17 +710,11 @@ section{
 <section class="hikmah">
   <h2>✨ Ayat Al-Qur’an Hari Ini</h2>
 
-<div class="ayat-box">
-  <div class="ayat-title">✨ Ayat Al-Qur’an Hari Ini</div>
+div class="ayat-box">
+  <div class="ayat-title">📖 Ayat Al-Qur’an Hari Ini</div>
 
-  <div class="ayat-arab">
-    وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ
-  </div>
-
-  <div class="ayat-arti">
-    “Rahmat-Ku meliputi segala sesuatu.”  
-    <br><small>(QS. Al-A’raf: 156)</small>
-  </div>
+  <div id="ayat-arab" class="ayat-arab"></div>
+  <div id="ayat-arti" class="ayat-arti"></div>
 </div>
 </section>
 <!-- ================= JADWAL SHOLAT ================= -->
@@ -993,7 +989,7 @@ setInterval(highlightNextPrayer, 60000);
 highlightNextPrayer();
   </script>
 <script>
-const ayatData = [
+const ayatList = [
   { arab:"إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا", arti:"Sesungguhnya sholat itu adalah kewajiban yang ditentukan waktunya atas orang-orang beriman.", info:"QS. An-Nisa: 103" },
 
   { arab:"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ", arti:"Ingatlah, hanya dengan mengingat Allah hati menjadi tenteram.", info:"QS. Ar-Ra’d: 28" },
@@ -1035,20 +1031,12 @@ const ayatData = [
   { arab:"وَاعْبُدْ رَبَّكَ حَتَّىٰ يَأْتِيَكَ الْيَقِينُ", arti:"Sembahlah Tuhanmu sampai datang kepadamu kepastian (kematian).", info:"QS. Al-Hijr: 99" }
 ];
 
-let indexAyat = Math.floor(Math.random() * ayatData.length);
+// GANTI AYAT OTOMATIS SETIAP HARI
+const today = new Date().getDate();
+const index = today % ayatList.length;
 
-function tampilAyat(){
-  document.getElementById("ayatArab").innerText = ayatData[indexAyat].arab;
-  document.getElementById("ayatArti").innerText = ayatData[indexAyat].arti;
-  document.getElementById("ayatInfo").innerText = ayatData[indexAyat].info;
-}
-
-function gantiAyat(){
-  indexAyat = Math.floor(Math.random() * ayatData.length);
-  tampilAyat();
-}
-
-tampilAyat();
+document.getElementById("ayat-arab").innerText = ayatList[index].arab;
+document.getElementById("ayat-arti").innerText = ayatList[index].arti;
 </script>
 </body>
 </html>
