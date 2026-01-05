@@ -447,34 +447,39 @@ section{
   font-size: 14px;
   opacity: 0.9;
 }
-  .hijri-date {
-  text-align: center;
-  font-weight: 600;
-  color: #0f6b44;
-  margin: 15px 0 25px;
-  font-size: 15px;
-  }
   /* ===== TANGGAL HIJRIYAH & MASEHI ===== */
-.date-box{
-  text-align:center;
-  margin:18px 0 26px;
-  padding:14px;
-  border-radius:14px;
-  background:#f7faf8;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
-}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-#dateHijri{
-  font-weight:700;
-  color:#0f6b44;
-  font-size:16px;
-}
+  const hijriEl = document.getElementById("dateHijri");
+  const masehiEl = document.getElementById("dateMasehi");
 
-#dateMasehi{
-  margin-top:4px;
-  font-size:14px;
-  color:#555;
-}
+  if (!hijriEl || !masehiEl) {
+    console.log("Elemen tanggal tidak ditemukan");
+    return;
+  }
+
+  const now = new Date();
+
+  const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(now);
+
+  const masehi = new Intl.DateTimeFormat('id-ID', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(now);
+
+  hijriEl.textContent = "📅 " + hijri + " H";
+  masehiEl.textContent = "🗓️ " + masehi;
+
+});
+</script>
 </style>
 </head>
 
@@ -667,7 +672,6 @@ section{
   <span id="verseSource"></span>
 </section>
 <!-- ================= JADWAL SHOLAT ================= -->
-<div class="hijri-date" id="hijriDate"></div>
   <div class="date-box">
   <div id="dateHijri"></div>
   <div id="dateMasehi"></div>
