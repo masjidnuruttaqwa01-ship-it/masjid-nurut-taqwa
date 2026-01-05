@@ -447,42 +447,12 @@ section{
   font-size: 14px;
   opacity: 0.9;
 }
-  /* ===== TANGGAL HIJRIYAH & MASEHI ===== */
-<script>
-document.addEventListener("DOMContentLoaded", function () {
 
-  const hijriEl = document.getElementById("dateHijri");
-  const masehiEl = document.getElementById("dateMasehi");
-
-  if (!hijriEl || !masehiEl) {
-    console.log("Elemen tanggal tidak ditemukan");
-    return;
-  }
-
-  const now = new Date();
-
-  const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  }).format(now);
-
-  const masehi = new Intl.DateTimeFormat('id-ID', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  }).format(now);
-
-  hijriEl.textContent = "📅 " + hijri + " H";
-  masehiEl.textContent = "🗓️ " + masehi;
 
 });
 </script>
 </style>
 </head>
-
 <body>
 <!-- ================= HEADER ================= -->
 <header><div class="running-text">
@@ -957,44 +927,6 @@ const verses = [
     source: "HR. Muslim"
   }
 ];
-
-const today = new Date().getDate();
-const verse = verses[today % verses.length];
-
-document.getElementById("verseText").innerText = verse.text;
-document.getElementById("verseSource").innerText = verse.source;
   </script>
-    <script>
-const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric'
-}).format(new Date());
-
-document.getElementById("hijriDate").innerText =
-  "📅 " + hijri + " Hijriyah";
-</script>
-    <script>
-const now = new Date();
-
-// Hijriyah
-const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
-  weekday: 'long',
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric'
-}).format(now);
-
-// Masehi
-const masehi = new Intl.DateTimeFormat('id-ID', {
-  weekday: 'long',
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric'
-}).format(now);
-
-document.getElementById("dateHijri").innerText = "📅 " + hijri + " H";
-document.getElementById("dateMasehi").innerText = "🗓️ " + masehi;
-    </script>
 </body>
 </html>
