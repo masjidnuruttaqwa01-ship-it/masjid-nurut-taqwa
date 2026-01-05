@@ -514,7 +514,30 @@ section{
   font-size:16px;
   opacity:.95;
 }
+/* ===== KONTAK RINGKAS ===== */
+.kontak-card p{
+  margin-bottom:12px;
+}
 
+.kontak-card iframe{
+  width:100%;
+  height:220px;        /* INI YANG BIKIN PENDEK */
+  border:0;
+  border-radius:14px;
+  margin-top:12px;
+}
+
+.btn-map{
+  display:block;
+  margin-top:12px;
+  padding:12px;
+  text-align:center;
+  background:#0f6b44;
+  color:#fff;
+  text-decoration:none;
+  border-radius:12px;
+  font-weight:600;
+}
 </style>
 </head>
 <body>
@@ -810,49 +833,31 @@ section{
 <!-- ================= KONTAK ================= -->
 <section id="kontak">
   <div class="section-title">Kontak dan Lokasi</div>
- <section id="kontak">
-  <div class="section-title">Kontak dan Lokasi</div>
-  <div class="card">
-    <p>Alamat:Jl.Sukapura 1, Kelurahan Sukapura Kota Cirebon</p>
-    <p>WhatsApp: 0896-5408-4629</p>
 
-    <div class="card">
-  <p>Alamat: Jl.Sukapura 1, Kelurahan Sukapura Kota Cirebon</p>
-  <p>WhatsApp: 0896-5408-4629</p>
+  <div class="card kontak-card">
+    <p><b>📍 Alamat</b><br>
+      Jl. Sukapura 1, Kelurahan Sukapura, Kota Cirebon
+    </p>
 
-  <!-- GOOGLE MAPS AKURAT -->
-  <iframe
-    src="https://www.google.com/maps?q=7GVX%2B9JJ%20MASJID%20NURUT%20TAQWA%2C%20Kejaksan%2C%20Kota%20Cirebon&output=embed"
-    width="100%"
-    height="320"
-    style="border:0;border-radius:14px;margin-top:14px"
-    allowfullscreen=""
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-<a href="https://maps.app.goo.gl/ywD5mDFGgyotBVmD9"
-   target="_blank"
-   style="
-     display:block;
-     margin-top:12px;
-     padding:12px;
-     text-align:center;
-     background:#0f6b44;
-     color:#fff;
-     text-decoration:none;
-     border-radius:12px;
-     font-weight:600;">
-📍 Buka di Google Maps
-</a>
-</div>
-  </div>
- </section>
-  <div class="card">
-    <p>Alamat: Jl.Sukapura 1, Kelurahan Sukapura Kota Cirebon</p>
-    <p>WhatsApp DKM: 0896-5408-4629</p>
+    <p><b>📱 WhatsApp DKM</b><br>
+      <a href="https://wa.me/6289654084629" target="_blank">
+        0896-5408-4629
+      </a>
+    </p>
+
+    <!-- MAP RINGKAS -->
+    <iframe
+      src="https://www.google.com/maps?q=7GVX%2B9JJ%20MASJID%20NURUT%20TAQWA%2C%20Kejaksan%2C%20Kota%20Cirebon&output=embed"
+      loading="lazy">
+    </iframe>
+
+    <a class="btn-map"
+       href="https://maps.app.goo.gl/ywD5mDFGgyotBVmD9"
+       target="_blank">
+      📍 Buka di Google Maps
+    </a>
   </div>
 </section>
-
 <footer>
 © Masjid Nurut Taqwa – Kejaksan, Kota Cirebon
 </footer>
