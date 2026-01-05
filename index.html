@@ -454,6 +454,27 @@ section{
   margin: 15px 0 25px;
   font-size: 15px;
   }
+  /* ===== TANGGAL HIJRIYAH & MASEHI ===== */
+.date-box{
+  text-align:center;
+  margin:18px 0 26px;
+  padding:14px;
+  border-radius:14px;
+  background:#f7faf8;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+#dateHijri{
+  font-weight:700;
+  color:#0f6b44;
+  font-size:16px;
+}
+
+#dateMasehi{
+  margin-top:4px;
+  font-size:14px;
+  color:#555;
+}
 </style>
 </head>
 
@@ -646,7 +667,10 @@ section{
   <span id="verseSource"></span>
 </section>
 <!-- ================= JADWAL SHOLAT ================= -->
-<div class="hijri-date" id="hijriDate"></div>
+<div class="date-box">
+  <div id="dateHijri"></div>
+  <div id="dateMasehi"></div>
+</div>
   <section id="jadwal">
 <section class="section">
   <div class="section-title">Jadwal Sholat Hari Ini</div>
@@ -891,7 +915,10 @@ function highlightNextPrayer() {
   const prayers = {
     fajr: document.getElementById('fajr').innerText,
     dhuhr: document.getElementById('dhuhr').innerText,
-    asr: document.getElementById('asr').innerText,
+    asr: document.getElementById('as<div class="date-box">
+  <div id="dateHijri"></div>
+  <div id="dateMasehi"></div>
+</div>lr').innerText,
     maghrib: document.getElementById('maghrib').innerText,
     isha: document.getElementById('isha').innerText
   };
@@ -942,6 +969,28 @@ const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
 document.getElementById("hijriDate").innerText =
   "📅 " + hijri + " Hijriyah";
 </script>
+    <script>
+const now = new Date();
+
+// Hijriyah
+const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+}).format(now);
+
+// Masehi
+const masehi = new Intl.DateTimeFormat('id-ID', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+}).format(now);
+
+document.getElementById("dateHijri").innerText = "📅 " + hijri + " H";
+document.getElementById("dateMasehi").innerText = "🗓️ " + masehi;
+    </script>
 </body>
 </body>
 </html>
