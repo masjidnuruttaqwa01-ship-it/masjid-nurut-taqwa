@@ -1060,13 +1060,7 @@ showAyat();
 setInterval(showAyat, 10000);
 
 </script>
-    <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/masjid-nurut-taqwa/sw.js")
-    .then(() => console.log("Service Worker aktif"))
-    .catch(err => console.log("SW gagal:", err));
-}
-    </script>
+    
    <script>
 function kirimNotif() {
   Notification.requestPermission().then(p => {
@@ -1083,5 +1077,18 @@ function kirimNotif() {
 </script>
 
 <button onclick="kirimNotif()">🔔 Aktifkan Notifikasi</button> 
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(reg => {
+        console.log("Service Worker terdaftar:", reg.scope);
+      })
+      .catch(err => {
+        console.error("SW gagal:", err);
+      });
+  });
+}
+</script>
 </body>
 </html>
