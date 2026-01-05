@@ -422,6 +422,31 @@ section{
   50% { box-shadow: 0 0 20px #2aff9c; }
   100% { box-shadow: 0 0 5px #2aff9c; }
 }
+  .daily-verse {
+  background: linear-gradient(135deg, #0f6b44, #1a8f5f);
+  color: #fff;
+  padding: 22px;
+  border-radius: 14px;
+  margin: 30px 0;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.daily-verse h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.daily-verse p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.daily-verse span {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  opacity: 0.9;
+}
 </style>
 </head>
 
@@ -609,7 +634,11 @@ section{
     <button class="gallery-btn next">›</button>
   </div>
 </section>
-
+<section class="daily-verse">
+  <h2>✨ Hikmah Hari Ini</h2>
+  <p id="verseText">Memuat ayat...</p>
+  <span id="verseSource"></span>
+</section>
 <!-- ================= JADWAL SHOLAT ================= -->
 <section id="jadwal">
 <section class="section">
@@ -873,6 +902,28 @@ function highlightNextPrayer() {
 // Update tiap menit
 setInterval(highlightNextPrayer, 60000);
 highlightNextPrayer();
+  </script>
+  <script>
+const verses = [
+  {
+    text: "Sesungguhnya shalat itu mencegah dari perbuatan keji dan mungkar.",
+    source: "QS. Al-Ankabut: 45"
+  },
+  {
+    text: "Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lain.",
+    source: "HR. Ahmad"
+  },
+  {
+    text: "Barangsiapa memakmurkan masjid Allah, maka Allah akan memuliakannya.",
+    source: "HR. Muslim"
+  }
+];
+
+const today = new Date().getDate();
+const verse = verses[today % verses.length];
+
+document.getElementById("verseText").innerText = verse.text;
+document.getElementById("verseSource").innerText = verse.source;
   </script>
 </body>
 </html>
