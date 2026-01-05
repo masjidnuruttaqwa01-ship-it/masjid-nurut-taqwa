@@ -1031,12 +1031,12 @@ const ayatList = [
   { arab:"وَاعْبُدْ رَبَّكَ حَتَّىٰ يَأْتِيَكَ الْيَقِينُ", arti:"Sembahlah Tuhanmu sampai datang kepadamu kepastian (kematian).", info:"QS. Al-Hijr: 99" }
 ];
 
-// GANTI AYAT OTOMATIS SETIAP HARI
-const today = new Date().getDate();
-const index = today % ayatList.length;
-
-document.getElementById("ayat-arab").innerText = ayatList[index].arab;
-document.getElementById("ayat-arti").innerText = ayatList[index].arti;
-</script>
+let i = 0;
+setInterval(()=>{
+  document.getElementById("ayat-arab").innerText = ayatList[i].arab;
+  document.getElementById("ayat-arti").innerText = ayatList[i].arti;
+  i = (i + 1) % ayatList.length;
+}, 10000);
+  <script>
 </body>
 </html>
