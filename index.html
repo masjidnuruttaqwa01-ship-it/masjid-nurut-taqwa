@@ -489,93 +489,35 @@ section{
   font-style: italic;
 }
   /* === AYAT BACKGROUND UPGRADE === */
-.ayat-box{
-  background: linear-gradient(135deg,#0b3d2e,#198754);
-  padding:28px 22px;
-  border-radius:20px;
-  margin:40px auto;
-  max-width:780px;
-  box-shadow:
-    0 20px 45px rgba(0,0,0,.25),
-    inset 0 0 40px rgba(255,255,255,.05);
-}
+/* ================= AYAT AL-QUR'AN HARI INI (SATU KOTAK) ================= */
 
-.ayat-arab{
-  background: rgba(0,0,0,.25);
-  padding:20px;
-  border-radius:14px;
-  font-size:32px;
-  line-height:1.9;
-  text-align:center;
-  color:#fff;
-  box-shadow: inset 0 0 15px rgba(0,255,170,.25);
-}
-
-.ayat-arti{
-  margin-top:14px;
-  background: rgba(255,255,255,.15);
-  padding:14px 18px;
-  border-radius:12px;
-  text-align:center;
-  color:#f1fdf6;
-  font-size:16px;
-}
-
-.ayat-info{
-  margin-top:10px;
-  text-align:center;
-  font-size:14px;
-  color:#ffe8a1;
-  letter-spacing:.5px;
-}
-
-.ayat-next{
-  margin-top:18px;
-  background: linear-gradient(135deg,#ffc107,#ffda6a);
-  color:#000;
-  font-weight:700;
-  border:none;
-  padding:10px 26px;
-  border-radius:30px;
-  cursor:pointer;
-  box-shadow:0 8px 20px rgba(0,0,0,.25);
-}
-  .ayat-title{
-  text-align:center;
-  font-size:22px;
-  margin-bottom:18px;
-  letter-spacing:1px;
-  }
-  /* ================= AYAT AL-QUR'AN HARI INI ================= */
-
-.ayat-hari-ini-title {
-  color: #0f6b44; /* hijau masjid */
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 18px;
-}
-
-.ayat-card {
+.ayat-box {
   background: linear-gradient(135deg, #0f6b44, #1f8f5f);
-  border-radius: 18px;
-  padding: 22px;
+  border-radius: 20px;
+  padding: 26px 22px;
+  margin: 24px 0;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.18);
   color: #ffffff;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.ayat-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #c8ffe5;
+  margin-bottom: 16px;
 }
 
 .ayat-arab {
-  font-size: 28px;
-  font-weight: 600;
-  text-align: center;
-  line-height: 1.9;
+  font-size: 30px;
+  line-height: 2;
   margin-bottom: 14px;
-  color: #ffffff;
+  font-weight: 600;
 }
 
 .ayat-arti {
   font-size: 15px;
-  text-align: center;
-  color: #e6fff2;
+  color: #eafff4;
   opacity: 0.95;
 }
 </style>
@@ -766,11 +708,18 @@ section{
 <section class="hikmah">
   <h2>✨ Ayat Al-Qur’an Hari Ini</h2>
 
-  <div class="ayat-box">
-    <div class="ayat-arab" id="ayatArab">Memuat ayat...</div>
-    <div class="ayat-arti" id="ayatArti">Memuat terjemahan...</div>
-    <div class="ayat-sumber" id="ayatSumber"></div>
+<div class="ayat-box">
+  <div class="ayat-title">✨ Ayat Al-Qur’an Hari Ini</div>
+
+  <div class="ayat-arab">
+    وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ
   </div>
+
+  <div class="ayat-arti">
+    “Rahmat-Ku meliputi segala sesuatu.”  
+    <br><small>(QS. Al-A’raf: 156)</small>
+  </div>
+</div>
 </section>
 <!-- ================= JADWAL SHOLAT ================= -->
   <div class="date-box">
