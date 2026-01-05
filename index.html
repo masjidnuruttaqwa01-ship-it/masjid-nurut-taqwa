@@ -447,11 +447,17 @@ section{
   font-size: 14px;
   opacity: 0.9;
 }
+  .hijri-date {
+  text-align: center;
+  font-weight: 600;
+  color: #0f6b44;
+  margin: 15px 0 25px;
+  font-size: 15px;
+  }
 </style>
 </head>
 
 <body>
-
 <!-- ================= HEADER ================= -->
 <header><div class="running-text">
   <div class="running-track">
@@ -640,7 +646,8 @@ section{
   <span id="verseSource"></span>
 </section>
 <!-- ================= JADWAL SHOLAT ================= -->
-<section id="jadwal">
+<div class="hijri-date" id="hijriDate"></div>
+  <section id="jadwal">
 <section class="section">
   <div class="section-title">Jadwal Sholat Hari Ini</div>
 
@@ -925,5 +932,16 @@ const verse = verses[today % verses.length];
 document.getElementById("verseText").innerText = verse.text;
 document.getElementById("verseSource").innerText = verse.source;
   </script>
+    <script>
+const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+}).format(new Date());
+
+document.getElementById("hijriDate").innerText =
+  "📅 " + hijri + " Hijriyah";
+</script>
+</body>
 </body>
 </html>
