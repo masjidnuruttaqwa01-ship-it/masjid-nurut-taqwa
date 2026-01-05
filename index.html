@@ -1067,5 +1067,21 @@ if ("serviceWorker" in navigator) {
     .catch(err => console.log("SW gagal:", err));
 }
     </script>
+   <script>
+function kirimNotif() {
+  Notification.requestPermission().then(p => {
+    if (p === "granted") {
+      navigator.serviceWorker.ready.then(reg => {
+        reg.showNotification("Masjid Nurut Taqwa", {
+          body: "Kajian malam Jumat ba’da Isya",
+          icon: "/masjid-nurut-taqwa/icon-192.jpg"
+        });
+      });
+    }
+  });
+}
+</script>
+
+<button onclick="kirimNotif()">🔔 Aktifkan Notifikasi</button> 
 </body>
 </html>
