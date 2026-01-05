@@ -993,53 +993,59 @@ highlightNextPrayer();
   </script>
 <script>
 const ayatList = [
-  { arab:"إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا", arti:"Sesungguhnya sholat itu adalah kewajiban yang ditentukan waktunya atas orang-orang beriman.", info:"QS. An-Nisa: 103" },
-
-  { arab:"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ", arti:"Ingatlah, hanya dengan mengingat Allah hati menjadi tenteram.", info:"QS. Ar-Ra’d: 28" },
-
-  { arab:"إِنَّ مَعَ الْعُسْرِ يُسْرًا", arti:"Sesungguhnya bersama kesulitan ada kemudahan.", info:"QS. Al-Insyirah: 6" },
-
-  { arab:"وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ", arti:"Tolong-menolonglah dalam kebajikan dan ketakwaan.", info:"QS. Al-Ma’idah: 2" },
-
-  { arab:"وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ", arti:"Dan tidak ada taufik bagiku melainkan dengan pertolongan Allah.", info:"QS. Hud: 88" },
-
-  { arab:"رَبِّ زِدْنِي عِلْمًا", arti:"Ya Tuhanku, tambahkanlah aku ilmu.", info:"QS. Thaha: 114" },
-
-  { arab:"إِنَّ اللَّهَ مَعَ الصَّابِرِينَ", arti:"Sesungguhnya Allah bersama orang-orang yang sabar.", info:"QS. Al-Baqarah: 153" },
-
-  { arab:"فَاذْكُرُونِي أَذْكُرْكُمْ", arti:"Ingatlah Aku, niscaya Aku ingat kalian.", info:"QS. Al-Baqarah: 152" },
-
-  { arab:"وَقُلِ اعْمَلُوا فَسَيَرَى اللَّهُ عَمَلَكُمْ", arti:"Katakanlah: bekerjalah, maka Allah akan melihat pekerjaanmu.", info:"QS. At-Taubah: 105" },
-
-  { arab:"إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ", arti:"Sesungguhnya Allah mencintai orang-orang yang bertawakal.", info:"QS. Ali Imran: 159" },
-
-  { arab:"وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ", arti:"Rahmat-Ku meliputi segala sesuatu.", info:"QS. Al-A’raf: 156" },
-
-  { arab:"إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ", arti:"Sesungguhnya Allah Maha Pengampun lagi Maha Penyayang.", info:"QS. Az-Zumar: 53" },
-
-  { arab:"وَمَنْ يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا", arti:"Barang siapa bertakwa kepada Allah, niscaya Dia akan memberinya jalan keluar.", info:"QS. At-Talaq: 2" },
-
-  { arab:"إِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ", arti:"Sesungguhnya Allah tidak menyia-nyiakan pahala orang-orang yang berbuat baik.", info:"QS. At-Taubah: 120" },
-
-  { arab:"فَصَلِّ لِرَبِّكَ وَانْحَرْ", arti:"Maka dirikanlah sholat karena Tuhanmu dan berkurbanlah.", info:"QS. Al-Kautsar: 2" },
-
-  { arab:"وَاللَّهُ خَيْرُ الرَّازِقِينَ", arti:"Dan Allah adalah sebaik-baik pemberi rezeki.", info:"QS. Al-Jumu’ah: 11" },
-
-  { arab:"إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ", arti:"Sesungguhnya Allah mencintai orang-orang yang berbuat baik.", info:"QS. Al-Baqarah: 195" },
-
-  { arab:"قَدْ أَفْلَحَ الْمُؤْمِنُونَ", arti:"Sungguh beruntung orang-orang yang beriman.", info:"QS. Al-Mu’minun: 1" },
-
-  { arab:"إِنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ", arti:"Sesungguhnya Allah Maha Kuasa atas segala sesuatu.", info:"QS. Al-Baqarah: 20" },
-
-  { arab:"وَاعْبُدْ رَبَّكَ حَتَّىٰ يَأْتِيَكَ الْيَقِينُ", arti:"Sembahlah Tuhanmu sampai datang kepadamu kepastian (kematian).", info:"QS. Al-Hijr: 99" }
+  {
+    arab: "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ",
+    arti: "Rahmat-Ku meliputi segala sesuatu. (QS. Al-A’raf: 156)"
+  },
+  {
+    arab: "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",
+    arti: "Sesungguhnya Allah bersama orang-orang yang sabar. (QS. Al-Baqarah: 153)"
+  },
+  {
+    arab: "فَاذْكُرُونِي أَذْكُرْكُمْ",
+    arti: "Ingatlah Aku, niscaya Aku ingat kepadamu. (QS. Al-Baqarah: 152)"
+  },
+  {
+    arab: "لَا تَقْنَطُوا مِنْ رَحْمَةِ اللَّهِ",
+    arti: "Janganlah kamu berputus asa dari rahmat Allah. (QS. Az-Zumar: 53)"
+  },
+  {
+    arab: "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
+    arti: "Sesungguhnya bersama kesulitan ada kemudahan. (QS. Al-Insyirah: 6)"
+  },
+  {
+    arab: "اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ",
+    arti: "Allah adalah cahaya langit dan bumi. (QS. An-Nur: 35)"
+  },
+  {
+    arab: "وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ",
+    arti: "Dan tidak ada taufik bagiku kecuali dengan pertolongan Allah. (QS. Hud: 88)"
+  },
+  {
+    arab: "قُلْ هُوَ اللَّهُ أَحَدٌ",
+    arti: "Katakanlah: Dialah Allah Yang Maha Esa. (QS. Al-Ikhlas: 1)"
+  },
+  {
+    arab: "وَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَّكُمْ",
+    arti: "Boleh jadi kamu membenci sesuatu, padahal ia baik bagimu. (QS. Al-Baqarah: 216)"
+  },
+  {
+    arab: "رَبِّ زِدْنِي عِلْمًا",
+    arti: "Ya Rabb, tambahkanlah aku ilmu. (QS. Thaha: 114)"
+  }
 ];
 
-let i = 0;
-setInterval(()=>{
-  document.getElementById("ayat-arab").innerText = ayatList[i].arab;
-  document.getElementById("ayat-arti").innerText = ayatList[i].arti;
-  i = (i + 1) % ayatList.length;
-}, 10000);
+let current = 0;
+
+function showAyat(){
+  document.getElementById("ayat-arab").innerText = ayatList[current].arab;
+  document.getElementById("ayat-arti").innerText = ayatList[current].arti;
+  current = (current + 1) % ayatList.length;
+}
+
+showAyat();
+setInterval(showAyat, 10000);
+
   <script>
 </body>
 </html>
