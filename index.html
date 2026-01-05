@@ -355,6 +355,73 @@ section{
   from { transform: translateX(0); }
   to   { transform: translateX(-100%); }
 }
+/* ===== DIGITAL PRAYER TIME ===== */
+
+#jadwalSholat li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 16px;
+}
+
+.sholat-name {
+  font-weight: 600;
+  color: #0f6b44;
+}
+
+.digital-time {
+  background: #0f6b44;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+}
+  /* ===== DIGITAL LED STYLE ===== */
+
+#jadwalSholat li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.digital-time {
+  font-family: 'Courier New', monospace;
+  font-size: 20px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #222;
+  color: #7cff7c;
+  box-shadow:
+    inset 0 0 6px rgba(0,0,0,0.8),
+    0 0 6px rgba(0,255,0,0.4);
+  letter-spacing: 2px;
+}
+
+/* SHOLAT BERIKUTNYA AKTIF */
+#jadwalSholat li.active .digital-time {
+  background: #0f6b44;
+  color: #ffffff;
+  box-shadow:
+    0 0 10px #2aff9c,
+    0 0 20px rgba(42,255,156,0.8);
+  animation: pulse 1.5s infinite;
+}
+
+#jadwalSholat li.active .sholat-name {
+  font-weight: bold;
+  color: #0f6b44;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 5px #2aff9c; }
+  50% { box-shadow: 0 0 20px #2aff9c; }
+  100% { box-shadow: 0 0 5px #2aff9c; }
+}
 </style>
 </head>
 
@@ -550,12 +617,27 @@ section{
 
   <div class="card">
     <ul id="jadwalSholat">
-      <li>Subuh: <b id="fajr">--:--</b></li>
-      <li>Dzuhur: <b id="dhuhr">--:--</b></li>
-      <li>Ashar: <b id="asr">--:--</b></li>
-      <li>Maghrib: <b id="maghrib">--:--</b></li>
-      <li>Isya: <b id="isha">--:--</b></li>
-    </ul>
+  <li data-sholat="fajr">
+    <span class="sholat-name">Subuh</span>
+    <span class="digital-time" id="fajr">--:--</span>
+  </li>
+  <li data-sholat="dhuhr">
+    <span class="sholat-name">Dzuhur</span>
+    <span class="digital-time" id="dhuhr">--:--</span>
+  </li>
+  <li data-sholat="asr">
+    <span class="sholat-name">Ashar</span>
+    <span class="digital-time" id="asr">--:--</span>
+  </li>
+  <li data-sholat="maghrib">
+    <span class="sholat-name">Maghrib</span>
+    <span class="digital-time" id="maghrib">--:--</span>
+  </li>
+  <li data-sholat="isha">
+    <span class="sholat-name">Isya</span>
+    <span class="digital-time" id="isha">--:--</span>
+  </li>
+</ul>
   </div>
 </section>
 
@@ -757,5 +839,40 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
     document.getElementById("isha").innerText = t.Isha;
   });
 </script>
+  <script>
+function getNextPrayer(prayers) {
+  const now = new Date();
+  for (let key in prayers) {
+    const [h, m] = prayers[key].split(':');
+    const t = new Date();
+    t.setHours(h, m, 0);
+    if (t > now) return key;
+  }
+  return null;
+}
+
+function highlightNextPrayer() {
+  const prayers = {
+    fajr: document.getElementById('fajr').innerText,
+    dhuhr: document.getElementById('dhuhr').innerText,
+    asr: document.getElementById('asr').innerText,
+    maghrib: document.getElementById('maghrib').innerText,
+    isha: document.getElementById('isha').innerText
+  };
+
+  document.querySelectorAll('#jadwalSholat li')
+    .forEach(li => li.classList.remove('active'));
+
+  const next = getNextPrayer(prayers);
+  if (next) {
+    document.querySelector(`#jadwalSholat li[data-sholat="${next}"]`)
+      ?.classList.add('active');
+  }
+}
+
+// Update tiap menit
+setInterval(highlightNextPrayer, 60000);
+highlightNextPrayer();
+  </script>
 </body>
 </html>
