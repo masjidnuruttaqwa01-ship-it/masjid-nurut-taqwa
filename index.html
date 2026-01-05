@@ -451,6 +451,43 @@ section{
 
 });
 </script>
+  .hikmah {
+  background: linear-gradient(135deg, #0f6b44, #1b8a5a);
+  color: #fff;
+  padding: 24px;
+  border-radius: 18px;
+  margin: 30px 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.hikmah h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #ffe08a;
+}
+
+.ayat-box {
+  text-align: center;
+}
+
+.ayat-arab {
+  font-size: 26px;
+  line-height: 1.8;
+  font-family: "Amiri", "Scheherazade", serif;
+  margin-bottom: 14px;
+}
+
+.ayat-arti {
+  font-size: 15px;
+  opacity: 0.95;
+  margin-bottom: 8px;
+}
+
+.ayat-sumber {
+  font-size: 13px;
+  opacity: 0.8;
+  font-style: italic;
+}
 </style>
 </head>
 <body>
@@ -636,10 +673,14 @@ section{
     <button class="gallery-btn next">›</button>
   </div>
 </section>
-<section class="daily-verse">
-  <h2>✨ Hikmah Hari Ini</h2>
-  <p id="verseText">Memuat ayat...</p>
-  <span id="verseSource"></span>
+<section class="hikmah">
+  <h2>✨ Ayat Al-Qur’an Hari Ini</h2>
+
+  <div class="ayat-box">
+    <div class="ayat-arab" id="ayatArab">Memuat ayat...</div>
+    <div class="ayat-arti" id="ayatArti">Memuat terjemahan...</div>
+    <div class="ayat-sumber" id="ayatSumber"></div>
+  </div>
 </section>
 <!-- ================= JADWAL SHOLAT ================= -->
   <div class="date-box">
@@ -928,5 +969,53 @@ const verses = [
   }
 ];
   </script>
+    <script>
+const ayatList = [
+  {
+    arab: "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
+    arti: "Sesungguhnya bersama kesulitan ada kemudahan.",
+    sumber: "QS. Al-Insyirah: 6"
+  },
+  {
+    arab: "فَاذْكُرُونِي أَذْكُرْكُمْ",
+    arti: "Ingatlah kepada-Ku, niscaya Aku ingat kepadamu.",
+    sumber: "QS. Al-Baqarah: 152"
+  },
+  {
+    arab: "وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ",
+    arti: "Dan tidak ada taufik bagiku kecuali dengan pertolongan Allah.",
+    sumber: "QS. Hud: 88"
+  },
+  {
+    arab: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ",
+    arti: "Allah, tidak ada Tuhan selain Dia.",
+    sumber: "QS. Al-Baqarah: 255"
+  },
+  {
+    arab: "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",
+    arti: "Sesungguhnya Allah bersama orang-orang yang sabar.",
+    sumber: "QS. Al-Baqarah: 153"
+  },
+  {
+    arab: "وَتَوَكَّلْ عَلَى اللَّهِ ۚ وَكَفَىٰ بِاللَّهِ وَكِيلًا",
+    arti: "Bertawakallah kepada Allah. Cukuplah Allah sebagai pelindung.",
+    sumber: "QS. Al-Ahzab: 3"
+  }
+];
+
+let indexAyat = 0;
+
+function tampilAyat() {
+  const ayat = ayatList[indexAyat];
+  document.getElementById("ayatArab").innerText = ayat.arab;
+  document.getElementById("ayatArti").innerText = ayat.arti;
+  document.getElementById("ayatSumber").innerText = ayat.sumber;
+
+  indexAyat = (indexAyat + 1) % ayatList.length;
+}
+
+tampilAyat();
+setInterval(tampilAyat, 15000); // ganti tiap 15 detik
+    </script>
 </body>
 </html>
