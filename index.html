@@ -966,7 +966,7 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
     document.getElementById("isha").innerText = t.Isha;
   });
 </script>
-  <script>
+<script>
 function getNextPrayer(prayers) {
   const now = new Date();
   for (let key in prayers) {
@@ -982,10 +982,7 @@ function highlightNextPrayer() {
   const prayers = {
     fajr: document.getElementById('fajr').innerText,
     dhuhr: document.getElementById('dhuhr').innerText,
-    asr: document.getElementById('as<div class="date-box">
-  <div id="dateHijri"></div>
-  <div id="dateMasehi"></div>
-</div>lr').innerText,
+    asr: document.getElementById('asr').innerText,
     maghrib: document.getElementById('maghrib').innerText,
     isha: document.getElementById('isha').innerText
   };
@@ -995,15 +992,15 @@ function highlightNextPrayer() {
 
   const next = getNextPrayer(prayers);
   if (next) {
-    document.querySelector(`#jadwalSholat li[data-sholat="${next}"]`)
+    document
+      .querySelector(`#jadwalSholat li[data-sholat="${next}"]`)
       ?.classList.add('active');
   }
 }
 
-// Update tiap menit
 setInterval(highlightNextPrayer, 60000);
 highlightNextPrayer();
-  </script>
+</script>
 <script>
 const ayatList = [
   {
