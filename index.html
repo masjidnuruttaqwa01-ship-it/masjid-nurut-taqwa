@@ -699,7 +699,6 @@ body{
 </head>
 <body>
   <!-- ================= ARTIKEL SLIDER ================= -->
-<section id="artikel">
   <div class="section-title">📚 Artikel & Ilmu Pengetahuan</div>
 
   <div class="artikel-slider">
@@ -941,11 +940,16 @@ body{
   </div>
 </section>
 <!-- ================= ARTIKEL TERBARU ================= -->
-<section id="artikel" class="artikel-section">
+<section id="artikel">
   <div class="section-title">📚 Artikel Terbaru</div>
 
-  <div class="artikel-grid" id="listArtikel">
-    <!-- artikel di-load otomatis -->
+  <div class="artikel-slider">
+    <div class="artikel-track" id="artikelTrack">
+      <div class="artikel-item">Memuat artikel...</div>
+    </div>
+
+    <button class="artikel-btn prev">‹</button>
+    <button class="artikel-btn next">›</button>
   </div>
 </section>
 <!-- ================= ZAKAT ================= -->
