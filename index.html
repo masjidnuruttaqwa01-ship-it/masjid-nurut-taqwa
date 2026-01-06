@@ -1254,8 +1254,8 @@ if ("serviceWorker" in navigator) {
 }
 </script>
     <script>
-fetch("artikel.json")
-.then(res => res.json())
+fetch("artikel/artikel.json")
+  .then(res => res.json())
 .then(data => {
   const box = document.getElementById("listArtikel");
   if(!box) return;
@@ -1272,7 +1272,7 @@ fetch("artikel.json")
 <script>
 let artikelIndex = 0;
 
-fetch("artikel.json")
+fetch("artikel/artikel.json")
 .then(res => res.json())
 .then(data => {
   const track = document.getElementById("artikelTrack");
