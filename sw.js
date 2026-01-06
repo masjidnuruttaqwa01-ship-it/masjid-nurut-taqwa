@@ -1,11 +1,12 @@
-const CACHE_NAME = "nurut-taqwa-v2";
-const OFFLINE_URL = "/masjid-nurut-taqwa/index.html";
+const CACHE_NAME = "nurut-taqwa-v1";
+const OFFLINE_URL = "./index.html";
 
 const FILES_TO_CACHE = [
-  OFFLINE_URL,
-  "/masjid-nurut-taqwa/manifest.json",
-  "/masjid-nurut-taqwa/icon-192.jpg",
-  "/masjid-nurut-taqwa/icon-512.jpg"
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./icon-192.jpg",
+  "./icon-512.jpg"
 ];
 
 self.addEventListener("install", event => {
