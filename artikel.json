@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "judul": "Sains dalam Perspektif Al-Qur’an",
+    "ringkas": "Al-Qur’an mendorong manusia untuk berpikir, meneliti, dan mengkaji alam semesta.",
+    "isi": "Al-Qur’an bukan kitab sains, namun mengandung banyak isyarat ilmiah tentang penciptaan langit dan bumi, pergantian siang dan malam, serta kehidupan manusia.",
+    "gambar": "images/artikel/sains-quran.jpg",
+    "tanggal": "2026-01-01"
+  },
+  {
+    "id": 2,
+    "judul": "Astronomi dalam Peradaban Islam",
+    "ringkas": "Ilmuwan muslim berperan besar dalam perkembangan ilmu falak dan astronomi.",
+    "isi": "Ilmu astronomi berkembang pesat dalam peradaban Islam untuk penentuan waktu sholat, arah kiblat, dan kalender hijriah.",
+    "gambar": "images/artikel/astronomi-islam.jpg",
+    "tanggal": "2026-01-05"
+  },
+  {
+    "id": 3,
+    "judul": "Kesehatan dalam Ajaran Islam",
+    "ringkas": "Islam mengajarkan pola hidup sehat yang sejalan dengan ilmu modern.",
+    "isi": "Rasulullah ﷺ mengajarkan pola makan seimbang, kebersihan, dan istirahat yang cukup.",
+    "gambar": "images/artikel/kesehatan-islam.jpg",
+    "tanggal": "2026-01-10"
+  }
+]
