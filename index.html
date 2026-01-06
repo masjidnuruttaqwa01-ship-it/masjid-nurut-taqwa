@@ -633,9 +633,85 @@ body{
   font-weight:600;
   text-decoration:none;
 }
+  /* ================= ARTIKEL SLIDER ================= */
+.artikel-slider{
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
+  background:linear-gradient(135deg,#0f6b44,#0b4f34);
+  padding:24px 16px;
+  box-shadow:0 14px 40px rgba(0,0,0,.18);
+}
+
+.artikel-track{
+  display:flex;
+  transition:transform .5s ease;
+}
+
+.artikel-item{
+  min-width:100%;
+  padding:20px;
+  color:#fff;
+}
+
+.artikel-item h3{
+  font-size:22px;
+  margin-bottom:10px;
+}
+
+.artikel-item small{
+  opacity:.85;
+}
+
+.artikel-item p{
+  margin:14px 0;
+  line-height:1.7;
+}
+
+.artikel-item a{
+  display:inline-block;
+  margin-top:12px;
+  padding:10px 16px;
+  background:#f4c430;
+  color:#0f6b44;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* tombol */
+.artikel-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,.35);
+  color:#fff;
+  border:none;
+  font-size:28px;
+  padding:6px 14px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:5;
+}
+.artikel-btn.prev{left:10px}
+.artikel-btn.next{right:10px}
 </style>
 </head>
 <body>
+  <!-- ================= ARTIKEL SLIDER ================= -->
+<section id="artikel">
+  <div class="section-title">📚 Artikel & Ilmu Pengetahuan</div>
+
+  <div class="artikel-slider">
+    <button class="artikel-btn prev">‹</button>
+
+    <div class="artikel-track" id="artikelTrack">
+      <!-- Artikel di-load dari JSON -->
+    </div>
+
+    <button class="artikel-btn next">›</button>
+  </div>
+</section>
 <!-- ================= HEADER ================= -->
 <header><div class="running-text">
   <div class="running-track">
@@ -1189,6 +1265,40 @@ fetch("artikel.json")
     </div>
   `).join("");
 });
+<script>
+let artikelIndex = 0;
+
+fetch("artikel.json")
+.then(res => res.json())
+.then(data => {
+  const track = document.getElementById("artikelTrack");
+
+  data.forEach(a => {
+    const div = document.createElement("div");
+    div.className = "artikel-item";
+    div.innerHTML = `
+      <h3>${a.judul}</h3>
+      <small>${a.tanggal}</small>
+      <p>${a.ringkas}</p>
+      <a href="artikel/artikel-detail.html?id=${a.id}">Baca Selengkapnya</a>
+    `;
+    track.appendChild(div);
+  });
+});
+
+function slideArtikel(dir){
+  const total = document.querySelectorAll(".artikel-item").length;
+  artikelIndex = (artikelIndex + dir + total) % total;
+  document.getElementById("artikelTrack")
+    .style.transform = `translateX(-${artikelIndex * 100}%)`;
+}
+
+document.querySelector(".artikel-btn.next")
+  .onclick = () => slideArtikel(1);
+document.querySelector(".artikel-btn.prev")
+  .onclick = () => slideArtikel(-1);
+</script>
+setInterval(()=>slideArtikel(1),5000);
 </script>
 </body>
 </html>
