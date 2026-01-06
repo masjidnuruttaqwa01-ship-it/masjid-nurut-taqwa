@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detail Artikel</title>
+<link rel="stylesheet" href="../css/artikel.css">
+</head>
+<body>
+
+<header class="header-artikel">
+  <a href="index.html">← Kembali ke Artikel</a>
+</header>
+
+<main class="container artikel-detail" id="detailArtikel">
+  <p>Memuat artikel...</p>
+</main>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+fetch("../artikel.json")
+.then(res => res.json())
+.then(data => {
+  const a = data.find(x => x.id == id);
+  document.getElementById("detailArtikel").innerHTML = `
+    <h1>${a.judul}</h1>
+    <img src="../${a.gambar}">
+    <p>${a.isi}</p>
+    <small>${a.tanggal}</small>
+  `;
+});
+</script>
+
+</body>
+</html>
