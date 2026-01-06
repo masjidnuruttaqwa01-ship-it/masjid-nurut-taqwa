@@ -116,37 +116,40 @@ body{
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-/* ===== DETEKSI AYAT ARAB ===== */
-function highlightAyat(text){
-  // Deteksi huruf Arab
-  const arabRegex = /([\u0600-\u06FF\s۞۩]+)(\s*\([^)]+\))?/g;
-
-  return text.replace(arabRegex, match => {
-    if(match.length < 8) return match;
-    return `
-      <div class="ayat-highlight">
-        <div class="arab">${match}</div>
-      </div>
-    `;
-  });
-}
-
 fetch("../artikel.json")
   .then(res => res.json())
   .then(data => {
     const artikel = data.find(x => x.id == id);
-    if(!artikel) return;
+
+    if(!artikel){
+      document.getElementById("isiArtikel").innerHTML =
+        "<p>Artikel tidak ditemukan.</p>";
+      return;
+    }
 
     document.getElementById("judulArtikel").innerText = artikel.judul;
     document.getElementById("gambarArtikel").src = "../" + artikel.gambar;
 
-    let isi = artikel.isi
-      .split("\n\n")
-      .map(p => `<p>${highlightAyat(p)}</p>`)
-      .join("");
-
-    document.getElementById("isiArtikel").innerHTML = isi;
+    document.getElementById("isiArtikel").innerHTML =
+      artikel.isi
+        .split("\n\n")
+        .map(p => `<p>${highlightAyat(p)}</p>`)
+        .join("");
   });
+
+/* ===== HIGHLIGHT AYAT ===== */
+function highlightAyat(text){
+  return text.replace(
+    /(QS\.[^)]+\))/g,
+    `<span style="
+      background:rgba(255,255,255,.15);
+      padding:4px 8px;
+      border-radius:6px;
+      color:#bbf7d0;
+      font-weight:600;
+    ">$1</span>`
+  );
+}
 </script>
 
 </body>
