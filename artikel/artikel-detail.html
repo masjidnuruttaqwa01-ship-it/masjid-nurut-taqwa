@@ -1,10 +1,25 @@
-/* ===== HALAMAN DETAIL ARTIKEL (HIJAU) ===== */
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Detail Artikel</title>
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= HALAMAN DETAIL ARTIKEL ================= */
 
 body{
   background: linear-gradient(180deg,#0f6b44,#0b4f34);
+  margin:0;
+  font-family: Poppins, system-ui, sans-serif;
+  color:#ecfdf5;
 }
 
-/* container halaman */
+/* pembungkus halaman */
 .article-page{
   padding: 24px 16px;
 }
@@ -14,10 +29,9 @@ body{
   background: linear-gradient(135deg,#0f7a4a,#0b5d3b);
   border-radius:20px;
   padding:26px;
-  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  box-shadow:0 20px 40px rgba(0,0,0,.28);
   max-width:900px;
   margin:0 auto;
-  color:#ecfdf5;
 }
 
 /* tombol kembali */
@@ -29,7 +43,7 @@ body{
   font-weight:600;
 }
 
-/* judul artikel */
+/* judul */
 .article-title{
   font-family:"Playfair Display", serif;
   font-size:30px;
@@ -38,7 +52,7 @@ body{
   color:#ffffff;
 }
 
-/* gambar artikel */
+/* gambar */
 .article-image{
   width:100%;
   border-radius:16px;
@@ -46,7 +60,7 @@ body{
   box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
 
-/* isi artikel */
+/* isi */
 .article-content{
   font-size:17px;
   line-height:1.9;
@@ -64,3 +78,46 @@ body{
     font-size:24px;
   }
 }
+</style>
+</head>
+
+<body>
+
+<div class="article-page">
+
+  <a href="artikel.html" class="article-back">← Kembali ke Artikel</a>
+
+  <div class="article-card">
+
+    <h1 class="article-title" id="judulArtikel">Memuat...</h1>
+
+    <img id="gambarArtikel" class="article-image" alt="Gambar Artikel">
+
+    <div class="article-content" id="isiArtikel"></div>
+
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+fetch("../artikel.json")
+  .then(res => res.json())
+  .then(data => {
+    const artikel = data.find(x => x.id == id);
+    if(!artikel) return;
+
+    document.getElementById("judulArtikel").innerText = artikel.judul;
+    document.getElementById("gambarArtikel").src = "../" + artikel.gambar;
+
+    document.getElementById("isiArtikel").innerHTML =
+      artikel.isi
+        .split("\n\n")
+        .map(p => `<p>${p}</p>`)
+        .join("");
+  });
+</script>
+
+</body>
+</html>
