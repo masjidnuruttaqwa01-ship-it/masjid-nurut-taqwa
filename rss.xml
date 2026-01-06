@@ -1,1 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
 
+<title>Artikel Ilmu Pengetahuan - Masjid Nurut Taqwa</title>
+<link>https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/</link>
+<description>Artikel ilmu pengetahuan Islam dari Masjid Nurut Taqwa Kota Cirebon</description>
+<language>id-ID</language>
+
+<item>
+  <title>Sains dalam Perspektif Al-Qur’an</title>
+  <link>https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/artikel/detail.html?id=1</link>
+  <description>
+    Al-Qur’an mendorong manusia untuk berpikir, meneliti, dan mengkaji alam semesta.
+  </description>
+  <pubDate>Wed, 01 Jan 2026 08:00:00 GMT</pubDate>
+</item>
+
+<item>
+  <title>Astronomi dalam Peradaban Islam</title>
+  <link>https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/artikel/detail.html?id=2</link>
+  <description>
+    Peran ilmuwan muslim dalam perkembangan ilmu falak dan astronomi.
+  </description>
+  <pubDate>Mon, 05 Jan 2026 08:00:00 GMT</pubDate>
+</item>
+
+<item>
+  <title>Kesehatan dalam Ajaran Islam</title>
+  <link>https://masjidnuruttaqwa01-ship-it.github.io/masjid-nurut-taqwa/artikel/detail.html?id=3</link>
+  <description>
+    Pola hidup sehat menurut Islam dan kajian ilmiah modern.
+  </description>
+  <pubDate>Sat, 10 Jan 2026 08:00:00 GMT</pubDate>
+</item>
+
+</channel>
+</rss>
