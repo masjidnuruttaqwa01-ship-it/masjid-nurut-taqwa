@@ -116,7 +116,7 @@ body{
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-fetch("../artikel.json")
+fetch("/masjid-nurut-taqwa/artikel.json")
   .then(res => res.json())
   .then(data => {
     const artikel = data.find(x => x.id == id);
