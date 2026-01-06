@@ -8,14 +8,20 @@
 </head>
 <body>
 
-<header class="header-artikel">
-  <a href="index.html">← Kembali ke Artikel</a>
-</header>
+<div class="article-page">
 
-<main class="container artikel-detail" id="detailArtikel">
-  <p>Memuat artikel...</p>
-</main>
+  <a href="artikel.html" class="article-back">← Kembali ke Artikel</a>
 
+  <div class="article-card">
+
+    <h1 class="article-title" id="judulArtikel"></h1>
+
+    <img id="gambarArtikel" class="article-image" alt="Gambar Artikel">
+
+    <div class="article-content" id="isiArtikel"></div>
+
+  </div>
+</div>
 <script>
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
@@ -24,13 +30,63 @@ fetch("../artikel.json")
 .then(res => res.json())
 .then(data => {
   const a = data.find(x => x.id == id);
-  document.getElementById("detailArtikel").innerHTML = `
-    <h1>${a.judul}</h1>
-    <img src="../${a.gambar}">
-    <p>${a.isi}</p>
-    <small>${a.tanggal}</small>
-  `;
-});
+  document.getElementById("isiArtikel").innerHTML =
+  artikel.isi
+    .split("\n\n")
+    .map(p => `<p>${p}</p>`)
+    .join("");
+
+  /* ================= DETAIL ARTIKEL ================= */
+
+.article-page{
+  padding: 20px 16px;
+}
+
+.article-card{
+  background:#ffffff;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 12px 30px rgba(0,0,0,.12);
+  max-width:900px;
+  margin:0 auto;
+}
+
+.article-back{
+  display:inline-block;
+  margin-bottom:16px;
+  color:#0f6b44;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.article-title{
+  font-family:"Playfair Display", serif;
+  font-size:30px;
+  line-height:1.2;
+  margin-bottom:18px;
+  color:#0b4f34;
+}
+
+.article-image{
+  width:100%;
+  border-radius:14px;
+  margin-bottom:20px;
+}
+
+.article-content{
+  font-size:17px;
+  line-height:1.9;
+}
+
+.article-content p{
+  margin-bottom:18px;
+}
+
+@media(max-width:600px){
+  .article-title{
+    font-size:24px;
+  }
+    }
 </script>
 
 </body>
