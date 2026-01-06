@@ -738,6 +738,10 @@ section{
     <button class="gallery-btn prev">‹</button>
     <button class="gallery-btn next">›</button>
   </div>
+  <section class="card">
+  <h3>📚 Artikel Terbaru</h3>
+  <div id="artikelTerbaru">Memuat...</div>
+  </section>
 </section>
 <!-- AYAT AL-QUR'AN HARI INI -->
 <div class="ayat-box">
@@ -1089,5 +1093,22 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+    <script>
+fetch("artikel.json")
+.then(res=>res.json())
+.then(data=>{
+  const box=document.getElementById("artikelTerbaru");
+  box.innerHTML="";
+  data.slice(-3).reverse().forEach(a=>{
+    box.innerHTML+=`
+      <p>
+        <b>${a.judul}</b><br>
+        <small>${a.tanggal}</small><br>
+        <a href="artikel/detail.html?id=${a.id}">Baca</a>
+      </p>
+    `;
+  });
+});
+    </script>
 </body>
 </html>
