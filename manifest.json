@@ -1,7 +1,6 @@
 {
   "name": "Masjid Nurut Taqwa",
   "short_name": "Nurut Taqwa",
-  "description": "Website resmi Masjid Nurut Taqwa Kejaksan Kota Cirebon",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -9,14 +8,14 @@
   "theme_color": "#0f6b44",
   "icons": [
     {
-      "src": "icon-192.jpg",
+      "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/png"
     },
     {
-      "src": "icon-512.jpg",
+      "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png"
     }
   ]
 }
