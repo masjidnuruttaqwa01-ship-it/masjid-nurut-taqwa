@@ -140,7 +140,7 @@ header{
   border-bottom:1px solid rgba(255,255,255,.15);
 }
 .mobile-menu.active{display:flex}
-
+<a href="#artikel">Artikel</a>
 /* ================== HERO ================== */
 .hero{
   margin-top:70px;
@@ -586,6 +586,53 @@ body{
   background: linear-gradient(90deg,#0f6b44,#0b4f34);
   box-shadow:0 6px 20px rgba(0,0,0,.25);
 }
+  /* ================= ARTIKEL ================= */
+.artikel-section{
+  background: linear-gradient(180deg,#e8f5ef,#ffffff);
+  padding:36px 16px;
+}
+
+.artikel-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+
+.artikel-card{
+  background: linear-gradient(135deg,#0f6b44,#0b4f34);
+  color:#ecfdf5;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+  transition:.3s;
+}
+
+.artikel-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
+}
+
+.artikel-card h3{
+  margin:0 0 8px;
+  font-size:18px;
+}
+
+.artikel-card small{
+  opacity:.9;
+}
+
+.artikel-card p{
+  font-size:14px;
+  opacity:.95;
+}
+
+.artikel-card a{
+  display:inline-block;
+  margin-top:10px;
+  color:#facc15;
+  font-weight:600;
+  text-decoration:none;
+}
 </style>
 </head>
 <body>
@@ -817,7 +864,14 @@ body{
 </ul>
   </div>
 </section>
+<!-- ================= ARTIKEL TERBARU ================= -->
+<section id="artikel" class="artikel-section">
+  <div class="section-title">📚 Artikel Terbaru</div>
 
+  <div class="artikel-grid" id="listArtikel">
+    <!-- artikel di-load otomatis -->
+  </div>
+</section>
 <!-- ================= ZAKAT ================= -->
 <section id="zakat">
   <div class="section-title">Zakat, Infaq, dan Sedekah</div>
@@ -1118,6 +1172,23 @@ if ("serviceWorker" in navigator) {
       });
   });
 }
+</script>
+    <script>
+fetch("artikel.json")
+.then(res => res.json())
+.then(data => {
+  const box = document.getElementById("listArtikel");
+  if(!box) return;
+
+  box.innerHTML = data.map(a => `
+    <div class="artikel-card">
+      <h3>${a.judul}</h3>
+      <small>${a.tanggal}</small>
+      <p>${a.ringkas}</p>
+      <a href="artikel/artikel-detail.html?id=${a.id}">Baca →</a>
+    </div>
+  `).join("");
+});
 </script>
 </body>
 </html>
