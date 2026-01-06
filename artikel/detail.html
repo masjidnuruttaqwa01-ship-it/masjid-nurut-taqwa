@@ -4,39 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Detail Artikel</title>
+
 <link rel="stylesheet" href="../css/artikel.css">
-</head>
-<body>
 
-<div class="article-page">
-
-  <a href="artikel.html" class="article-back">← Kembali ke Artikel</a>
-
-  <div class="article-card">
-
-    <h1 class="article-title" id="judulArtikel"></h1>
-
-    <img id="gambarArtikel" class="article-image" alt="Gambar Artikel">
-
-    <div class="article-content" id="isiArtikel"></div>
-
-  </div>
-</div>
-<script>
-const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
-
-fetch("../artikel.json")
-.then(res => res.json())
-.then(data => {
-  const a = data.find(x => x.id == id);
-  document.getElementById("isiArtikel").innerHTML =
-  artikel.isi
-    .split("\n\n")
-    .map(p => `<p>${p}</p>`)
-    .join("");
-
-  /* ================= DETAIL ARTIKEL ================= */
+<style>
+/* ================= DETAIL ARTIKEL ================= */
 
 .article-page{
   padding: 20px 16px;
@@ -86,7 +58,46 @@ fetch("../artikel.json")
   .article-title{
     font-size:24px;
   }
-    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="article-page">
+
+  <a href="artikel.html" class="article-back">← Kembali ke Artikel</a>
+
+  <div class="article-card">
+
+    <h1 class="article-title" id="judulArtikel"></h1>
+
+    <img id="gambarArtikel" class="article-image" alt="Gambar Artikel">
+
+    <div class="article-content" id="isiArtikel"></div>
+
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+fetch("../artikel.json")
+  .then(res => res.json())
+  .then(data => {
+    const artikel = data.find(x => x.id == id);
+    if(!artikel) return;
+
+    document.getElementById("judulArtikel").innerText = artikel.judul;
+    document.getElementById("gambarArtikel").src = "../" + artikel.gambar;
+
+    document.getElementById("isiArtikel").innerHTML =
+      artikel.isi
+        .split("\n\n")
+        .map(p => `<p>${p}</p>`)
+        .join("");
+  });
 </script>
 
 </body>
