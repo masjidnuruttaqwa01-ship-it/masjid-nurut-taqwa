@@ -1,6 +1,7 @@
 {
   "name": "Masjid Nurut Taqwa",
   "short_name": "Nurut Taqwa",
+  "description": "Website resmi Masjid Nurut Taqwa Kejaksan Kota Cirebon",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
