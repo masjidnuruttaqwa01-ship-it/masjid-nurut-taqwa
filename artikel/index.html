@@ -1,2 +1,40 @@
-<a href="artikel-1.html">Baca Selengkapnya</a>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artikel Ilmu Pengetahuan</title>
 <link rel="stylesheet" href="../css/artikel.css">
+</head>
+<body>
+
+<header class="header-artikel">
+  <h1>Artikel Ilmu Pengetahuan Islam</h1>
+  <a href="../index.html">← Kembali ke Beranda</a>
+</header>
+
+<main class="container" id="daftarArtikel">
+  <p>Memuat artikel...</p>
+</main>
+
+<script>
+fetch("../artikel.json")
+.then(res => res.json())
+.then(data => {
+  const box = document.getElementById("daftarArtikel");
+  box.innerHTML = "";
+  data.forEach(a => {
+    box.innerHTML += `
+      <article class="card">
+        <img src="../${a.gambar}">
+        <h2>${a.judul}</h2>
+        <p>${a.ringkas}</p>
+        <a href="detail.html?id=${a.id}">Baca Selengkapnya</a>
+      </article>
+    `;
+  });
+});
+</script>
+
+</body>
+</html>
