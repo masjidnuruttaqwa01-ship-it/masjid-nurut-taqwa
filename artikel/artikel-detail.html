@@ -128,7 +128,8 @@ fetch("/masjid-nurut-taqwa/artikel.json")
     }
 
     document.getElementById("judulArtikel").innerText = artikel.judul;
-    document.getElementById("gambarArtikel").src = "../" + artikel.gambar;
+    document.getElementById("gambarArtikel").src =
+      "/masjid-nurut-taqwa/" + artikel.gambar;
 
     document.getElementById("isiArtikel").innerHTML =
       artikel.isi
@@ -137,7 +138,6 @@ fetch("/masjid-nurut-taqwa/artikel.json")
         .join("");
   });
 
-/* ===== HIGHLIGHT AYAT ===== */
 function highlightAyat(text){
   return text.replace(
     /(QS\.[^)]+\))/g,
