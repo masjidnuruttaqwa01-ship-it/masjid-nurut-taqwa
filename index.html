@@ -113,9 +113,25 @@ header{
   padding:14px 18px;
 }
 .logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
   font-weight:700;
-  font-size:14px;
   line-height:1.2;
+}
+
+/* Teks utama */
+.logo strong{
+  font-size:18px;        /* BESARIN DI SINI */
+  letter-spacing:0.5px;
+}
+
+/* Subjudul */
+.logo small{
+  display:block;
+  font-size:13px;        /* BESARIN SUBTEKS */
+  font-weight:500;
+  opacity:.9;
 }
 .menu-btn{
   font-size:26px;
@@ -641,8 +657,10 @@ section{
 </div>
 <div class="logo">
   <img src="images/icon-masjid.png" class="icon-masjid">
-  MASJID NURUT TAQWA<br>
-  <small>Kejaksan – Kota Cirebon</small>
+  <div>
+    <strong>MASJID NURUT TAQWA</strong>
+    <small>Kejaksan – Kota Cirebon</small>
+  </div>
 </div>
 </header>
 
