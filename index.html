@@ -598,6 +598,35 @@ section{
   margin-bottom:8px;
   color:#0f6b44;
 }
+  /* ===== FLOATING CHAT BUTTON ===== */
+.chat-islami{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:56px;
+  height:56px;
+  background:linear-gradient(135deg,#0f6b44,#1a8f5f);
+  color:#ffffff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+  z-index:2000;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.chat-islami:hover{
+  transform:scale(1.08);
+  box-shadow:0 16px 36px rgba(0,0,0,.35);
+}
+
+/* ICON DI DALAM */
+.chat-icon{
+  font-size:22px;   /* INI YANG NGATUR BESAR KECIL */
+  line-height:1;
+}
 </style>
 </head>
 <body>
@@ -1000,20 +1029,11 @@ fetch(`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.g
   }
 </script>
 <a href="https://wa.me/6289654084629"
-   style="
-   position:fixed;
-   bottom:20px;
-   right:20px;
-   background:#25D366;
-   color:#fff;
-   padding:14px 16px;
-   border-radius:50%;
-   font-size:22px;
-   text-decoration:none;
-   box-shadow:0 8px 20px rgba(0,0,0,.25);
-   z-index:2000;">
-💬
+   class="chat-islami show"
+   aria-label="Hubungi DKM via WhatsApp">
+  <span class="chat-icon">🕌</span>
 </a>
+  </script>
   <script>
 /* ===== GALERI KEGIATAN ===== */
 const slidesGaleri = document.querySelectorAll('.gallery-slide');
