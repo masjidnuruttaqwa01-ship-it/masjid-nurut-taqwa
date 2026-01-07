@@ -581,6 +581,23 @@ section{
   border-top:1px solid #ddd;
   margin:16px 0;
 }
+.dkm-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+
+.dkm-card{
+  background:rgba(255,255,255,.95);
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+.dkm-card h5{
+  margin-bottom:8px;
+  color:#0f6b44;
+}
 </style>
 </head>
 <body>
@@ -870,42 +887,32 @@ section{
   </table>
 
   <hr>
+  <div class="dkm-grid">
 
-  <h4>Bidang-Bidang</h4>
+  <div class="dkm-card">
+    <h5>📚 Pendidikan & Peribadatan</h5>
+    <p>Suparman<br>Mohamad Sholeh<br>Kolana<br>Hj. Emi Evarini</p>
+  </div>
 
-  <b>Bidang Pendidikan & Peribadatan</b>
-  <ul>
-    <li>Suparman</li>
-    <li>Mohamad Sholeh</li>
-    <li>Kolana</li>
-    <li>Hj. Emi Evarini</li>
-  </ul>
-    
-  <b>Bidang Humas & Lembaga</b>
-  <ul>
-    <li>Mamlukat</li>
-    <li>Anang Mulyadi</li>
-  </ul>
+  <div class="dkm-card">
+    <h5>📢 Humas & Lembaga</h5>
+    <p>Mamlukat<br>Anang Mulyadi</p>
+  </div>
 
-  <b>Bidang Pengembangan Fisik & Sarana</b>
-  <ul>
-    <li>Suratmin</li>
-    <li>Yayat Supriatna</li>
-  </ul>
+  <div class="dkm-card">
+    <h5>🏗️ Fisik & Sarana</h5>
+    <p>Suratmin<br>Yayat Supriatna</p>
+  </div>
 
-  <b>Bidang Pembinaan Wanita</b>
-  <ul>
-    <li>Tutty Nurasih</li>
-    <li>Sri Hartati</li>
-  </ul>
+  <div class="dkm-card">
+    <h5>👩‍👩‍👧 Pembinaan Wanita</h5>
+    <p>Tutty Nurasih<br>Sri Hartati</p>
+  </div>
 
-  <b>Bidang Pemuda & Remaja Masjid</b>
-  <ul>
-    <li>Pramuditya Hasan Choiry</li>
-    <li>Nur Fitriani</li>
-  </ul>
-
-</div>
+  <div class="dkm-card">
+    <h5>🧑‍🎓 Pemuda & Remaja</h5>
+    <p>Pramuditya Hasan Choiry<br>Nur Fitriani</p>
+  </div>
 </section>
 
 <!-- ================= TATA TERTIB ================= -->
