@@ -598,6 +598,30 @@ section{
   margin-bottom:8px;
   color:#0f6b44;
 }
+  /* ===== CHAT FLOAT ELEGAN ===== */
+.chat-float{
+  position:fixed;
+  bottom:20px;
+  right:18px;
+  width:54px;
+  height:54px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#0f6b44,#1fa36b);
+  color:#ffffff;
+  font-size:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  box-shadow:0 12px 30px rgba(0,0,0,.28);
+  z-index:2000;
+  transition:all .3s ease;
+}
+
+.chat-float:hover{
+  transform:translateY(-4px) scale(1.05);
+  box-shadow:0 18px 40px rgba(0,0,0,.35);
+}
 </style>
 </head>
 <body>
@@ -950,9 +974,9 @@ section{
     </p>
 
     <p><b>📱 WhatsApp DKM</b><br>
-      <a href="https://wa.me/6289654084629" target="_blank">
-        0896-5408-4629
-      </a>
+      <a href="https://wa.me/6289654084629" class="chat-float">
+  <img src="images/icon-masjid.png" alt="Chat Masjid">
+</a>
     </p>
 
     <!-- MAP RINGKAS -->
@@ -998,21 +1022,11 @@ fetch(`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.g
     padding:36px 16px;
   }
   }
+  <a href="https://wa.me/6289654084629" class="chat-float" aria-label="Chat WhatsApp">
+  💬
+</a>
 </script>
-<a href="https://wa.me/6289654084629"
-   style="
-   position:fixed;
-   bottom:20px;
-   right:20px;
-   background:#25D366;
-   color:#fff;
-   padding:14px 16px;
-   border-radius:50%;
-   font-size:22px;
-   text-decoration:none;
-   box-shadow:0 8px 20px rgba(0,0,0,.25);
-   z-index:2000;">
-💬
+
 </a>
   <script>
 /* ===== GALERI KEGIATAN ===== */
