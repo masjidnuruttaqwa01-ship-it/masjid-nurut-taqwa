@@ -598,24 +598,70 @@ section{
   margin-bottom:8px;
   color:#0f6b44;
 }
-  /* ===== CHAT FLOAT ELEGAN ===== */
-.chat-float{
+/* ================= CHAT PREMIUM FIX ================= */
+.premium-chat{
   position:fixed;
-  bottom:20px;
-  right:18px;
-  width:54px;
-  height:54px;
-  border-radius:16px;
-  background:linear-gradient(135deg,#0f6b44,#1fa36b);
-  color:#ffffff;
-  font-size:26px;
+  bottom:18px;
+  right:16px;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#0f6b44,#1c8b5f);
+  color:#fff;
+  font-size:22px;
   display:flex;
   align-items:center;
   justify-content:center;
   text-decoration:none;
-  box-shadow:0 12px 30px rgba(0,0,0,.28);
-  z-index:2000;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+  z-index:3000;
+  opacity:0;
+  pointer-events:none;
+  transform:scale(.85);
   transition:all .3s ease;
+}
+
+.premium-chat.show{
+  opacity:1;
+  pointer-events:auto;
+  transform:scale(1);
+}
+
+/* pulse lebih halus & kecil */
+.premium-chat::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  animation:pulse 3s infinite;
+  background:rgba(255,255,255,.18);
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);opacity:.5}
+  70%{transform:scale(1.4);opacity:0}
+  100%{opacity:0}
+}
+
+/* tooltip kecil & elegan */
+.chat-tooltip{
+  position:absolute;
+  right:58px;
+  background:#0b4f34;
+  color:#fff;
+  font-size:12px;
+  padding:5px 9px;
+  border-radius:6px;
+  white-space:nowrap;
+  opacity:0;
+  transform:translateX(6px);
+  transition:.25s ease;
+}
+
+.premium-chat:hover .chat-tooltip{
+  opacity:1;
+  transform:translateX(0);
+}
 }
 
 .chat-float:hover{
@@ -1022,8 +1068,12 @@ fetch(`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.g
     padding:36px 16px;
   }
   }
-  <a href="https://wa.me/6289654084629" class="chat-float" aria-label="Chat WhatsApp">
+  <a href="https://wa.me/6289654084629" 
+   class="chat-float premium-chat" 
+   id="chatDKM"
+   aria-label="Hubungi DKM">
   💬
+  <span class="chat-tooltip">Hubungi DKM</span>
 </a>
 </script>
 
