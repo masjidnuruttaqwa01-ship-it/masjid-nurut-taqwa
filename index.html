@@ -598,76 +598,6 @@ section{
   margin-bottom:8px;
   color:#0f6b44;
 }
-/* ================= CHAT PREMIUM FIX ================= */
-.premium-chat{
-  position:fixed;
-  bottom:18px;
-  right:16px;
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#0f6b44,#1c8b5f);
-  color:#fff;
-  font-size:22px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  box-shadow:0 10px 24px rgba(0,0,0,.25);
-  z-index:3000;
-  opacity:0;
-  pointer-events:none;
-  transform:scale(.85);
-  transition:all .3s ease;
-}
-
-.premium-chat.show{
-  opacity:1;
-  pointer-events:auto;
-  transform:scale(1);
-}
-
-/* pulse lebih halus & kecil */
-.premium-chat::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  animation:pulse 3s infinite;
-  background:rgba(255,255,255,.18);
-}
-
-@keyframes pulse{
-  0%{transform:scale(1);opacity:.5}
-  70%{transform:scale(1.4);opacity:0}
-  100%{opacity:0}
-}
-
-/* tooltip kecil & elegan */
-.chat-tooltip{
-  position:absolute;
-  right:58px;
-  background:#0b4f34;
-  color:#fff;
-  font-size:12px;
-  padding:5px 9px;
-  border-radius:6px;
-  white-space:nowrap;
-  opacity:0;
-  transform:translateX(6px);
-  transition:.25s ease;
-}
-
-.premium-chat:hover .chat-tooltip{
-  opacity:1;
-  transform:translateX(0);
-}
-}
-
-.chat-float:hover{
-  transform:translateY(-4px) scale(1.05);
-  box-shadow:0 18px 40px rgba(0,0,0,.35);
-}
 </style>
 </head>
 <body>
@@ -1020,9 +950,9 @@ section{
     </p>
 
     <p><b>📱 WhatsApp DKM</b><br>
-      <a href="https://wa.me/6289654084629" class="chat-float">
-  <img src="images/icon-masjid.png" alt="Chat Masjid">
-</a>
+      <a href="https://wa.me/6289654084629" target="_blank">
+        0896-5408-4629
+      </a>
     </p>
 
     <!-- MAP RINGKAS -->
@@ -1068,15 +998,21 @@ fetch(`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.g
     padding:36px 16px;
   }
   }
-  <a href="https://wa.me/6289654084629" 
-   class="chat-float premium-chat" 
-   id="chatDKM"
-   aria-label="Hubungi DKM">
-  💬
-  <span class="chat-tooltip">Hubungi DKM</span>
-</a>
 </script>
-
+<a href="https://wa.me/6289654084629"
+   style="
+   position:fixed;
+   bottom:20px;
+   right:20px;
+   background:#25D366;
+   color:#fff;
+   padding:14px 16px;
+   border-radius:50%;
+   font-size:22px;
+   text-decoration:none;
+   box-shadow:0 8px 20px rgba(0,0,0,.25);
+   z-index:2000;">
+💬
 </a>
   <script>
 /* ===== GALERI KEGIATAN ===== */
