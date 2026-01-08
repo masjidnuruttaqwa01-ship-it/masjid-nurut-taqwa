@@ -20,7 +20,7 @@
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f6b44">
+<meta name="theme-color" content="#0f6b44">n">
 
 <!-- FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -97,53 +97,45 @@ body{
   color:#1f2933;
   line-height:1.9;
 }
-  /* ================= HEADER UPGRADE ================= */
+
+/* ================== HEADER ================== */
 header{
-  background: linear-gradient(135deg,#0f6b44,#1a8f5f);
+  background:#0f6b44;
   color:#fff;
-  position:sticky;
-  top:0;
+  position:fixed;
+  top:0;left:0;right:0;
   z-index:1000;
-  box-shadow:0 6px 18px rgba(0,0,0,.18);
 }
-
 .header-inner{
-  max-width:1200px;
-  margin:auto;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  padding:16px 20px;
+  align-items:center;
+  padding:14px 18px;
 }
-
-/* LOGO AREA */
 .logo{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:10px;
+  font-weight:700;
+  line-height:1.2;
 }
 
-.logo img{
-  width:42px;
-  height:42px;
-}
-
+/* Teks utama */
 .logo strong{
-  font-size:20px;
-  letter-spacing:.5px;
-  display:block;
+  font-size:18px;        /* BESARIN DI SINI */
+  letter-spacing:0.5px;
 }
 
+/* Subjudul */
 .logo small{
-  font-size:13px;
+  display:block;
+  font-size:13px;        /* BESARIN SUBTEKS */
+  font-weight:500;
   opacity:.9;
 }
-
-/* MOBILE */
-@media(max-width:600px){
-  .logo strong{
-    font-size:18px;
-  }
+.menu-btn{
+  font-size:26px;
+  cursor:pointer;
 }
 
 /* ================== MOBILE MENU ================== */
@@ -722,119 +714,6 @@ section{
     margin: 28px 12px;
   }
 }
-  /* ================= HERO MEGAH ================= */
-.hero-megah{
-  min-height:70vh;
-  background:
-    linear-gradient(
-      rgba(15,107,68,.88),
-      rgba(15,107,68,.88)
-    ),
-    url("images/masjid-depan.jpg");
-  background-size:cover;
-  background-position:center;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:80px 20px;
-  border-radius:0 0 40px 40px;
-}
-
-.hero-content{
-  max-width:900px;
-}
-
-.hero-content h1{
-  font-family:"Playfair Display",serif;
-  font-size:44px;
-  margin-bottom:16px;
-  letter-spacing:1px;
-  text-shadow:0 10px 30px rgba(0,0,0,.35);
-}
-
-.hero-content p{
-  font-size:18px;
-  opacity:.95;
-  line-height:1.8;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-  .hero-megah{
-    min-height:55vh;
-    padding:60px 16px;
-  }
-
-  .hero-content h1{
-    font-size:30px;
-  }
-
-  .hero-content p{
-    font-size:16px;
-  }
-}
-  /* ================= JADWAL SHOLAT LED ================= */
-
-.jadwal-led{
-  background: linear-gradient(180deg,#0f6b44,#0b4f34);
-  border-radius:32px;
-  margin:40px 16px;
-  padding:40px 20px;
-  color:#fff;
-}
-
-.led-board{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-  margin-top:24px;
-}
-
-.led-item{
-  background:#000;
-  border-radius:20px;
-  padding:22px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:
-    inset 0 0 18px rgba(0,255,0,.2),
-    0 12px 30px rgba(0,0,0,.4);
-}
-
-.led-name{
-  font-size:18px;
-  font-weight:600;
-  color:#7cff7c;
-}
-
-.led-time{
-  font-family:'Courier New', monospace;
-  font-size:28px;
-  letter-spacing:2px;
-  color:#7cff7c;
-}
-
-/* SHOLAT BERIKUTNYA */
-.led-item.active{
-  background:#063;
-  box-shadow:
-    0 0 12px #2aff9c,
-    0 0 28px rgba(42,255,156,.8);
-}
-
-.led-item.active .led-time,
-.led-item.active .led-name{
-  color:#ffffff;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-  .led-time{
-    font-size:24px;
-  }
-}
 </style>
 </head>
 <body>
@@ -872,15 +751,14 @@ section{
 
 <!-- ================= HERO ================= -->
 <div class="hero">
-<section class="hero hero-megah">
-  <div class="hero-content">
-    <h1>Masjid Nurut Taqwa</h1>
-    <p>
-      Pusat ibadah, dakwah, pendidikan Islam, dan pelayanan umat
-      di wilayah Kejaksan, Kota Cirebon.
-    </p>
-  </div>
-</section>  
+  <h1>Masjid Nurut Taqwa</h1>
+  <p>
+    Masjid Nurut Taqwa merupakan masjid jami’ yang berperan sebagai pusat ibadah,
+    dakwah, pendidikan Islam, dan pelayanan umat. Masjid ini berkomitmen untuk
+    menjadi ruang spiritual, sosial, dan edukatif yang terbuka bagi seluruh lapisan
+    masyarakat di wilayah Kejaksan dan sekitarnya.
+  </p>
+</div>
 <!-- ================= PROFIL ================= -->
 <section class="accordion">
   <div class="accordion-header">
@@ -894,9 +772,7 @@ section{
       dan berorientasi pada pelayanan jamaah.
     </p>
     <p>
-      Keberadaan masjid tidak hanya<section class="hero hero-megah">
-  </div>
-      </section> difungsikan sebagai tempat ibadah mahdhah,
+      Keberadaan masjid tidak hanya difungsikan sebagai tempat ibadah mahdhah,
       tetapi juga sebagai pusat pembinaan keislaman, penguatan ukhuwah Islamiyah,
       serta kegiatan sosial kemasyarakatan.
     </p>
@@ -1054,34 +930,33 @@ section{
   <div id="dateHijri"></div>
   <div id="dateMasehi"></div>
 </div>
-<section id="jadwal" class="jadwal-led">
-  <h2 class="section-title">Jadwal Sholat Hari Ini</h2>
+  <section id="jadwal">
+<section class="section">
+  <div class="section-title">Jadwal Sholat Hari Ini</div>
 
-  <div class="led-board">
-    <div class="led-item" data-sholat="fajr">
-      <span class="led-name">Subuh</span>
-      <span class="led-time" id="fajr">--:--</span>
-    </div>
-
-    <div class="led-item" data-sholat="dhuhr">
-      <span class="led-name">Dzuhur</span>
-      <span class="led-time" id="dhuhr">--:--</span>
-    </div>
-
-    <div class="led-item" data-sholat="asr">
-      <span class="led-name">Ashar</span>
-      <span class="led-time" id="asr">--:--</span>
-    </div>
-
-    <div class="led-item" data-sholat="maghrib">
-      <span class="led-name">Maghrib</span>
-      <span class="led-time" id="maghrib">--:--</span>
-    </div>
-
-    <div class="led-item" data-sholat="isha">
-      <span class="led-name">Isya</span>
-      <span class="led-time" id="isha">--:--</span>
-    </div>
+  <div class="card">
+    <ul id="jadwalSholat">
+  <li data-sholat="fajr">
+    <span class="sholat-name">Subuh</span>
+    <span class="digital-time" id="fajr">--:--</span>
+  </li>
+  <li data-sholat="dhuhr">
+    <span class="sholat-name">Dzuhur</span>
+    <span class="digital-time" id="dhuhr">--:--</span>
+  </li>
+  <li data-sholat="asr">
+    <span class="sholat-name">Ashar</span>
+    <span class="digital-time" id="asr">--:--</span>
+  </li>
+  <li data-sholat="maghrib">
+    <span class="sholat-name">Maghrib</span>
+    <span class="digital-time" id="maghrib">--:--</span>
+  </li>
+  <li data-sholat="isha">
+    <span class="sholat-name">Isya</span>
+    <span class="digital-time" id="isha">--:--</span>
+  </li>
+</ul>
   </div>
 </section>
 
@@ -1440,40 +1315,5 @@ cards.forEach(card=>{
   observer.observe(card);
 });
 </script>
-    <script>
-function getNextPrayer(times){
-  const now = new Date();
-  for(const key in times){
-    const [h,m] = times[key].split(":");
-    const t = new Date();
-    t.setHours(h,m,0);
-    if(t > now) return key;
-  }
-  return null;
-}
-
-function highlightNext(){
-  const times = {
-    fajr: document.getElementById("fajr").innerText,
-    dhuhr: document.getElementById("dhuhr").innerText,
-    asr: document.getElementById("asr").innerText,
-    maghrib: document.getElementById("maghrib").innerText,
-    isha: document.getElementById("isha").innerText
-  };
-
-  document.querySelectorAll(".led-item")
-    .forEach(i => i.classList.remove("active"));
-
-  const next = getNextPrayer(times);
-  if(next){
-    document
-      .querySelector(`.led-item[data-sholat="${next}"]`)
-      ?.classList.add("active");
-  }
-}
-
-setInterval(highlightNext,60000);
-highlightNext();
-    </script>
   </body>
 </html>
