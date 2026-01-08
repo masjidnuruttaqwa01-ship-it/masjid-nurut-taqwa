@@ -643,6 +643,77 @@ section{
   font-size:22px;   /* INI YANG NGATUR BESAR KECIL */
   line-height:1;
 }
+  /* ================= PROGRAM UNGGULAN PREMIUM ================= */
+
+.program-section{
+  background: linear-gradient(
+    180deg,
+    #f7faf9 0%,
+    #eef7f2 100%
+  );
+  border-radius: 32px;
+  margin: 40px 16px;
+  padding: 40px 18px;
+}
+
+.program-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 24px;
+}
+
+/* CARD */
+.program-card{
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  border-radius: 22px;
+  padding: 28px 24px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.12);
+  text-align: center;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.program-card:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 28px 55px rgba(0,0,0,.18);
+}
+
+/* ICON */
+.program-icon{
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#0f6b44,#1a8f5f);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 10px 25px rgba(15,107,68,.4);
+}
+
+/* TEXT */
+.program-card h3{
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #0f6b44;
+  font-weight: 700;
+}
+
+.program-card p{
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.7;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .program-section{
+    padding: 30px 14px;
+    margin: 28px 12px;
+  }
+}
 </style>
 </head>
 <body>
@@ -768,29 +839,38 @@ section{
 </section>
 
 <!-- ================= PROGRAM ================= -->
-<section id="program">
-  <div class="section-title">Program Unggulan Masjid</div>
-  <div class="grid">
-    <div class="card">
-      <b>Pendidikan & Dakwah</b>
+<section id="program" class="program-section">
+  <h2 class="section-title">Program Unggulan Masjid</h2>
+
+  <div class="program-grid">
+
+    <div class="program-card">
+      <div class="program-icon">📖</div>
+      <h3>Pendidikan & Dakwah</h3>
       <p>
-        Kajian rutin, pengajian tematik, dan pembinaan keislaman untuk
-        seluruh lapisan jamaah.
+        Kajian rutin, pengajian tematik, TPA, dan pembinaan keislaman
+        untuk anak-anak, remaja, dan jamaah umum.
       </p>
     </div>
-    <div class="card">
-      <b>Sosial & Kemanusiaan</b>
+
+    <div class="program-card">
+      <div class="program-icon">🤝</div>
+      <h3>Sosial & Kemanusiaan</h3>
       <p>
-        Program santunan, bantuan sosial, dan kegiatan kepedulian umat
-        berbasis masjid.
+        Penyaluran zakat, infaq, sedekah, santunan yatim,
+        bantuan dhuafa, dan aksi sosial berbasis masjid.
       </p>
     </div>
-    <div class="card">
-      <b>Pemberdayaan Jamaah</b>
+
+    <div class="program-card">
+      <div class="program-icon">🏛️</div>
+      <h3>Pemberdayaan Jamaah</h3>
       <p>
-        Mendorong keterlibatan jamaah dalam pengelolaan dan pemakmuran masjid.
+        Mendorong keterlibatan jamaah dalam kegiatan masjid,
+        kepengurusan, dan penguatan ukhuwah Islamiyah.
       </p>
     </div>
+
   </div>
 </section>
 
@@ -1217,5 +1297,23 @@ function kirimNotif() {
 </script>
 
 <button onclick="kirimNotif()">🔔 Aktifkan Notifikasi</button> 
-</body>
+<script>
+const cards = document.querySelectorAll('.program-card');
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+},{threshold:0.2});
+
+cards.forEach(card=>{
+  card.style.opacity = 0;
+  card.style.transform = 'translateY(30px)';
+  observer.observe(card);
+});
+</script>
+  </body>
 </html>
