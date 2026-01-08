@@ -137,6 +137,54 @@ header{
   font-size:26px;
   cursor:pointer;
 }
+  /* ================= HEADER UPGRADE ================= */
+header{
+  background: linear-gradient(135deg,#0f6b44,#1a8f5f);
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 20px;
+}
+
+/* LOGO AREA */
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo img{
+  width:42px;
+  height:42px;
+}
+
+.logo strong{
+  font-size:20px;
+  letter-spacing:.5px;
+  display:block;
+}
+
+.logo small{
+  font-size:13px;
+  opacity:.9;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .logo strong{
+    font-size:18px;
+  }
+}
 
 /* ================== MOBILE MENU ================== */
 .mobile-menu{
@@ -714,6 +762,58 @@ section{
     margin: 28px 12px;
   }
 }
+  /* ================= HERO MEGAH ================= */
+.hero-megah{
+  min-height:70vh;
+  background:
+    linear-gradient(
+      rgba(15,107,68,.88),
+      rgba(15,107,68,.88)
+    ),
+    url("images/masjid-depan.jpg");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:80px 20px;
+  border-radius:0 0 40px 40px;
+}
+
+.hero-content{
+  max-width:900px;
+}
+
+.hero-content h1{
+  font-family:"Playfair Display",serif;
+  font-size:44px;
+  margin-bottom:16px;
+  letter-spacing:1px;
+  text-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.hero-content p{
+  font-size:18px;
+  opacity:.95;
+  line-height:1.8;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .hero-megah{
+    min-height:55vh;
+    padding:60px 16px;
+  }
+
+  .hero-content h1{
+    font-size:30px;
+  }
+
+  .hero-content p{
+    font-size:16px;
+  }
+}
 </style>
 </head>
 <body>
@@ -751,14 +851,15 @@ section{
 
 <!-- ================= HERO ================= -->
 <div class="hero">
-  <h1>Masjid Nurut Taqwa</h1>
-  <p>
-    Masjid Nurut Taqwa merupakan masjid jami’ yang berperan sebagai pusat ibadah,
-    dakwah, pendidikan Islam, dan pelayanan umat. Masjid ini berkomitmen untuk
-    menjadi ruang spiritual, sosial, dan edukatif yang terbuka bagi seluruh lapisan
-    masyarakat di wilayah Kejaksan dan sekitarnya.
-  </p>
-</div>
+<section class="hero hero-megah">
+  <div class="hero-content">
+    <h1>Masjid Nurut Taqwa</h1>
+    <p>
+      Pusat ibadah, dakwah, pendidikan Islam, dan pelayanan umat
+      di wilayah Kejaksan, Kota Cirebon.
+    </p>
+  </div>
+</section>  
 <!-- ================= PROFIL ================= -->
 <section class="accordion">
   <div class="accordion-header">
@@ -772,7 +873,9 @@ section{
       dan berorientasi pada pelayanan jamaah.
     </p>
     <p>
-      Keberadaan masjid tidak hanya difungsikan sebagai tempat ibadah mahdhah,
+      Keberadaan masjid tidak hanya<section class="hero hero-megah">
+  </div>
+      </section> difungsikan sebagai tempat ibadah mahdhah,
       tetapi juga sebagai pusat pembinaan keislaman, penguatan ukhuwah Islamiyah,
       serta kegiatan sosial kemasyarakatan.
     </p>
