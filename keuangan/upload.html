@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Input Transaksi</title>
+<style>
+body{
+  font-family:Poppins;
+  background:#eef7f3;
+  padding:20px;
+}
+.form-box{
+  background:white;
+  max-width:420px;
+  padding:24px;
+  margin:auto;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+input,select,button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+button{
+  background:#0f6b44;
+  color:white;
+  font-weight:600;
+  border:none;
+}
+.note{
+  font-size:13px;
+  color:#555;
+  margin-top:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="form-box">
+<h2>Input Transaksi Keuangan</h2>
+
+<select id="jenis">
+  <option>Pemasukan</option>
+  <option>Pengeluaran</option>
+</select>
+
+<input id="tanggal" type="date">
+<input id="ket" placeholder="Keterangan">
+<input id="jumlah" type="number" placeholder="Jumlah Rupiah">
+
+<label>Upload Bukti (Foto)</label>
+<input type="file" id="bukti">
+
+<button onclick="kirim()">Kirim</button>
+
+<div id="link"></div>
+
+<div class="note">
+Setelah upload, salin link gambar dan tempel ke data.json
+</div>
+</div>
+
+<script>
+function kirim(){
+  const file = document.getElementById("bukti").files[0];
+  if(!file){alert("Pilih foto bukti"); return;}
+
+  const form = new FormData();
+  form.append("file", file);
+
+  fetch("https://api.imgbb.com/1/upload?key=YOUR_IMGBB_API_KEY",{
+    method:"POST",
+    body: form
+  })
+  .then(res=>res.json())
+  .then(d=>{
+    link.innerHTML=`
+    <b>Link Bukti:</b><br>
+    <input value="${d.data.url}" style="width:100%">
+    <p>Salin link ini lalu tempel ke data.json</p>
+    `;
+  });
+}
+</script>
+
+</body>
+</html>
