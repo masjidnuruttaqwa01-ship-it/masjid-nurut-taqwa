@@ -1,136 +1,30 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Input Transaksi Keuangan</title>
-
-<style>
-body{
-  font-family:Poppins, Arial;
-  background:#eaf6f1;
-  padding:20px;
-}
-
-.form-box{
-  background:#ffffff;
-  max-width:420px;
-  padding:24px;
-  margin:auto;
-  border-radius:16px;
-  box-shadow:0 12px 30px rgba(0,0,0,.15);
-}
-
-h2{
-  color:#0f6b44;
-  text-align:center;
-}
-
-input, select, button{
-  width:100%;
-  padding:12px;
-  margin-top:12px;
-  border-radius:8px;
-  border:1px solid #ccc;
-  font-size:14px;
-}
-
-button{
-  background:#0f6b44;
-  color:#fff;
-  font-weight:600;
-  border:none;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#0b5a38;
-}
-
-#result{
-  margin-top:16px;
-  background:#f0fff8;
-  padding:12px;
-  border-radius:10px;
-  font-size:13px;
-}
-
-.note{
-  font-size:12px;
-  color:#555;
-  margin-top:10px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="form-box">
-<h2>Upload Transaksi Masjid</h2>
-
-<select id="jenis">
-  <option value="Pemasukan">Pemasukan</option>
-  <option value="Pengeluaran">Pengeluaran</option>
-</select>
-
-<input type="date" id="tanggal">
-<input type="text" id="ket" placeholder="Keterangan transaksi">
-<input type="number" id="jumlah" placeholder="Jumlah Rupiah">
-
-<label>Upload Bukti Foto</label>
-<input type="file" id="bukti">
-
-<button onclick="upload()">Upload Bukti</button>
-
-<div id="result"></div>
-
-<div class="note">
-Setelah upload, salin link bukti lalu tempel ke <b>keuangan/data.json</b>
-</div>
-
-</div>
-
-<script>
 function upload(){
-  const file = document.getElementById("bukti").files[0];
-  if(!file){
-    alert("Pilih foto bukti dulu");
-    return;
-  }
+  const file = bukti.files[0];
+  if(!file){ alert("Pilih foto"); return;}
 
   const apiKey = "a70980819daf3fc4f2421cef4cb333dd";
+  const form = new FormData();
+  form.append("image", file);
 
-  const formData = new FormData();
-  formData.append("image", file);
-
-  fetch("https://api.imgbb.com/1/upload?key=" + apiKey, {
-    method: "POST",
-    body: formData
+  fetch("https://api.imgbb.com/1/upload?key="+apiKey,{
+    method:"POST",
+    body:form
   })
-  .then(res => res.json())
-  .then(data => {
-    const url = data.data.url;
+  .then(res=>res.json())
+  .then(img=>{
+    const data = {
+      tanggal: tanggal.value,
+      jenis: jenis.value,
+      keterangan: ket.value,
+      jumlah: jumlah.value,
+      bukti: img.data.url
+    };
 
-    document.getElementById("result").innerHTML = `
-      <b>Upload berhasil</b><br><br>
-      Link Bukti:<br>
-      <input value="${url}" style="width:100%" onclick="this.select()">
-      <br><br>
-      Tambahkan ke data.json seperti ini:
-      <pre>{
-  "tanggal": "${tanggal.value}",
-  "jenis": "${jenis.value}",
-  "keterangan": "${ket.value}",
-  "jumlah": ${jumlah.value},
-  "bukti": "${url}"
-}</pre>
-    `;
-  })
-  .catch(()=>{
-    alert("Gagal upload, coba ulangi");
+    fetch("https://script.google.com/macros/s/AKfycbyIwIo6LHiTc01tTWmDX6H5sOq3qIrphSNa-SCLaGRqI2BlONT3VPHDnVIkMfOpBzHN/exec",{
+      method:"POST",
+      body: JSON.stringify(data)
+    }).then(()=>{
+      alert("Data berhasil disimpan");
+    });
   });
 }
-</script>
-
-</body>
-</html>
