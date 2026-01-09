@@ -52,33 +52,33 @@ if(localStorage.getItem("login")!=="ok"){
   location.href="login.html";
 }
 
-function logout(){
-  localStorage.removeItem("login");
-  location.href="login.html";
-}
+const API = "a70980819daf3fc4f2421cef4cb333dd";
 
-fetch("data.json")
+fetch(API)
 .then(res=>res.json())
 .then(data=>{
-  let total=0;
+  let saldo=0;
   let html="";
 
   data.forEach(d=>{
-    if(d.jenis==="Pemasukan") total+=d.jumlah;
-    else total-=d.jumlah;
+    const j = parseInt(d.jumlah);
+
+    if(d.jenis==="Pemasukan") saldo+=j;
+    else saldo-=j;
 
     html+=`
     <div class="card">
       <b>${d.tanggal}</b><br>
       ${d.keterangan}<br>
-      <b>${d.jenis}</b>: Rp ${d.jumlah.toLocaleString()}
+      <b>${d.jenis}</b> : Rp ${j.toLocaleString()}<br>
       <img src="${d.bukti}">
-    </div>
-    `;
+    </div>`;
   });
 
-  saldo.innerHTML="Saldo Kas: Rp "+total.toLocaleString();
-  list.innerHTML=html;
+  document.getElementById("saldo").innerHTML =
+    "Saldo Kas: Rp " + saldo.toLocaleString();
+
+  document.getElementById("list").innerHTML = html;
 });
 </script>
 
