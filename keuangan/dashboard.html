@@ -48,37 +48,36 @@ img{
 <div id="list"></div>
 
 <script>
-if(localStorage.getItem("login")!=="ok"){
-  location.href="login.html";
-}
-
 const API_URL = "https://script.google.com/macros/s/AKfycbyIwIo6LHiTc01tTWmDX6H5sOq3qIrphSNa-SCLaGRqI2BlONT3VPHDnVIkMfOpBzHN/exec";
 
-fetch(API)
-.then(res=>res.json())
-.then(data=>{
-  let saldo=0;
-  let html="";
+fetch(API_URL)
+.then(res => res.json())
+.then(data => {
+  let html = "";
+  let totalMasuk = 0;
+  let totalKeluar = 0;
 
-  data.forEach(d=>{
-    const j = parseInt(d.jumlah);
+  data.forEach(row => {
+    let jml = parseInt(row.jumlah);
 
-    if(d.jenis==="Pemasukan") saldo+=j;
-    else saldo-=j;
+    if(row.jenis === "Pemasukan") totalMasuk += jml;
+    if(row.jenis === "Pengeluaran") totalKeluar += jml;
 
-    html+=`
-    <div class="card">
-      <b>${d.tanggal}</b><br>
-      ${d.keterangan}<br>
-      <b>${d.jenis}</b> : Rp ${j.toLocaleString()}<br>
-      <img src="${d.bukti}">
-    </div>`;
+    html += `
+      <tr>
+        <td>${row.tanggal}</td>
+        <td>${row.jenis}</td>
+        <td>${row.keterangan}</td>
+        <td>Rp ${jml.toLocaleString()}</td>
+        <td><a href="${row.bukti}" target="_blank">📷</a></td>
+      </tr>
+    `;
   });
 
-  document.getElementById("saldo").innerHTML =
-    "Saldo Kas: Rp " + saldo.toLocaleString();
-
-  document.getElementById("list").innerHTML = html;
+  document.getElementById("tabelData").innerHTML = html;
+  document.getElementById("masuk").innerText = totalMasuk.toLocaleString();
+  document.getElementById("keluar").innerText = totalKeluar.toLocaleString();
+  document.getElementById("saldo").innerText = (totalMasuk - totalKeluar).toLocaleString();
 });
 </script>
 
