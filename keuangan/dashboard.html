@@ -1,58 +1,80 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Keuangan Masjid</title>
+<title>Dashboard Keuangan</title>
 <style>
-body{font-family:Poppins,sans-serif;background:#eef7f3;padding:20px}
+body{
+  font-family:Poppins,Arial;
+  background:#eef7f3;
+  padding:20px;
+}
+.saldo{
+  background:#0f6b44;
+  color:white;
+  padding:18px;
+  border-radius:14px;
+  font-size:20px;
+  margin-bottom:20px;
+}
 .card{
   background:white;
   border-radius:14px;
-  padding:18px;
-  margin-bottom:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
-}
-.total{
-  background:#0f6b44;
-  color:white;
   padding:16px;
-  border-radius:14px;
-  margin-bottom:20px;
-  font-size:18px;
+  margin-bottom:16px;
+  box-shadow:0 10px 20px rgba(0,0,0,.12);
 }
-img{width:100%;border-radius:10px;margin-top:10px}
+img{
+  width:100%;
+  border-radius:10px;
+  margin-top:10px;
+}
+.logout{
+  background:#b91c1c;
+  color:white;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+}
 </style>
 </head>
 <body>
 
+<button class="logout" onclick="logout()">Logout</button>
 <h2>Keuangan Masjid Nurut Taqwa</h2>
-<div id="saldo" class="total"></div>
+
+<div id="saldo" class="saldo"></div>
 <div id="list"></div>
 
 <script>
-if(localStorage.getItem("auth")!=="ok"){
+if(localStorage.getItem("login")!=="ok"){
+  location.href="login.html";
+}
+
+function logout(){
+  localStorage.removeItem("login");
   location.href="login.html";
 }
 
 fetch("data.json")
-.then(r=>r.json())
-.then(d=>{
-  let html="";
+.then(res=>res.json())
+.then(data=>{
   let total=0;
+  let html="";
 
-  d.forEach(x=>{
-    if(x.jenis==="Pemasukan") total+=x.jumlah;
-    else total-=x.jumlah;
+  data.forEach(d=>{
+    if(d.jenis==="Pemasukan") total+=d.jumlah;
+    else total-=d.jumlah;
 
     html+=`
     <div class="card">
-      <b>${x.tanggal}</b><br>
-      ${x.sumber}<br>
-      <b>${x.jenis}:</b> Rp ${x.jumlah.toLocaleString()}<br>
-      <img src="${x.bukti}">
-    </div>`;
+      <b>${d.tanggal}</b><br>
+      ${d.keterangan}<br>
+      <b>${d.jenis}</b>: Rp ${d.jumlah.toLocaleString()}
+      <img src="${d.bukti}">
+    </div>
+    `;
   });
 
   saldo.innerHTML="Saldo Kas: Rp "+total.toLocaleString();
