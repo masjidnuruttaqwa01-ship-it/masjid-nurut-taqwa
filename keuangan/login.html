@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login Keuangan</title>
+<style>
+body{
+  font-family:Poppins,sans-serif;
+  background:#e9f6f0;
+  padding:40px;
+}
+.box{
+  max-width:380px;
+  background:white;
+  padding:30px;
+  border-radius:14px;
+  margin:auto;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+input,button{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+button{
+  background:#0f6b44;
+  color:white;
+  font-weight:600;
+  border:none;
+}
+</style>
+</head>
+<body>
 
+<div class="box">
+<h2>Keuangan Masjid Nurut Taqwa</h2>
+<input id="u" placeholder="Username">
+<input id="p" type="password" placeholder="Password">
+<button onclick="login()">Masuk</button>
+<p id="msg"></p>
+</div>
+
+<script>
+function login(){
+  if(u.value==="dkm" && p.value==="NurutTaqwa2026"){
+    localStorage.setItem("auth","ok");
+    location.href="dashboard.html";
+  } else {
+    msg.innerText="Login salah";
+  }
+}
+</script>
+
+</body>
+</html>
