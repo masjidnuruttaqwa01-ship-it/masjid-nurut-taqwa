@@ -1,1 +1,64 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keuangan Masjid</title>
+<style>
+body{font-family:Poppins,sans-serif;background:#eef7f3;padding:20px}
+.card{
+  background:white;
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+.total{
+  background:#0f6b44;
+  color:white;
+  padding:16px;
+  border-radius:14px;
+  margin-bottom:20px;
+  font-size:18px;
+}
+img{width:100%;border-radius:10px;margin-top:10px}
+</style>
+</head>
+<body>
+
+<h2>Keuangan Masjid Nurut Taqwa</h2>
+<div id="saldo" class="total"></div>
+<div id="list"></div>
+
+<script>
+if(localStorage.getItem("auth")!=="ok"){
+  location.href="login.html";
+}
+
+fetch("data.json")
+.then(r=>r.json())
+.then(d=>{
+  let html="";
+  let total=0;
+
+  d.forEach(x=>{
+    if(x.jenis==="Pemasukan") total+=x.jumlah;
+    else total-=x.jumlah;
+
+    html+=`
+    <div class="card">
+      <b>${x.tanggal}</b><br>
+      ${x.sumber}<br>
+      <b>${x.jenis}:</b> Rp ${x.jumlah.toLocaleString()}<br>
+      <img src="${x.bukti}">
+    </div>`;
+  });
+
+  saldo.innerHTML="Saldo Kas: Rp "+total.toLocaleString();
+  list.innerHTML=html;
+});
+</script>
+
+</body>
+</html>
