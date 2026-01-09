@@ -1,1 +1,16 @@
-
+[
+  {
+    "tanggal": "2026-01-05",
+    "jenis": "Pemasukan",
+    "sumber": "Infaq Jumat",
+    "jumlah": 1250000,
+    "bukti": "https://drive.google.com/uc?id=XXXX"
+  },
+  {
+    "tanggal": "2026-01-07",
+    "jenis": "Pengeluaran",
+    "sumber": "Pembelian Karpet",
+    "jumlah": 800000,
+    "bukti": "https://drive.google.com/uc?id=YYYY"
+  }
+]
