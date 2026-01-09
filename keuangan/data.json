@@ -2,15 +2,15 @@
   {
     "tanggal": "2026-01-05",
     "jenis": "Pemasukan",
-    "sumber": "Infaq Jumat",
-    "jumlah": 1250000,
-    "bukti": "https://drive.google.com/uc?id=XXXX"
+    "keterangan": "Infaq Jumat",
+    "jumlah": 1500000,
+    "bukti": "https://via.placeholder.com/600x400?text=Infaq+Jumat"
   },
   {
     "tanggal": "2026-01-07",
     "jenis": "Pengeluaran",
-    "sumber": "Pembelian Karpet",
-    "jumlah": 800000,
-    "bukti": "https://drive.google.com/uc?id=YYYY"
+    "keterangan": "Pembelian Karpet Masjid",
+    "jumlah": 850000,
+    "bukti": "https://via.placeholder.com/600x400?text=Karpet"
   }
 ]
