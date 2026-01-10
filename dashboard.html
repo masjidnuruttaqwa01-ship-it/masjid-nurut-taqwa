@@ -2,68 +2,254 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard DKM</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Keuangan DKM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="css/dashboard.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(180deg,#064e3b,#0f766e);
+  color:#fff;
+}
+
+/* ===== HEADER ===== */
+.header{
+  padding:16px;
+  background:#064e3b;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.header h1{
+  font-size:16px;
+  margin:0;
+}
+.logout{
+  background:#dc2626;
+  border:none;
+  color:white;
+  padding:8px 14px;
+  border-radius:10px;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+  padding:16px;
+}
+
+/* ===== SUMMARY ===== */
+.summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:16px;
+}
+.box{
+  background:#fff;
+  color:#064e3b;
+  padding:14px;
+  border-radius:14px;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.box small{
+  opacity:.7;
+}
+.box b{
+  font-size:18px;
+}
+
+/* ===== TABLE ===== */
+.table-box{
+  background:#fff;
+  color:#064e3b;
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:16px;
+}
+.table-box table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+.table-box th{
+  background:#064e3b;
+  color:#fff;
+  padding:10px;
+}
+.table-box td{
+  padding:10px;
+  border-bottom:1px solid #eee;
+}
+.table-box img{
+  width:40px;
+  height:40px;
+  border-radius:6px;
+  object-fit:cover;
+}
+
+/* ===== FORM ===== */
+.form{
+  background:#fff;
+  color:#064e3b;
+  padding:16px;
+  border-radius:16px;
+}
+.form h3{
+  text-align:center;
+  margin-top:0;
+}
+.form input{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+.form button{
+  width:100%;
+  background:#064e3b;
+  color:#fff;
+  border:none;
+  padding:12px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:600;
+}
+</style>
 </head>
 
 <body>
 
 <script>
 if(localStorage.getItem("login")!=="true"){
-  location.href="login.html";
+  window.location="login.html";
 }
 </script>
 
-<header>
-  <h2>Keuangan Masjid Nurut Taqwa</h2>
-  <button onclick="logout()">Logout</button>
-</header>
+<div class="header">
+  <h1>📊 Keuangan Masjid</h1>
+  <button class="logout" onclick="logout()">Logout</button>
+</div>
 
 <div class="container">
 
-<div class="cards">
-  <div class="card">
-    <span>Saldo Kas</span>
-    <h3 id="saldo">Rp 0</h3>
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="box">
+      <small>Saldo</small><br>
+      <b id="saldo">Rp 0</b>
+    </div>
+    <div class="box">
+      <small>Transaksi</small><br>
+      <b id="jumlah">0</b>
+    </div>
+    <div class="box">
+      <small>Pemasukan</small><br>
+      <b id="masukTotal">Rp 0</b>
+    </div>
+    <div class="box">
+      <small>Pengeluaran</small><br>
+      <b id="keluarTotal">Rp 0</b>
+    </div>
   </div>
-  <div class="card">
-    <span>Pemasukan</span>
-    <h3 id="masukTotal">Rp 0</h3>
+
+  <!-- TABLE -->
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Tgl</th>
+          <th>Keterangan</th>
+          <th>Rp</th>
+          <th>Bukti</th>
+        </tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
   </div>
-  <div class="card">
-    <span>Pengeluaran</span>
-    <h3 id="keluarTotal">Rp 0</h3>
+
+  <!-- FORM -->
+  <div class="form">
+    <h3>Tambah Transaksi</h3>
+    <input type="date" id="tgl">
+    <input type="text" id="ket" placeholder="Keterangan">
+    <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
+    <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
+    <input type="file" id="foto" accept="image/*">
+    <button onclick="simpan()">💾 Simpan</button>
   </div>
+
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Tanggal</th>
-      <th>Keterangan</th>
-      <th>Masuk</th>
-      <th>Keluar</th>
-      <th>Bukti</th>
-    </tr>
-  </thead>
-  <tbody id="tabel"></tbody>
-</table>
+<script>
+let data = JSON.parse(localStorage.getItem("kas") || "[]");
 
-<div class="form">
-  <h3>Tambah Transaksi</h3>
-  <input type="date" id="tgl">
-  <input type="text" id="ket" placeholder="Keterangan">
-  <input type="number" id="masuk">
-  <input type="number" id="keluar">
-  <input type="file" id="bukti">
-  <button onclick="simpan()">Simpan</button>
-</div>
+function simpan(){
+  const tgl = tglInput.value;
+  const ket = ketInput.value;
+  const masuk = parseInt(masukInput.value||0);
+  const keluar = parseInt(keluarInput.value||0);
+  const foto = fotoInput.files[0];
 
-</div>
+  if(!tgl || !ket){ alert("Lengkapi data"); return; }
 
-<script src="js/dashboard.js"></script>
+  if(foto){
+    const reader = new FileReader();
+    reader.onload = function(){
+      data.push({tgl,ket,masuk,keluar,foto:this.result});
+      localStorage.setItem("kas",JSON.stringify(data));
+      tampil();
+    }
+    reader.readAsDataURL(foto);
+  } else {
+    data.push({tgl,ket,masuk,keluar,foto:""});
+    localStorage.setItem("kas",JSON.stringify(data));
+    tampil();
+  }
+
+  tglInput.value=ketInput.value=masukInput.value=keluarInput.value="";
+  fotoInput.value="";
+}
+
+function tampil(){
+  let html="", saldo=0, masukT=0, keluarT=0;
+
+  data.forEach(x=>{
+    saldo += x.masuk - x.keluar;
+    masukT += x.masuk;
+    keluarT += x.keluar;
+    html += `<tr>
+      <td>${x.tgl}</td>
+      <td>${x.ket}</td>
+      <td>${x.masuk? "Rp"+x.masuk:x.keluar? "-Rp"+x.keluar:""}</td>
+      <td>${x.foto? `<img src="${x.foto}">`:"-"}</td>
+    </tr>`;
+  });
+
+  list.innerHTML = html;
+  saldo.innerText="Rp "+saldo.toLocaleString();
+  masukTotal.innerText="Rp "+masukT.toLocaleString();
+  keluarTotal.innerText="Rp "+keluarT.toLocaleString();
+  jumlah.innerText=data.length;
+}
+
+tampil();
+
+function logout(){
+  localStorage.removeItem("login");
+  location="login.html";
+}
+
+const tglInput=document.getElementById("tgl");
+const ketInput=document.getElementById("ket");
+const masukInput=document.getElementById("masuk");
+const keluarInput=document.getElementById("keluar");
+const fotoInput=document.getElementById("foto");
+</script>
+
 </body>
 </html>
