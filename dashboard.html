@@ -2,37 +2,112 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard DKM</title>
+<title>Dashboard DKM | Masjid Nurut Taqwa</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 body{
-  font-family:Poppins,system-ui,sans-serif;
-  background:#f0fdf4;
   margin:0;
-  padding:20px;
-}
-h1{color:#065f46;}
-.card{
-  background:#fff;
-  border-radius:16px;
-  padding:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,.1);
-  margin-bottom:16px;
-}
-.saldo{
-  background:#065f46;
+  font-family:Poppins,system-ui,sans-serif;
+  background:linear-gradient(135deg,#064e3b,#0f766e);
   color:#fff;
+}
+
+/* ===== HEADER ===== */
+.header{
   padding:20px;
+  background:rgba(0,0,0,.25);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.header h1{
+  margin:0;
+  font-size:20px;
+}
+.logout{
+  background:#dc2626;
+  border:none;
+  color:white;
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:600;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+  padding:20px;
+  max-width:1100px;
+  margin:auto;
+}
+
+/* ===== CARDS ===== */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+}
+.card{
+  background:rgba(255,255,255,.95);
+  color:#064e3b;
   border-radius:16px;
-  font-size:22px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+.card h3{
+  margin:0 0 8px;
+  font-size:14px;
+  opacity:.7;
+}
+.card .value{
+  font-size:28px;
   font-weight:700;
 }
-button{
-  background:#b91c1c;
-  color:#fff;
+
+/* ===== TRANSAKSI ===== */
+.table{
+  background:rgba(255,255,255,.95);
+  color:#064e3b;
+  border-radius:16px;
+  margin-top:20px;
+  overflow:hidden;
+}
+.table table{
+  width:100%;
+  border-collapse:collapse;
+}
+.table th,.table td{
+  padding:12px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:left;
+  font-size:14px;
+}
+.table th{
+  background:#064e3b;
+  color:white;
+}
+
+/* ===== UPLOAD ===== */
+.upload-box{
+  margin-top:20px;
+  background:rgba(255,255,255,.95);
+  color:#064e3b;
+  padding:20px;
+  border-radius:16px;
+}
+.upload-box input, .upload-box button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+.upload-box button{
+  background:#064e3b;
+  color:white;
   border:none;
-  padding:10px 18px;
-  border-radius:12px;
   font-weight:600;
 }
 </style>
@@ -46,22 +121,61 @@ if(localStorage.getItem("login")!=="true"){
 }
 </script>
 
-<button onclick="logout()">Logout</button>
-
-<h1>Keuangan Masjid Nurut Taqwa</h1>
-
-<div class="saldo">Saldo Kas: Rp 650.000</div>
-
-<div class="card">
-  <b>2026-01-05</b><br>
-  Infaq Jumat<br>
-  <b>Pemasukan: Rp 1.500.000</b>
+<div class="header">
+  <h1>Masjid Nurut Taqwa – Dashboard Keuangan</h1>
+  <button class="logout" onclick="logout()">Logout</button>
 </div>
 
-<div class="card">
-  <b>2026-01-07</b><br>
-  Pembelian Karpet Masjid<br>
-  <b>Pengeluaran: Rp 850.000</b>
+<div class="container">
+
+  <div class="cards">
+    <div class="card">
+      <h3>Saldo Kas</h3>
+      <div class="value">Rp 12.500.000</div>
+    </div>
+    <div class="card">
+      <h3>Pemasukan Bulan Ini</h3>
+      <div class="value">Rp 4.200.000</div>
+    </div>
+    <div class="card">
+      <h3>Pengeluaran Bulan Ini</h3>
+      <div class="value">Rp 2.350.000</div>
+    </div>
+    <div class="card">
+      <h3>Transaksi</h3>
+      <div class="value">128</div>
+    </div>
+  </div>
+
+  <div class="table">
+    <table>
+      <tr>
+        <th>Tanggal</th>
+        <th>Keterangan</th>
+        <th>Masuk</th>
+        <th>Keluar</th>
+      </tr>
+      <tr>
+        <td>2026-01-05</td>
+        <td>Infaq Jumat</td>
+        <td>Rp 1.500.000</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>2026-01-07</td>
+        <td>Pembelian Karpet</td>
+        <td>-</td>
+        <td>Rp 850.000</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="upload-box">
+    <h3>Upload Bukti Transaksi</h3>
+    <input type="file">
+    <button>Upload</button>
+  </div>
+
 </div>
 
 <script>
