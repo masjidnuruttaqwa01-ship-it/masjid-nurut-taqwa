@@ -129,7 +129,13 @@ body{
 if(localStorage.getItem("login")!=="true"){
   window.location.href="./login.html";
 }
-
+if(role==="anggota"){
+  document.getElementById("formInput").style.display="none";
+}
+  if(role!=="bendahara"){
+  alert("Akses ditolak");
+  return;
+  }
 const role = localStorage.getItem("role");
 </script>
   
