@@ -1,201 +1,100 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard DKM | Masjid Nurut Taqwa</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Dashboard Keuangan Masjid</title>
 
 <style>
-*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Poppins,system-ui,sans-serif;
-  background:linear-gradient(135deg,#064e3b,#0f766e);
-  color:#fff;
+  font-family:Arial;
+  background:#f3f4f6;
 }
-
-/* ===== HEADER ===== */
-.header{
-  padding:18px 22px;
-  background:rgba(0,0,0,.25);
+header{
+  background:#064e3b;
+  color:white;
+  padding:15px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  backdrop-filter:blur(10px);
-}
-.header h1{
-  margin:0;
-  font-size:18px;
 }
 .logout{
-  background:#dc2626;
+  background:red;
   border:none;
   color:white;
-  padding:10px 18px;
-  border-radius:12px;
-  font-weight:600;
+  padding:8px 14px;
+  border-radius:8px;
 }
-
-/* ===== CONTAINER ===== */
 .container{
-  padding:22px;
-  max-width:1200px;
-  margin:auto;
-}
-
-/* ===== SUMMARY CARDS ===== */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
+  padding:16px;
 }
 .card{
-  background:rgba(255,255,255,.95);
-  color:#064e3b;
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
-}
-.card h3{
-  margin:0 0 6px;
-  font-size:12px;
-  opacity:.7;
-}
-.card .value{
-  font-size:30px;
-  font-weight:700;
-}
-
-/* ===== FORM ===== */
-.form-box{
-  margin-top:30px;
-  background:rgba(255,255,255,.95);
-  color:#064e3b;
-  padding:24px;
-  border-radius:22px;
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
-}
-.form-box h3{
-  margin-top:0;
-  text-align:center;
-}
-.form-box input{
-  width:100%;
-  padding:14px 16px;
-  margin-bottom:14px;
-  border-radius:14px;
-  border:1px solid #ddd;
-  font-size:15px;
-}
-.form-box button{
-  width:100%;
-  background:linear-gradient(135deg,#0f6b44,#0b4f34);
-  color:#fff;
-  border:none;
+  background:white;
   padding:14px;
-  border-radius:16px;
-  font-size:16px;
-  font-weight:600;
-  box-shadow:0 8px 20px rgba(15,107,68,.5);
+  border-radius:12px;
+  margin-bottom:12px;
 }
-
-/* ===== TABLE ===== */
-.table-box{
-  margin-top:30px;
-  background:rgba(255,255,255,.95);
-  color:#064e3b;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
+input,select{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+button{
+  margin-top:10px;
+  padding:10px;
+  width:100%;
+  background:#064e3b;
+  color:white;
+  border:none;
+  border-radius:10px;
 }
 table{
   width:100%;
   border-collapse:collapse;
 }
-th{
-  background:#064e3b;
-  color:#fff;
-  padding:14px;
-  font-size:12px;
-}
-td{
-  padding:12px;
-  border-bottom:1px solid #e5e7eb;
+th,td{
+  padding:8px;
+  border-bottom:1px solid #ddd;
   font-size:13px;
 }
-tr:hover{
-  background:#f1fdf9;
-}
-
-/* ===== ROLE BADGE ===== */
-.role-badge{
-  background:#facc15;
-  color:#064e3b;
-  padding:6px 14px;
-  border-radius:30px;
-  font-size:12px;
-  font-weight:700;
+img{
+  width:60px;
+  border-radius:6px;
 }
 </style>
 </head>
-
 <body>
 
 <script>
 if(localStorage.getItem("login")!=="true"){
-  window.location="login.html";
+  location.href="login.html";
 }
 const role = localStorage.getItem("role");
 </script>
 
-<div class="header">
-  <div>
-    <h1>Masjid Nurut Taqwa</h1>
-    <small>Dashboard Keuangan</small>
-  </div>
-  <div>
-    <span class="role-badge" id="roleBadge"></span>
-    <button class="logout" onclick="logout()">Logout</button>
-  </div>
-</div>
+<header>
+  <div>Masjid Nurut Taqwa – Keuangan</div>
+  <button class="logout" onclick="logout()">Logout</button>
+</header>
 
 <div class="container">
 
-<div class="cards">
-  <div class="card">
-    <h3>Saldo Kas</h3>
-    <div class="value" id="saldo">Rp 0</div>
-  </div>
-  <div class="card">
-    <h3>Total Pemasukan</h3>
-    <div class="value" id="inTotal">Rp 0</div>
-  </div>
-  <div class="card">
-    <h3>Total Pengeluaran</h3>
-    <div class="value" id="outTotal">Rp 0</div>
-  </div>
-</div>
-
-<!-- FORM INPUT -->
-<div class="form-box" id="formInput">
+<div id="formBox" class="card">
   <h3>Tambah Transaksi</h3>
   <input type="date" id="tgl">
   <input type="text" id="ket" placeholder="Keterangan">
-  <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
-  <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
-  <button onclick="simpan()">💾 Simpan Transaksi</button>
+  <input type="number" id="masuk" placeholder="Pemasukan">
+  <input type="number" id="keluar" placeholder="Pengeluaran">
+  <input type="file" id="foto">
+  <button onclick="kirim()">Simpan</button>
 </div>
 
-<!-- TABLE -->
-<div class="table-box">
+<div class="card">
+  <h3>Data Keuangan</h3>
   <table id="tabel">
     <tr>
-      <th>Tanggal</th>
-      <th>Keterangan</th>
-      <th>Masuk</th>
-      <th>Keluar</th>
+      <th>Tanggal</th><th>Keterangan</th><th>Masuk</th><th>Keluar</th><th>Bukti</th>
     </tr>
   </table>
 </div>
@@ -203,71 +102,54 @@ const role = localStorage.getItem("role");
 </div>
 
 <script>
-document.getElementById("roleBadge").innerText = role==="bendahara" ? "Bendahara" : "Anggota";
+const API="https://script.google.com/macros/s/AKfycbyIwIo6LHiTc01tTWmDX6H5sOq3qIrphSNa-SCLaGRqI2BlONT3VPHDnVIkMfOpBzHN/exec";
 
 if(role==="anggota"){
-  document.getElementById("formInput").style.display="none";
+  document.getElementById("formBox").style.display="none";
 }
+
+function kirim(){
+  const fd=new FormData();
+  fd.append("tanggal",tgl.value);
+  fd.append("keterangan",ket.value);
+  fd.append("masuk",masuk.value);
+  fd.append("keluar",keluar.value);
+  fd.append("foto",foto.files[0]);
+
+  fetch(API,{method:"POST",body:fd})
+  .then(r=>r.text())
+  .then(r=>{
+    alert("Tersimpan");
+    loadData();
+  });
+}
+
+function loadData(){
+  fetch(API)
+  .then(r=>r.json())
+  .then(data=>{
+    let html=`<tr>
+      <th>Tanggal</th><th>Keterangan</th><th>Masuk</th><th>Keluar</th><th>Bukti</th>
+    </tr>`;
+    data.forEach(x=>{
+      html+=`<tr>
+        <td>${x.tanggal}</td>
+        <td>${x.keterangan}</td>
+        <td>${x.masuk}</td>
+        <td>${x.keluar}</td>
+        <td><a href="${x.foto}" target="_blank"><img src="${x.foto}"></a></td>
+      </tr>`;
+    });
+    document.getElementById("tabel").innerHTML=html;
+  });
+}
+
+loadData();
 
 function logout(){
   localStorage.clear();
-  window.location="login.html";
+  location.href="login.html";
 }
-
-let data = JSON.parse(localStorage.getItem("kas") || "[]");
-
-function simpan(){
-  if(role!=="bendahara"){
-    alert("Hanya bendahara yang boleh input");
-    return;
-  }
-  const t = tgl.value;
-  const k = ket.value;
-  const m = Number(masuk.value||0);
-  const kl = Number(keluar.value||0);
-
-  if(!t || !k){
-    alert("Tanggal & keterangan wajib diisi");
-    return;
-  }
-
-  data.push({t,k,m,kl});
-  localStorage.setItem("kas",JSON.stringify(data));
-  tampil();
-}
-
-function tampil(){
-  let saldo=0, masuk=0, keluar=0;
-  let html = `
-    <tr>
-      <th>Tanggal</th>
-      <th>Keterangan</th>
-      <th>Masuk</th>
-      <th>Keluar</th>
-    </tr>
-  `;
-
-  data.forEach(x=>{
-    saldo += x.m - x.kl;
-    masuk += x.m;
-    keluar += x.kl;
-
-    html += `
-      <tr>
-        <td>${x.t}</td>
-        <td>${x.k}</td>
-        <td>${x.m ? "Rp "+x.m.toLocaleString() : "-"}</td>
-        <td>${x.kl ? "Rp "+x.kl.toLocaleString() : "-"}</td>
-      </tr>
-    `;
-  });
-
-  document.getElementById("tabel").innerHTML = html;
-  document.getElementById("saldo").innerText = "Rp "+saldo.toLocaleString();
-  document.getElementById("inTotal").innerText = "Rp "+masuk.toLocaleString();
-  document.getElementById("outTotal").innerText = "Rp "+keluar.toLocaleString();
-}
-tampil();
 </script>
 
 </body>
