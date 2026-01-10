@@ -1,76 +1,181 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Login DKM</title>
+<meta charset="UTF-8">
+<title>Login DKM – Masjid Nurut Taqwa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Arial;
+  font-family:Poppins,sans-serif;
+  min-height:100vh;
   background:linear-gradient(135deg,#064e3b,#0f766e);
-  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
+  color:#064e3b;
 }
-.box{
-  background:white;
-  padding:30px;
-  border-radius:16px;
-  width:90%;
-  max-width:320px;
-}
-h2{text-align:center;color:#064e3b}
-input{
+
+/* ===== CARD ===== */
+.card{
+  background:#ffffff;
   width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
+  max-width:380px;
+  padding:28px;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
+  animation:fade 0.6s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.logo{
+  text-align:center;
+  margin-bottom:16px;
+}
+.logo img{
+  width:90px;
+  margin-bottom:10px;
+}
+.logo h2{
+  margin:0;
+  color:#064e3b;
+  font-size:22px;
+  font-weight:700;
+}
+
+/* ===== FORM ===== */
+.input-group{
+  margin-bottom:14px;
+}
+.input-group label{
+  font-size:13px;
+  color:#555;
+  display:block;
+  margin-bottom:4px;
+}
+.input-group input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
   border:1px solid #ccc;
+  font-size:14px;
 }
-button{
-  width:100%;
-  margin-top:15px;
+
+.role{
+  display:flex;
+  gap:10px;
+  margin-bottom:16px;
+}
+.role button{
+  flex:1;
+  border:none;
   padding:12px;
+  border-radius:14px;
+  font-weight:600;
+  background:#e5e7eb;
+  color:#064e3b;
+}
+.role button.active{
   background:#064e3b;
   color:white;
+}
+
+/* ===== LOGIN BUTTON ===== */
+.login-btn{
+  width:100%;
+  padding:14px;
   border:none;
-  border-radius:10px;
-  font-weight:bold;
+  border-radius:16px;
+  font-size:16px;
+  font-weight:700;
+  background:linear-gradient(135deg,#0f6b44,#0b4f34);
+  color:white;
+  margin-top:10px;
+  box-shadow:0 10px 20px rgba(15,107,68,.4);
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  text-align:center;
+  margin-top:16px;
+  font-size:12px;
+  color:#777;
 }
 </style>
 </head>
+
 <body>
 
-<div class="box">
-  <h2>Login DKM</h2>
-  <input id="user" placeholder="Username">
-  <input id="pass" type="password" placeholder="Password">
-  <button onclick="login()">Masuk</button>
+<div class="card">
+
+  <div class="logo">
+    <img src="https://i.imgur.com/fn6XQ5Y.png">
+    <h2>Masjid Nurut Taqwa</h2>
+    <small>Login Sistem Keuangan DKM</small>
+  </div>
+
+  <div class="input-group">
+    <label>Username</label>
+    <input type="text" id="user" placeholder="Masukkan username">
+  </div>
+
+  <div class="input-group">
+    <label>Password</label>
+    <input type="password" id="pass" placeholder="Masukkan password">
+  </div>
+
+  <div class="role">
+    <button id="btnBendahara" onclick="setRole('bendahara')" class="active">Bendahara</button>
+    <button id="btnAnggota" onclick="setRole('anggota')">Anggota</button>
+  </div>
+
+  <button class="login-btn" onclick="login()">🔐 Login</button>
+
+  <div class="footer">
+    © Masjid Nurut Taqwa – Kejaksan, Kota Cirebon
+  </div>
+
 </div>
 
 <script>
-<script>
-function login(){
-  const u = document.getElementById("username").value;
-  const p = document.getElementById("password").value;
+let selectedRole="bendahara";
 
-  // AKUN
-  if(u=="bendahara" && p=="dkm123"){
-    localStorage.setItem("login","true");
-    localStorage.setItem("role","bendahara");
-    location="dashboard.html";
-  }
-  else if(u=="anggota" && p=="123"){
-    localStorage.setItem("login","true");
-    localStorage.setItem("role","anggota");
-    location="dashboard.html";
-  }
-  else{
-    alert("Username / password salah");
-  }
+function setRole(role){
+  selectedRole=role;
+  document.getElementById("btnBendahara").classList.remove("active");
+  document.getElementById("btnAnggota").classList.remove("active");
+
+  if(role==="bendahara") document.getElementById("btnBendahara").classList.add("active");
+  if(role==="anggota") document.getElementById("btnAnggota").classList.add("active");
 }
-</script>
+
+function login(){
+  const u=document.getElementById("user").value;
+  const p=document.getElementById("pass").value;
+
+  // Akun
+  if(selectedRole==="bendahara"){
+    if(u==="dkm" && p==="12345"){
+      localStorage.setItem("login","true");
+      localStorage.setItem("role","bendahara");
+      location="dashboard.html";
+    } else alert("Akun bendahara salah");
+  }
+
+  if(selectedRole==="anggota"){
+    if(u==="anggota" && p==="123"){
+      localStorage.setItem("login","true");
+      localStorage.setItem("role","anggota");
+      location="dashboard.html";
+    } else alert("Akun anggota salah");
   }
 }
 </script>
