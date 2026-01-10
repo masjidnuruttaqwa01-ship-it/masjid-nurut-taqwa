@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login DKM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+  margin:0;
+  background:linear-gradient(135deg,#0f6b44,#1fa36a);
+  font-family:Poppins;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.box{
+  background:white;
+  padding:30px;
+  border-radius:16px;
+  width:90%;
+  max-width:320px;
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
+}
+
+h2{text-align:center;color:#0f6b44}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+button{
+  width:100%;
+  margin-top:15px;
+  background:#0f6b44;
+  color:white;
+  border:none;
+  padding:12px;
+  border-radius:8px;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Login DKM</h2>
+
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+
+<button onclick="login()">Masuk</button>
+
+<p id="msg" style="color:red;text-align:center"></p>
+</div>
+
+<script>
+function login(){
+  let u=document.getElementById("user").value;
+  let p=document.getElementById("pass").value;
+
+  if(u=="dkm" && p=="nuruttaqwa"){
+    localStorage.setItem("login","true");
+    window.location="dashboard.html";
+  }else{
+    document.getElementById("msg").innerText="Login salah";
+  }
+}
+</script>
+
+</body>
+</html>
