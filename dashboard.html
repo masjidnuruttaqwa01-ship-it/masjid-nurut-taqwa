@@ -2,360 +2,68 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard DKM | Masjid Nurut Taqwa</title>
+<title>Dashboard DKM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link rel="stylesheet" href="css/dashboard.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-body{
-  margin:0;
-  font-family:Poppins,system-ui,sans-serif;
-  background:linear-gradient(135deg,#064e3b,#0f766e);
-  color:#fff;
-}
-
-/* ===== HEADER ===== */
-.header{
-  padding:20px;
-  background:rgba(0,0,0,.25);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.header h1{
-  margin:0;
-  font-size:20px;
-}
-.logout{
-  background:#dc2626;
-  border:none;
-  color:white;
-  padding:10px 18px;
-  border-radius:10px;
-  font-weight:600;
-}
-
-/* ===== CONTAINER ===== */
-.container{
-  padding:22px;
-  max-width:1100px;
-  margin:auto;
-}
-
-/* ===== CARDS ===== */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
-}
-.card{
-  background:rgba(255,255,255,.95);
-  color:#064e3b;
-  border-radius:14px;
-  padding:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.3);
-}
-.card h3{
-  margin:0 0 6px;
-  font-size:12px;
-  opacity:.7;
-}
-.card .value{
-  font-size:28px;
-  font-weight:700;
-}
-
-/* ===== FORM TRANSAKSI ===== */
-.upload-box{
-  background:#ffffff;
-  padding:22px;
-  border-radius:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
-  max-width:500px;
-  margin:0 auto 40px auto;
-}
-
-.upload-box h3{
-  text-align:center;
-  color:#0f6b44;
-  margin-bottom:18px;
-}
-
-/* semua input */
-.upload-box input,
-.upload-box select{
-  width:100%;
-  padding:14px 16px;
-  border-radius:12px;
-  border:1px solid #ddd;
-  font-size:15px;
-  margin-bottom:14px;
-  outline:none;
-  background:#f9fafb;
-}
-
-.upload-box input:focus{
-  border-color:#0f6b44;
-  background:#fff;
-}
-
-/* tombol simpan */
-.upload-box button{
-  width:100%;
-  background:linear-gradient(135deg,#0f6b44,#0b4f34);
-  color:#fff;
-  border:none;
-  padding:14px;
-  font-size:16px;
-  border-radius:14px;
-  cursor:pointer;
-  font-weight:600;
-  margin-top:10px;
-  box-shadow:0 8px 20px rgba(15,107,68,.4);
-}
-
-.upload-box button:hover{
-  opacity:.95;
-}
-
-/* input file */
-.upload-box input[type="file"]{
-  background:#fff;
-  border:2px dashed #0f6b44;
-  padding:18px;
-  text-align:center;
-}
-/* ===== UPLOAD ===== */
-.upload-box{
-  margin-top:20px;
-  background:rgba(255,255,255,.95);
-  color:#064e3b;
-  padding:20px;
-  border-radius:16px;
-}
-.upload-box input, .upload-box button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-}
-.upload-box button{
-  background:#064e3b;
-  color:white;
-  border:none;
-  font-weight:600;
-}
-  /* ===== PHOTO VIEWER ===== */
-.photo-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-  animation:fade .3s;
-}
-
-.photo-modal img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:16px;
-  box-shadow:0 0 40px rgba(255,255,255,.2); Bu
-  animation:zoom .3s;
-}
-
-.photo-modal::after{
-  content:"✕";
-  position:absolute;
-  top:20px;
-  right:30px;
-  font-size:40px;
-  color:white;
-  cursor:pointer;
-}
-
-@keyframes zoom{
-  from{transform:scale(.7);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
-@keyframes fade{
-  from{opacity:0}
-  to{opacity:1}
-}
-  /* ===== FOTO BUKTI ===== */
-.bukti{
-  width:60px;
-  height:60px;
-  object-fit:cover;
-  border-radius:10px;
-  cursor:pointer;
-  border:2px solid #0f6b44;
-  box-shadow:0 4px 10px rgba(0,0,0,.3);
-}
-</style>
 </head>
 
 <body>
 
 <script>
 if(localStorage.getItem("login")!=="true"){
-  window.location.href="./login.html";
+  location.href="login.html";
 }
 </script>
 
-<div class="header">
-  <h1>Masjid Nurut Taqwa – Dashboard Keuangan</h1>
-  <button class="logout" onclick="logout()">Logout</button>
-</div>
+<header>
+  <h2>Keuangan Masjid Nurut Taqwa</h2>
+  <button onclick="logout()">Logout</button>
+</header>
 
 <div class="container">
 
-  <div class="cards">
-    <div class="card">
-      <h3>Saldo Kas</h3>
-      <div class="value">Rp 12.500.000</div>
-    </div>
-    <div class="card">
-      <h3>Pemasukan Bulan Ini</h3>
-      <div class="value">Rp 4.200.000</div>
-    </div>
-    <div class="card">
-      <h3>Pengeluaran Bulan Ini</h3>
-      <div class="value">Rp 2.350.000</div>
-    </div>
-    <div class="card">
-      <h3>Transaksi</h3>
-      <div class="value">128</div>
-    </div>
+<div class="cards">
+  <div class="card">
+    <span>Saldo Kas</span>
+    <h3 id="saldo">Rp 0</h3>
   </div>
-
-  <div class="table">
-    <table>
-      <tr>
-        <th>Tanggal</th>
-        <th>Keterangan</th>
-        <th>Masuk</th>
-        <th>Keluar</th>
-      </tr>
-      <tr>
-        <td>2026-01-05</td>
-        <td>Infaq Jumat</td>
-        <td>Rp 1.500.000</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>2026-01-07</td>
-        <td>Pembelian Karpet</td>
-        <td>-</td>
-        <td>Rp 850.000</td>
-      </tr>
-    </table>
+  <div class="card">
+    <span>Pemasukan</span>
+    <h3 id="masukTotal">Rp 0</h3>
   </div>
-
-  <div class="upload-box">
-  <h3>Tambah Transaksi</h3>
-
-  <input type="date" id="tgl">
-
-  <input type="text" id="ket" placeholder="Keterangan transaksi">
-
-  <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
-
-  <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
-
-  <input type="file" id="bukti">
-
-  <button onclick="simpanTransaksi()">💾 Simpan Transaksi</button>
+  <div class="card">
+    <span>Pengeluaran</span>
+    <h3 id="keluarTotal">Rp 0</h3>
+  </div>
 </div>
 
-<script>
-function logout(){
-  localStorage.removeItem("login");
-  window.location.href="./login.html";
-}
-  function viewPhoto(src){
-  const modal = document.createElement("div");
-  modal.className = "photo-modal";
-  modal.innerHTML = `<img src="${src}">`;
-  modal.onclick = ()=> modal.remove();
-  document.body.appendChild(modal);
-  }
-</script>
-<script>
-let data = JSON.parse(localStorage.getItem("transaksi") || "[]");
+<table>
+  <thead>
+    <tr>
+      <th>Tanggal</th>
+      <th>Keterangan</th>
+      <th>Masuk</th>
+      <th>Keluar</th>
+      <th>Bukti</th>
+    </tr>
+  </thead>
+  <tbody id="tabel"></tbody>
+</table>
 
-function simpanTransaksi(){
-  const tgl = document.getElementById("tgl").value;
-  const ket = document.getElementById("ket").value;
-  const masuk = document.getElementById("masuk").value;
-  const keluar = document.getElementById("keluar").value;
-  const file = document.getElementById("bukti").files[0];
+<div class="form">
+  <h3>Tambah Transaksi</h3>
+  <input type="date" id="tgl">
+  <input type="text" id="ket" placeholder="Keterangan">
+  <input type="number" id="masuk">
+  <input type="number" id="keluar">
+  <input type="file" id="bukti">
+  <button onclick="simpan()">Simpan</button>
+</div>
 
-  if(!tgl || !ket){
-    alert("Lengkapi tanggal & keterangan");
-    return;
-  }
+</div>
 
-  if(file){
-    const reader = new FileReader();
-    reader.onload = function(e){
-      data.push({
-        tgl,
-        ket,
-        masuk,
-        keluar,
-        foto: e.target.result
-      });
-      localStorage.setItem("transaksi", JSON.stringify(data));
-      tampilkan();
-    };
-    reader.readAsDataURL(file);
-  } else {
-    data.push({tgl,ket,masuk,keluar});
-    localStorage.setItem("transaksi", JSON.stringify(data));
-    tampilkan();
-  }
-}
-
-function tampilkan(){
-  let html="";
-  let saldo=0, inTotal=0, outTotal=0;
-
-  data.forEach(x=>{
-    const m = parseInt(x.masuk||0);
-    const k = parseInt(x.keluar||0);
-    saldo += m-k;
-    inTotal+=m;
-    outTotal+=k;
-
-    html += `
-      <tr>
-        <td>${x.tgl}</td>
-        <td>${x.ket}</td>
-        <td>${m? "Rp "+m.toLocaleString():"-"}</td>
-        <td>${k? "Rp "+k.toLocaleString():"-"}</td>
-      </tr>
-    `;
-  });
-
-  document.querySelector(".table table").innerHTML = `
-    <table>
-<tr>
-<th>Tanggal</th>
-<th>Keterangan</th>
-<th>Masuk</th>
-<th>Keluar</th>
-<th>Bukti</th>
-</tr>
-  document.querySelectorAll(".value")[0].innerText="Rp "+saldo.toLocaleString();
-  document.querySelectorAll(".value")[1].innerText="Rp "+inTotal.toLocaleString();
-  document.querySelectorAll(".value")[2].innerText="Rp "+outTotal.toLocaleString();
-}
-
-tampilkan();
-</script>
+<script src="js/dashboard.js"></script>
 </body>
 </html>
