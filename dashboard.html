@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard DKM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+  font-family:Poppins,system-ui,sans-serif;
+  background:#f0fdf4;
+  margin:0;
+  padding:20px;
+}
+h1{color:#065f46;}
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+  margin-bottom:16px;
+}
+.saldo{
+  background:#065f46;
+  color:#fff;
+  padding:20px;
+  border-radius:16px;
+  font-size:22px;
+  font-weight:700;
+}
+button{
+  background:#b91c1c;
+  color:#fff;
+  border:none;
+  padding:10px 18px;
+  border-radius:12px;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+if(localStorage.getItem("login")!=="true"){
+  window.location.href="./login.html";
+}
+</script>
+
+<button onclick="logout()">Logout</button>
+
+<h1>Keuangan Masjid Nurut Taqwa</h1>
+
+<div class="saldo">Saldo Kas: Rp 650.000</div>
+
+<div class="card">
+  <b>2026-01-05</b><br>
+  Infaq Jumat<br>
+  <b>Pemasukan: Rp 1.500.000</b>
+</div>
+
+<div class="card">
+  <b>2026-01-07</b><br>
+  Pembelian Karpet Masjid<br>
+  <b>Pengeluaran: Rp 850.000</b>
+</div>
+
+<script>
+function logout(){
+  localStorage.removeItem("login");
+  window.location.href="./login.html";
+}
+</script>
+
+</body>
+</html>
