@@ -199,21 +199,27 @@ const role = localStorage.getItem("role");
 <script>
 let data = JSON.parse(localStorage.getItem("kas") || "[]");
 
-function simpan(){
-  const tgl = tglInput.value;
-  const ket = ketInput.value;
-  const masuk = parseInt(masukInput.value||0);
-  const keluar = parseInt(keluarInput.value||0);
-  const foto = fotoInput.files[0];
+function simpanTransaksi(){
 
-  if(!tgl || !ket){ alert("Lengkapi data"); return; }
+  if(role!=="bendahara"){
+    alert("Akses ditolak. Hanya bendahara yang boleh mengubah data.");
+    return;
+  }
 
-  if(foto){
-    const reader = new FileReader();
-    reader.onload = function(){
-      data.push({tgl,ket,masuk,keluar,foto:this.result});
-      localStorage.setItem("kas",JSON.stringify(data));
-      tampil();
+  const tgl = document.getElementById("tgl").value;
+  const ket = document.getElementById("ket").value;
+  const masuk = document.getElementById("masuk").value;
+  const keluar = document.getElementById("keluar").value;
+
+  if(!tgl || !ket){
+    alert("Lengkapi tanggal & keterangan");
+    return;
+  }
+
+  data.push({tgl,ket,masuk,keluar});
+  localStorage.setItem("transaksi", JSON.stringify(data));
+  tampilkan();
+}
     }
     reader.readAsDataURL(foto);
   } else {
@@ -264,6 +270,13 @@ const fotoInput=document.getElementById("foto");
 <script>
 if(role==="anggota"){
   document.getElementById("formInput").style.display="none";
+  if(role==="anggota"){
+  document.querySelectorAll("button").forEach(btn=>{
+    if(btn.innerText.includes("Simpan") || btn.innerText.includes("Upload")){
+      btn.style.display="none";
+    }
+  });
+  }
 }
 </script>
 </body>
