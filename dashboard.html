@@ -173,7 +173,7 @@ if(localStorage.getItem("login")!=="true"){
   </div>
 
   <!-- FORM -->
-  <div class="form">
+  <div class="form" id="formInput">
     <h3>Tambah Transaksi</h3>
     <input type="date" id="tgl">
     <input type="text" id="ket" placeholder="Keterangan">
@@ -249,6 +249,18 @@ const ketInput=document.getElementById("ket");
 const masukInput=document.getElementById("masuk");
 const keluarInput=document.getElementById("keluar");
 const fotoInput=document.getElementById("foto");
+  <script>
+if(localStorage.getItem("login")!=="true"){
+  window.location="login.html";
+}
+</script>
+  <script>
+const role = localStorage.getItem("role");
+
+if(role === "anggota"){
+  document.getElementById("formInput").style.display = "none";
+}
+  </script>
 </script>
 
 </body>
