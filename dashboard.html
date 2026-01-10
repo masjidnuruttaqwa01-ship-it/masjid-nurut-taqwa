@@ -147,6 +147,54 @@ body{
   border:none;
   font-weight:600;
 }
+  /* ===== PHOTO VIEWER ===== */
+.photo-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  animation:fade .3s;
+}
+
+.photo-modal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:16px;
+  box-shadow:0 0 40px rgba(255,255,255,.2); Bu
+  animation:zoom .3s;
+}
+
+.photo-modal::after{
+  content:"✕";
+  position:absolute;
+  top:20px;
+  right:30px;
+  font-size:40px;
+  color:white;
+  cursor:pointer;
+}
+
+@keyframes zoom{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+@keyframes fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+  /* ===== FOTO BUKTI ===== */
+.bukti{
+  width:60px;
+  height:60px;
+  object-fit:cover;
+  border-radius:10px;
+  cursor:pointer;
+  border:2px solid #0f6b44;
+  box-shadow:0 4px 10px rgba(0,0,0,.3);
+}
 </style>
 </head>
 
@@ -228,6 +276,13 @@ function logout(){
   localStorage.removeItem("login");
   window.location.href="./login.html";
 }
+  function viewPhoto(src){
+  const modal = document.createElement("div");
+  modal.className = "photo-modal";
+  modal.innerHTML = `<img src="${src}">`;
+  modal.onclick = ()=> modal.remove();
+  document.body.appendChild(modal);
+  }
 </script>
 <script>
 let data = JSON.parse(localStorage.getItem("transaksi") || "[]");
@@ -237,15 +292,32 @@ function simpanTransaksi(){
   const ket = document.getElementById("ket").value;
   const masuk = document.getElementById("masuk").value;
   const keluar = document.getElementById("keluar").value;
+  const file = document.getElementById("bukti").files[0];
 
   if(!tgl || !ket){
     alert("Lengkapi tanggal & keterangan");
     return;
   }
 
-  data.push({tgl,ket,masuk,keluar});
-  localStorage.setItem("transaksi", JSON.stringify(data));
-  tampilkan();
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      data.push({
+        tgl,
+        ket,
+        masuk,
+        keluar,
+        foto: e.target.result
+      });
+      localStorage.setItem("transaksi", JSON.stringify(data));
+      tampilkan();
+    };
+    reader.readAsDataURL(file);
+  } else {
+    data.push({tgl,ket,masuk,keluar});
+    localStorage.setItem("transaksi", JSON.stringify(data));
+    tampilkan();
+  }
 }
 
 function tampilkan(){
@@ -270,13 +342,14 @@ function tampilkan(){
   });
 
   document.querySelector(".table table").innerHTML = `
-    <tr>
-      <th>Tanggal</th>
-      <th>Keterangan</th>
-      <th>Masuk</th>
-      <th>Keluar</th>
-    </tr>${html}`;
-
+    <table>
+<tr>
+<th>Tanggal</th>
+<th>Keterangan</th>
+<th>Masuk</th>
+<th>Keluar</th>
+<th>Bukti</th>
+</tr>
   document.querySelectorAll(".value")[0].innerText="Rp "+saldo.toLocaleString();
   document.querySelectorAll(".value")[1].innerText="Rp "+inTotal.toLocaleString();
   document.querySelectorAll(".value")[2].innerText="Rp "+outTotal.toLocaleString();
