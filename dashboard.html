@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <title>Dashboard Keuangan DKM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:Poppins,sans-serif;
@@ -17,8 +17,8 @@ body{
 
 /* ===== HEADER ===== */
 .header{
-  padding:16px;
   background:#064e3b;
+  padding:14px 16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -26,13 +26,15 @@ body{
 .header h1{
   font-size:16px;
   margin:0;
+  font-weight:700;
 }
 .logout{
   background:#dc2626;
   border:none;
-  color:white;
+  color:#fff;
   padding:8px 14px;
-  border-radius:10px;
+  border-radius:12px;
+  font-weight:600;
 }
 
 /* ===== CONTAINER ===== */
@@ -45,29 +47,33 @@ body{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin-bottom:16px;
+  margin-bottom:18px;
 }
 .box{
   background:#fff;
   color:#064e3b;
-  padding:14px;
-  border-radius:14px;
-  box-shadow:0 6px 20px rgba(0,0,0,.25);
+  padding:16px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
 .box small{
   opacity:.7;
+  font-size:12px;
 }
 .box b{
-  font-size:18px;
+  font-size:20px;
+  display:block;
+  margin-top:4px;
 }
 
 /* ===== TABLE ===== */
 .table-box{
   background:#fff;
   color:#064e3b;
-  border-radius:16px;
+  border-radius:18px;
   overflow:hidden;
-  margin-bottom:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+  margin-bottom:20px;
 }
 .table-box table{
   width:100%;
@@ -78,6 +84,7 @@ body{
   background:#064e3b;
   color:#fff;
   padding:10px;
+  text-align:left;
 }
 .table-box td{
   padding:10px;
@@ -86,38 +93,61 @@ body{
 .table-box img{
   width:40px;
   height:40px;
-  border-radius:6px;
+  border-radius:8px;
   object-fit:cover;
+  cursor:pointer;
 }
 
 /* ===== FORM ===== */
 .form{
   background:#fff;
   color:#064e3b;
-  padding:16px;
-  border-radius:16px;
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
 .form h3{
   text-align:center;
   margin-top:0;
+  margin-bottom:14px;
 }
 .form input{
   width:100%;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:10px;
+  padding:12px 14px;
+  border-radius:12px;
   border:1px solid #ccc;
+  margin-bottom:12px;
   font-size:14px;
+}
+.form input[type="file"]{
+  border:2px dashed #0f6b44;
+  background:#f9fafb;
 }
 .form button{
   width:100%;
-  background:#064e3b;
+  background:linear-gradient(135deg,#0f6b44,#0b4f34);
   color:#fff;
   border:none;
-  padding:12px;
-  border-radius:12px;
+  padding:14px;
+  border-radius:14px;
   font-size:16px;
-  font-weight:600;
+  font-weight:700;
+}
+
+/* ===== MODAL FOTO ===== */
+#fotoModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+#fotoModal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:14px;
 }
 </style>
 </head>
@@ -134,19 +164,19 @@ body{
   <!-- SUMMARY -->
   <div class="summary">
     <div class="box">
-      <small>Saldo</small><br>
+      <small>Saldo</small>
       <b id="saldo">Rp 0</b>
     </div>
     <div class="box">
-      <small>Transaksi</small><br>
+      <small>Transaksi</small>
       <b id="jumlah">0</b>
     </div>
     <div class="box">
-      <small>Pemasukan</small><br>
+      <small>Pemasukan</small>
       <b id="masukTotal">Rp 0</b>
     </div>
     <div class="box">
-      <small>Pengeluaran</small><br>
+      <small>Pengeluaran</small>
       <b id="keluarTotal">Rp 0</b>
     </div>
   </div>
@@ -174,31 +204,115 @@ body{
     <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
     <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
     <input type="file" id="foto" accept="image/*">
-    <button onclick="simpan()">💾 Simpan</button>
+    <button onclick="simpan()">💾 Simpan Transaksi</button>
   </div>
 
 </div>
 
+<!-- MODAL FOTO -->
+<div id="fotoModal" onclick="this.style.display='none'">
+  <img id="fotoPreview">
+</div>
 
+<script>
+/* ===== CEK LOGIN ===== */
+if(localStorage.getItem("login")!=="true"){
+  window.location="login.html";
 }
 
+const role = localStorage.getItem("role");
+
+/* ===== AMBIL ELEMENT ===== */
 const tglInput=document.getElementById("tgl");
 const ketInput=document.getElementById("ket");
 const masukInput=document.getElementById("masuk");
 const keluarInput=document.getElementById("keluar");
 const fotoInput=document.getElementById("foto");
-  <script>
-if(localStorage.getItem("login")!=="true"){
-  window.location="login.html";
-}
-</script>
-  <script>
-const role = localStorage.getItem("role");
+const formInput=document.getElementById("formInput");
 
-if(role === "anggota"){
-  document.getElementById("formInput").style.display = "none";
+/* ===== SEMBUNYIKAN FORM JIKA ANGGOTA ===== */
+if(role==="anggota"){
+  formInput.style.display="none";
 }
-  </script>
+
+/* ===== DATA ===== */
+let data = JSON.parse(localStorage.getItem("kas")||"[]");
+
+/* ===== SIMPAN ===== */
+function simpan(){
+  if(role!=="bendahara"){
+    alert("Hanya Bendahara yang boleh input data");
+    return;
+  }
+
+  const tgl=tglInput.value;
+  const ket=ketInput.value;
+  const masuk=parseInt(masukInput.value||0);
+  const keluar=parseInt(keluarInput.value||0);
+  const foto=fotoInput.files[0];
+
+  if(!tgl||!ket){ alert("Lengkapi data"); return; }
+
+  if(foto){
+    const r=new FileReader();
+    r.onload=function(){
+      data.push({tgl,ket,masuk,keluar,foto:this.result});
+      localStorage.setItem("kas",JSON.stringify(data));
+      tampil();
+    }
+    r.readAsDataURL(foto);
+  }else{
+    data.push({tgl,ket,masuk,keluar,foto:""});
+    localStorage.setItem("kas",JSON.stringify(data));
+    tampil();
+  }
+
+  tglInput.value="";
+  ketInput.value="";
+  masukInput.value="";
+  keluarInput.value="";
+  fotoInput.value="";
+}
+
+/* ===== TAMPILKAN ===== */
+function tampil(){
+  let html="", saldo=0, masukT=0, keluarT=0;
+
+  data.forEach(x=>{
+    saldo+=x.masuk-x.keluar;
+    masukT+=x.masuk;
+    keluarT+=x.keluar;
+
+    html+=`
+    <tr>
+      <td>${x.tgl}</td>
+      <td>${x.ket}</td>
+      <td>${x.masuk? "Rp "+x.masuk.toLocaleString():x.keluar? "-Rp "+x.keluar.toLocaleString():""}</td>
+      <td>${x.foto? `<img src="${x.foto}" onclick="viewFoto('${x.foto}')">`:"-"}</td>
+    </tr>`;
+  });
+
+  document.getElementById("list").innerHTML=html;
+  document.getElementById("saldo").innerText="Rp "+saldo.toLocaleString();
+  document.getElementById("masukTotal").innerText="Rp "+masukT.toLocaleString();
+  document.getElementById("keluarTotal").innerText="Rp "+keluarT.toLocaleString();
+  document.getElementById("jumlah").innerText=data.length;
+}
+
+tampil();
+
+/* ===== FOTO ===== */
+function viewFoto(src){
+  document.getElementById("fotoPreview").src=src;
+  document.getElementById("fotoModal").style.display="flex";
+}
+
+/* ===== LOGOUT ===== */
+function logout(){
+  localStorage.removeItem("login");
+  localStorage.removeItem("role");
+  location="login.html";
+}
 </script>
 
 </body>
