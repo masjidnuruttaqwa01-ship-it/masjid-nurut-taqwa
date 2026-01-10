@@ -189,6 +189,11 @@ if(localStorage.getItem("login")!=="true"){
 let data = JSON.parse(localStorage.getItem("kas") || "[]");
 
 function simpan(){
+  if(localStorage.getItem("role")!=="bendahara"){
+    alert("Hanya Bendahara yang boleh input data");
+    return;
+  }
+
   const tgl = tglInput.value;
   const ket = ketInput.value;
   const masuk = parseInt(masukInput.value||0);
@@ -213,6 +218,7 @@ function simpan(){
 
   tglInput.value=ketInput.value=masukInput.value=keluarInput.value="";
   fotoInput.value="";
+}
 }
 
 function tampil(){
