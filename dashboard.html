@@ -2,287 +2,187 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard DKM | Masjid Nurut Taqwa</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DKM – Keuangan Masjid Nurut Taqwa</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
-  font-family:Poppins,system-ui,sans-serif;
-  background:linear-gradient(135deg,#064e3b,#0f766e);
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,#0b4f34,#0f6b44);
   color:#fff;
 }
 
-/* ===== HEADER ===== */
 .header{
   padding:20px;
-  background:rgba(0,0,0,.25);
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
+
 .header h1{
-  margin:0;
   font-size:20px;
 }
+
 .logout{
-  background:#dc2626;
+  background:#b91c1c;
   border:none;
-  color:white;
-  padding:10px 18px;
-  border-radius:10px;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:12px;
+  cursor:pointer;
   font-weight:600;
 }
 
-/* ===== CONTAINER ===== */
 .container{
-  padding:22px;
-  max-width:1100px;
-  margin:auto;
+  background:#f4f9f7;
+  color:#0f172a;
+  border-radius:30px 30px 0 0;
+  padding:20px;
+  min-height:100vh;
 }
 
-/* ===== CARDS ===== */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
-}
-.card{
-  background:rgba(255,255,255,.95);
-  color:#064e3b;
-  border-radius:14px;
-  padding:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.3);
-}
-.card h3{
-  margin:0 0 6px;
-  font-size:12px;
-  opacity:.7;
-}
-.card .value{
-  font-size:28px;
+/* SALDO */
+.saldo{
+  background:linear-gradient(135deg,#0f6b44,#0b4f34);
+  color:#fff;
+  padding:24px;
+  border-radius:20px;
+  text-align:center;
+  font-size:24px;
   font-weight:700;
+  margin-bottom:20px;
 }
 
-/* ===== FORM TRANSAKSI ===== */
-.upload-box{
-  background:#ffffff;
+/* FORM */
+.form-box{
+  background:#fff;
   padding:22px;
-  border-radius:18px;
+  border-radius:20px;
   box-shadow:0 10px 25px rgba(0,0,0,.15);
-  max-width:500px;
-  margin:0 auto 40px auto;
+  margin-bottom:30px;
 }
 
-.upload-box h3{
+.form-box h3{
   text-align:center;
   color:#0f6b44;
   margin-bottom:18px;
 }
 
-/* semua input */
-.upload-box input,
-.upload-box select{
+.form-box input{
   width:100%;
-  padding:14px 16px;
+  padding:14px;
+  margin-bottom:12px;
   border-radius:12px;
-  border:1px solid #ddd;
-  font-size:15px;
-  margin-bottom:14px;
-  outline:none;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
+.form-box input[type=file]{
+  border:2px dashed #0f6b44;
   background:#f9fafb;
 }
 
-.upload-box input:focus{
-  border-color:#0f6b44;
-  background:#fff;
-}
-
-/* tombol simpan */
-.upload-box button{
+.form-box button{
   width:100%;
-  background:linear-gradient(135deg,#0f6b44,#0b4f34);
+  background:#0f6b44;
   color:#fff;
-  border:none;
   padding:14px;
-  font-size:16px;
-  border-radius:14px;
-  cursor:pointer;
-  font-weight:600;
-  margin-top:10px;
-  box-shadow:0 8px 20px rgba(15,107,68,.4);
-}
-
-.upload-box button:hover{
-  opacity:.95;
-}
-
-/* input file */
-.upload-box input[type="file"]{
-  background:#fff;
-  border:2px dashed #0f6b44;
-  padding:18px;
-  text-align:center;
-}
-/* ===== UPLOAD ===== */
-.upload-box{
-  margin-top:20px;
-  background:rgba(255,255,255,.95);
-  color:#064e3b;
-  padding:20px;
-  border-radius:16px;
-}
-.upload-box input, .upload-box button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-}
-.upload-box button{
-  background:#064e3b;
-  color:white;
   border:none;
+  border-radius:14px;
   font-weight:600;
+  cursor:pointer;
 }
+
+/* TRANSAKSI */
+.transaksi{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 6px 16px rgba(0,0,0,.1);
+}
+
+.transaksi b{
+  color:#0f6b44;
+}
+
+.masuk{color:#16a34a;font-weight:600;}
+.keluar{color:#b91c1c;font-weight:600;}
 </style>
 </head>
 
 <body>
 
-<script>
-if(localStorage.getItem("login")!=="true"){
-  window.location.href="./login.html";
-}
-</script>
-
 <div class="header">
-  <h1>Masjid Nurut Taqwa – Dashboard Keuangan</h1>
+  <h1>Keuangan Masjid Nurut Taqwa</h1>
   <button class="logout" onclick="logout()">Logout</button>
 </div>
 
 <div class="container">
 
-  <div class="cards">
-    <div class="card">
-      <h3>Saldo Kas</h3>
-      <div class="value">Rp 12.500.000</div>
-    </div>
-    <div class="card">
-      <h3>Pemasukan Bulan Ini</h3>
-      <div class="value">Rp 4.200.000</div>
-    </div>
-    <div class="card">
-      <h3>Pengeluaran Bulan Ini</h3>
-      <div class="value">Rp 2.350.000</div>
-    </div>
-    <div class="card">
-      <h3>Transaksi</h3>
-      <div class="value">128</div>
-    </div>
+  <div class="saldo" id="saldo">Saldo: Rp 0</div>
+
+  <div class="form-box">
+    <h3>Tambah Transaksi</h3>
+    <input type="date" id="tanggal">
+    <input type="text" id="keterangan" placeholder="Keterangan">
+    <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
+    <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
+    <input type="file" id="bukti">
+    <button onclick="simpan()">Simpan Transaksi</button>
   </div>
 
-  <div class="table">
-    <table>
-      <tr>
-        <th>Tanggal</th>
-        <th>Keterangan</th>
-        <th>Masuk</th>
-        <th>Keluar</th>
-      </tr>
-      <tr>
-        <td>2026-01-05</td>
-        <td>Infaq Jumat</td>
-        <td>Rp 1.500.000</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>2026-01-07</td>
-        <td>Pembelian Karpet</td>
-        <td>-</td>
-        <td>Rp 850.000</td>
-      </tr>
-    </table>
-  </div>
+  <div id="list"></div>
 
-  <div class="upload-box">
-  <h3>Tambah Transaksi</h3>
-
-  <input type="date" id="tgl">
-
-  <input type="text" id="ket" placeholder="Keterangan transaksi">
-
-  <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
-
-  <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
-
-  <input type="file" id="bukti">
-
-  <button onclick="simpanTransaksi()">💾 Simpan Transaksi</button>
 </div>
 
 <script>
+if(localStorage.getItem("login")!=="true"){
+  window.location="login.html";
+}
+
+let data = [];
+
 function logout(){
   localStorage.removeItem("login");
-  window.location.href="./login.html";
-}
-</script>
-<script>
-let data = JSON.parse(localStorage.getItem("transaksi") || "[]");
-
-function simpanTransaksi(){
-  const tgl = document.getElementById("tgl").value;
-  const ket = document.getElementById("ket").value;
-  const masuk = document.getElementById("masuk").value;
-  const keluar = document.getElementById("keluar").value;
-
-  if(!tgl || !ket){
-    alert("Lengkapi tanggal & keterangan");
-    return;
-  }
-
-  data.push({tgl,ket,masuk,keluar});
-  localStorage.setItem("transaksi", JSON.stringify(data));
-  tampilkan();
+  window.location="login.html";
 }
 
-function tampilkan(){
-  let html="";
-  let saldo=0, inTotal=0, outTotal=0;
+function simpan(){
+  const tgl = tanggal.value;
+  const ket = keterangan.value;
+  const masukVal = parseInt(masuk.value||0);
+  const keluarVal = parseInt(keluar.value||0);
 
-  data.forEach(x=>{
-    const m = parseInt(x.masuk||0);
-    const k = parseInt(x.keluar||0);
-    saldo += m-k;
-    inTotal+=m;
-    outTotal+=k;
+  const trx = {tgl,ket,masuk:masukVal,keluar:keluarVal};
+  data.push(trx);
 
-    html += `
-      <tr>
-        <td>${x.tgl}</td>
-        <td>${x.ket}</td>
-        <td>${m? "Rp "+m.toLocaleString():"-"}</td>
-        <td>${k? "Rp "+k.toLocaleString():"-"}</td>
-      </tr>
+  render();
+}
+
+function render(){
+  let saldo=0;
+  list.innerHTML="";
+  data.forEach(t=>{
+    saldo += t.masuk;
+    saldo -= t.keluar;
+
+    list.innerHTML += `
+      <div class="transaksi">
+        <b>${t.tgl}</b><br>
+        ${t.ket}<br>
+        ${t.masuk?`<span class="masuk">Masuk: Rp ${t.masuk}</span>`:""}
+        ${t.keluar?`<span class="keluar">Keluar: Rp ${t.keluar}</span>`:""}
+      </div>
     `;
   });
 
-  document.querySelector(".table table").innerHTML = `
-    <tr>
-      <th>Tanggal</th>
-      <th>Keterangan</th>
-      <th>Masuk</th>
-      <th>Keluar</th>
-    </tr>${html}`;
-
-  document.querySelectorAll(".value")[0].innerText="Rp "+saldo.toLocaleString();
-  document.querySelectorAll(".value")[1].innerText="Rp "+inTotal.toLocaleString();
-  document.querySelectorAll(".value")[2].innerText="Rp "+outTotal.toLocaleString();
+  document.getElementById("saldo").innerText = "Saldo: Rp " + saldo.toLocaleString();
 }
-
-tampilkan();
 </script>
+
 </body>
 </html>
