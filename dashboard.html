@@ -124,12 +124,6 @@ body{
 
 <body>
 
-<script>
-if(localStorage.getItem("login")!=="true"){
-  window.location="login.html";
-}
-</script>
-
 <div class="header">
   <h1>📊 Keuangan Masjid</h1>
   <button class="logout" onclick="logout()">Logout</button>
@@ -185,69 +179,7 @@ if(localStorage.getItem("login")!=="true"){
 
 </div>
 
-<script>
-let data = JSON.parse(localStorage.getItem("kas") || "[]");
 
-function simpan(){
-  if(localStorage.getItem("role")!=="bendahara"){
-    alert("Hanya Bendahara yang boleh input data");
-    return;
-  }
-
-  const tgl = tglInput.value;
-  const ket = ketInput.value;
-  const masuk = parseInt(masukInput.value||0);
-  const keluar = parseInt(keluarInput.value||0);
-  const foto = fotoInput.files[0];
-
-  if(!tgl || !ket){ alert("Lengkapi data"); return; }
-
-  if(foto){
-    const reader = new FileReader();
-    reader.onload = function(){
-      data.push({tgl,ket,masuk,keluar,foto:this.result});
-      localStorage.setItem("kas",JSON.stringify(data));
-      tampil();
-    }
-    reader.readAsDataURL(foto);
-  } else {
-    data.push({tgl,ket,masuk,keluar,foto:""});
-    localStorage.setItem("kas",JSON.stringify(data));
-    tampil();
-  }
-
-  tglInput.value=ketInput.value=masukInput.value=keluarInput.value="";
-  fotoInput.value="";
-}
-}
-
-function tampil(){
-  let html="", saldo=0, masukT=0, keluarT=0;
-
-  data.forEach(x=>{
-    saldo += x.masuk - x.keluar;
-    masukT += x.masuk;
-    keluarT += x.keluar;
-    html += `<tr>
-      <td>${x.tgl}</td>
-      <td>${x.ket}</td>
-      <td>${x.masuk? "Rp"+x.masuk:x.keluar? "-Rp"+x.keluar:""}</td>
-      <td>${x.foto? `<img src="${x.foto}">`:"-"}</td>
-    </tr>`;
-  });
-
-  list.innerHTML = html;
-  saldo.innerText="Rp "+saldo.toLocaleString();
-  masukTotal.innerText="Rp "+masukT.toLocaleString();
-  keluarTotal.innerText="Rp "+keluarT.toLocaleString();
-  jumlah.innerText=data.length;
-}
-
-tampil();
-
-function logout(){
-  localStorage.removeItem("login");
-  location="login.html";
 }
 
 const tglInput=document.getElementById("tgl");
