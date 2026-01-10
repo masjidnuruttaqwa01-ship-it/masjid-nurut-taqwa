@@ -66,29 +66,66 @@ body{
   font-weight:700;
 }
 
-/* ===== TRANSAKSI ===== */
-.table{
-  background:rgba(255,255,255,.95);
-  color:#064e3b;
-  border-radius:14px;
-  margin-top:18px;
-  overflow:hidden;
-}
-.table table{
-  width:100%;
-  border-collapse:collapse;
-}
-.table th,.table td{
-  padding:10px;
-  border-bottom:1px solid #e5e7eb;
-  text-align:left;
-  font-size:12px;
-}
-.table th{
-  background:#064e3b;
-  color:white;
+/* ===== FORM TRANSAKSI ===== */
+.upload-box{
+  background:#ffffff;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  max-width:500px;
+  margin:0 auto 40px auto;
 }
 
+.upload-box h3{
+  text-align:center;
+  color:#0f6b44;
+  margin-bottom:18px;
+}
+
+/* semua input */
+.upload-box input,
+.upload-box select{
+  width:100%;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:15px;
+  margin-bottom:14px;
+  outline:none;
+  background:#f9fafb;
+}
+
+.upload-box input:focus{
+  border-color:#0f6b44;
+  background:#fff;
+}
+
+/* tombol simpan */
+.upload-box button{
+  width:100%;
+  background:linear-gradient(135deg,#0f6b44,#0b4f34);
+  color:#fff;
+  border:none;
+  padding:14px;
+  font-size:16px;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:600;
+  margin-top:10px;
+  box-shadow:0 8px 20px rgba(15,107,68,.4);
+}
+
+.upload-box button:hover{
+  opacity:.95;
+}
+
+/* input file */
+.upload-box input[type="file"]{
+  background:#fff;
+  border:2px dashed #0f6b44;
+  padding:18px;
+  text-align:center;
+}
 /* ===== UPLOAD ===== */
 .upload-box{
   margin-top:20px;
@@ -174,18 +211,16 @@ if(localStorage.getItem("login")!=="true"){
   <h3>Tambah Transaksi</h3>
 
   <input type="date" id="tgl">
+
   <input type="text" id="ket" placeholder="Keterangan transaksi">
+
   <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
+
   <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
+
   <input type="file" id="bukti">
 
-  <button onclick="simpanTransaksi()">Simpan Transaksi</button>
-</div>
-    <h3>Upload Bukti Transaksi</h3>
-    <input type="file">
-    <button>Upload</button>
-  </div>
-
+  <button onclick="simpanTransaksi()">💾 Simpan Transaksi</button>
 </div>
 
 <script>
