@@ -168,6 +168,11 @@ body{
 </div>
 
 <script>
+  <script>
+if(localStorage.getItem("login")!=="true"){
+  window.location="login.html";
+}
+</script>
 if(localStorage.getItem("login")!=="true"){
   window.location="login.html";
 }
@@ -207,6 +212,13 @@ fetch(API)
   document.getElementById("list").innerHTML=list;
 });
 </script>
+<button onclick="logout()" class="logout-btn">Logout</button>
 
+<script>
+function logout(){
+  localStorage.removeItem("login");
+  window.location="login.html";
+}
+</script>
 </body>
 </html>
