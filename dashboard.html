@@ -171,6 +171,16 @@ if(localStorage.getItem("login")!=="true"){
   </div>
 
   <div class="upload-box">
+  <h3>Tambah Transaksi</h3>
+
+  <input type="date" id="tgl">
+  <input type="text" id="ket" placeholder="Keterangan transaksi">
+  <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
+  <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
+  <input type="file" id="bukti">
+
+  <button onclick="simpanTransaksi()">Simpan Transaksi</button>
+</div>
     <h3>Upload Bukti Transaksi</h3>
     <input type="file">
     <button>Upload</button>
@@ -184,6 +194,60 @@ function logout(){
   window.location.href="./login.html";
 }
 </script>
+<script>
+let data = JSON.parse(localStorage.getItem("transaksi") || "[]");
 
+function simpanTransaksi(){
+  const tgl = document.getElementById("tgl").value;
+  const ket = document.getElementById("ket").value;
+  const masuk = document.getElementById("masuk").value;
+  const keluar = document.getElementById("keluar").value;
+
+  if(!tgl || !ket){
+    alert("Lengkapi tanggal & keterangan");
+    return;
+  }
+
+  data.push({tgl,ket,masuk,keluar});
+  localStorage.setItem("transaksi", JSON.stringify(data));
+  tampilkan();
+}
+
+function tampilkan(){
+  let html="";
+  let saldo=0, inTotal=0, outTotal=0;
+
+  data.forEach(x=>{
+    const m = parseInt(x.masuk||0);
+    const k = parseInt(x.keluar||0);
+    saldo += m-k;
+    inTotal+=m;
+    outTotal+=k;
+
+    html += `
+      <tr>
+        <td>${x.tgl}</td>
+        <td>${x.ket}</td>
+        <td>${m? "Rp "+m.toLocaleString():"-"}</td>
+        <td>${k? "Rp "+k.toLocaleString():"-"}</td>
+      </tr>
+    `;
+  });
+
+  document.querySelector(".table table").innerHTML = `
+    <tr>
+      <th>Tanggal</th>
+      <th>Keterangan</th>
+      <th>Masuk</th>
+      <th>Keluar</th>
+    </tr>${html}`;
+
+  document.querySelectorAll(".value")[0].innerText="Rp "+saldo.toLocaleString();
+  document.querySelectorAll(".value")[1].innerText="Rp "+inTotal.toLocaleString();
+  document.querySelectorAll(".value")[2].innerText="Rp "+outTotal.toLocaleString();
+}
+
+tampilkan();
+</script>
 </body>
 </html>
