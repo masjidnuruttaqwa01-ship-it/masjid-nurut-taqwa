@@ -1,31 +1,29 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Login DKM</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 <style>
 body{
   margin:0;
+  font-family:Arial;
   background:linear-gradient(135deg,#064e3b,#0f766e);
-  font-family:Poppins;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 .box{
-  background:#fff;
+  background:white;
   padding:30px;
-  border-radius:20px;
+  border-radius:16px;
   width:90%;
-  max-width:360px;
+  max-width:320px;
 }
-h2{text-align:center;color:#064e3b;}
+h2{text-align:center;color:#064e3b}
 input{
   width:100%;
-  padding:14px;
+  padding:12px;
   margin-top:10px;
   border-radius:10px;
   border:1px solid #ccc;
@@ -33,12 +31,12 @@ input{
 button{
   width:100%;
   margin-top:15px;
-  padding:14px;
+  padding:12px;
   background:#064e3b;
-  color:#fff;
+  color:white;
   border:none;
-  border-radius:12px;
-  font-size:16px;
+  border-radius:10px;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -48,26 +46,24 @@ button{
   <h2>Login DKM</h2>
   <input id="user" placeholder="Username">
   <input id="pass" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
+  <button onclick="login()">Masuk</button>
 </div>
 
 <script>
 function login(){
-  const u = user.value;
-  const p = pass.value;
+  const u=document.getElementById("user").value;
+  const p=document.getElementById("pass").value;
 
-  if(u==="bendahara" && p==="nurut123"){
+  if(u==="dkm" && p==="nurut123"){
     localStorage.setItem("login","true");
     localStorage.setItem("role","bendahara");
-    window.location="dashboard.html";
-  }
-  else if(u==="anggota" && p==="lihat123"){
+    location.href="dashboard.html";
+  }else if(u==="anggota" && p==="lihat123"){
     localStorage.setItem("login","true");
     localStorage.setItem("role","anggota");
-    window.location="dashboard.html";
-  }
-  else{
-    alert("Username / password salah");
+    location.href="dashboard.html";
+  }else{
+    alert("Login salah");
   }
 }
 </script>
