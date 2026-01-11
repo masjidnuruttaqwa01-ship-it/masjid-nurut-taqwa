@@ -215,9 +215,8 @@ body{
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbwnZiqtiUv0cBgrHBlhSZNpjqVymAssJOvz0XpjcPA8ESPeLOLsSnoIYv5yXxw5BxqM/exec";
+https://script.google.com/macros/s/AKfycbyK6pSHUxk07KW9Ffy7-Jv82ooytiJUQrzcSqI55cobIMckcYhCI5UUgWd5upsFi5TfPQ/exec/* ===== CEK LOGIN ===== */
 
-/* ===== CEK LOGIN ===== */
 if(localStorage.getItem("login") !== "true"){
   window.location = "login.html";
 }
@@ -245,47 +244,83 @@ if(role === "anggota"){
 }
 
 /* ===== LOAD DATA ===== */
-let data = JSON.parse(localStorage.getItem("kas") || "[]");
+function loadData(){
+ fetch(API_URL)
+  .then(r=>r.json())
+  .then(rows=>{
+    let html="";
+    let saldo=0, masukT=0, keluarT=0;
 
-/* ===== SIMPAN ===== */
+    rows.forEach(r=>{
+      saldo = r[4];
+      masukT += Number(r[2]);
+      keluarT += Number(r[3]);
+
+      html += `
+        <tr>
+          <td>${r[0]}</td>
+          <td>${r[1]}</td>
+          <td>${r[2]? "Rp "+r[2]:"-"}</td>
+          <td>${r[5]? `<a href="${r[5]}" target="_blank">📷</a>`:"-"}</td>
+        </tr>`;
+    });
+
+    list.innerHTML = html;
+    saldoBox.innerText = "Rp "+saldo;
+    masukBox.innerText = "Rp "+masukT;
+    keluarBox.innerText = "Rp "+keluarT;
+    jumlahBox.innerText = rows.length;
+  });
+}
+
+loadData();
+  /* ===== SIMPAN ===== */
 function simpan(){
   if(role !== "bendahara"){
-    alert("Hanya Bendahara yang boleh input transaksi");
+    alert("Hanya Bendahara yang boleh input");
     return;
   }
 
   const tgl = tglInput.value;
   const ket = ketInput.value;
-  const masuk = parseInt(masukInput.value || 0);
-  const keluar = parseInt(keluarInput.value || 0);
+  const masuk = masukInput.value;
+  const keluar = keluarInput.value;
   const foto = fotoInput.files[0];
 
   if(!tgl || !ket){
-    alert("Tanggal & keterangan wajib diisi");
+    alert("Lengkapi data");
     return;
   }
+
+  const formData = new FormData();
+  formData.append("tgl", tgl);
+  formData.append("ket", ket);
+  formData.append("masuk", masuk);
+  formData.append("keluar", keluar);
 
   if(foto){
     const reader = new FileReader();
     reader.onload = function(){
-      data.push({ tgl, ket, masuk, keluar, foto: reader.result });
-      localStorage.setItem("kas", JSON.stringify(data));
-      tampil();
+      formData.append("foto", reader.result);
+      kirim(formData);
     };
     reader.readAsDataURL(foto);
   } else {
-    data.push({ tgl, ket, masuk, keluar, foto: "" });
-    localStorage.setItem("kas", JSON.stringify(data));
-    tampil();
+    kirim(formData);
   }
-
-  tglInput.value="";
-  ketInput.value="";
-  masukInput.value="";
-  keluarInput.value="";
-  fotoInput.value="";
 }
 
+function kirim(formData){
+  fetch(API_URL, {
+    method:"POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(res=>{
+    alert("Transaksi tersimpan di Google Sheets");
+    loadData();
+  });
+}
 /* ===== TAMPIL ===== */
 function tampil(){
   let html="";
