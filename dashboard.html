@@ -113,7 +113,7 @@ body{
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbwnZiqtiUv0cBgrHBlhSZNpjqVymAssJOvz0XpjcPA8ESPeLOLsSnoIYv5yXxw5BxqM/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbz6-lcYkV3Ux-7-WYt9rwirB13pz2a6m7t2Z-4lxDm71c-JkWvR8TfK3z0HTEcbBmuR/exec";
 
 /* ===== CEK LOGIN ===== */
 if(localStorage.getItem("login") !== "true"){
@@ -159,27 +159,54 @@ function loadData(){
 
 /* ===== SIMPAN ===== */
 function simpan(){
- if(role!=="bendahara"){ alert("Hanya bendahara"); return; }
+  if(localStorage.getItem("role") !== "bendahara"){
+    alert("Hanya bendahara yang boleh input");
+    return;
+  }
 
- const tgl=tglInput.value;
- const ket=ketInput.value;
- const masuk=masukInput.value;
- const keluar=keluarInput.value;
- const foto=fotoInput.files[0];
+  const tgl = document.getElementById("tgl").value;
+  const ket = document.getElementById("ket").value;
+  const masuk = document.getElementById("masuk").value;
+  const keluar = document.getElementById("keluar").value;
+  const foto = document.getElementById("foto").files[0];
 
- if(!tgl||!ket){ alert("Lengkapi data"); return; }
+  if(!tgl || !ket){
+    alert("Isi tanggal & keterangan");
+    return;
+  }
 
- const fd=new FormData();
- fd.append("tgl",tgl);
- fd.append("ket",ket);
- fd.append("masuk",masuk);
- fd.append("keluar",keluar);
+  const formData = new FormData();
+  formData.append("tgl", tgl);
+  formData.append("ket", ket);
+  formData.append("masuk", masuk);
+  formData.append("keluar", keluar);
 
- if(foto){
-   const r=new FileReader();
-   r.onload=()=>{ fd.append("foto",r.result); kirim(fd); }
-   r.readAsDataURL(foto);
- }else kirim(fd);
+  if(foto){
+    const reader = new FileReader();
+    reader.onload = function(){
+      formData.append("foto", reader.result);
+      kirim(formData);
+    }
+    reader.readAsDataURL(foto);
+  } else {
+    kirim(formData);
+  }
+}
+
+function kirim(formData){
+  fetch(API_URL, {
+    method:"POST",
+    body: formData
+  })
+  .then(r=>r.text())
+  .then(res=>{
+    alert("Transaksi berhasil disimpan");
+    loadData();
+  })
+  .catch(err=>{
+    alert("Gagal kirim data");
+    console.error(err);
+  });
 }
 
 function kirim(fd){
