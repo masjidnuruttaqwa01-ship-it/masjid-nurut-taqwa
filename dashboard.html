@@ -160,39 +160,56 @@ function loadData(){
 /* ===== SIMPAN ===== */
 function simpan(){
   if(localStorage.getItem("role") !== "bendahara"){
-    alert("Hanya bendahara yang boleh input");
+    alert("Hanya Bendahara yang boleh input transaksi");
     return;
   }
 
-  const tgl = document.getElementById("tgl").value;
-  const ket = document.getElementById("ket").value;
-  const masuk = document.getElementById("masuk").value;
-  const keluar = document.getElementById("keluar").value;
-  const foto = document.getElementById("foto").files[0];
+  const tgl   = document.getElementById("tgl").value;
+  const ket   = document.getElementById("ket").value;
+  const masuk = document.getElementById("masuk").value || 0;
+  const keluar= document.getElementById("keluar").value || 0;
+  const foto  = document.getElementById("foto").files[0];
 
   if(!tgl || !ket){
-    alert("Isi tanggal & keterangan");
+    alert("Tanggal dan keterangan wajib diisi");
     return;
   }
-
-  const formData = new FormData();
-  formData.append("tgl", tgl);
-  formData.append("ket", ket);
-  formData.append("masuk", masuk);
-  formData.append("keluar", keluar);
 
   if(foto){
     const reader = new FileReader();
     reader.onload = function(){
-      formData.append("foto", reader.result);
-      kirim(formData);
+      kirimKeSheet(tgl, ket, masuk, keluar, reader.result);
     }
     reader.readAsDataURL(foto);
   } else {
-    kirim(formData);
+    kirimKeSheet(tgl, ket, masuk, keluar, "");
   }
 }
+  function kirimKeSheet(tgl, ket, masuk, keluar, foto){
+  const params = new URLSearchParams();
+  params.append("tgl", tgl);
+  params.append("ket", ket);
+  params.append("masuk", masuk);
+  params.append("keluar", keluar);
+  params.append("foto", foto);
 
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: params.toString()
+  })
+  .then(r => r.text())
+  .then(res => {
+    alert("Transaksi berhasil disimpan");
+    loadData();
+  })
+  .catch(err => {
+    alert("Gagal menyimpan");
+    console.error(err);
+  });
+  } 
 function kirim(formData){
   fetch(API_URL, {
     method:"POST",
