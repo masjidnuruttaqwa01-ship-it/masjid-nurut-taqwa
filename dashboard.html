@@ -215,7 +215,9 @@ body{
 </div>
 
 <script>
-https://script.google.com/macros/s/AKfycbyK6pSHUxk07KW9Ffy7-Jv82ooytiJUQrzcSqI55cobIMckcYhCI5UUgWd5upsFi5TfPQ/exec/* ===== CEK LOGIN ===== */
+const API_URL = "https://script.google.com/macros/s/AKfycbwnZiqtiUv0cBgrHBlhSZNpjqVymAssJOvz0XpjcPA8ESPeLOLsSnoIYv5yXxw5BxqM/exec";
+  
+/* ===== CEK LOGIN ===== */
 
 if(localStorage.getItem("login") !== "true"){
   window.location = "login.html";
@@ -275,20 +277,21 @@ function loadData(){
 
 loadData();
   /* ===== SIMPAN ===== */
+<script>
 function simpan(){
-  if(role !== "bendahara"){
-    alert("Hanya Bendahara yang boleh input");
+  if(localStorage.getItem("role") !== "bendahara"){
+    alert("Hanya Bendahara yang boleh input transaksi");
     return;
   }
 
-  const tgl = tglInput.value;
-  const ket = ketInput.value;
-  const masuk = masukInput.value;
-  const keluar = keluarInput.value;
-  const foto = fotoInput.files[0];
+  const tgl   = document.getElementById("tgl").value;
+  const ket   = document.getElementById("ket").value;
+  const masuk = document.getElementById("masuk").value;
+  const keluar= document.getElementById("keluar").value;
+  const foto  = document.getElementById("foto").files[0];
 
   if(!tgl || !ket){
-    alert("Lengkapi data");
+    alert("Tanggal & keterangan wajib diisi");
     return;
   }
 
@@ -302,65 +305,28 @@ function simpan(){
     const reader = new FileReader();
     reader.onload = function(){
       formData.append("foto", reader.result);
-      kirim(formData);
-    };
+      kirimKeSheet(formData);
+    }
     reader.readAsDataURL(foto);
   } else {
-    kirim(formData);
+    kirimKeSheet(formData);
   }
 }
 
-function kirim(formData){
-  fetch(API_URL, {
+function kirimKeSheet(formData){
+  fetch(API_URL,{
     method:"POST",
-    body: formData
+    body:formData
   })
-  .then(res => res.json())
+  .then(r=>r.text())
   .then(res=>{
-    alert("Transaksi tersimpan di Google Sheets");
-    loadData();
+    alert("Transaksi berhasil disimpan");
+    loadData(); // refresh tabel
+  })
+  .catch(err=>{
+    alert("Gagal kirim ke server");
+    console.error(err);
   });
-}
-/* ===== TAMPIL ===== */
-function tampil(){
-  let html="";
-  let saldo=0, masukT=0, keluarT=0;
-
-  data.forEach(x=>{
-    saldo += x.masuk - x.keluar;
-    masukT += x.masuk;
-    keluarT += x.keluar;
-
-    html += `
-      <tr>
-        <td>${x.tgl}</td>
-        <td>${x.ket}</td>
-        <td>${x.masuk ? "Rp "+x.masuk.toLocaleString() : "-"}</td>
-        <td>${x.foto ? `<img src="${x.foto}" style="width:40px;border-radius:8px" onclick="lihatFoto('${x.foto}')">` : "-"}</td>
-      </tr>
-    `;
-  });
-
-  list.innerHTML = html;
-  saldoBox.innerText = "Rp " + saldo.toLocaleString();
-  masukBox.innerText = "Rp " + masukT.toLocaleString();
-  keluarBox.innerText = "Rp " + keluarT.toLocaleString();
-  jumlahBox.innerText = data.length;
-}
-
-tampil();
-
-/* ===== LIHAT FOTO ===== */
-function lihatFoto(src){
-  document.getElementById("fotoPreview").src = src;
-  document.getElementById("fotoModal").style.display = "flex";
-}
-
-/* ===== LOGOUT ===== */
-function logout(){
-  localStorage.removeItem("login");
-  localStorage.removeItem("role");
-  location = "login.html";
 }
 </script>
 </body>
