@@ -218,31 +218,30 @@ body{
   <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwnZiqtiUv0cBgrHBlhSZNpjqVymAssJOvz0XpjcPA8ESPeLOLsSnoIYv5yXxw5BxqM/exec";
 </script>
-  <script>
-/* ===== CEK LOGIN ===== */
-if(localStorage.getItem("login")!=="true"){
 <script>
 /* ===== CEK LOGIN ===== */
-if(localStorage.getItem("login")!=="true"){
-  window.location="login.html";
+if(localStorage.getItem("login") !== "true"){
+  window.location = "login.html";
 }
 
+/* ===== ROLE ===== */
 const role = localStorage.getItem("role");
 
-/* ===== AMBIL ELEMENT ===== */
+/* ===== ELEMENT ===== */
 const tglInput = document.getElementById("tgl");
 const ketInput = document.getElementById("ket");
 const masukInput = document.getElementById("masuk");
 const keluarInput = document.getElementById("keluar");
 const fotoInput = document.getElementById("foto");
 const formInput = document.getElementById("formInput");
+
 const list = document.getElementById("list");
 const saldoBox = document.getElementById("saldo");
 const masukBox = document.getElementById("masukTotal");
 const keluarBox = document.getElementById("keluarTotal");
 const jumlahBox = document.getElementById("jumlah");
 
-/* ===== SEMBUNYIKAN FORM JIKA ANGGOTA ===== */
+/* ===== SEMBUNYIKAN FORM UNTUK ANGGOTA ===== */
 if(role === "anggota"){
   formInput.style.display = "none";
 }
@@ -252,32 +251,35 @@ let data = JSON.parse(localStorage.getItem("kas") || "[]");
 
 /* ===== SIMPAN ===== */
 function simpan(){
-  if(localStorage.getItem("role")!=="bendahara"){
-    alert("Hanya Bendahara yang boleh input data");
+  if(role !== "bendahara"){
+    alert("Hanya Bendahara yang boleh input transaksi");
     return;
   }
 
   const tgl = tglInput.value;
   const ket = ketInput.value;
-  const masuk = parseInt(masukInput.value||0);
-  const keluar = parseInt(keluarInput.value||0);
+  const masuk = parseInt(masukInput.value || 0);
+  const keluar = parseInt(keluarInput.value || 0);
   const foto = fotoInput.files[0];
 
   if(!tgl || !ket){
-    alert("Lengkapi data");
+    alert("Tanggal & keterangan wajib diisi");
     return;
   }
 
   if(foto){
     const reader = new FileReader();
     reader.onload = function(){
-      data.push({tgl,ket,masuk,keluar,foto:this.result});
+      data.push({
+        tgl, ket, masuk, keluar,
+        foto: reader.result
+      });
       localStorage.setItem("kas", JSON.stringify(data));
       tampil();
     }
     reader.readAsDataURL(foto);
   } else {
-    data.push({tgl,ket,masuk,keluar,foto:""});
+    data.push({tgl, ket, masuk, keluar, foto:""});
     localStorage.setItem("kas", JSON.stringify(data));
     tampil();
   }
@@ -300,18 +302,19 @@ function tampil(){
     keluarT += x.keluar;
 
     html += `
-    <tr>
-      <td>${x.tgl}</td>
-      <td>${x.ket}</td>
-      <td>${x.masuk ? "Rp "+x.masuk.toLocaleString() : "-"}</td>
-      <td>${x.foto ? `<img src="${x.foto}" style="width:40px;border-radius:6px">` : "-"}</td>
-    </tr>`;
+      <tr>
+        <td>${x.tgl}</td>
+        <td>${x.ket}</td>
+        <td>${x.masuk ? "Rp "+x.masuk.toLocaleString() : "-"}</td>
+        <td>${x.foto ? `<img src="${x.foto}" style="width:40px;border-radius:6px">` : "-"}</td>
+      </tr>
+    `;
   });
 
   list.innerHTML = html;
-  saldoBox.innerText = "Rp "+saldo.toLocaleString();
-  masukBox.innerText = "Rp "+masukT.toLocaleString();
-  keluarBox.innerText = "Rp "+keluarT.toLocaleString();
+  saldoBox.innerText = "Rp " + saldo.toLocaleString();
+  masukBox.innerText = "Rp " + masukT.toLocaleString();
+  keluarBox.innerText = "Rp " + keluarT.toLocaleString();
   jumlahBox.innerText = data.length;
 }
 
@@ -321,9 +324,9 @@ tampil();
 function logout(){
   localStorage.removeItem("login");
   localStorage.removeItem("role");
-  location="login.html";
+  location = "login.html";
 }
-</script>
+      </script>
 
 </body>
 </html>
