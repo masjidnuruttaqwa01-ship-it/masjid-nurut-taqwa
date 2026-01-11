@@ -215,10 +215,8 @@ body{
 </div>
 
 <script>
-  <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwnZiqtiUv0cBgrHBlhSZNpjqVymAssJOvz0XpjcPA8ESPeLOLsSnoIYv5yXxw5BxqM/exec";
-</script>
-<script>
+
 /* ===== CEK LOGIN ===== */
 if(localStorage.getItem("login") !== "true"){
   window.location = "login.html";
@@ -241,7 +239,7 @@ const masukBox = document.getElementById("masukTotal");
 const keluarBox = document.getElementById("keluarTotal");
 const jumlahBox = document.getElementById("jumlah");
 
-/* ===== SEMBUNYIKAN FORM UNTUK ANGGOTA ===== */
+/* ===== SEMBUNYIKAN FORM JIKA ANGGOTA ===== */
 if(role === "anggota"){
   formInput.style.display = "none";
 }
@@ -270,16 +268,13 @@ function simpan(){
   if(foto){
     const reader = new FileReader();
     reader.onload = function(){
-      data.push({
-        tgl, ket, masuk, keluar,
-        foto: reader.result
-      });
+      data.push({ tgl, ket, masuk, keluar, foto: reader.result });
       localStorage.setItem("kas", JSON.stringify(data));
       tampil();
-    }
+    };
     reader.readAsDataURL(foto);
   } else {
-    data.push({tgl, ket, masuk, keluar, foto:""});
+    data.push({ tgl, ket, masuk, keluar, foto: "" });
     localStorage.setItem("kas", JSON.stringify(data));
     tampil();
   }
@@ -306,7 +301,7 @@ function tampil(){
         <td>${x.tgl}</td>
         <td>${x.ket}</td>
         <td>${x.masuk ? "Rp "+x.masuk.toLocaleString() : "-"}</td>
-        <td>${x.foto ? `<img src="${x.foto}" style="width:40px;border-radius:6px">` : "-"}</td>
+        <td>${x.foto ? `<img src="${x.foto}" style="width:40px;border-radius:8px" onclick="lihatFoto('${x.foto}')">` : "-"}</td>
       </tr>
     `;
   });
@@ -320,13 +315,18 @@ function tampil(){
 
 tampil();
 
+/* ===== LIHAT FOTO ===== */
+function lihatFoto(src){
+  document.getElementById("fotoPreview").src = src;
+  document.getElementById("fotoModal").style.display = "flex";
+}
+
 /* ===== LOGOUT ===== */
 function logout(){
   localStorage.removeItem("login");
   localStorage.removeItem("role");
   location = "login.html";
 }
-      </script>
-
+</script>
 </body>
 </html>
