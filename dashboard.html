@@ -223,35 +223,43 @@ if(localStorage.getItem("login") !== "true"){
   window.location = "login.html";
 }
 
-/* ===== ROLE ===== */
-const role = localStorage.getItem("role");
-
-/* ===== ELEMENT ===== */
-const tglInput = document.getElementById("tgl");
-const ketInput = document.getElementById("ket");
-const masukInput = document.getElementById("masuk");
-const keluarInput = document.getElementById("keluar");
-const fotoInput = document.getElementById("foto");
-const formInput = document.getElementById("formInput");
-
-const list = document.getElementById("list");
-const saldoBox = document.getElementById("saldo");
-const masukBox = document.getElementById("masukTotal");
-const keluarBox = document.getElementById("keluarTotal");
-const jumlahBox = document.getElementById("jumlah");
-
-/* ===== SEMBUNYIKAN FORM JIKA ANGGOTA ===== */
-if(role === "anggota"){
-  formInput.style.display = "none";
-}
-
 /* ===== LOAD DATA ===== */
 function loadData(){
  fetch(API_URL)
   .then(r=>r.json())
   .then(rows=>{
     let html="";
-    let saldo=0, masukT=0, keluarT=0;
+  /* ===== AMBIL ROLE USER ===== */
+const role = localStorage.getItem("role") || "anggota";
+
+/* ===== AMBIL ELEMENT FORM ===== */
+const tglInput    = document.getElementById("tgl");
+const ketInput    = document.getElementById("ket");
+const masukInput  = document.getElementById("masuk");
+const keluarInput = document.getElementById("keluar");
+const fotoInput   = document.getElementById("foto");
+const formInput   = document.getElementById("formInput");
+
+/* ===== AMBIL ELEMENT TAMPILAN ===== */
+const list       = document.getElementById("list");
+const saldoBox   = document.getElementById("saldo");
+const masukBox   = document.getElementById("masukTotal");
+const keluarBox  = document.getElementById("keluarTotal");
+const jumlahBox  = document.getElementById("jumlah");
+
+/* ===== CEK ELEMENT (anti error kosong) ===== */
+if(!tglInput || !ketInput || !masukInput || !keluarInput || !fotoInput){
+  console.error("❌ Form input tidak ditemukan");
+}
+
+if(!list || !saldoBox || !masukBox || !keluarBox || !jumlahBox){
+  console.error("❌ Element tampilan tidak lengkap");
+}
+
+/* ===== SEMBUNYIKAN FORM JIKA ANGGOTA ===== */
+if(role === "anggota" && formInput){
+  formInput.style.display = "none";
+}  let saldo=0, masukT=0, keluarT=0;
 
     rows.forEach(r=>{
       saldo = r[4];
