@@ -240,40 +240,57 @@ let data = JSON.parse(localStorage.getItem("kas")||"[]");
 
 /* ===== SIMPAN ===== */
 function simpan(){
-  if(role!=="bendahara"){
-    alert("Hanya Bendahara yang boleh input data");
+  if(localStorage.getItem("role") !== "bendahara"){
+    alert("Hanya Bendahara yang boleh input transaksi");
     return;
   }
 
-  const tgl=tglInput.value;
-  const ket=ketInput.value;
-  const masuk=parseInt(masukInput.value||0);
-  const keluar=parseInt(keluarInput.value||0);
-  const foto=fotoInput.files[0];
+  const tgl   = document.getElementById("tgl").value;
+  const ket   = document.getElementById("ket").value;
+  const masuk = document.getElementById("masuk").value || 0;
+  const keluar= document.getElementById("keluar").value || 0;
+  const foto  = document.getElementById("foto").files[0];
 
-  if(!tgl||!ket){ alert("Lengkapi data"); return; }
-
-  if(foto){
-    const r=new FileReader();
-    r.onload=function(){
-      data.push({tgl,ket,masuk,keluar,foto:this.result});
-      localStorage.setItem("kas",JSON.stringify(data));
-      tampil();
-    }
-    r.readAsDataURL(foto);
-  }else{
-    data.push({tgl,ket,masuk,keluar,foto:""});
-    localStorage.setItem("kas",JSON.stringify(data));
-    tampil();
+  if(!tgl || !ket){
+    alert("Tanggal dan keterangan wajib");
+    return;
   }
 
-  tglInput.value="";
-  ketInput.value="";
-  masukInput.value="";
-  keluarInput.value="";
-  fotoInput.value="";
+  if(foto){
+    const reader = new FileReader();
+    reader.onload = function(){
+      kirimKeServer(tgl, ket, masuk, keluar, reader.result);
+    };
+    reader.readAsDataURL(foto);
+  } else {
+    kirimKeServer(tgl, ket, masuk, keluar, "");
+  }
 }
+  function kirimKeServer(tgl, ket, masuk, keluar, foto){
+  const params = new URLSearchParams();
+  params.append("tgl", tgl);
+  params.append("ket", ket);
+  params.append("masuk", masuk);
+  params.append("keluar", keluar);
+  params.append("foto", foto);
 
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: params.toString()
+  })
+  .then(r => r.text())
+  .then(res => {
+    alert("Transaksi berhasil disimpan");
+    loadData();
+  })
+  .catch(err => {
+    alert("Gagal menyimpan");
+    console.error(err);
+  });
+  }
 /* ===== TAMPILKAN ===== */
 function tampil(){
   let html="", saldo=0, masukT=0, keluarT=0;
