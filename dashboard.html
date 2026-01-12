@@ -1,343 +1,37 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Dashboard Keuangan DKM</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kas Masjid</title>
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Poppins,sans-serif;
-  background:linear-gradient(180deg,#064e3b,#0f766e);
-  color:#fff;
-}
-
-/* ===== HEADER ===== */
-.header{
-  background:#064e3b;
-  padding:14px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.header h1{
-  font-size:16px;
-  margin:0;
-  font-weight:700;
-}
-.logout{
-  background:#dc2626;
-  border:none;
-  color:#fff;
-  padding:8px 14px;
-  border-radius:12px;
-  font-weight:600;
-}
-
-/* ===== CONTAINER ===== */
-.container{
-  padding:16px;
-}
-
-/* ===== SUMMARY ===== */
-.summary{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:18px;
-}
-.box{
-  background:#fff;
-  color:#064e3b;
-  padding:16px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
-}
-.box small{
-  opacity:.7;
-  font-size:12px;
-}
-.box b{
-  font-size:20px;
-  display:block;
-  margin-top:4px;
-}
-
-/* ===== TABLE ===== */
-.table-box{
-  background:#fff;
-  color:#064e3b;
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,.2);
-  margin-bottom:20px;
-}
-.table-box table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:12px;
-}
-.table-box th{
-  background:#064e3b;
-  color:#fff;
-  padding:10px;
-  text-align:left;
-}
-.table-box td{
-  padding:10px;
-  border-bottom:1px solid #eee;
-}
-.table-box img{
-  width:40px;
-  height:40px;
-  border-radius:8px;
-  object-fit:cover;
-  cursor:pointer;
-}
-
-/* ===== FORM ===== */
-.form{
-  background:#fff;
-  color:#064e3b;
-  padding:18px;
-  border-radius:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.2);
-}
-.form h3{
-  text-align:center;
-  margin-top:0;
-  margin-bottom:14px;
-}
-.form input{
-  width:100%;
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid #ccc;
-  margin-bottom:12px;
-  font-size:14px;
-}
-.form input[type="file"]{
-  border:2px dashed #0f6b44;
-  background:#f9fafb;
-}
-.form button{
-  width:100%;
-  background:linear-gradient(135deg,#0f6b44,#0b4f34);
-  color:#fff;
-  border:none;
-  padding:14px;
-  border-radius:14px;
-  font-size:16px;
-  font-weight:700;
-}
-
-/* ===== MODAL FOTO ===== */
-#fotoModal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:2000;
-}
-#fotoModal img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:14px;
-}
+body{font-family:Arial;background:#064e3b;color:white}
+.card{background:white;color:#064e3b;padding:15px;border-radius:10px;margin:10px}
+table{width:100%;background:white;color:black}
+td,th{padding:6px;border-bottom:1px solid #ddd;font-size:12px}
+button{background:#064e3b;color:white;border:none;padding:8px;border-radius:6px}
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <h1>📊 Keuangan Masjid</h1>
-  <button class="logout" onclick="logout()">Logout</button>
+<div class="card">
+Saldo: <b id="saldo">0</b> | Transaksi: <b id="jumlah">0</b>
 </div>
 
-<div class="container">
-
-  <!-- SUMMARY -->
-  <div class="summary">
-    <div class="box">
-      <small>Saldo</small>
-      <b id="saldo">Rp 0</b>
-    </div>
-    <div class="box">
-      <small>Transaksi</small>
-      <b id="jumlah">0</b>
-    </div>
-    <div class="box">
-      <small>Pemasukan</small>
-      <b id="masukTotal">Rp 0</b>
-    </div>
-    <div class="box">
-      <small>Pengeluaran</small>
-      <b id="keluarTotal">Rp 0</b>
-    </div>
-  </div>
-
-  <!-- TABLE -->
-  <div class="table-box">
-    <table>
-      <thead>
-        <tr>
-          <th>Tgl</th>
-          <th>Keterangan</th>
-          <th>Rp</th>
-          <th>Bukti</th>
-        </tr>
-      </thead>
-      <tbody id="list"></tbody>
-    </table>
-  </div>
-
-  <!-- FORM -->
-  <div class="form" id="formInput">
-    <h3>Tambah Transaksi</h3>
-    <input type="date" id="tgl">
-    <input type="text" id="ket" placeholder="Keterangan">
-    <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
-    <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
-    <input type="file" id="foto" accept="image/*">
-    <button onclick="simpan()">💾 Simpan Transaksi</button>
-  </div>
-
+<div class="card">
+<input type="date" id="tgl"><br>
+<input id="ket" placeholder="Keterangan"><br>
+<input id="masuk" type="number" placeholder="Masuk"><br>
+<input id="keluar" type="number" placeholder="Keluar"><br>
+<input id="foto" type="file"><br>
+<button onclick="simpan()">Simpan</button>
 </div>
 
-<!-- MODAL FOTO -->
-<div id="fotoModal" onclick="this.style.display='none'">
-  <img id="fotoPreview">
-</div>
+<table>
+<thead><tr><th>Tgl</th><th>Ket</th><th>Rp</th><th>Foto</th><th>Aksi</th></tr></thead>
+<tbody id="list"></tbody>
+</table>
 
-<script>
-const API_URL = "https://script.google.com/macros/s/AKfycbz2fHNtKgcbtT_q5TtX33XZRbji30T0Cen7DldaAJi5PW5t3LB2b5ojYSYDPZF1EJkM/exec";
-
-function simpan(){
-  const tgl = document.getElementById("tgl").value;
-  const ket = document.getElementById("ket").value;
-  const masuk = document.getElementById("masuk").value || 0;
-  const keluar = document.getElementById("keluar").value || 0;
-  const fotoFile = document.getElementById("foto").files[0];
-
-  if(!tgl || !ket){
-    alert("Tanggal dan keterangan wajib");
-    return;
-  }
-
-  if(fotoFile){
-    const reader = new FileReader();
-    reader.onload = function(){
-      kirim(reader.result);
-    }
-    reader.readAsDataURL(fotoFile);
-  } else {
-    kirim("");
-  }
-
-  function kirim(base64){
-    const data =
-      "tgl="+encodeURIComponent(tgl)+
-      "&ket="+encodeURIComponent(ket)+
-      "&masuk="+encodeURIComponent(masuk)+
-      "&keluar="+encodeURIComponent(keluar)+
-      "&foto="+encodeURIComponent(base64);
-
-    fetch(API_URL,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/x-www-form-urlencoded"
-      },
-      body:data
-    })
-    .then(r=>r.json())
-    .then(res=>{
-      if(res.status==="ok"){
-        alert("Tersimpan");
-        loadData();
-      } else {
-        alert("Server error: "+res.message);
-      }
-    })
-    .catch(err=>{
-      alert("Koneksi gagal");
-      console.error(err);
-    });
-  }
-}
-function kirim(tgl, ket, masuk, keluar, fotoBase64){
-  const body =
-    "tgl=" + encodeURIComponent(tgl) +
-    "&ket=" + encodeURIComponent(ket) +
-    "&masuk=" + encodeURIComponent(masuk) +
-    "&keluar=" + encodeURIComponent(keluar) +
-    "&foto=" + encodeURIComponent(fotoBase64);
-
-  fetch(API_URL,{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/x-www-form-urlencoded"
-    },
-    body: body
-  })
-  .then(r=>r.json())
-  .then(res=>{
-    if(res.status==="ok"){
-      alert("✅ Transaksi tersimpan");
-      loadData();
-    }else{
-      alert("❌ Gagal: " + res.message);
-    }
-  })
-  .catch(err=>{
-    alert("❌ Gagal koneksi");
-    console.error(err);
-  });
-}
-/* ===== TAMPILKAN ===== */
-function tampil(){
-  let html="", saldo=0, masukT=0, keluarT=0;
-
-  data.forEach(x=>{
-    saldo+=x.masuk-x.keluar;
-    masukT+=x.masuk;
-    keluarT+=x.keluar;
-
-    html+=`
-    <tr>
-      <td>${x.tgl}</td>
-      <td>${x.ket}</td>
-      <td>${x.masuk? "Rp "+x.masuk.toLocaleString():x.keluar? "-Rp "+x.keluar.toLocaleString():""}</td>
-      <td>${x.foto? `<img src="${x.foto}" onclick="viewFoto('${x.foto}')">`:"-"}</td>
-    </tr>`;
-  });
-
-  document.getElementById("list").innerHTML=html;
-  document.getElementById("saldo").innerText="Rp "+saldo.toLocaleString();
-  document.getElementById("masukTotal").innerText="Rp "+masukT.toLocaleString();
-  document.getElementById("keluarTotal").innerText="Rp "+keluarT.toLocaleString();
-  document.getElementById("jumlah").innerText=data.length;
-}
-
-tampil();
-
-/* ===== FOTO ===== */
-function viewFoto(src){
-  document.getElementById("fotoPreview").src=src;
-  document.getElementById("fotoModal").style.display="flex";
-}
-
-/* ===== LOGOUT ===== */
-function logout(){
-  localStorage.removeItem("login");
-  localStorage.removeItem("role");
-  location="login.html";
-}
-</script>
-<script src="js/dashboard.js"></script>
+<script src="dashboard.js"></script>
 </body>
 </html>
