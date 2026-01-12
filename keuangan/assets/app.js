@@ -4,7 +4,9 @@ const list=document.getElementById("list");
 const saldoBox=document.getElementById("saldoBox");
 
 function load(){
- fetch(API).then(r=>r.json()).then(rows=>{
+ fetch(API)
+ .then(r=>r.json())
+ .then(rows=>{
   let saldo=0,html="";
   rows.forEach((r,i)=>{
     saldo=r[4];
@@ -12,13 +14,14 @@ function load(){
     <tr>
       <td>${r[0]}</td>
       <td>${r[1]}</td>
-      <td>${r[2]-r[3]}</td>
+      <td>${r[2]}</td>
+      <td>${r[3]}</td>
       <td>${r[5]?`<a href="${r[5]}" target="_blank">📷</a>`:"-"}</td>
       <td><button onclick="hapus(${i+2})">❌</button></td>
     </tr>`;
   });
   list.innerHTML=html;
-  saldoBox.innerText="Rp "+saldo.toLocaleString();
+  saldoBox.innerText="Rp "+saldo;
  });
 }
 
@@ -29,24 +32,32 @@ function simpan(){
  const keluar=document.getElementById("keluar").value;
  const foto=document.getElementById("foto").files[0];
 
- const reader=new FileReader();
+ if(!tgl||!ket){alert("Lengkapi data");return;}
+
  if(foto){
-   reader.onload=()=>kirim(reader.result);
-   reader.readAsDataURL(foto);
+  const r=new FileReader();
+  r.onload=()=>kirim(r.result);
+  r.readAsDataURL(foto);
  }else{
-   kirim("");
+  kirim("");
  }
 }
 
-function kirim(foto64){
- const body=`tgl=${tgl.value}&ket=${ket.value}&masuk=${masuk.value}&keluar=${keluar.value}&foto=${encodeURIComponent(foto64)}`;
- fetch(API,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body})
- .then(()=>load());
+function kirim(foto){
+ const body=`tgl=${tgl.value}&ket=${ket.value}&masuk=${masuk.value}&keluar=${keluar.value}&foto=${encodeURIComponent(foto)}`;
+ fetch(API,{
+  method:"POST",
+  headers:{"Content-Type":"application/x-www-form-urlencoded"},
+  body
+ }).then(()=>load());
 }
 
 function hapus(r){
- fetch(API,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"action=delete&row="+r})
- .then(()=>load());
+ fetch(API,{
+  method:"POST",
+  headers:{"Content-Type":"application/x-www-form-urlencoded"},
+  body:"action=delete&row="+r
+ }).then(()=>load());
 }
 
 function logout(){
