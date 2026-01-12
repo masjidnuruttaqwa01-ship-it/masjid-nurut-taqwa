@@ -253,45 +253,50 @@ function simpan(){
   const foto  = document.getElementById("foto").files[0];
 
   if(!tgl || !ket){
-    alert("Tanggal dan keterangan wajib");
+    alert("Tanggal & keterangan wajib diisi");
     return;
   }
 
   if(foto){
     const reader = new FileReader();
     reader.onload = function(){
-      kirimKeServer(tgl, ket, masuk, keluar, reader.result);
+      kirim(tgl, ket, masuk, keluar, reader.result);
     };
     reader.readAsDataURL(foto);
   } else {
-    kirimKeServer(tgl, ket, masuk, keluar, "");
+    kirim(tgl, ket, masuk, keluar, "");
   }
 }
-  function kirimKeServer(tgl, ket, masuk, keluar, foto){
-  const params = new URLSearchParams();
-  params.append("tgl", tgl);
-  params.append("ket", ket);
-  params.append("masuk", masuk);
-  params.append("keluar", keluar);
-  params.append("foto", foto);
 
-  fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+function kirim(tgl, ket, masuk, keluar, fotoBase64){
+  const body =
+    "tgl=" + encodeURIComponent(tgl) +
+    "&ket=" + encodeURIComponent(ket) +
+    "&masuk=" + encodeURIComponent(masuk) +
+    "&keluar=" + encodeURIComponent(keluar) +
+    "&foto=" + encodeURIComponent(fotoBase64);
+
+  fetch(API_URL,{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/x-www-form-urlencoded"
     },
-    body: params.toString()
+    body: body
   })
-  .then(r => r.text())
-  .then(res => {
-    alert("Transaksi berhasil disimpan");
-    loadData();
+  .then(r=>r.json())
+  .then(res=>{
+    if(res.status==="ok"){
+      alert("✅ Transaksi tersimpan");
+      loadData();
+    }else{
+      alert("❌ Gagal: " + res.message);
+    }
   })
-  .catch(err => {
-    alert("Gagal menyimpan");
+  .catch(err=>{
+    alert("❌ Gagal koneksi");
     console.error(err);
   });
-  }
+}
 /* ===== TAMPILKAN ===== */
 function tampil(){
   let html="", saldo=0, masukT=0, keluarT=0;
