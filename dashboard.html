@@ -1,37 +1,42 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Keuangan DKM</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="dashboard.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kas Masjid</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;font-family:Poppins;background:linear-gradient(#064e3b,#0f766e);color:white}
+.header{padding:15px;font-weight:bold;display:flex;justify-content:space-between}
+.box{background:white;color:#064e3b;margin:10px;border-radius:15px;padding:15px}
+input,button{width:100%;padding:10px;margin-top:8px;border-radius:8px;border:none}
+button{background:#0f766e;color:white;font-weight:bold}
+.list .item{background:#f0fdf4;padding:10px;border-radius:10px;margin:8px 0}
+img{width:50px;border-radius:8px}
+</style>
 </head>
+
 <body>
 
-<header>
-  <h1>🕌 Keuangan Masjid</h1>
+<div class="header">
+  <div>Kas Masjid</div>
   <button onclick="logout()">Logout</button>
-</header>
+</div>
 
-<section class="summary">
-  <div><small>Saldo</small><b id="saldo">Rp 0</b></div>
-  <div><small>Transaksi</small><b id="jumlah">0</b></div>
-  <div><small>Masuk</small><b id="masukTotal">Rp 0</b></div>
-  <div><small>Keluar</small><b id="keluarTotal">Rp 0</b></div>
-</section>
+<div class="box">
+<b>Saldo:</b> <span id="saldo">0</span>
+</div>
 
-<h3>📑 Riwayat</h3>
-<div id="list" class="list"></div>
+<div class="box list" id="list"></div>
 
-<div id="formInput" class="form">
-  <h3>➕ Tambah Transaksi</h3>
-  <input type="date" id="tgl">
-  <input type="text" id="ket" placeholder="Keterangan">
-  <input type="number" id="masuk" placeholder="Pemasukan">
-  <input type="number" id="keluar" placeholder="Pengeluaran">
-  <input type="file" id="foto">
-  <button onclick="simpan()">Simpan</button>
+<div class="box" id="form">
+<h3>Tambah</h3>
+<input type="date" id="tgl">
+<input id="ket" placeholder="Keterangan">
+<input id="masuk" type="number" placeholder="Masuk">
+<input id="keluar" type="number" placeholder="Keluar">
+<input type="file" id="foto">
+<button onclick="simpan()">Simpan</button>
 </div>
 
 <script src="dashboard.js"></script>
