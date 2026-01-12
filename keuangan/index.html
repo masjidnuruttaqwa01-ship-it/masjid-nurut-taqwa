@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard Keuangan Masjid</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="assets/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>Masjid<br>Nurut Taqwa</h2>
+    <a href="#">📊 Dashboard</a>
+    <a href="#">💰 Kas</a>
+    <a href="#">📁 Bukti</a>
+    <a href="#">📄 Laporan</a>
+    <a href="#" onclick="logout()">🚪 Logout</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <header>
+      <h1>Dashboard Keuangan</h1>
+      <div id="saldoBox">Rp 0</div>
+    </header>
+
+    <!-- FORM -->
+    <section class="card" id="formBox">
+      <h3>Tambah Transaksi</h3>
+      <div class="form-grid">
+        <input type="date" id="tgl">
+        <input type="text" id="ket" placeholder="Keterangan">
+        <input type="number" id="masuk" placeholder="Pemasukan">
+        <input type="number" id="keluar" placeholder="Pengeluaran">
+        <input type="file" id="foto">
+        <button onclick="simpan()">💾 Simpan</button>
+      </div>
+    </section>
+
+    <!-- TABLE -->
+    <section class="card">
+      <h3>Data Transaksi</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Keterangan</th>
+            <th>Nominal</th>
+            <th>Bukti</th>
+            <th>Hapus</th>
+          </tr>
+        </thead>
+        <tbody id="list"></tbody>
+      </table>
+    </section>
+
+  </main>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
