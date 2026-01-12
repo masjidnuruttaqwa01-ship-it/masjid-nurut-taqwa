@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbyOR1gCumlqZ0xr0qH3xqll-GN_CLZ-dzGsbTEkk1IMYUWuI-YrtUt51mAhl2ouQHnPxg/exec";
+const API_URL = "const API_URL = "https://script.google.com/macros/s/AKfycbz2fHNtKgcbtT_q5TtX33XZRbji30T0Cen7DldaAJi5PW5t3LB2b5ojYSYDPZF1EJkM/exec";";
 
 /* =============================
    SIMPAN TRANSAKSI KE SHEET
