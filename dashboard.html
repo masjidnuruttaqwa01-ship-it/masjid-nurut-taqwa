@@ -1,37 +1,240 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+<meta charset="UTF-8">
+<title>DKM Dashboard – Masjid Nurut Taqwa</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kas Masjid</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{font-family:Arial;background:#064e3b;color:white}
-.card{background:white;color:#064e3b;padding:15px;border-radius:10px;margin:10px}
-table{width:100%;background:white;color:black}
-td,th{padding:6px;border-bottom:1px solid #ddd;font-size:12px}
-button{background:#064e3b;color:white;border:none;padding:8px;border-radius:6px}
+:root{
+  --green:#0f6b44;
+  --dark:#064e3b;
+  --gold:#d4af37;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:#f4f7f6;
+  color:#1f2933;
+}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  background:linear-gradient(135deg,#064e3b,#0f6b44);
+  color:white;
+  padding:16px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.topbar h1{
+  font-size:18px;
+  margin:0;
+  font-weight:700;
+}
+.topbar span{
+  font-size:12px;
+  opacity:.9;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+  padding:18px;
+  max-width:1200px;
+  margin:auto;
+}
+
+/* ===== SUMMARY ===== */
+.summary{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+  margin-bottom:26px;
+}
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,.08);
+  position:relative;
+  overflow:hidden;
+}
+.card::after{
+  content:"";
+  position:absolute;
+  right:-20px;
+  top:-20px;
+  width:120px;
+  height:120px;
+  background:rgba(212,175,55,.15);
+  border-radius:50%;
+}
+.card h4{
+  margin:0;
+  font-size:13px;
+  color:#777;
+}
+.card b{
+  display:block;
+  font-size:26px;
+  color:var(--green);
+  margin-top:6px;
+}
+
+/* ===== TABLE ===== */
+.table-box{
+  background:#fff;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+.table-box h3{
+  padding:16px;
+  margin:0;
+  background:#f9fafb;
+  font-size:16px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+th{
+  background:#0f6b44;
+  color:white;
+  text-align:left;
+  padding:12px;
+}
+td{
+  padding:12px;
+  border-bottom:1px solid #eee;
+}
+td img{
+  width:42px;
+  height:42px;
+  border-radius:8px;
+  object-fit:cover;
+}
+
+/* ===== FORM ===== */
+.form-box{
+  background:#fff;
+  border-radius:18px;
+  box-shadow:0 15px 40px rgba(0,0,0,.08);
+  padding:22px;
+  margin-top:30px;
+}
+.form-box h3{
+  margin-top:0;
+  margin-bottom:18px;
+}
+.form-box input{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  margin-bottom:14px;
+  font-size:14px;
+}
+.form-box input[type="file"]{
+  border:2px dashed var(--green);
+  background:#f7faf9;
+}
+.form-box button{
+  width:100%;
+  background:linear-gradient(135deg,#0f6b44,#064e3b);
+  color:white;
+  border:none;
+  padding:14px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:600px){
+  .card b{font-size:20px;}
+}
 </style>
 </head>
-
 <body>
 
-<div class="card">
-Saldo: <b id="saldo">0</b> | Transaksi: <b id="jumlah">0</b>
+<div class="topbar">
+  <div>
+    <h1>Masjid Nurut Taqwa</h1>
+    <span>Dashboard Keuangan DKM</span>
+  </div>
+  <div>
+    <b>👤 Bendahara</b>
+  </div>
 </div>
 
-<div class="card">
-<input type="date" id="tgl"><br>
-<input id="ket" placeholder="Keterangan"><br>
-<input id="masuk" type="number" placeholder="Masuk"><br>
-<input id="keluar" type="number" placeholder="Keluar"><br>
-<input id="foto" type="file"><br>
-<button onclick="simpan()">Simpan</button>
+<div class="container">
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="card">
+      <h4>Saldo Kas</h4>
+      <b>Rp 12.500.000</b>
+    </div>
+    <div class="card">
+      <h4>Total Pemasukan</h4>
+      <b>Rp 6.300.000</b>
+    </div>
+    <div class="card">
+      <h4>Total Pengeluaran</h4>
+      <b>Rp 3.800.000</b>
+    </div>
+    <div class="card">
+      <h4>Jumlah Transaksi</h4>
+      <b>128</b>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-box">
+    <h3>Riwayat Transaksi</h3>
+    <table>
+      <tr>
+        <th>Tanggal</th>
+        <th>Keterangan</th>
+        <th>Masuk</th>
+        <th>Keluar</th>
+        <th>Bukti</th>
+      </tr>
+      <tr>
+        <td>2026-01-10</td>
+        <td>Infaq Jumat</td>
+        <td>Rp 1.500.000</td>
+        <td>-</td>
+        <td><img src="https://via.placeholder.com/100"></td>
+      </tr>
+      <tr>
+        <td>2026-01-12</td>
+        <td>Pembelian Karpet</td>
+        <td>-</td>
+        <td>Rp 750.000</td>
+        <td><img src="https://via.placeholder.com/100"></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-box">
+    <h3>Tambah Transaksi</h3>
+    <input type="date">
+    <input type="text" placeholder="Keterangan transaksi">
+    <input type="number" placeholder="Pemasukan">
+    <input type="number" placeholder="Pengeluaran">
+    <input type="file">
+    <button>💾 Simpan Transaksi</button>
+  </div>
+
 </div>
 
-<table>
-<thead><tr><th>Tgl</th><th>Ket</th><th>Rp</th><th>Foto</th><th>Aksi</th></tr></thead>
-<tbody id="list"></tbody>
-</table>
-
-<script src="dashboard.js"></script>
 </body>
 </html>
