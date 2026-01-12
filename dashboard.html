@@ -215,58 +215,69 @@ body{
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbyIwIo6LHiTc01tTWmDX6H5sOq3qIrphSNa-SCLaGRqI2BlONT3VPHDnVIkMfOpBzHN/exec";
-/* ===== CEK LOGIN ===== */
-if(localStorage.getItem("login")!=="true"){
-  window.location="login.html";
-}
+const API_URL = "https://script.google.com/macros/s/AKfycbyOR1gCumlqZ0xr0qH3xqll-GN_CLZ-dzGsbTEkk1IMYUWuI-YrtUt51mAhl2ouQHnPxg/exec";
 
-const role = localStorage.getItem("role");
-
-/* ===== AMBIL ELEMENT ===== */
-const tglInput=document.getElementById("tgl");
-const ketInput=document.getElementById("ket");
-const masukInput=document.getElementById("masuk");
-const keluarInput=document.getElementById("keluar");
-const fotoInput=document.getElementById("foto");
-const formInput=document.getElementById("formInput");
-
-/* ===== SEMBUNYIKAN FORM JIKA ANGGOTA ===== */
-if(role==="anggota"){
-  formInput.style.display="none";
-}
-
-/* ===== DATA ===== */
-let data = JSON.parse(localStorage.getItem("kas")||"[]");
-
-/* ===== SIMPAN ===== */
 function simpan(){
   if(localStorage.getItem("role") !== "bendahara"){
-    alert("Hanya Bendahara yang boleh input transaksi");
+    alert("Hanya Bendahara yang boleh input");
     return;
   }
 
-  const tgl   = document.getElementById("tgl").value;
-  const ket   = document.getElementById("ket").value;
-  const masuk = document.getElementById("masuk").value || 0;
-  const keluar= document.getElementById("keluar").value || 0;
-  const foto  = document.getElementById("foto").files[0];
+  const tgl = document.getElementById("tgl").value;
+  const ket = document.getElementById("ket").value;
+  const masuk = document.getElementById("masuk").value;
+  const keluar = document.getElementById("keluar").value;
+  const foto = document.getElementById("foto").files[0];
 
   if(!tgl || !ket){
-    alert("Tanggal & keterangan wajib diisi");
+    alert("Lengkapi data");
     return;
   }
 
   if(foto){
     const reader = new FileReader();
     reader.onload = function(){
-      kirim(tgl, ket, masuk, keluar, reader.result);
-    };
+      kirim(reader.result);
+    }
     reader.readAsDataURL(foto);
   } else {
-    kirim(tgl, ket, masuk, keluar, "");
+    kirim("");
   }
-}
+
+  function kirim(base64){
+    fetch(API_URL,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        tgl: tgl,
+        ket: ket,
+        masuk: masuk,
+        keluar: keluar,
+        foto: base64
+      })
+    })
+    .then(r=>r.json())
+    .then(res=>{
+      if(res.status==="ok"){
+        alert("Tersimpan");
+        loadData();
+        document.getElementById("tgl").value="";
+        document.getElementById("ket").value="";
+        document.getElementById("masuk").value="";
+        document.getElementById("keluar").value="";
+        document.getElementById("foto").value="";
+      } else {
+        alert("Gagal: "+res.message);
+      }
+    })
+    .catch(e=>{
+      alert("Koneksi gagal");
+      console.error(e);
+    });
+  }
+          }
 
 function kirim(tgl, ket, masuk, keluar, fotoBase64){
   const body =
