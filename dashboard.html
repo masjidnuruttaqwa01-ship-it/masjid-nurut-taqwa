@@ -14,6 +14,8 @@ body{
   background:linear-gradient(180deg,#064e3b,#0f766e);
   color:#fff;
 }
+
+/* ===== HEADER ===== */
 .header{
   background:#064e3b;
   padding:14px 16px;
@@ -21,12 +23,26 @@ body{
   justify-content:space-between;
   align-items:center;
 }
-.header h1{font-size:16px;margin:0}
-.logout{
-  background:#dc2626;border:none;color:#fff;padding:8px 14px;border-radius:12px;font-weight:600
+.header h1{
+  font-size:16px;
+  margin:0;
+  font-weight:700;
 }
-.container{padding:16px}
+.logout{
+  background:#dc2626;
+  border:none;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:12px;
+  font-weight:600;
+}
 
+/* ===== CONTAINER ===== */
+.container{
+  padding:16px;
+}
+
+/* ===== SUMMARY ===== */
 .summary{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -38,39 +54,100 @@ body{
   color:#064e3b;
   padding:16px;
   border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
+.box small{
+  opacity:.7;
+  font-size:12px;
+}
+.box b{
+  font-size:20px;
+  display:block;
+  margin-top:4px;
+}
+
+/* ===== TABLE ===== */
 .table-box{
   background:#fff;
   color:#064e3b;
   border-radius:18px;
   overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
   margin-bottom:20px;
 }
-.table-box table{width:100%;border-collapse:collapse;font-size:12px}
-.table-box th{background:#064e3b;color:#fff;padding:10px}
-.table-box td{padding:10px;border-bottom:1px solid #eee}
+.table-box table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+.table-box th{
+  background:#064e3b;
+  color:#fff;
+  padding:10px;
+  text-align:left;
+}
+.table-box td{
+  padding:10px;
+  border-bottom:1px solid #eee;
+}
+.table-box img{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  object-fit:cover;
+  cursor:pointer;
+}
 
+/* ===== FORM ===== */
 .form{
   background:#fff;
   color:#064e3b;
   padding:18px;
   border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+.form h3{
+  text-align:center;
+  margin-top:0;
+  margin-bottom:14px;
 }
 .form input{
   width:100%;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:10px;
+  padding:12px 14px;
+  border-radius:12px;
   border:1px solid #ccc;
+  margin-bottom:12px;
+  font-size:14px;
+}
+.form input[type="file"]{
+  border:2px dashed #0f6b44;
+  background:#f9fafb;
 }
 .form button{
   width:100%;
-  background:#064e3b;
+  background:linear-gradient(135deg,#0f6b44,#0b4f34);
   color:#fff;
   border:none;
-  padding:12px;
-  border-radius:12px;
+  padding:14px;
+  border-radius:14px;
+  font-size:16px;
   font-weight:700;
+}
+
+/* ===== MODAL FOTO ===== */
+#fotoModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+#fotoModal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:14px;
 }
 </style>
 </head>
@@ -84,163 +161,158 @@ body{
 
 <div class="container">
 
-<div class="summary">
-  <div class="box">Saldo<br><b id="saldo">Rp 0</b></div>
-  <div class="box">Transaksi<br><b id="jumlah">0</b></div>
-  <div class="box">Masuk<br><b id="masukTotal">Rp 0</b></div>
-  <div class="box">Keluar<br><b id="keluarTotal">Rp 0</b></div>
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="box">
+      <small>Saldo</small>
+      <b id="saldo">Rp 0</b>
+    </div>
+    <div class="box">
+      <small>Transaksi</small>
+      <b id="jumlah">0</b>
+    </div>
+    <div class="box">
+      <small>Pemasukan</small>
+      <b id="masukTotal">Rp 0</b>
+    </div>
+    <div class="box">
+      <small>Pengeluaran</small>
+      <b id="keluarTotal">Rp 0</b>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Tgl</th>
+          <th>Keterangan</th>
+          <th>Rp</th>
+          <th>Bukti</th>
+        </tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
+  </div>
+
+  <!-- FORM -->
+  <div class="form" id="formInput">
+    <h3>Tambah Transaksi</h3>
+    <input type="date" id="tgl">
+    <input type="text" id="ket" placeholder="Keterangan">
+    <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
+    <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
+    <input type="file" id="foto" accept="image/*">
+    <button onclick="simpan()">💾 Simpan Transaksi</button>
+  </div>
+
 </div>
 
-<div class="table-box">
-<table>
-<thead>
-<tr><th>Tgl</th><th>Keterangan</th><th>Masuk</th><th>Keluar</th><th>Bukti</th></tr>
-</thead>
-<tbody id="list"></tbody>
-</table>
-</div>
-
-<div class="form" id="formInput">
-<h3>Tambah Transaksi</h3>
-<input type="date" id="tgl">
-<input type="text" id="ket" placeholder="Keterangan">
-<input type="number" id="masuk" placeholder="Pemasukan">
-<input type="number" id="keluar" placeholder="Pengeluaran">
-<input type="file" id="foto" accept="image/*">
-<button onclick="simpan()">💾 Simpan Transaksi</button>
-</div>
-
+<!-- MODAL FOTO -->
+<div id="fotoModal" onclick="this.style.display='none'">
+  <img id="fotoPreview">
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbz6-lcYkV3Ux-7-WYt9rwirB13pz2a6m7t2Z-4lxDm71c-JkWvR8TfK3z0HTEcbBmuR/exec";
-
 /* ===== CEK LOGIN ===== */
-if(localStorage.getItem("login") !== "true"){
-  location="login.html";
+if(localStorage.getItem("login")!=="true"){
+  window.location="login.html";
 }
 
 const role = localStorage.getItem("role");
 
+/* ===== AMBIL ELEMENT ===== */
+const tglInput=document.getElementById("tgl");
+const ketInput=document.getElementById("ket");
+const masukInput=document.getElementById("masuk");
+const keluarInput=document.getElementById("keluar");
+const fotoInput=document.getElementById("foto");
+const formInput=document.getElementById("formInput");
+
 /* ===== SEMBUNYIKAN FORM JIKA ANGGOTA ===== */
 if(role==="anggota"){
-  document.getElementById("formInput").style.display="none";
+  formInput.style.display="none";
 }
 
-/* ===== LOAD DATA ===== */
-function loadData(){
- fetch(API_URL)
- .then(r=>r.json())
- .then(rows=>{
-   let html="", saldo=0, masukT=0, keluarT=0;
-
-   rows.forEach(r=>{
-     saldo = r[4];
-     masukT += Number(r[2]);
-     keluarT += Number(r[3]);
-     html+=`
-       <tr>
-         <td>${r[0]}</td>
-         <td>${r[1]}</td>
-         <td>${r[2]}</td>
-         <td>${r[3]}</td>
-         <td>${r[5]?`<a href="${r[5]}" target="_blank">📷</a>`:"-"}</td>
-       </tr>
-     `;
-   });
-
-   list.innerHTML=html;
-   saldo.innerText="Rp "+saldo;
-   masukTotal.innerText="Rp "+masukT;
-   keluarTotal.innerText="Rp "+keluarT;
-   jumlah.innerText=rows.length;
- });
-}
+/* ===== DATA ===== */
+let data = JSON.parse(localStorage.getItem("kas")||"[]");
 
 /* ===== SIMPAN ===== */
 function simpan(){
-  if(localStorage.getItem("role") !== "bendahara"){
-    alert("Hanya Bendahara yang boleh input transaksi");
+  if(role!=="bendahara"){
+    alert("Hanya Bendahara yang boleh input data");
     return;
   }
 
-  const tgl   = document.getElementById("tgl").value;
-  const ket   = document.getElementById("ket").value;
-  const masuk = document.getElementById("masuk").value || 0;
-  const keluar= document.getElementById("keluar").value || 0;
-  const foto  = document.getElementById("foto").files[0];
+  const tgl=tglInput.value;
+  const ket=ketInput.value;
+  const masuk=parseInt(masukInput.value||0);
+  const keluar=parseInt(keluarInput.value||0);
+  const foto=fotoInput.files[0];
 
-  if(!tgl || !ket){
-    alert("Tanggal dan keterangan wajib diisi");
-    return;
-  }
+  if(!tgl||!ket){ alert("Lengkapi data"); return; }
 
   if(foto){
-    const reader = new FileReader();
-    reader.onload = function(){
-      kirimKeSheet(tgl, ket, masuk, keluar, reader.result);
+    const r=new FileReader();
+    r.onload=function(){
+      data.push({tgl,ket,masuk,keluar,foto:this.result});
+      localStorage.setItem("kas",JSON.stringify(data));
+      tampil();
     }
-    reader.readAsDataURL(foto);
-  } else {
-    kirimKeSheet(tgl, ket, masuk, keluar, "");
+    r.readAsDataURL(foto);
+  }else{
+    data.push({tgl,ket,masuk,keluar,foto:""});
+    localStorage.setItem("kas",JSON.stringify(data));
+    tampil();
   }
-}
-  function kirimKeSheet(tgl, ket, masuk, keluar, foto){
-  const params = new URLSearchParams();
-  params.append("tgl", tgl);
-  params.append("ket", ket);
-  params.append("masuk", masuk);
-  params.append("keluar", keluar);
-  params.append("foto", foto);
 
-  fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: params.toString()
-  })
-  .then(r => r.text())
-  .then(res => {
-    alert("Transaksi berhasil disimpan");
-    loadData();
-  })
-  .catch(err => {
-    alert("Gagal menyimpan");
-    console.error(err);
+  tglInput.value="";
+  ketInput.value="";
+  masukInput.value="";
+  keluarInput.value="";
+  fotoInput.value="";
+}
+
+/* ===== TAMPILKAN ===== */
+function tampil(){
+  let html="", saldo=0, masukT=0, keluarT=0;
+
+  data.forEach(x=>{
+    saldo+=x.masuk-x.keluar;
+    masukT+=x.masuk;
+    keluarT+=x.keluar;
+
+    html+=`
+    <tr>
+      <td>${x.tgl}</td>
+      <td>${x.ket}</td>
+      <td>${x.masuk? "Rp "+x.masuk.toLocaleString():x.keluar? "-Rp "+x.keluar.toLocaleString():""}</td>
+      <td>${x.foto? `<img src="${x.foto}" onclick="viewFoto('${x.foto}')">`:"-"}</td>
+    </tr>`;
   });
-  } 
-function kirim(formData){
-  fetch(API_URL, {
-    method:"POST",
-    body: formData
-  })
-  .then(r=>r.text())
-  .then(res=>{
-    alert("Transaksi berhasil disimpan");
-    loadData();
-  })
-  .catch(err=>{
-    alert("Gagal kirim data");
-    console.error(err);
-  });
+
+  document.getElementById("list").innerHTML=html;
+  document.getElementById("saldo").innerText="Rp "+saldo.toLocaleString();
+  document.getElementById("masukTotal").innerText="Rp "+masukT.toLocaleString();
+  document.getElementById("keluarTotal").innerText="Rp "+keluarT.toLocaleString();
+  document.getElementById("jumlah").innerText=data.length;
 }
 
-function kirim(fd){
- fetch(API_URL,{method:"POST",body:fd})
- .then(r=>r.text())
- .then(()=>{
-   alert("Tersimpan");
-   loadData();
- });
+tampil();
+
+/* ===== FOTO ===== */
+function viewFoto(src){
+  document.getElementById("fotoPreview").src=src;
+  document.getElementById("fotoModal").style.display="flex";
 }
 
+/* ===== LOGOUT ===== */
 function logout(){
- localStorage.clear();
- location="login.html";
+  localStorage.removeItem("login");
+  localStorage.removeItem("role");
+  location="login.html";
 }
-
-loadData();
 </script>
 
 </body>
