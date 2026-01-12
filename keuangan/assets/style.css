@@ -1,0 +1,82 @@
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Poppins;
+ background:#f3f4f6;
+}
+.app{
+ display:flex;
+ min-height:100vh;
+}
+.sidebar{
+ width:220px;
+ background:#064e3b;
+ color:white;
+ padding:20px;
+}
+.sidebar h2{
+ font-size:20px;
+ margin-bottom:20px;
+}
+.sidebar a{
+ display:block;
+ color:white;
+ text-decoration:none;
+ padding:10px;
+ border-radius:8px;
+ margin-bottom:6px;
+}
+.sidebar a:hover{background:#0f766e}
+
+.main{
+ flex:1;
+ padding:20px;
+}
+header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:20px;
+}
+#saldoBox{
+ background:#064e3b;
+ color:white;
+ padding:10px 20px;
+ border-radius:14px;
+ font-size:18px;
+}
+
+.card{
+ background:white;
+ border-radius:16px;
+ padding:18px;
+ box-shadow:0 10px 25px rgba(0,0,0,.08);
+ margin-bottom:20px;
+}
+
+.form-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+ gap:12px;
+}
+
+input,button{
+ padding:12px;
+ border-radius:10px;
+ border:1px solid #ddd;
+}
+button{
+ background:#064e3b;
+ color:white;
+ border:none;
+ font-weight:600;
+}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+}
+th,td{
+ padding:10px;
+ border-bottom:1px solid #eee;
+}
