@@ -1,43 +1,49 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Dashboard Keuangan Masjid</title>
+<title>Keuangan Masjid</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+<script src="dashboard.js" defer></script>
+<style>
+body{margin:0;background:linear-gradient(180deg,#064e3b,#0f766e);font-family:Poppins;color:#fff}
+.header{padding:16px;background:#064e3b;display:flex;justify-content:space-between}
+.card{background:#fff;color:#064e3b;border-radius:16px;padding:14px;margin:12px}
+input,button{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;margin-top:8px}
+button{background:#064e3b;color:white;font-weight:700;border:none}
+table{width:100%;font-size:12px}
+img{width:50px;border-radius:8px}
+</style>
 </head>
 
 <body>
-
-<header>
-  <h1>📊 Keuangan Masjid Nurut Taqwa</h1>
-  <button onclick="logout()">Logout</button>
-</header>
-
-<div class="wrap">
-
-<div class="summary">
-  <div><small>Saldo</small><b id="saldo">Rp 0</b></div>
-  <div><small>Masuk</small><b id="masuk">Rp 0</b></div>
-  <div><small>Keluar</small><b id="keluar">Rp 0</b></div>
+<div class="header">
+<b>📊 Keuangan Masjid</b>
+<button onclick="logout()">Logout</button>
 </div>
 
-<div id="today"></div>
+<div class="card">
+Saldo: <b id="saldo">0</b><br>
+Masuk: <span id="masuk"></span><br>
+Keluar: <span id="keluar"></span>
+</div>
 
-<div class="list" id="list"></div>
+<div class="card">
+<table>
+<thead><tr><th>Tgl</th><th>Ket</th><th>Rp</th><th>Foto</th><th>❌</th></tr></thead>
+<tbody id="list"></tbody>
+</table>
+</div>
 
-<div class="form" id="formInput">
-<h3>Tambah Transaksi</h3>
+<div class="card" id="form">
 <input type="date" id="tgl">
-<input type="text" id="ket" placeholder="Keterangan">
-<input type="number" id="masukInput" placeholder="Pemasukan">
-<input type="number" id="keluarInput" placeholder="Pengeluaran">
+<input id="ket" placeholder="Keterangan">
+<input id="masukIn" placeholder="Pemasukan">
+<input id="keluarIn" placeholder="Pengeluaran">
 <input type="file" id="foto">
 <button onclick="simpan()">💾 Simpan</button>
 </div>
 
-</div>
-
-<script src="dashboard.js"></script>
 </body>
 </html>
