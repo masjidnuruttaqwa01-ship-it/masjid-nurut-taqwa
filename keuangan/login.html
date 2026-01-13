@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login DKM</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{margin:0;background:linear-gradient(135deg,#064e3b,#0f766e);font-family:Poppins;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh}
+.box{background:white;color:#064e3b;padding:30px;border-radius:20px;width:90%;max-width:340px;box-shadow:0 20px 40px rgba(0,0,0,.3)}
+input,button{width:100%;padding:14px;border-radius:12px;border:1px solid #ccc;margin-top:12px;font-size:15px}
+button{background:#064e3b;color:white;border:none;font-weight:700}
+</style>
+</head>
+<body>
+<div class="box">
+<h3>Login Keuangan</h3>
+<input id="u" placeholder="Username">
+<input id="p" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<p id="msg"></p>
+</div>
+
+<script>
+const users = {
+  bendahara:{pass:"1234",role:"bendahara"},
+  anggota:{pass:"1111",role:"anggota"}
+};
+
+function login(){
+  const u = document.getElementById("u").value;
+  const p = document.getElementById("p").value;
+  if(users[u] && users[u].pass===p){
+    localStorage.setItem("login","true");
+    localStorage.setItem("role",users[u].role);
+    location="dashboard.html";
+  } else {
+    document.getElementById("msg").innerText="Login gagal";
+  }
+}
+</script>
+</body>
+</html>
