@@ -1,49 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Keuangan Masjid</title>
+<title>Kas Masjid</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
-<script src="dashboard.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{margin:0;background:linear-gradient(180deg,#064e3b,#0f766e);font-family:Poppins;color:#fff}
-.header{padding:16px;background:#064e3b;display:flex;justify-content:space-between}
-.card{background:#fff;color:#064e3b;border-radius:16px;padding:14px;margin:12px}
-input,button{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;margin-top:8px}
-button{background:#064e3b;color:white;font-weight:700;border:none}
-table{width:100%;font-size:12px}
-img{width:50px;border-radius:8px}
+body{
+  margin:0;
+  font-family:Poppins;
+  background:linear-gradient(180deg,#043f2e,#0f766e);
+  color:#fff;
+}
+header{
+  padding:16px;
+  font-weight:700;
+  font-size:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logout{
+  background:#dc2626;
+  border:none;
+  padding:10px 14px;
+  color:#fff;
+  border-radius:12px;
+}
+.summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  padding:16px;
+}
+.card{
+  background:rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:16px;
+}
+.card small{opacity:.7}
+.card b{font-size:22px}
+
+.list{
+  background:#fff;
+  color:#064e3b;
+  border-radius:30px 30px 0 0;
+  padding:16px;
+  min-height:50vh;
+}
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+}
+.row .left{
+  flex:1;
+}
+.row .left b{
+  display:block;
+}
+.row .right{
+  text-align:right;
+}
+.row img{
+  width:50px;
+  height:50px;
+  object-fit:cover;
+  border-radius:12px;
+  margin-top:6px;
+}
+.delete{
+  background:#065f46;
+  border:none;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:14px;
+}
+
+.form{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  padding:14px;
+  border-radius:30px 30px 0 0;
+}
+.form input{
+  width:100%;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  margin-bottom:10px;
+}
+.form button{
+  width:100%;
+  background:#065f46;
+  color:#fff;
+  padding:14px;
+  border:none;
+  border-radius:16px;
+  font-size:16px;
+}
 </style>
 </head>
 
 <body>
-<div class="header">
-<b>📊 Keuangan Masjid</b>
-<button onclick="logout()">Logout</button>
+
+<header>
+  📊 Kas Masjid
+  <button class="logout" onclick="logout()">Logout</button>
+</header>
+
+<div class="summary">
+  <div class="card"><small>Saldo</small><b id="saldo">Rp 0</b></div>
+  <div class="card"><small>Transaksi</small><b id="jumlah">0</b></div>
+  <div class="card"><small>Masuk</small><b id="masuk">Rp 0</b></div>
+  <div class="card"><small>Keluar</small><b id="keluar">Rp 0</b></div>
 </div>
 
-<div class="card">
-Saldo: <b id="saldo">0</b><br>
-Masuk: <span id="masuk"></span><br>
-Keluar: <span id="keluar"></span>
+<div class="list" id="list"></div>
+
+<div class="form" id="form">
+  <input type="date" id="tgl">
+  <input type="text" id="ket" placeholder="Keterangan">
+  <input type="number" id="masukInput" placeholder="Pemasukan">
+  <input type="number" id="keluarInput" placeholder="Pengeluaran">
+  <input type="file" id="foto">
+  <button onclick="simpan()">💾 Simpan Transaksi</button>
 </div>
 
-<div class="card">
-<table>
-<thead><tr><th>Tgl</th><th>Ket</th><th>Rp</th><th>Foto</th><th>❌</th></tr></thead>
-<tbody id="list"></tbody>
-</table>
-</div>
-
-<div class="card" id="form">
-<input type="date" id="tgl">
-<input id="ket" placeholder="Keterangan">
-<input id="masukIn" placeholder="Pemasukan">
-<input id="keluarIn" placeholder="Pengeluaran">
-<input type="file" id="foto">
-<button onclick="simpan()">💾 Simpan</button>
-</div>
-
+<script src="dashboard.js"></script>
 </body>
 </html>
