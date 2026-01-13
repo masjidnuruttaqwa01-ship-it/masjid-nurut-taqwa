@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard Keuangan Masjid</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>📊 Keuangan Masjid Nurut Taqwa</h1>
+  <button onclick="logout()">Logout</button>
+</header>
+
+<div class="wrap">
+
+<div class="summary">
+  <div><small>Saldo</small><b id="saldo">Rp 0</b></div>
+  <div><small>Masuk</small><b id="masuk">Rp 0</b></div>
+  <div><small>Keluar</small><b id="keluar">Rp 0</b></div>
+</div>
+
+<div id="today"></div>
+
+<div class="list" id="list"></div>
+
+<div class="form" id="formInput">
+<h3>Tambah Transaksi</h3>
+<input type="date" id="tgl">
+<input type="text" id="ket" placeholder="Keterangan">
+<input type="number" id="masukInput" placeholder="Pemasukan">
+<input type="number" id="keluarInput" placeholder="Pengeluaran">
+<input type="file" id="foto">
+<button onclick="simpan()">💾 Simpan</button>
+</div>
+
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
