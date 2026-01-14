@@ -357,5 +357,16 @@ function showTab(tab){
   event.target.classList.add("active");
 }
   </script>
+  <div id="previewBox" onclick="this.style.display='none'"
+     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:3000;align-items:center;justify-content:center">
+  <img id="previewImg" style="max-width:90%;max-height:90%;border-radius:18px">
+</div>
+
+<script>
+function preview(src){
+  document.getElementById("previewImg").src = src;
+  document.getElementById("previewBox").style.display="flex";
+}
+</script>
 </body>
 </html>
