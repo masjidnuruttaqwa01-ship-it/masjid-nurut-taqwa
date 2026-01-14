@@ -74,8 +74,9 @@ function simpan(){
 function kirim(fd){
  fetch(API,{method:"POST",body:fd})
  .then(r=>r.json())
- .then(res=>{
+ .then(x=>{
    alert("Tersimpan");
+   document.getElementById("form").classList.add("hide"); // tutup form
    load();
  });
 }
@@ -87,3 +88,6 @@ function logout(){
 }
 
 load();
+function toggleForm(){
+  document.getElementById("form").classList.toggle("hide");
+}
