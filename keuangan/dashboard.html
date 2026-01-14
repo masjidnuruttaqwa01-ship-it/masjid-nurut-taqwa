@@ -256,6 +256,26 @@ header{
 .row{
   animation:fadeIn .4s ease;
 }
+  /* ===== FOTO GRID ===== */
+#fotoList{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+#fotoList img{
+  width:100%;
+  height:110px;
+  object-fit:cover;
+  border-radius:14px;
+  box-shadow:0 6px 14px rgba(0,0,0,.3);
+  cursor:pointer;
+  transition:.3s;
+}
+
+#fotoList img:hover{
+  transform:scale(1.05);
+}
 </style>
 </head>
 
@@ -305,6 +325,10 @@ box-shadow:0 6px 20px rgba(0,0,0,.5);
     <small>📤 Keluar</small>
     <b id="keluar">Rp 0</b>
   </div>
+    <div id="fotoTab" style="display:none" class="list">
+  <h3>📷 Bukti Transaksi</h3>
+  <div id="fotoList"></div>
+    </div>
 </div>
 
 <div class="list" id="list"></div>
