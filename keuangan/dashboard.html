@@ -7,6 +7,61 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+  .topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  font-weight:700;
+  font-size:18px;
+}
+
+.title span{
+  font-size:18px;
+}
+
+.summary{
+  padding:16px;
+}
+
+.big{
+  background:linear-gradient(135deg,#059669,#047857);
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  margin-bottom:12px;
+}
+
+.big h2{
+  margin:10px 0 0;
+  font-size:28px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+}
+
+.mini{
+  background:rgba(255,255,255,.12);
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+}
+
+.list{
+  background:#fff;
+  color:#064e3b;
+  border-radius:30px 30px 0 0;
+  padding:16px;
+}
+
+.list h3{
+  margin-top:0;
+  text-align:center;
+  color:#065f46;
+}
   /* Floating Add Button */
 .fab{
   position:fixed;
@@ -164,19 +219,6 @@ header{
   border-radius:16px;
   font-size:16px;
 }
-  /* ===== GLASS EFFECT ===== */
-.card{
-  backdrop-filter: blur(10px);
-  background: rgba(255,255,255,0.15);
-  border:1px solid rgba(255,255,255,0.18);
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
-}
-
-/* Animasi masuk */
-.card, .row{
-  animation: fadeUp .6s ease;
-}
-
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(20px)}
   to{opacity:1;transform:translateY(0)}
@@ -337,10 +379,12 @@ header{
 
 <body>
 
-<header style="
-background:linear-gradient(135deg,#065f46,#0f766e);
-box-shadow:0 6px 20px rgba(0,0,0,.5);
-">
+<header class="topbar">
+  <div class="title">
+    🕌 <span>Kas Masjid</span>
+  </div>
+  <button class="logout" onclick="logout()">Keluar</button>
+</header>
 </header>
 <div class="menu-bar">
   <button class="menu-btn active" onclick="showTab('kas')">📊 Kas</button>
@@ -364,30 +408,30 @@ box-shadow:0 6px 20px rgba(0,0,0,.5);
   <p>Masjid Nurut Taqwa – RW 01 Sukapura</p>
 </div>
   <div class="summary">
-  
-  <div class="card">
-    <small>💰 Saldo</small>
-    <b id="saldo">Rp 0</b>
+  <div class="card big">
+    <small>Saldo Kas</small>
+    <h2 id="saldo">Rp 0</h2>
   </div>
-  <div class="card">
-    <small>📄 Transaksi</small>
-    <b id="jumlah">0</b>
-  </div>
-  <div class="card">
-    <small>📥 Masuk</small>
-    <b id="masuk">Rp 0</b>
-  </div>
-  <div class="card">
-    <small>📤 Keluar</small>
-    <b id="keluar">Rp 0</b>
-  </div>
-    <div id="fotoTab" style="display:none" class="list">
-  <h3>📷 Bukti Transaksi</h3>
-  <div id="fotoList"></div>
-    </div>
-</div>
 
-<div class="list" id="list"></div>
+  <div class="grid">
+    <div class="mini">
+      <small>Masuk</small>
+      <b id="masuk">Rp 0</b>
+    </div>
+    <div class="mini">
+      <small>Keluar</small>
+      <b id="keluar">Rp 0</b>
+    </div>
+    <div class="mini">
+      <small>Transaksi</small>
+      <b id="jumlah">0</b>
+    </div>
+  </div>
+  </div>
+<div class="list">
+  <h3>📑 Riwayat Transaksi</h3>
+  <div id="list"></div>
+</div>
 </div>
 <button class="fab" onclick="toggleForm()">＋</button>
 <div class="form hide" id="form">
