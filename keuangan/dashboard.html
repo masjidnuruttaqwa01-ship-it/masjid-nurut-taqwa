@@ -168,22 +168,97 @@ header{
   background:linear-gradient(135deg,#064e3b,#0f766e);
   box-shadow:0 5px 20px rgba(0,0,0,.4);
   }
+  /* ===== PREMIUM GLASS EFFECT ===== */
+.card{
+  backdrop-filter: blur(6px);
+  background: linear-gradient(135deg, rgba(255,255,255,.15), rgba(255,255,255,.05));
+  box-shadow: 0 10px 25px rgba(0,0,0,.35);
+}
+
+/* ===== LIST ITEM PREMIUM ===== */
+.row{
+  background: linear-gradient(135deg,#ecfdf5,#d1fae5);
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+
+/* tulisan transaksi */
+.row .left b{
+  color:#064e3b;
+  font-size:15px;
+}
+.row .left small{
+  color:#047857;
+  font-size:12px;
+}
+
+/* angka */
+.row .right b{
+  color:#065f46;
+  font-size:16px;
+  font-weight:700;
+}
+
+/* ===== TOMBOL DELETE ===== */
+.delete{
+  background:linear-gradient(135deg,#dc2626,#991b1b);
+  box-shadow:0 6px 14px rgba(220,38,38,.6);
+}
+
+/* ===== FOTO PREVIEW ===== */
+.row img{
+  border:3px solid #0f766e;
+  box-shadow:0 4px 10px rgba(0,0,0,.3);
+}
+
+/* ===== FORM GLOW ===== */
+.form{
+  box-shadow:0 -10px 40px rgba(0,0,0,.4);
+  border-top:3px solid #0f766e;
+}
+
+.form button{
+  background:linear-gradient(135deg,#059669,#0f766e);
+  box-shadow:0 10px 25px rgba(6,95,70,.6);
+}
+  @keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.row{
+  animation:fadeIn .4s ease;
+}
 </style>
 </head>
 
 <body>
 
-<header>
-  <div>🕌 Kas Masjid</div>
-  <button class="logout" onclick="logout()">Logout</button>
-}
+<header style="
+background:linear-gradient(135deg,#065f46,#0f766e);
+box-shadow:0 6px 20px rgba(0,0,0,.5);
+">
 </header>
 
-<div class="summary">
-  <div class="card"><small>Saldo</small><b id="saldo">Rp 0</b></div>
-  <div class="card"><small>Transaksi</small><b id="jumlah">0</b></div>
-  <div class="card"><small>Masuk</small><b id="masuk">Rp 0</b></div>
-  <div class="card"><small>Keluar</small><b id="keluar">Rp 0</b></div>
+<<div class="summary">
+  <div class="card">
+    <small>💰 Saldo</small>
+    <b id="saldo">Rp 0</b>
+  </div>
+  <div class="card">
+    <small>📄 Transaksi</small>
+    <b id="jumlah">0</b>
+  </div>
+  <div class="card">
+    <small>📥 Masuk</small>
+    <b id="masuk">Rp 0</b>
+  </div>
+  <div class="card">
+    <small>📤 Keluar</small>
+    <b id="keluar">Rp 0</b>
+  </div>
 </div>
 
 <div class="list" id="list"></div>
