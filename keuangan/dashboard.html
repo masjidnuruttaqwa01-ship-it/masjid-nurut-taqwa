@@ -1,66 +1,71 @@
-<!*{box-sizing:border-box}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Kas Masjid</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
+<style>
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:Poppins;
   background:#f1f5f9;
-  color:#0f172a;
 }
-
 .app{
-  padding-bottom:120px;
+  padding-bottom:140px;
 }
 
-/* ===== TOP ===== */
-.top{
+/* ===== HEADER ===== */
+.header{
+  background:#065f46;
+  color:white;
+  padding:16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px;
-  background:#065f46;
-  color:#fff;
 }
-
-.title{font-size:18px;font-weight:700}
-.subtitle{font-size:12px;opacity:.8}
-
+.header .title{
+  font-weight:700;
+  font-size:18px;
+}
 .logout{
   background:#dc2626;
   border:none;
-  padding:8px 14px;
-  border-radius:10px;
-  color:#fff;
+  color:white;
+  padding:10px 14px;
+  border-radius:12px;
 }
 
 /* ===== SALDO ===== */
-.saldo-box{
-  background:#fff;
+.saldoBox{
+  background:white;
   margin:16px;
   padding:16px;
   border-radius:20px;
   box-shadow:0 10px 20px rgba(0,0,0,.05);
 }
-
-.saldo-label{font-size:13px;color:#64748b}
-.saldo-value{
-  font-size:34px;
-  font-weight:700;
-  margin:6px 0 14px;
+.saldoLabel{
+  font-size:13px;
+  color:#64748b;
 }
-
-.saldo-row{
+.saldoValue{
+  font-size:32px;
+  font-weight:700;
+  margin:8px 0;
+}
+.rowSummary{
   display:flex;
   gap:10px;
 }
-
 .mini{
   flex:1;
   background:#ecfdf5;
+  padding:12px;
   border-radius:14px;
-  padding:10px;
   text-align:center;
 }
-
 .mini span{
   font-size:12px;
   color:#047857;
@@ -71,102 +76,85 @@ body{
 }
 
 /* ===== LIST ===== */
-.history-title{
+.listTitle{
   padding:0 16px;
   font-weight:700;
   margin-top:10px;
 }
-
 .list{
   padding:16px;
 }
-
-.row{
-  background:#fff;
+.item{
+  background:white;
   margin-bottom:12px;
   padding:14px;
   border-radius:16px;
   box-shadow:0 5px 15px rgba(0,0,0,.05);
   display:flex;
   justify-content:space-between;
-  align-items:center;
 }
-
-.row small{
+.item small{
   display:block;
   color:#64748b;
 }
-
-.row img{
+.item img{
   width:50px;
+  height:50px;
   border-radius:10px;
   margin-top:6px;
+  object-fit:cover;
 }
 
-/* ===== BUTTON ===== */
-.add-btn{
+/* ===== FLOAT BTN ===== */
+.addBtn{
   position:fixed;
-  bottom:20px;
   right:20px;
+  bottom:20px;
   width:60px;
   height:60px;
   border-radius:50%;
   background:#22c55e;
-  color:#064e3b;
   border:none;
   font-size:32px;
+  color:#064e3b;
   box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
-/* ===== SHEET FORM ===== */
+/* ===== FORM SHEET ===== */
 .sheet{
   position:fixed;
   left:0;
   right:0;
   bottom:0;
-  background:#fff;
+  background:white;
   padding:16px;
   border-radius:24px 24px 0 0;
   box-shadow:0 -10px 40px rgba(0,0,0,.2);
   transition:.4s;
 }
-
 .sheet.hide{
   transform:translateY(110%);
 }
-
-.sheet-header{
-  font-weight:700;
+.sheet h3{
   text-align:center;
   margin-bottom:10px;
 }
-
 .sheet input{
   width:100%;
   padding:12px;
-  margin-bottom:10px;
   border-radius:12px;
   border:1px solid #ddd;
+  margin-bottom:10px;
 }
-
-.save{
+.saveBtn{
   width:100%;
   padding:14px;
   background:#065f46;
-  color:#fff;
+  color:white;
   border:none;
   border-radius:14px;
-}DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<title>Kas Masjid</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-  
-
+  font-size:16px;
+}
 </style>
 </head>
 
@@ -174,80 +162,40 @@ body{
 
 <div class="app">
 
-  <div class="top">
-    <div>
-      <div class="title">🕌 Kas Masjid</div>
-      <div class="subtitle">Masjid Nurut Taqwa</div>
-    </div>
+  <div class="header">
+    <div class="title">🕌 Kas Masjid</div>
     <button class="logout" onclick="logout()">Keluar</button>
   </div>
 
-  <div class="saldo-box">
-    <div class="saldo-label">Saldo Saat Ini</div>
-    <div class="saldo-value" id="saldo">Rp 0</div>
+  <div class="saldoBox">
+    <div class="saldoLabel">Saldo Saat Ini</div>
+    <div class="saldoValue" id="saldo">Rp 0</div>
 
-    <div class="saldo-row">
-      <div class="mini">
-        <span>Masuk</span>
-        <b id="masuk">Rp 0</b>
-      </div>
-      <div class="mini">
-        <span>Keluar</span>
-        <b id="keluar">Rp 0</b>
-      </div>
-      <div class="mini">
-        <span>Transaksi</span>
-        <b id="jumlah">0</b>
-      </div>
+    <div class="rowSummary">
+      <div class="mini"><span>Masuk</span><b id="masuk">Rp 0</b></div>
+      <div class="mini"><span>Keluar</span><b id="keluar">Rp 0</b></div>
+      <div class="mini"><span>Transaksi</span><b id="jumlah">0</b></div>
     </div>
   </div>
 
-  <div class="history-title">Riwayat Transaksi</div>
+  <div class="listTitle">Riwayat Transaksi</div>
   <div id="list" class="list"></div>
 
-  <button class="add-btn" onclick="toggleForm()">＋</button>
+  <button class="addBtn" onclick="toggleForm()">＋</button>
 
   <!-- FORM -->
   <div class="sheet hide" id="form">
-    <div class="sheet-header">Tambah Transaksi</div>
+    <h3>Tambah Transaksi</h3>
     <input type="date" id="tgl">
     <input type="text" id="ket" placeholder="Keterangan">
     <input type="number" id="masukInput" placeholder="Pemasukan">
     <input type="number" id="keluarInput" placeholder="Pengeluaran">
     <input type="file" id="foto">
-    <button class="save" onclick="simpan()">Simpan</button>
+    <button class="saveBtn" onclick="simpan()">Simpan</button>
   </div>
 
 </div>
+
 <script src="dashboard.js"></script>
-  <script>
-    function toggleForm(){
-  document.getElementById("form").classList.toggle("show");
-    }
-function showTab(tab){
-  document.getElementById("kasTab").style.display="none";
-  document.getElementById("laporanTab").style.display="none";
-  document.getElementById("fotoTab").style.display="none";
-  document.getElementById("profilTab").style.display="none";
-
-  document.getElementById(tab+"Tab").style.display="block";
-
-  document.querySelectorAll(".menu-btn").forEach(b=>b.classList.remove("active"));
-  event.target.classList.add("active");
-}
-  </script>
-  <div id="previewBox" onclick="this.style.display='none'"
-     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:3000;align-items:center;justify-content:center">
-  <img id="previewImg" style="max-width:90%;max-height:90%;border-radius:18px">
-</div>
-
-<script>
-function preview(src){
-  document.getElementById("form").classList.remove("show");
-  document.getElementById("previewImg").src = src;
-  document.getElementById("previewBox").style.display="flex";
-}
-</script>
-  <button class="fab" onclick="toggleForm()">＋</button>
 </body>
 </html>
