@@ -16,17 +16,14 @@ function load(){
      keluar += k;
 
      html += `
-     <div class="item">
-       <div>
-         <b>${ket}</b>
-         <small>${tgl.split("T")[0]}</small>
-         ${foto?`<img src="${foto}">`:""}
-       </div>
-       <div>
-         <b>${m?"+Rp "+m.toLocaleString():"-Rp "+k.toLocaleString()}</b>
-       </div>
-     </div>`;
-   });
+<div class="row">
+  <div class="left">
+    <b>${ket}</b>
+    <small>${tgl}</small>
+    ${ foto ? `<img src="${foto}" onclick="preview('${foto}')">` : "" }
+  </div>
+</div>
+`;
 
    const saldo = masuk - keluar;
    document.getElementById("list").innerHTML = html;
