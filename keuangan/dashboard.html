@@ -276,6 +276,28 @@ header{
 #fotoList img:hover{
   transform:scale(1.05);
 }
+  .form.hide{
+  transform:translateY(110%);
+}
+
+.form{
+  transition:.4s ease;
+}
+
+/* Floating add button */
+.fab{
+  position:fixed;
+  bottom:90px;
+  right:16px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#0f766e,#064e3b);
+  border:none;
+  color:white;
+  font-size:32px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
 </style>
 </head>
 
@@ -333,8 +355,8 @@ box-shadow:0 6px 20px rgba(0,0,0,.5);
 
 <div class="list" id="list"></div>
 </div>
-
-<div class="form" id="form">
+<button class="fab" onclick="toggleForm()">＋</button>
+<div class="form hide" id="form">
   <input type="date" id="tgl">
   <input type="text" id="ket" placeholder="Keterangan">
   <input type="number" id="masukInput" placeholder="Pemasukan">
