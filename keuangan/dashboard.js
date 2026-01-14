@@ -36,6 +36,13 @@ function load(){
     const saldo = totalMasuk - totalKeluar;
 
     document.getElementById("list").innerHTML = html;
+   let fotoHTML = "";
+data.forEach(r=>{
+  if(r.foto){
+    fotoHTML += `<img src="${r.foto}" onclick="preview('${r.foto}')">`;
+  }
+});
+document.getElementById("fotoList").innerHTML = fotoHTML;
     document.getElementById("saldo").innerText = "Rp " + saldo.toLocaleString();
     document.getElementById("jumlah").innerText = data.length;
     document.getElementById("masuk").innerText = "Rp " + totalMasuk.toLocaleString();
