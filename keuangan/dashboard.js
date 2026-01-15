@@ -15,7 +15,7 @@ function load(){
 
      masuk += m;
      keluar += k;
-
+    
      html += `
 <div class="row">
   <div class="left">
