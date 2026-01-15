@@ -70,19 +70,33 @@ function load(){
 }
 
 function simpan(){
- const fd=new FormData();
- fd.append("tgl",tgl.value);
- fd.append("ket",ket.value);
- fd.append("masuk",masuk.value);
- fd.append("keluar",keluar.value);
- fd.append("foto",foto.files[0]);
+ const fd = new FormData();
+ fd.append("tgl", tgl.value);
+ fd.append("ket", ket.value);
+ fd.append("masuk", masukInput.value);
+ fd.append("keluar", keluarInput.value);
 
+ const file = foto.files[0];
+ if(file){
+   const r = new FileReader();
+   r.onload=()=>{
+     fd.append("foto",r.result);
+     kirim(fd);
+   }
+   r.readAsDataURL(file);
+ } else {
+   kirim(fd);
+ }
+}
+
+function kirim(fd){
  fetch(API,{method:"POST",body:fd})
- .then(r=>r.text())
- .then(()=>{
-  alert("Tersimpan");
-  load();
+ .then(r=>r.json())
+ .then(x=>{
+   alert("Tersimpan di Spreadsheet");
+   load();
  });
+}
  fd.append("masuk",masukInput.value);
  fd.append("keluar",keluarInput.value);
 
@@ -110,3 +124,40 @@ function kirim(fd){
 }
 
 load();
+  function load(){
+ fetch(API)
+ .then(r=>r.json())
+ .then(data=>{
+   let html="";
+   let masuk=0, keluar=0, saldo=0;
+
+   data.reverse().forEach(r=>{
+     const tgl = r[0];
+     const ket = r[1];
+     const m   = Number(r[2]);
+     const k   = Number(r[3]);
+     const s   = Number(r[4]);
+     const foto= r[5];
+
+     masuk+=m; keluar+=k; saldo=s;
+
+     html+=`
+     <div class="row">
+       <div class="left">
+         <b>${ket}</b>
+         <small>${tgl}</small>
+         ${foto?`<img src="${foto}">`:""}
+       </div>
+       <div class="right">
+         <b>${m?"+Rp "+m.toLocaleString():"-Rp "+k.toLocaleString()}</b>
+       </div>
+     </div>`;
+   });
+
+   list.innerHTML = html;
+   document.getElementById("saldo").innerText="Rp "+saldo.toLocaleString();
+   document.getElementById("masuk").innerText="Rp "+masuk.toLocaleString();
+   document.getElementById("keluar").innerText="Rp "+keluar.toLocaleString();
+   document.getElementById("jumlah").innerText=data.length;
+ });
+  }
