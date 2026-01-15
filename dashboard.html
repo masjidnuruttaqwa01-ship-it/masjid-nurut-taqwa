@@ -241,44 +241,50 @@ if(role==="anggota"){
 /* ===== SIMPAN ===== */
 function simpan(){
   if(role!=="bendahara"){
-    alert("Hanya Bendahara yang boleh input");
+    alert("Hanya bendahara boleh input");
     return;
   }
 
-  const fd = new FormData();
-  fd.append("tgl", tglInput.value);
-  fd.append("ket", ketInput.value);
-  fd.append("masuk", masukInput.value || 0);
-  fd.append("keluar", keluarInput.value || 0);
+  const tgl = tglInput.value;
+  const ket = ketInput.value;
+  const masuk = masukInput.value || 0;
+  const keluar = keluarInput.value || 0;
+  const foto = fotoInput.files[0];
 
-  const file = fotoInput.files[0];
+  if(!tgl || !ket){
+    alert("Tanggal dan keterangan wajib diisi");
+    return;
+  }
 
-  if(file){
+  if(foto){
     const r = new FileReader();
-    r.onload = ()=>{
-      fd.append("foto", r.result);
-      kirim(fd);
+    r.onload = function(){
+      kirim(tgl,ket,masuk,keluar,r.result);
     }
-    r.readAsDataURL(file);
+    r.readAsDataURL(foto);
   }else{
-    kirim(fd);
+    kirim(tgl,ket,masuk,keluar,"");
   }
 }
 
-function kirim(fd){
-  fetch(API_URL,{
-    method:"POST",
-    body: fd
-  })
-  .then(r=>r.json())
-  .then(res=>{
-    if(res.status==="ok"){
-      alert("Tersimpan di Spreadsheet");
-      load();
-    }else{
-      alert("Gagal menyimpan");
-    }
-  });
+function kirim(tgl,ket,masuk,keluar,foto){
+  const url = API_URL
+    + "?tgl=" + encodeURIComponent(tgl)
+    + "&ket=" + encodeURIComponent(ket)
+    + "&masuk=" + masuk
+    + "&keluar=" + keluar
+    + "&foto=" + encodeURIComponent(foto);
+
+  fetch(url,{method:"POST"})
+    .then(r=>r.json())
+    .then(res=>{
+      if(res.status==="ok"){
+        alert("Tersimpan di Spreadsheet");
+        load();
+      }else{
+        alert("Gagal simpan");
+      }
+    });
 }
 /* ===== TAMPILKAN ===== */
 function Load(){
