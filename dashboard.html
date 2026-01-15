@@ -1,35 +1,200 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<meta name="viewport" content="width=device-width">
-<title>Keuangan Masjid</title>
+<meta charset="UTF-8">
+<title>Kas Masjid</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{font-family:Arial;background:#0f766e;color:white;padding:10px}
-input,button{width:100%;padding:12px;margin:5px 0}
-.card{background:white;color:black;padding:10px;border-radius:10px;margin:10px 0}
-img{width:100%;border-radius:8px}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Poppins;
+  background:#f1f5f9;
+}
+.app{
+  padding-bottom:140px;
+}
+
+/* ===== HEADER ===== */
+.header{
+  background:#065f46;
+  color:white;
+  padding:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.header .title{
+  font-weight:700;
+  font-size:18px;
+}
+.logout{
+  background:#dc2626;
+  border:none;
+  color:white;
+  padding:10px 14px;
+  border-radius:12px;
+}
+
+/* ===== SALDO ===== */
+.saldoBox{
+  background:white;
+  margin:16px;
+  padding:16px;
+  border-radius:20px;
+  box-shadow:0 10px 20px rgba(0,0,0,.05);
+}
+.saldoLabel{
+  font-size:13px;
+  color:#64748b;
+}
+.saldoValue{
+  font-size:32px;
+  font-weight:700;
+  margin:8px 0;
+}
+.rowSummary{
+  display:flex;
+  gap:10px;
+}
+.mini{
+  flex:1;
+  background:#ecfdf5;
+  padding:12px;
+  border-radius:14px;
+  text-align:center;
+}
+.mini span{
+  font-size:12px;
+  color:#047857;
+}
+.mini b{
+  display:block;
+  margin-top:4px;
+}
+
+/* ===== LIST ===== */
+.listTitle{
+  padding:0 16px;
+  font-weight:700;
+  margin-top:10px;
+}
+.list{
+  padding:16px;
+}
+.item{
+  background:white;
+  margin-bottom:12px;
+  padding:14px;
+  border-radius:16px;
+  box-shadow:0 5px 15px rgba(0,0,0,.05);
+  display:flex;
+  justify-content:space-between;
+}
+.item small{
+  display:block;
+  color:#64748b;
+}
+.item img{
+  width:50px;
+  height:50px;
+  border-radius:10px;
+  margin-top:6px;
+  object-fit:cover;
+}
+
+/* ===== FLOAT BTN ===== */
+.addBtn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#22c55e;
+  border:none;
+  font-size:32px;
+  color:#064e3b;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+/* ===== FORM SHEET ===== */
+.sheet{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:white;
+  padding:16px;
+  border-radius:24px 24px 0 0;
+  box-shadow:0 -10px 40px rgba(0,0,0,.2);
+  transition:.4s;
+}
+.sheet.hide{
+  transform:translateY(110%);
+}
+.sheet h3{
+  text-align:center;
+  margin-bottom:10px;
+}
+.sheet input{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  margin-bottom:10px;
+}
+.saveBtn{
+  width:100%;
+  padding:14px;
+  background:#065f46;
+  color:white;
+  border:none;
+  border-radius:14px;
+  font-size:16px;
+}
 </style>
 </head>
+
 <body>
 
-<h2>Keuangan Masjid</h2>
+<div class="app">
 
-<div>Saldo: <b id="saldo">0</b></div>
-<div>Masuk: <b id="masuk">0</b></div>
-<div>Keluar: <b id="keluar">0</b></div>
+  <div class="header">
+    <div class="title">🕌 Kas Masjid</div>
+    <button class="logout" onclick="logout()">Keluar</button>
+  </div>
 
-<hr>
+  <div class="saldoBox">
+    <div class="saldoLabel">Saldo Saat Ini</div>
+    <div class="saldoValue" id="saldo">Rp 0</div>
 
-<input id="tgl" type="date">
-<input id="ket" placeholder="Keterangan">
-<input id="masukInput" placeholder="Masuk">
-<input id="keluarInput" placeholder="Keluar">
-<input id="foto" type="file">
-<button onclick="simpan()">Simpan</button>
+    <div class="rowSummary">
+      <div class="mini"><span>Masuk</span><b id="masuk">Rp 0</b></div>
+      <div class="mini"><span>Keluar</span><b id="keluar">Rp 0</b></div>
+      <div class="mini"><span>Transaksi</span><b id="jumlah">0</b></div>
+    </div>
+  </div>
 
-<hr>
+  <div class="listTitle">Riwayat Transaksi</div>
+  <div id="list" class="list"></div>
 
-<div id="list"></div>
+  <button class="addBtn" onclick="toggleForm()">＋</button>
+
+  <!-- FORM -->
+  <div class="sheet hide" id="form">
+    <h3>Tambah Transaksi</h3>
+    <input type="date" id="tgl">
+    <input type="text" id="ket" placeholder="Keterangan">
+    <input type="number" id="masukInput" placeholder="Pemasukan">
+    <input type="number" id="keluarInput" placeholder="Pengeluaran">
+    <input type="file" id="foto">
+    <button class="saveBtn" onclick="simpan()">Simpan</button>
+  </div>
+
+</div>
 
 <script src="dashboard.js"></script>
 </body>
