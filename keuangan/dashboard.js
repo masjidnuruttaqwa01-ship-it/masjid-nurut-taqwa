@@ -1,3 +1,4 @@
+const role = localStorage.getItem("role") || "publik";
 const API = "https://script.google.com/macros/s/AKfycbytLyuCvtaHnCE_2Z3TxcegAnE1YtZkNoK7uYtQe5GOSFYaPUjr8KbuTdy5fb4J6Ysz/exec";
 
 function load(){
@@ -35,6 +36,11 @@ function load(){
 }
 
 function simpan(){
+
+  if(role !== "dkm"){
+    alert("Akses ditolak. Hanya DKM yang boleh input.");
+    return;
+  }
  const fd = new FormData();
  fd.append("tgl", tgl.value);
  fd.append("ket", ket.value);
@@ -72,5 +78,12 @@ function logout(){
  localStorage.clear();
  location="login.html";
 }
+// ==== MODE PUBLIK & DKM ====
+if(role === "publik"){
+  const form = document.getElementById("form");
+  const addBtn = document.getElementById("addBtn"); // tombol +
 
+  if(form) form.style.display = "none";
+  if(addBtn) addBtn.style.display = "none";
+}
 load();
