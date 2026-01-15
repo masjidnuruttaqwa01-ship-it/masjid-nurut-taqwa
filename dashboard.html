@@ -239,35 +239,34 @@ if(role==="anggota"){
 /* ===== DATA ===== */
 
 /* ===== SIMPAN ===== */
-
 function simpan(){
-  if(localStorage.getItem("role") !== "bendahara"){
-    alert("Hanya Bendahara yang boleh input");
+  if(role!=="bendahara"){
+    alert("Hanya bendahara yang bisa input");
     return;
   }
 
-  const tgl   = document.getElementById("tgl").value;
-  const ket   = document.getElementById("ket").value;
-  const masuk = document.getElementById("masuk").value || 0;
-  const keluar= document.getElementById("keluar").value || 0;
-  const foto  = document.getElementById("foto").files[0];
+  const tgl = tglInput.value;
+  const ket = ketInput.value;
+  const masuk = masukInput.value || 0;
+  const keluar = keluarInput.value || 0;
+  const fotoFile = fotoInput.files[0];
 
   if(!tgl || !ket){
-    alert("Tanggal & Keterangan wajib diisi");
+    alert("Tanggal dan keterangan wajib diisi");
     return;
   }
 
-  if(foto){
-    const reader = new FileReader();
-    reader.onload = function(){
-      kirimKeSheet(tgl,ket,masuk,keluar,reader.result);
-    };
-    reader.readAsDataURL(foto);
+  if(fotoFile){
+    const r = new FileReader();
+    r.onload = function(){
+      kirimKeSheet(tgl, ket, masuk, keluar, r.result);
+    }
+    r.readAsDataURL(fotoFile);
   } else {
-    kirimKeSheet(tgl,ket,masuk,keluar,"");
+    kirimKeSheet(tgl, ket, masuk, keluar, "");
   }
 }
-function kirimKeSheet(tgl,ket,masuk,keluar,foto){
+function kirimKeSheet(tgl, ket, masuk, keluar, foto){
   const url = API_URL
     + "?tgl=" + encodeURIComponent(tgl)
     + "&ket=" + encodeURIComponent(ket)
@@ -275,60 +274,57 @@ function kirimKeSheet(tgl,ket,masuk,keluar,foto){
     + "&keluar=" + keluar
     + "&foto=" + encodeURIComponent(foto);
 
-  fetch(url)
+  fetch(url,{method:"POST"})
     .then(r=>r.json())
     .then(res=>{
       if(res.status==="ok"){
-        alert("✅ Transaksi tersimpan di Spreadsheet");
-        document.getElementById("tgl").value="";
-        document.getElementById("ket").value="";
-        document.getElementById("masuk").value="";
-        document.getElementById("keluar").value="";
-        document.getElementById("foto").value="";
-        loadData();   // reload data dari Google Sheet
+        alert("Tersimpan ke Spreadsheet");
+        loadData();
       } else {
-        alert("❌ Gagal: "+res.message);
+        alert("Gagal menyimpan");
       }
     })
     .catch(err=>{
-      alert("❌ Tidak bisa konek ke server");
+      alert("Error koneksi");
       console.error(err);
     });
 }
+
 /* ===== TAMPILKAN ===== */
 function loadData(){
- fetch(API_URL)
-  .then(r=>r.json())
-  .then(rows=>{
-    let html="", saldo=0, masukT=0, keluarT=0;
+  fetch(API_URL)
+    .then(r=>r.json())
+    .then(rows=>{
+      let html="";
+      let masuk=0, keluar=0, saldo=0;
 
-    rows.forEach(r=>{
-      const tgl = r[0];
-      const ket = r[1];
-      const m   = Number(r[2]);
-      const k   = Number(r[3]);
-      const s   = Number(r[4]);
-      const foto= r[5];
+      rows.forEach(r=>{
+        const tgl = r[0];
+        const ket = r[1];
+        const m = Number(r[2]||0);
+        const k = Number(r[3]||0);
+        const s = Number(r[4]||0);
+        const foto = r[5];
 
-      saldo = s;
-      masukT += m;
-      keluarT += k;
+        masuk+=m;
+        keluar+=k;
+        saldo=s;
 
-      html += `
-      <tr>
-        <td>${tgl}</td>
-        <td>${ket}</td>
-        <td>${m? "Rp "+m.toLocaleString():"-Rp "+k.toLocaleString()}</td>
-        <td>${foto? `<img src="${foto}" style="width:40px">`:"-"}</td>
-      </tr>`;
+        html+=`
+        <tr>
+          <td>${tgl}</td>
+          <td>${ket}</td>
+          <td>${m? "Rp "+m.toLocaleString() : "-Rp "+k.toLocaleString()}</td>
+          <td>${foto? `<img src="${foto}" onclick="viewFoto('${foto}')">`:"-"}</td>
+        </tr>`;
+      });
+
+      document.getElementById("list").innerHTML=html;
+      saldoEl.innerText="Rp "+saldo.toLocaleString();
+      masukTotal.innerText="Rp "+masuk.toLocaleString();
+      keluarTotal.innerText="Rp "+keluar.toLocaleString();
+      jumlah.innerText=rows.length;
     });
-
-    document.getElementById("list").innerHTML = html;
-    document.getElementById("saldo").innerText="Rp "+saldo.toLocaleString();
-    document.getElementById("masukTotal").innerText="Rp "+masukT.toLocaleString();
-    document.getElementById("keluarTotal").innerText="Rp "+keluarT.toLocaleString();
-    document.getElementById("jumlah").innerText=rows.length;
-  });
 }
 /* ===== FOTO ===== */
 function viewFoto(src){
