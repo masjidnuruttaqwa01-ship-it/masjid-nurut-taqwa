@@ -8,7 +8,7 @@ if(role === "bendahara"){
 }else{
   modeLabel.innerText = "Publik";
 }
-const API="https://script.google.com/macros/s/AKfycbz2fHNtKgcbtT_q5TtX33XZRbji30T0Cen7DldaAJi5PW5t3LB2b5ojYSYDPZF1EJkM/exec";
+const API="https://script.google.com/macros/s/AKfycbytLyuCvtaHnCE_2Z3TxcegAnE1YtZkNoK7uYtQe5GOSFYaPUjr8KbuTdy5fb4J6Ysz/exec";
 
 if(localStorage.getItem("login")!=="true"){
  location="login.html";
