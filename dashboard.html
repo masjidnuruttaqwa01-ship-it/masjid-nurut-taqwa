@@ -2,215 +2,121 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Kas Masjid</title>
+<title>Dashboard Keuangan DKM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Poppins;
-  background:#f1f5f9;
-}
-.app{
-  padding-bottom:140px;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(180deg,#064e3b,#0f766e);
+  color:#fff;
 }
 
 /* ===== HEADER ===== */
 .header{
-  background:#065f46;
-  color:white;
   padding:16px;
+  background:#064e3b;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
-.header .title{
-  font-weight:700;
-  font-size:18px;
+.header h1{
+  font-size:16px;
+  margin:0;
 }
 .logout{
   background:#dc2626;
   border:none;
   color:white;
-  padding:10px 14px;
-  border-radius:12px;
-}
-
-/* ===== SALDO ===== */
-.saldoBox{
-  background:white;
-  margin:16px;
-  padding:16px;
-  border-radius:20px;
-  box-shadow:0 10px 20px rgba(0,0,0,.05);
-}
-.saldoLabel{
-  font-size:13px;
-  color:#64748b;
-}
-.saldoValue{
-  font-size:32px;
-  font-weight:700;
-  margin:8px 0;
-}
-.rowSummary{
-  display:flex;
-  gap:10px;
-}
-.mini{
-  flex:1;
-  background:#ecfdf5;
-  padding:12px;
-  border-radius:14px;
-  text-align:center;
-}
-.mini span{
-  font-size:12px;
-  color:#047857;
-}
-.mini b{
-  display:block;
-  margin-top:4px;
-}
-
-/* ===== LIST ===== */
-.listTitle{
-  padding:0 16px;
-  font-weight:700;
-  margin-top:10px;
-}
-.list{
-  padding:16px;
-}
-.item{
-  background:white;
-  margin-bottom:12px;
-  padding:14px;
-  border-radius:16px;
-  box-shadow:0 5px 15px rgba(0,0,0,.05);
-  display:flex;
-  justify-content:space-between;
-}
-.item small{
-  display:block;
-  color:#64748b;
-}
-.item img{
-  width:50px;
-  height:50px;
+  padding:8px 14px;
   border-radius:10px;
-  margin-top:6px;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+  padding:16px;
+}
+
+/* ===== SUMMARY ===== */
+.summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:16px;
+}
+.box{
+  background:#fff;
+  color:#064e3b;
+  padding:14px;
+  border-radius:14px;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.box small{
+  opacity:.7;
+}
+.box b{
+  font-size:18px;
+}
+
+/* ===== TABLE ===== */
+.table-box{
+  background:#fff;
+  color:#064e3b;
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:16px;
+}
+.table-box table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+.table-box th{
+  background:#064e3b;
+  color:#fff;
+  padding:10px;
+}
+.table-box td{
+  padding:10px;
+  border-bottom:1px solid #eee;
+}
+.table-box img{
+  width:40px;
+  height:40px;
+  border-radius:6px;
   object-fit:cover;
 }
 
-/* ===== FLOAT BTN ===== */
-.addBtn{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:#22c55e;
-  border:none;
-  font-size:32px;
-  color:#064e3b;
-  box-shadow:0 10px 30px rgba(0,0,0,.3);
-}
-
-/* ===== FORM SHEET ===== */
-.sheet{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  background:white;
-  padding:16px;
-  border-radius:24px 24px 0 0;
-  box-shadow:0 -10px 40px rgba(0,0,0,.2);
-  transition:.4s;
-}
-.sheet.hide{
-  transform:translateY(110%);
-}
-.sheet h3{
-  text-align:center;
-  margin-bottom:10px;
-}
-.sheet input{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid #ddd;
-  margin-bottom:10px;
-}
-.saveBtn{
-  width:100%;
-  padding:14px;
-  background:#065f46;
-  color:white;
-  border:none;
-  border-radius:14px;
-  font-size:16px;
-}
-  .topbar{
-  background:linear-gradient(135deg,#064e3b,#0f766e);
-  padding:14px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 10px 25px rgba(0,0,0,.35);
-  border-radius:0 0 22px 22px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.logo{
-  width:44px;
-  height:44px;
-  background:#0f766e;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:14px;
-  font-size:22px;
-  box-shadow:0 4px 15px rgba(0,0,0,.4);
-}
-.brand-text b{
-  display:block;
-  font-size:15px;
-}
-.brand-text small{
-  font-size:11px;
-  opacity:.8;
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.mode{
+/* ===== FORM ===== */
+.form{
   background:#fff;
   color:#064e3b;
-  padding:6px 12px;
-  border-radius:12px;
-  font-size:12px;
-  font-weight:700;
+  padding:16px;
+  border-radius:16px;
 }
-
-.logout{
-  background:#dc2626;
+.form h3{
+  text-align:center;
+  margin-top:0;
+}
+.form input{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+.form button{
+  width:100%;
+  background:#064e3b;
   color:#fff;
   border:none;
-  padding:8px 14px;
+  padding:12px;
   border-radius:12px;
+  font-size:16px;
   font-weight:600;
 }
 </style>
@@ -218,53 +124,160 @@ body{
 
 <body>
 
-<div class="app">
+<script>
+<script>
+if(localStorage.getItem("login")!=="true"){
+  window.location.href="./login.html";
+}
+if(role==="anggota"){
+  document.getElementById("formInput").style.display="none";
+}
+  if(role!=="bendahara"){
+  alert("Akses ditolak");
+  return;
+  }
+const role = localStorage.getItem("role");
+</script>
+  
+</script>
 
-  <div class="header">
-    <header class="topbar">
-  <div class="brand">
-    <div class="logo">🕌</div>
-    <div class="brand-text">
-      <b>Masjid Nurut Taqwa</b>
-      <small>Sistem Keuangan Digital</small>
+<div class="header">
+  <h1>📊 Keuangan Masjid</h1>
+  <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<div class="container">
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="box">
+      <small>Saldo</small><br>
+      <b id="saldo">Rp 0</b>
+    </div>
+    <div class="box">
+      <small>Transaksi</small><br>
+      <b id="jumlah">0</b>
+    </div>
+    <div class="box">
+      <small>Pemasukan</small><br>
+      <b id="masukTotal">Rp 0</b>
+    </div>
+    <div class="box">
+      <small>Pengeluaran</small><br>
+      <b id="keluarTotal">Rp 0</b>
     </div>
   </div>
 
-  <div class="actions">
-    <span id="modeLabel" class="mode">Publik</span>
-    <button class="logout" onclick="logout()">Keluar</button>
+  <!-- TABLE -->
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Tgl</th>
+          <th>Keterangan</th>
+          <th>Rp</th>
+          <th>Bukti</th>
+        </tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
   </div>
-</header>
-
-  <div class="saldoBox">
-    <div class="saldoLabel">Saldo Saat Ini</div>
-    <div class="saldoValue" id="saldo">Rp 0</div>
-
-    <div class="rowSummary">
-      <div class="mini"><span>Masuk</span><b id="masuk">Rp 0</b></div>
-      <div class="mini"><span>Keluar</span><b id="keluar">Rp 0</b></div>
-      <div class="mini"><span>Transaksi</span><b id="jumlah">0</b></div>
-    </div>
-  </div>
-
-  <div class="listTitle">Riwayat Transaksi</div>
-  <div id="list" class="list"></div>
-
-  <button class="addBtn" onclick="toggleForm()">＋</button>
 
   <!-- FORM -->
-  <div class="sheet hide" id="form">
+<div class="form" id="formInput">
     <h3>Tambah Transaksi</h3>
     <input type="date" id="tgl">
     <input type="text" id="ket" placeholder="Keterangan">
-    <input type="number" id="masukInput" placeholder="Pemasukan">
-    <input type="number" id="keluarInput" placeholder="Pengeluaran">
-    <input type="file" id="foto">
-    <button class="saveBtn" onclick="simpan()">Simpan</button>
+    <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
+    <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
+    <input type="file" id="foto" accept="image/*">
+    <button onclick="simpan()">💾 Simpan</button>
   </div>
 
 </div>
 
-<script src="dashboard.js"></script>
+<script>
+let data = JSON.parse(localStorage.getItem("kas") || "[]");
+
+function simpanTransaksi(){
+
+  if(role!=="bendahara"){
+    alert("Akses ditolak. Hanya bendahara yang boleh mengubah data.");
+    return;
+  }
+
+  const tgl = document.getElementById("tgl").value;
+  const ket = document.getElementById("ket").value;
+  const masuk = document.getElementById("masuk").value;
+  const keluar = document.getElementById("keluar").value;
+
+  if(!tgl || !ket){
+    alert("Lengkapi tanggal & keterangan");
+    return;
+  }
+
+  data.push({tgl,ket,masuk,keluar});
+  localStorage.setItem("transaksi", JSON.stringify(data));
+  tampilkan();
+}
+    }
+    reader.readAsDataURL(foto);
+  } else {
+    data.push({tgl,ket,masuk,keluar,foto:""});
+    localStorage.setItem("kas",JSON.stringify(data));
+    tampil();
+  }
+
+  tglInput.value=ketInput.value=masukInput.value=keluarInput.value="";
+  fotoInput.value="";
+}
+
+function tampil(){
+  let html="", saldo=0, masukT=0, keluarT=0;
+
+  data.forEach(x=>{
+    saldo += x.masuk - x.keluar;
+    masukT += x.masuk;
+    keluarT += x.keluar;
+    html += `<tr>
+      <td>${x.tgl}</td>
+      <td>${x.ket}</td>
+      <td>${x.masuk? "Rp"+x.masuk:x.keluar? "-Rp"+x.keluar:""}</td>
+      <td>${x.foto? `<img src="${x.foto}">`:"-"}</td>
+    </tr>`;
+  });
+
+  list.innerHTML = html;
+  saldo.innerText="Rp "+saldo.toLocaleString();
+  masukTotal.innerText="Rp "+masukT.toLocaleString();
+  keluarTotal.innerText="Rp "+keluarT.toLocaleString();
+  jumlah.innerText=data.length;
+}
+
+tampil();
+
+function logout(){
+  localStorage.removeItem("login");
+  location="login.html";
+}
+
+const tglInput=document.getElementById("tgl");
+const ketInput=document.getElementById("ket");
+const masukInput=document.getElementById("masuk");
+const keluarInput=document.getElementById("keluar");
+const fotoInput=document.getElementById("foto");
+</script>
+<script>
+if(role==="anggota"){
+  document.getElementById("formInput").style.display="none";
+  if(role==="anggota"){
+  document.querySelectorAll("button").forEach(btn=>{
+    if(btn.innerText.includes("Simpan") || btn.innerText.includes("Upload")){
+      btn.style.display="none";
+    }
+  });
+  }
+}
+</script>
 </body>
 </html>
