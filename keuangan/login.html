@@ -1,42 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Login DKM</title>
+<title>Login Kas Masjid</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{margin:0;background:linear-gradient(135deg,#064e3b,#0f766e);font-family:Poppins;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh}
-.box{background:white;color:#064e3b;padding:30px;border-radius:20px;width:90%;max-width:340px;box-shadow:0 20px 40px rgba(0,0,0,.3)}
-input,button{width:100%;padding:14px;border-radius:12px;border:1px solid #ccc;margin-top:12px;font-size:15px}
-button{background:#064e3b;color:white;border:none;font-weight:700}
+body{
+  margin:0;
+  background:linear-gradient(135deg,#043f2e,#0f766e);
+  font-family:Poppins;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.box{
+  background:white;
+  padding:28px;
+  border-radius:24px;
+  width:90%;
+  max-width:380px;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+  text-align:center;
+}
+h1{
+  color:#065f46;
+}
+input{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid #ccc;
+  margin-bottom:14px;
+  font-size:15px;
+}
+button{
+  width:100%;
+  background:linear-gradient(135deg,#065f46,#0f766e);
+  border:none;
+  color:white;
+  padding:14px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+}
+small{
+  display:block;
+  margin-top:12px;
+  opacity:.6;
+}
 </style>
 </head>
+
 <body>
+
 <div class="box">
-<h3>Login Keuangan</h3>
-<input id="u" placeholder="Username">
-<input id="p" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
-<p id="msg"></p>
+  <h1>Masjid Nurut Taqwa</h1>
+  <p>Login Sistem Kas</p>
+
+  <input type="text" id="user" placeholder="Username">
+  <input type="password" id="pass" placeholder="Password">
+
+  <button onclick="login()">Masuk</button>
+
+  <small>
+    Publik: publik / 123 <br>
+    DKM: dkm / 12345
+  </small>
 </div>
 
 <script>
-const users = {
-  bendahara:{pass:"1234",role:"bendahara"},
-  anggota:{pass:"1111",role:"anggota"}
-};
-
 function login(){
-  const u = document.getElementById("u").value;
-  const p = document.getElementById("p").value;
-  if(users[u] && users[u].pass===p){
+  const u = document.getElementById("user").value;
+  const p = document.getElementById("pass").value;
+
+  if(u==="dkm" && p==="12345"){
     localStorage.setItem("login","true");
-    localStorage.setItem("role",users[u].role);
+    localStorage.setItem("role","dkm");
     location="dashboard.html";
-  } else {
-    document.getElementById("msg").innerText="Login gagal";
+  }
+  else if(u==="publik" && p==="123"){
+    localStorage.setItem("login","true");
+    localStorage.setItem("role","publik");
+    location="dashboard.html";
+  }
+  else{
+    alert("Login salah");
   }
 }
 </script>
+
 </body>
 </html>
