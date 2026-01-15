@@ -296,15 +296,13 @@ function kirimKeSheet(tgl,ket,masuk,keluar,foto){
     });
 }
 /* ===== TAMPILKAN ===== */
-function Load(){
-  let html="", saldo=0, masukT=0, keluarT=0;
-function load(){
+function loadData(){
  fetch(API_URL)
   .then(r=>r.json())
   .then(rows=>{
-    let html="", saldo=0, masuk=0, keluar=0;
+    let html="", saldo=0, masukT=0, keluarT=0;
 
-    rows.reverse().forEach(r=>{
+    rows.forEach(r=>{
       const tgl = r[0];
       const ket = r[1];
       const m   = Number(r[2]);
@@ -312,28 +310,26 @@ function load(){
       const s   = Number(r[4]);
       const foto= r[5];
 
-      masuk+=m;
-      keluar+=k;
-      saldo=s;
+      saldo = s;
+      masukT += m;
+      keluarT += k;
 
-      html+=`
+      html += `
       <tr>
         <td>${tgl}</td>
         <td>${ket}</td>
-        <td>${m? "Rp "+m.toLocaleString() : "-Rp "+k.toLocaleString()}</td>
-        <td>${foto? `<img src="${foto}" onclick="viewFoto('${foto}')">`:"-"}</td>
+        <td>${m? "Rp "+m.toLocaleString():"-Rp "+k.toLocaleString()}</td>
+        <td>${foto? `<img src="${foto}" style="width:40px">`:"-"}</td>
       </tr>`;
     });
 
     document.getElementById("list").innerHTML = html;
-    document.getElementById("saldo").innerText = "Rp "+saldo.toLocaleString();
-    document.getElementById("masukTotal").innerText = "Rp "+masuk.toLocaleString();
-    document.getElementById("keluarTotal").innerText = "Rp "+keluar.toLocaleString();
-    document.getElementById("jumlah").innerText = rows.length;
+    document.getElementById("saldo").innerText="Rp "+saldo.toLocaleString();
+    document.getElementById("masukTotal").innerText="Rp "+masukT.toLocaleString();
+    document.getElementById("keluarTotal").innerText="Rp "+keluarT.toLocaleString();
+    document.getElementById("jumlah").innerText=rows.length;
   });
 }
-load();
-  
 /* ===== FOTO ===== */
 function viewFoto(src){
   document.getElementById("fotoPreview").src=src;
