@@ -1,3 +1,13 @@
+const role = localStorage.getItem("role") || "publik";
+const modeLabel = document.getElementById("modeLabel");
+
+if(role === "bendahara"){
+  modeLabel.innerText = "Mode DKM";
+  modeLabel.style.background = "#0f766e";
+  modeLabel.style.color = "#fff";
+}else{
+  modeLabel.innerText = "Publik";
+}
 const API="https://script.google.com/macros/s/AKfycbz2fHNtKgcbtT_q5TtX33XZRbji30T0Cen7DldaAJi5PW5t3LB2b5ojYSYDPZF1EJkM/exec";
 
 if(localStorage.getItem("login")!=="true"){
@@ -6,7 +16,11 @@ if(localStorage.getItem("login")!=="true"){
 
 const role=localStorage.getItem("role");
 if(role==="anggota"){
- document.getElementById("form").style.display="none";
+ if(role === "bendahara"){
+  document.getElementById("form").style.display = "block";
+}else{
+  document.getElementById("form").style.display = "none";
+}
 }
 
 function logout(){
