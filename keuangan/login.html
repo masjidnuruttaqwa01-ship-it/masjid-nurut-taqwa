@@ -2,92 +2,196 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Login Kas Masjid</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login DKM – Masjid Nurut Taqwa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
-  background:linear-gradient(135deg,#043f2e,#0f766e);
-  font-family:Poppins;
-  height:100vh;
+  font-family:Poppins,sans-serif;
+  min-height:100vh;
+  background:linear-gradient(135deg,#064e3b,#0f766e);
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
+  color:#064e3b;
 }
-.box{
-  background:white;
-  padding:28px;
-  border-radius:24px;
-  width:90%;
+
+/* ===== CARD ===== */
+.card{
+  background:#ffffff;
+  width:100%;
   max-width:380px;
-  box-shadow:0 30px 80px rgba(0,0,0,.35);
+  padding:28px;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
+  animation:fade 0.6s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.logo{
   text-align:center;
+  margin-bottom:16px;
 }
-h1{
-  color:#065f46;
+.logo img{
+  width:90px;
+  margin-bottom:10px;
 }
-input{
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-  border:1px solid #ccc;
-  margin-bottom:14px;
-  font-size:15px;
-}
-button{
-  width:100%;
-  background:linear-gradient(135deg,#065f46,#0f766e);
-  border:none;
-  color:white;
-  padding:14px;
-  border-radius:14px;
-  font-size:16px;
+.logo h2{
+  margin:0;
+  color:#064e3b;
+  font-size:22px;
   font-weight:700;
 }
-small{
+
+/* ===== FORM ===== */
+.input-group{
+  margin-bottom:14px;
+}
+.input-group label{
+  font-size:13px;
+  color:#555;
   display:block;
-  margin-top:12px;
-  opacity:.6;
+  margin-bottom:4px;
+}
+.input-group input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
+.role{
+  display:flex;
+  gap:10px;
+  margin-bottom:16px;
+}
+.role button{
+  flex:1;
+  border:none;
+  padding:12px;
+  border-radius:14px;
+  font-weight:600;
+  background:#e5e7eb;
+  color:#064e3b;
+}
+.role button.active{
+  background:#064e3b;
+  color:white;
+}
+
+/* ===== LOGIN BUTTON ===== */
+.login-btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:16px;
+  font-size:16px;
+  font-weight:700;
+  background:linear-gradient(135deg,#0f6b44,#0b4f34);
+  color:white;
+  margin-top:10px;
+  box-shadow:0 10px 20px rgba(15,107,68,.4);
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  text-align:center;
+  margin-top:16px;
+  font-size:12px;
+  color:#777;
+}
+  .login-logo{
+  text-align:center;
+  margin-bottom:14px;
+}
+
+.login-logo img{
+  width:90px;
+  height:90px;
+  object-fit:contain;
+  background:#ffffff;
+  padding:14px;
+  border-radius:50%;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h1>Masjid Nurut Taqwa</h1>
-  <p>Login Sistem Kas</p>
+<div class="card">
 
-  <input type="text" id="user" placeholder="Username">
-  <input type="password" id="pass" placeholder="Password">
+  <div class="logo">
+<div class="login-logo">
+  <img src="images/icon-masjid.png" alt="Masjid Nurut Taqwa">
+</div>
+    <h2>Masjid Nurut Taqwa</h2>
+    <small>Login Sistem Keuangan DKM</small>
+  </div>
 
-  <button onclick="login()">Masuk</button>
+  <div class="input-group">
+    <label>Username</label>
+    <input type="text" id="user" placeholder="Masukkan username">
+  </div>
 
-  <small>
-    Publik: publik / 123 <br>
-    DKM: dkm / 12345
-  </small>
+  <div class="input-group">
+    <label>Password</label>
+    <input type="password" id="pass" placeholder="Masukkan password">
+  </div>
+
+  <div class="role">
+    <button id="btnBendahara" onclick="setRole('bendahara')" class="active">Bendahara</button>
+    <button id="btnAnggota" onclick="setRole('anggota')">Anggota</button>
+  </div>
+
+  <button class="login-btn" onclick="login()">🔐 Login</button>
+
+  <div class="footer">
+    © Masjid Nurut Taqwa – Kejaksan, Kota Cirebon
+  </div>
+
 </div>
 
 <script>
-function login(){
-  const u = document.getElementById("user").value;
-  const p = document.getElementById("pass").value;
+let selectedRole="bendahara";
 
-  if(u==="dkm" && p==="12345"){
-    localStorage.setItem("login","true");
-    localStorage.setItem("role","dkm");
-    location="dashboard.html";
+function setRole(role){
+  selectedRole=role;
+  document.getElementById("btnBendahara").classList.remove("active");
+  document.getElementById("btnAnggota").classList.remove("active");
+
+  if(role==="bendahara") document.getElementById("btnBendahara").classList.add("active");
+  if(role==="anggota") document.getElementById("btnAnggota").classList.add("active");
+}
+
+function login(){
+  const u=document.getElementById("user").value;
+  const p=document.getElementById("pass").value;
+
+  // Akun
+  if(selectedRole==="bendahara"){
+    if(u==="dkm" && p==="12345"){
+      localStorage.setItem("login","true");
+      localStorage.setItem("role","bendahara");
+      location="dashboard.html";
+    } else alert("Akun bendahara salah");
   }
-  else if(u==="publik" && p==="123"){
-    localStorage.setItem("login","true");
-    localStorage.setItem("role","publik");
-    location="dashboard.html";
-  }
-  else{
-    alert("Login salah");
+
+  if(selectedRole==="anggota"){
+    if(u==="anggota" && p==="123"){
+      localStorage.setItem("login","true");
+      localStorage.setItem("role","anggota");
+      location="dashboard.html";
+    } else alert("Akun anggota salah");
   }
 }
 </script>
