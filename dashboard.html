@@ -237,71 +237,88 @@ if(role==="anggota"){
 }
 
 /* ===== DATA ===== */
-let data = JSON.parse(localStorage.getItem("kas")||"[]");
 
 /* ===== SIMPAN ===== */
 function simpan(){
   if(role!=="bendahara"){
-    alert("Hanya Bendahara yang boleh input data");
+    alert("Hanya Bendahara yang boleh input");
     return;
   }
 
-  const tgl=tglInput.value;
-  const ket=ketInput.value;
-  const masuk=parseInt(masukInput.value||0);
-  const keluar=parseInt(keluarInput.value||0);
-  const foto=fotoInput.files[0];
+  const fd = new FormData();
+  fd.append("tgl", tglInput.value);
+  fd.append("ket", ketInput.value);
+  fd.append("masuk", masukInput.value || 0);
+  fd.append("keluar", keluarInput.value || 0);
 
-  if(!tgl||!ket){ alert("Lengkapi data"); return; }
+  const file = fotoInput.files[0];
 
-  if(foto){
-    const r=new FileReader();
-    r.onload=function(){
-      data.push({tgl,ket,masuk,keluar,foto:this.result});
-      localStorage.setItem("kas",JSON.stringify(data));
-      tampil();
+  if(file){
+    const r = new FileReader();
+    r.onload = ()=>{
+      fd.append("foto", r.result);
+      kirim(fd);
     }
-    r.readAsDataURL(foto);
+    r.readAsDataURL(file);
   }else{
-    data.push({tgl,ket,masuk,keluar,foto:""});
-    localStorage.setItem("kas",JSON.stringify(data));
-    tampil();
+    kirim(fd);
   }
-
-  tglInput.value="";
-  ketInput.value="";
-  masukInput.value="";
-  keluarInput.value="";
-  fotoInput.value="";
 }
 
-/* ===== TAMPILKAN ===== */
-function tampil(){
-  let html="", saldo=0, masukT=0, keluarT=0;
-
-  data.forEach(x=>{
-    saldo+=x.masuk-x.keluar;
-    masukT+=x.masuk;
-    keluarT+=x.keluar;
-
-    html+=`
-    <tr>
-      <td>${x.tgl}</td>
-      <td>${x.ket}</td>
-      <td>${x.masuk? "Rp "+x.masuk.toLocaleString():x.keluar? "-Rp "+x.keluar.toLocaleString():""}</td>
-      <td>${x.foto? `<img src="${x.foto}" onclick="viewFoto('${x.foto}')">`:"-"}</td>
-    </tr>`;
+function kirim(fd){
+  fetch(API_URL,{
+    method:"POST",
+    body: fd
+  })
+  .then(r=>r.json())
+  .then(res=>{
+    if(res.status==="ok"){
+      alert("Tersimpan di Spreadsheet");
+      load();
+    }else{
+      alert("Gagal menyimpan");
+    }
   });
-
-  document.getElementById("list").innerHTML=html;
-  document.getElementById("saldo").innerText="Rp "+saldo.toLocaleString();
-  document.getElementById("masukTotal").innerText="Rp "+masukT.toLocaleString();
-  document.getElementById("keluarTotal").innerText="Rp "+keluarT.toLocaleString();
-  document.getElementById("jumlah").innerText=data.length;
 }
+/* ===== TAMPILKAN ===== */
+function Load(){
+  let html="", saldo=0, masukT=0, keluarT=0;
+function load(){
+ fetch(API_URL)
+  .then(r=>r.json())
+  .then(rows=>{
+    let html="", saldo=0, masuk=0, keluar=0;
 
-tampil();
+    rows.reverse().forEach(r=>{
+      const tgl = r[0];
+      const ket = r[1];
+      const m   = Number(r[2]);
+      const k   = Number(r[3]);
+      const s   = Number(r[4]);
+      const foto= r[5];
 
+      masuk+=m;
+      keluar+=k;
+      saldo=s;
+
+      html+=`
+      <tr>
+        <td>${tgl}</td>
+        <td>${ket}</td>
+        <td>${m? "Rp "+m.toLocaleString() : "-Rp "+k.toLocaleString()}</td>
+        <td>${foto? `<img src="${foto}" onclick="viewFoto('${foto}')">`:"-"}</td>
+      </tr>`;
+    });
+
+    document.getElementById("list").innerHTML = html;
+    document.getElementById("saldo").innerText = "Rp "+saldo.toLocaleString();
+    document.getElementById("masukTotal").innerText = "Rp "+masuk.toLocaleString();
+    document.getElementById("keluarTotal").innerText = "Rp "+keluar.toLocaleString();
+    document.getElementById("jumlah").innerText = rows.length;
+  });
+}
+load();
+  
 /* ===== FOTO ===== */
 function viewFoto(src){
   document.getElementById("fotoPreview").src=src;
