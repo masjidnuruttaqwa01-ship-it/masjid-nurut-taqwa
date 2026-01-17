@@ -78,12 +78,13 @@ async function simpan() {
     return;
   }
 
-  const data = {
-    tanggal: tgl.value,
-    keterangan: ket.value,
-    masuk: Number(masukInput.value || 0),
-    keluar: Number(keluarInput.value || 0),
-  };
+  await sb.from("kas").insert([{
+  tgl: tgl.value,
+  keterangan: ket.value,
+  masuk: Number(masuk.value || 0),
+  keluar: Number(keluar.value || 0),
+  foto: fotoData
+}]);
 
   if (!data.tanggal || !data.keterangan) {
     alert("Tanggal & keterangan wajib diisi");
