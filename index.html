@@ -20,7 +20,7 @@
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f6b44">
+<meta name="theme-color" content="#0f6b44">n">
 
 <!-- FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -842,74 +842,16 @@ footer{
   margin-top:0 !important;
   padding-top:30px;
 }
-  .announcement-bar{
-  background:linear-gradient(90deg,#facc15,#fde047);
-  color:#064e3b;
-  overflow:hidden;
-  white-space:nowrap;
-  position:relative;
-  box-shadow:0 6px 18px rgba(0,0,0,.15);
-}
-
-.announcement-track{
-  display:flex;
-  width:max-content;
-  animation:scrollText 28s linear infinite;
-}
-
-.announcement-track span{
-  display:inline-flex;
-  align-items:center;
-  font-size:14px;
-  font-weight:600;
-  padding:10px 24px;
-}
-
-/* PAUSE SAAT DISENTUH / HOVER */
-.announcement-bar:hover .announcement-track{
-  animation-play-state:paused;
-}
-
-@keyframes scrollText{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
-
-/* MOBILE OPTIMIZATION */
-@media(max-width:600px){
-  .announcement-track span{
-    font-size:13px;
-    padding:10px 18px;
-  }
-}
 </style>
 </head>
 <body>
 <!-- ================= HEADER ================= -->
-<header class="announcement-bar">
-  <div class="announcement-track">
-    <span>
-      📢 <b>Pengumuman:</b> Kajian rutin setiap malam Jumat ba’da Isya
-      &nbsp;•&nbsp;
-      🕌 Sholat berjamaah 5 waktu
-      &nbsp;•&nbsp;
-      🤲 Mari makmurkan Masjid Nurut Taqwa
-      &nbsp;•&nbsp;
-      💚 Infaq & sedekah melalui DKM
-      &nbsp;•&nbsp;
-    </span>
-
-    <!-- DUPLIKAT UNTUK LOOP MULUS -->
-    <span>
-      📢 <b>Pengumuman:</b> Kajian rutin setiap malam Jumat ba’da Isya
-      &nbsp;•&nbsp;
-      🕌 Sholat berjamaah 5 waktu
-      &nbsp;•&nbsp;
-      🤲 Mari makmurkan Masjid Nurut Taqwa
-      &nbsp;•&nbsp;
-      💚 Infaq & sedekah melalui DKM
-      &nbsp;•&nbsp;
-    </span>
+<header><div class="running-text">
+  <div class="running-track">
+    📢 Pengumuman: Kajian rutin setiap malam Jumat ba’da Isya • 
+    Sholat berjamaah 5 waktu • 
+    Mari makmurkan Masjid Nurut Taqwa • 
+    Infaq & sedekah dapat disalurkan melalui DKM
   </div>
 </div>
 <div class="logo">
