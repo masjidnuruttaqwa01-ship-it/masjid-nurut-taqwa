@@ -215,8 +215,14 @@ body{
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycby1PJ5sO9dse1oqgRkR7KNaUD4pyAslIIyFv7j_z2PJcWJa3HeqPYvYPirHwd9HyWxx/exec";
-/* ===== CEK LOGIN ===== */
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
+
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+</script>
+  /* ===== CEK LOGIN ===== */
 if(localStorage.getItem("login")!=="true"){
   window.location="login.html";
 }
@@ -242,93 +248,99 @@ if(role==="anggota"){
 /* ===== DATA ===== */
 
 /* ===== SIMPAN ===== */
-function simpan(){
-  if(role!=="bendahara"){
-    alert("Hanya bendahara yang bisa input");
+<script>
+async function simpan(){
+  if(role !== "bendahara"){
+    alert("Hanya bendahara");
     return;
   }
 
-  const tgl = tglInput.value;
-  const ket = ketInput.value;
-  const masuk = masukInput.value || 0;
-  const keluar = keluarInput.value || 0;
+  const tanggal = tglInput.value;
+  const keterangan = ketInput.value;
+  const masuk = Number(masukInput.value || 0);
+  const keluar = Number(keluarInput.value || 0);
   const fotoFile = fotoInput.files[0];
 
-  if(!tgl || !ket){
-    alert("Tanggal dan keterangan wajib diisi");
+  if(!tanggal || !keterangan){
+    alert("Tanggal & keterangan wajib");
     return;
   }
 
+  let foto = "";
+
   if(fotoFile){
-    const r = new FileReader();
-    r.onload = function(){
-      kirimKeSheet(tgl, ket, masuk, keluar, r.result);
+    const reader = new FileReader();
+    reader.onload = async function(){
+      foto = reader.result;
+      await kirim(tanggal, keterangan, masuk, keluar, foto);
     }
-    r.readAsDataURL(fotoFile);
+    reader.readAsDataURL(fotoFile);
   } else {
-    kirimKeSheet(tgl, ket, masuk, keluar, "");
+    await kirim(tanggal, keterangan, masuk, keluar, "");
   }
 }
-function kirimKeSheet(tgl, ket, masuk, keluar, foto){
-  const url = API_URL
-    + "?tgl=" + encodeURIComponent(tgl)
-    + "&ket=" + encodeURIComponent(ket)
-    + "&masuk=" + masuk
-    + "&keluar=" + keluar
-    + "&foto=" + encodeURIComponent(foto);
 
-  fetch(url,{method:"POST"})
-    .then(r=>r.json())
-    .then(res=>{
-      if(res.status==="ok"){
-        alert("Tersimpan ke Spreadsheet");
-        loadData();
-      } else {
-        alert("Gagal menyimpan");
-      }
-    })
-    .catch(err=>{
-      alert("Error koneksi");
-      console.error(err);
-    });
+async function kirim(tanggal, keterangan, masuk, keluar, foto){
+  const { error } = await supabase
+    .from("kas")
+    .insert([{
+      tanggal,
+      keterangan,
+      masuk,
+      keluar,
+      foto
+    }]);
+
+  if(error){
+    alert("Gagal simpan");
+    console.error(error);
+    return;
+  }
+
+  alert("Transaksi tersimpan");
+  loadData();
 }
-
+</script>
 /* ===== TAMPILKAN ===== */
-function loadData(){
-  fetch(API_URL)
-    .then(r=>r.json())
-    .then(rows=>{
-      let html="";
-      let masuk=0, keluar=0, saldo=0;
+<script>
+async function loadData(){
+  const { data, error } = await supabase
+    .from("kas")
+    .select("*")
+    .order("tanggal", { ascending: false });
 
-      rows.forEach(r=>{
-        const tgl = r[0];
-        const ket = r[1];
-        const m = Number(r[2]||0);
-        const k = Number(r[3]||0);
-        const s = Number(r[4]||0);
-        const foto = r[5];
+  if(error){
+    alert("Gagal load data");
+    console.error(error);
+    return;
+  }
 
-        masuk+=m;
-        keluar+=k;
-        saldo=s;
+  let html = "";
+  let masuk = 0, keluar = 0;
 
-        html+=`
-        <tr>
-          <td>${tgl}</td>
-          <td>${ket}</td>
-          <td>${m? "Rp "+m.toLocaleString() : "-Rp "+k.toLocaleString()}</td>
-          <td>${foto? `<img src="${foto}" onclick="viewFoto('${foto}')">`:"-"}</td>
-        </tr>`;
-      });
+  data.forEach(r=>{
+    masuk += r.masuk || 0;
+    keluar += r.keluar || 0;
 
-      document.getElementById("list").innerHTML=html;
-      saldoEl.innerText="Rp "+saldo.toLocaleString();
-      masukTotal.innerText="Rp "+masuk.toLocaleString();
-      keluarTotal.innerText="Rp "+keluar.toLocaleString();
-      jumlah.innerText=rows.length;
-    });
+    html += `
+      <tr>
+        <td>${r.tanggal}</td>
+        <td>${r.keterangan}</td>
+        <td>${r.masuk ? "Rp "+r.masuk.toLocaleString() : "-Rp "+r.keluar.toLocaleString()}</td>
+        <td>${r.foto ? `<img src="${r.foto}" onclick="viewFoto('${r.foto}')">` : "-"}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("list").innerHTML = html;
+  document.getElementById("masukTotal").innerText = "Rp " + masuk.toLocaleString();
+  document.getElementById("keluarTotal").innerText = "Rp " + keluar.toLocaleString();
+  document.getElementById("saldo").innerText = "Rp " + (masuk - keluar).toLocaleString();
+  document.getElementById("jumlah").innerText = data.length;
 }
+
+loadData();
+</script>
 /* ===== FOTO ===== */
 function viewFoto(src){
   document.getElementById("fotoPreview").src=src;
