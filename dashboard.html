@@ -258,6 +258,8 @@ async function loadData(){
   saldo.innerText = "Rp " + (m - k).toLocaleString("id-ID");
 masukTotal.innerText = "Rp " + m.toLocaleString("id-ID");
 keluarTotal.innerText = "Rp " + k.toLocaleString("id-ID");
+ const totalTransaksi = data.length;
+document.getElementById("jumlah").innerText = totalTransaksi; 
 }
 /* ===== SIMPAN ===== */
 async function simpan(){
