@@ -237,12 +237,18 @@ async function loadData(){
   data.forEach(r=>{
     m+=r.masuk||0;k+=r.keluar||0;
     html+=`
-    <tr>
-      <td>${r.tanggal}</td>
-      <td>${r.keterangan}</td>
-      <td>${r.masuk?"+Rp "+r.masuk:"-Rp "+r.keluar}</td>
-      <td>${r.foto?`<img src="${r.foto}" onclick="viewFoto('${r.foto}')">`:"-"}</td>
-    </tr>`;
+<tr>
+  <td>${r.tanggal}</td>
+  <td>${r.keterangan}</td>
+  <td>${r.masuk ? "+Rp "+r.masuk : "-Rp "+r.keluar}</td>
+  <td>
+    ${r.foto ? `<img src="${r.foto}" onclick="viewFoto('${r.foto}')">` : "-"}
+    <br>
+    ${role==="bendahara"
+      ? `<button onclick="hapusTransaksi(${r.id})">🗑 Hapus</button>`
+      : ""}
+  </td>
+</tr>`;
   });
   list.innerHTML=html;
   saldo.innerText="Rp "+(m-k);
@@ -301,6 +307,22 @@ function logout(){
 }
 
 loadData();
+  async function hapusTransaksi(id){
+  if(!confirm("Yakin hapus transaksi ini?")) return;
+
+  const { error } = await sb
+    .from("kas")
+    .delete()
+    .eq("id", id);
+
+  if(error){
+    alert("Gagal menghapus transaksi");
+    console.error(error);
+    return;
+  }
+
+  loadData(); // refresh tabel
+  }
 </script>
 
 </body>
