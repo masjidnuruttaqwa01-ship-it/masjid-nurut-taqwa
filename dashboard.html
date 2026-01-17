@@ -4,18 +4,17 @@
 <meta charset="UTF-8">
 <title>Dashboard Keuangan DKM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Poppins,sans-serif;
+  font-family:Poppins;
   background:linear-gradient(180deg,#064e3b,#0f766e);
   color:#fff;
 }
-
-/* ===== HEADER ===== */
 .header{
   background:#064e3b;
   padding:14px 16px;
@@ -23,337 +22,192 @@ body{
   justify-content:space-between;
   align-items:center;
 }
-.header h1{
-  font-size:16px;
-  margin:0;
-  font-weight:700;
-}
 .logout{
   background:#dc2626;
   border:none;
   color:#fff;
   padding:8px 14px;
   border-radius:12px;
-  font-weight:600;
 }
-
-/* ===== CONTAINER ===== */
-.container{
-  padding:16px;
-}
-
-/* ===== SUMMARY ===== */
+.container{padding:16px}
 .summary{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin-bottom:18px;
+  margin-bottom:16px;
 }
 .box{
   background:#fff;
   color:#064e3b;
-  padding:16px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  padding:14px;
+  border-radius:14px;
 }
-.box small{
-  opacity:.7;
-  font-size:12px;
-}
-.box b{
-  font-size:20px;
-  display:block;
-  margin-top:4px;
-}
-
-/* ===== TABLE ===== */
 .table-box{
   background:#fff;
   color:#064e3b;
-  border-radius:18px;
+  border-radius:16px;
   overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,.2);
-  margin-bottom:20px;
 }
-.table-box table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:12px;
-}
-.table-box th{
-  background:#064e3b;
-  color:#fff;
-  padding:10px;
-  text-align:left;
-}
-.table-box td{
-  padding:10px;
-  border-bottom:1px solid #eee;
-}
-.table-box img{
-  width:40px;
-  height:40px;
-  border-radius:8px;
-  object-fit:cover;
-  cursor:pointer;
-}
-
-/* ===== FORM ===== */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:10px;border-bottom:1px solid #eee}
+th{background:#064e3b;color:#fff}
 .form{
   background:#fff;
   color:#064e3b;
-  padding:18px;
-  border-radius:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.2);
+  margin-top:16px;
+  padding:16px;
+  border-radius:16px;
 }
-.form h3{
-  text-align:center;
-  margin-top:0;
-  margin-bottom:14px;
-}
-.form input{
+.form input,.form button{
   width:100%;
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid #ccc;
-  margin-bottom:12px;
-  font-size:14px;
-}
-.form input[type="file"]{
-  border:2px dashed #0f6b44;
-  background:#f9fafb;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:10px;
 }
 .form button{
-  width:100%;
-  background:linear-gradient(135deg,#0f6b44,#0b4f34);
+  background:#0f766e;
   color:#fff;
   border:none;
-  padding:14px;
-  border-radius:14px;
-  font-size:16px;
   font-weight:700;
 }
-
-/* ===== MODAL FOTO ===== */
+img{width:40px;border-radius:6px;cursor:pointer}
 #fotoModal{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:2000;
+  display:none;align-items:center;justify-content:center;
 }
-#fotoModal img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:14px;
-}
+#fotoModal img{max-width:90%}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <h1>📊 Keuangan Masjid</h1>
+  <b>📊 Keuangan Masjid</b>
   <button class="logout" onclick="logout()">Logout</button>
 </div>
 
 <div class="container">
 
-  <!-- SUMMARY -->
-  <div class="summary">
-    <div class="box">
-      <small>Saldo</small>
-      <b id="saldo">Rp 0</b>
-    </div>
-    <div class="box">
-      <small>Transaksi</small>
-      <b id="jumlah">0</b>
-    </div>
-    <div class="box">
-      <small>Pemasukan</small>
-      <b id="masukTotal">Rp 0</b>
-    </div>
-    <div class="box">
-      <small>Pengeluaran</small>
-      <b id="keluarTotal">Rp 0</b>
-    </div>
-  </div>
+<div class="summary">
+  <div class="box">Saldo<br><b id="saldo">Rp 0</b></div>
+  <div class="box">Transaksi<br><b id="jumlah">0</b></div>
+  <div class="box">Masuk<br><b id="masukTotal">Rp 0</b></div>
+  <div class="box">Keluar<br><b id="keluarTotal">Rp 0</b></div>
+</div>
 
-  <!-- TABLE -->
-  <div class="table-box">
-    <table>
-      <thead>
-        <tr>
-          <th>Tgl</th>
-          <th>Keterangan</th>
-          <th>Rp</th>
-          <th>Bukti</th>
-        </tr>
-      </thead>
-      <tbody id="list"></tbody>
-    </table>
-  </div>
+<div class="table-box">
+<table>
+<thead>
+<tr><th>Tgl</th><th>Keterangan</th><th>Rp</th><th>Bukti</th></tr>
+</thead>
+<tbody id="list"></tbody>
+</table>
+</div>
 
-  <!-- FORM -->
-  <div class="form" id="formInput">
-    <h3>Tambah Transaksi</h3>
-    <input type="date" id="tgl">
-    <input type="text" id="ket" placeholder="Keterangan">
-    <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
-    <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
-    <input type="file" id="foto" accept="image/*">
-    <button onclick="simpan()">💾 Simpan Transaksi</button>
-  </div>
+<div class="form" id="formInput">
+  <input type="date" id="tgl">
+  <input type="text" id="ket" placeholder="Keterangan">
+  <input type="number" id="masuk">
+  <input type="number" id="keluar">
+  <input type="file" id="foto">
+  <button onclick="simpan()">💾 Simpan</button>
+</div>
 
 </div>
 
-<!-- MODAL FOTO -->
 <div id="fotoModal" onclick="this.style.display='none'">
   <img id="fotoPreview">
 </div>
 
 <script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
-
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  /* ===== CEK LOGIN ===== */
+/* ===== LOGIN ===== */
 if(localStorage.getItem("login")!=="true"){
-  window.location="login.html";
+  location="login.html";
 }
-
 const role = localStorage.getItem("role");
 
-/* ===== AMBIL ELEMENT ===== */
-const tglInput=document.getElementById("tgl");
-const ketInput=document.getElementById("ket");
-const masukInput=document.getElementById("masuk");
-const keluarInput=document.getElementById("keluar");
-const fotoInput=document.getElementById("foto");
-const formInput=document.getElementById("formInput");
-const saldoEl = document.getElementById("saldo");
-const masukTotal = document.getElementById("masukTotal");
-const keluarTotal = document.getElementById("keluarTotal");
-const jumlah = document.getElementById("jumlah");
-/* ===== SEMBUNYIKAN FORM JIKA ANGGOTA ===== */
-if(role==="anggota"){
-  formInput.style.display="none";
+/* ===== SUPABASE ===== */
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ===== ELEMENT ===== */
+const tgl=document.getElementById("tgl");
+const ket=document.getElementById("ket");
+const masuk=document.getElementById("masuk");
+const keluar=document.getElementById("keluar");
+const foto=document.getElementById("foto");
+
+/* ===== FORM ACCESS ===== */
+if(role!=="bendahara"){
+  document.getElementById("formInput").style.display="none";
 }
 
-/* ===== DATA ===== */
+/* ===== LOAD ===== */
+async function loadData(){
+  const {data,error}=await sb.from("kas").select("*").order("tanggal",{ascending:false});
+  if(error){console.error(error);return;}
+
+  let html="",m=0,k=0;
+  data.forEach(r=>{
+    m+=r.masuk||0;k+=r.keluar||0;
+    html+=`
+    <tr>
+      <td>${r.tanggal}</td>
+      <td>${r.keterangan}</td>
+      <td>${r.masuk?"+Rp "+r.masuk:"-Rp "+r.keluar}</td>
+      <td>${r.foto?`<img src="${r.foto}" onclick="viewFoto('${r.foto}')">`:"-"}</td>
+    </tr>`;
+  });
+  list.innerHTML=html;
+  saldo.innerText="Rp "+(m-k);
+  masukTotal.innerText="Rp "+m;
+  keluarTotal.innerText="Rp "+k;
+  jumlah.innerText=data.length;
+}
 
 /* ===== SIMPAN ===== */
-<script>
 async function simpan(){
-  if(role !== "bendahara"){
-    alert("Hanya bendahara");
-    return;
-  }
+  if(role!=="bendahara")return alert("Akses ditolak");
 
-  const tanggal = tglInput.value;
-  const keterangan = ketInput.value;
-  const masuk = Number(masukInput.value || 0);
-  const keluar = Number(keluarInput.value || 0);
-  const fotoFile = fotoInput.files[0];
-
-  if(!tanggal || !keterangan){
-    alert("Tanggal & keterangan wajib");
-    return;
-  }
-
-  let foto = "";
-
-  if(fotoFile){
-    const reader = new FileReader();
-    reader.onload = async function(){
-      foto = reader.result;
-      await kirim(tanggal, keterangan, masuk, keluar, foto);
-    }
-    reader.readAsDataURL(fotoFile);
-  } else {
-    await kirim(tanggal, keterangan, masuk, keluar, "");
+  let fotoData="";
+  if(foto.files[0]){
+    const r=new FileReader();
+    r.onload=async ()=>{
+      fotoData=r.result;
+      await kirim(fotoData);
+    };
+    r.readAsDataURL(foto.files[0]);
+  }else{
+    await kirim("");
   }
 }
 
-async function kirim(tanggal, keterangan, masuk, keluar, foto){
-  const { error } = await supabase
-    .from("kas")
-    .insert([{
-      tanggal,
-      keterangan,
-      masuk,
-      keluar,
-      foto
-    }]);
-
-  if(error){
-    alert("Gagal simpan");
-    console.error(error);
-    return;
-  }
-
-  alert("Transaksi tersimpan");
+async function kirim(fotoData){
+  const {error}=await sb.from("kas").insert([{
+    tanggal:tgl.value,
+    keterangan:ket.value,
+    masuk:Number(masuk.value||0),
+    keluar:Number(keluar.value||0),
+    foto:fotoData
+  }]);
+  if(error){alert("Gagal");console.error(error);return;}
+  alert("Tersimpan");
   loadData();
 }
-  
-/* ===== TAMPILKAN ===== */
-<script>
-async function loadData(){
-  const { data, error } = await supabase
-    .from("kas")
-    .select("*")
-    .order("tanggal", { ascending: false });
 
-  if(error){
-    alert("Gagal load data");
-    console.error(error);
-    return;
-  }
-
-  let html = "";
-  let masuk = 0, keluar = 0;
-
-  data.forEach(r=>{
-    masuk += r.masuk || 0;
-    keluar += r.keluar || 0;
-
-    html += `
-      <tr>
-        <td>${r.tanggal}</td>
-        <td>${r.keterangan}</td>
-        <td>${r.masuk ? "Rp "+r.masuk.toLocaleString() : "-Rp "+r.keluar.toLocaleString()}</td>
-        <td>${r.foto ? `<img src="${r.foto}" onclick="viewFoto('${r.foto}')">` : "-"}</td>
-      </tr>
-    `;
-  });
-
-  document.getElementById("list").innerHTML = html;
-  document.getElementById("masukTotal").innerText = "Rp " + masuk.toLocaleString();
-  document.getElementById("keluarTotal").innerText = "Rp " + keluar.toLocaleString();
-  document.getElementById("saldo").innerText = "Rp " + (masuk - keluar).toLocaleString();
-  document.getElementById("jumlah").innerText = data.length;
+/* ===== UTIL ===== */
+function viewFoto(src){
+  fotoPreview.src=src;
+  fotoModal.style.display="flex";
+}
+function logout(){
+  localStorage.clear();
+  location="login.html";
 }
 
 loadData();
-  
-/* ===== FOTO ===== */
-function viewFoto(src){
-  document.getElementById("fotoPreview").src=src;
-  document.getElementById("fotoModal").style.display="flex";
-}
-
-/* ===== LOGOUT ===== */
-function logout(){
-  localStorage.removeItem("login");
-  localStorage.removeItem("role");
-  location="login.html";
-}
-  loadData();
 </script>
 
 </body>
