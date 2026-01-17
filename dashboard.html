@@ -230,34 +230,56 @@ if(role!=="bendahara"){
 
 /* ===== LOAD ===== */
 async function loadData(){
-  const {data,error}=await sb.from("kas").select("*").order("tanggal",{ascending:false});
-  if(error){console.error(error);return;}
+  const { data, error } = await sb
+    .from("kas")
+    .select("*")
+    .order("tanggal", { ascending: false });
 
-  let html="",m=0,k=0;
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  let html = "";
+  let totalMasuk = 0;
+  let totalKeluar = 0;
+
   data.forEach(r=>{
-    m+=r.masuk||0;k+=r.keluar||0;
-    html+=`
-<tr>
-  <td>${r.tanggal}</td>
-  <td>${r.keterangan}</td>
-  <td>
-  ${r.masuk
-    ? "+Rp " + r.masuk.toLocaleString("id-ID")
-    : "-Rp " + r.keluar.toLocaleString("id-ID")}
-</td>
-  <td>
-    ${r.foto ? `<img src="${r.foto}" onclick="viewFoto('${r.foto}')">` : "-"}
-    <br>
-    ${role==="bendahara"
-      ? `<button onclick="hapusTransaksi(${r.id})">🗑 Hapus</button>`
-      : ""}
-  </td>
-</tr>`;
+    totalMasuk += r.masuk || 0;
+    totalKeluar += r.keluar || 0;
+
+    html += `
+      <tr>
+        <td>${r.tanggal}</td>
+        <td>${r.keterangan}</td>
+        <td>
+          ${r.masuk
+            ? "+Rp " + r.masuk.toLocaleString("id-ID")
+            : "-Rp " + r.keluar.toLocaleString("id-ID")}
+        </td>
+        <td>
+          ${r.foto ? `<img src="${r.foto}" onclick="viewFoto('${r.foto}')">` : "-"}
+          <button onclick="hapus(${r.id})">🗑️ Hapus</button>
+        </td>
+      </tr>
+    `;
   });
-  list.innerHTML=html;
-  saldo.innerText = "Rp " + (m - k).toLocaleString("id-ID");
-masukTotal.innerText = "Rp " + m.toLocaleString("id-ID");
-keluarTotal.innerText = "Rp " + k.toLocaleString("id-ID");
+
+  /* ===== UPDATE UI ===== */
+  document.getElementById("list").innerHTML = html;
+
+  const saldoValue = totalMasuk - totalKeluar;
+  document.getElementById("saldo").innerText =
+    "Rp " + saldoValue.toLocaleString("id-ID");
+
+  document.getElementById("masukTotal").innerText =
+    "Rp " + totalMasuk.toLocaleString("id-ID");
+
+  document.getElementById("keluarTotal").innerText =
+    "Rp " + totalKeluar.toLocaleString("id-ID");
+
+  /* 🔥 INI YANG SEBELUMNYA KURANG */
+  document.getElementById("jumlah").innerText = data.length;
 }
 /* ===== SIMPAN ===== */
 async function simpan(){
