@@ -62,10 +62,10 @@ body{
   opacity:.7;
   font-size:12px;
 }
-.box b{
-  font-size:20px;
-  display:block;
-  margin-top:4px;
+@media (max-width: 360px){
+  .box b{
+    font-size: 18px;
+  }
 }
 
 /* ===== TABLE ===== */
@@ -273,9 +273,9 @@ async function loadData(){
 </tr>`;
   });
   list.innerHTML=html;
-  saldo.innerText = formatRupiahPremium(m - k);
-masukTotal.innerText = formatRupiahPremium(m);
-keluarTotal.innerText = formatRupiahPremium(k);
+  saldo.innerText = "Rp " + (m - k).toLocaleString("id-ID");
+masukTotal.innerText = "Rp " + m.toLocaleString("id-ID");
+keluarTotal.innerText = "Rp " + k.toLocaleString("id-ID");
  const totalTransaksi = data.length;
 document.getElementById("jumlah").innerText = totalTransaksi; 
 }
