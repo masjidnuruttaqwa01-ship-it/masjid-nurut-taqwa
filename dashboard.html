@@ -9,12 +9,15 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Poppins;
+  font-family:Poppins,sans-serif;
   background:linear-gradient(180deg,#064e3b,#0f766e);
   color:#fff;
 }
+
+/* ===== HEADER ===== */
 .header{
   background:#064e3b;
   padding:14px 16px;
@@ -22,113 +25,131 @@ body{
   justify-content:space-between;
   align-items:center;
 }
+.header h1{
+  font-size:16px;
+  margin:0;
+  font-weight:700;
+}
 .logout{
   background:#dc2626;
   border:none;
   color:#fff;
   padding:8px 14px;
   border-radius:12px;
+  font-weight:600;
 }
-.container{padding:16px}
+
+/* ===== CONTAINER ===== */
+.container{
+  padding:16px;
+}
+
+/* ===== SUMMARY ===== */
 .summary{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin-bottom:16px;
+  margin-bottom:18px;
 }
 .box{
   background:#fff;
   color:#064e3b;
-  padding:14px;
-  border-radius:14px;
+  padding:16px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
+.box small{
+  opacity:.7;
+  font-size:12px;
+}
+.box b{
+  font-size:20px;
+  display:block;
+  margin-top:4px;
+}
+
+/* ===== TABLE ===== */
 .table-box{
   background:#fff;
   color:#064e3b;
-  border-radius:16px;
+  border-radius:18px;
   overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+  margin-bottom:20px;
 }
-table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{padding:10px;border-bottom:1px solid #eee}
-th{background:#064e3b;color:#fff}
+.table-box table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+.table-box th{
+  background:#064e3b;
+  color:#fff;
+  padding:10px;
+  text-align:left;
+}
+.table-box td{
+  padding:10px;
+  border-bottom:1px solid #eee;
+}
+.table-box img{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  object-fit:cover;
+  cursor:pointer;
+}
+
+/* ===== FORM ===== */
 .form{
   background:#fff;
   color:#064e3b;
-  margin-top:16px;
-  padding:16px;
-  border-radius:16px;
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
-.form input,.form button{
-  width:100%;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:10px;
-}
-.form button{
-  background:#0f766e;
-  color:#fff;
-  border:none;
-  font-weight:700;
-}
-img{width:40px;border-radius:6px;cursor:pointer}
-#fotoModal{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;align-items:center;justify-content:center;
-}
-#fotoModal img{max-width:90%}
-  /* ===== FORM GRID ===== */
 .form h3{
   text-align:center;
   margin-top:0;
   margin-bottom:14px;
 }
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:12px;
-}
-
-/* ===== INPUT SERAGAM ===== */
-.form-grid input{
-  height:52px;
-  padding:14px 16px;
+.form input{
+  width:100%;
+  padding:12px 14px;
   border-radius:12px;
-  border:1px solid #ddd;
+  border:1px solid #ccc;
+  margin-bottom:12px;
   font-size:14px;
 }
-
-/* samakan input date */
-.form-grid input[type="date"]{
-  appearance:none;
-  -webkit-appearance:none;
-}
-
-/* ===== FILE INPUT MEWAH ===== */
-.file-box{
-  height:54px;
-  border:2px dashed #0f766e;
-  border-radius:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
+.form input[type="file"]{
+  border:2px dashed #0f6b44;
   background:#f9fafb;
 }
-.file-box input{
-  display:none;
-}
-.file-box span{
-  color:#064e3b;
-  font-weight:600;
-}
-
-/* ===== BUTTON ===== */
-.form-grid button{
-  height:54px;
+.form button{
+  width:100%;
+  background:linear-gradient(135deg,#0f6b44,#0b4f34);
+  color:#fff;
+  border:none;
+  padding:14px;
   border-radius:14px;
   font-size:16px;
+  font-weight:700;
+}
+
+/* ===== MODAL FOTO ===== */
+#fotoModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+#fotoModal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:14px;
 }
 </style>
 </head>
