@@ -240,7 +240,11 @@ async function loadData(){
 <tr>
   <td>${r.tanggal}</td>
   <td>${r.keterangan}</td>
-  <td>${r.masuk ? "+Rp "+r.masuk : "-Rp "+r.keluar}</td>
+  <td>
+  ${r.masuk
+    ? "+Rp " + r.masuk.toLocaleString("id-ID")
+    : "-Rp " + r.keluar.toLocaleString("id-ID")}
+</td>
   <td>
     ${r.foto ? `<img src="${r.foto}" onclick="viewFoto('${r.foto}')">` : "-"}
     <br>
@@ -251,12 +255,10 @@ async function loadData(){
 </tr>`;
   });
   list.innerHTML=html;
-  saldo.innerText="Rp "+(m-k);
-  masukTotal.innerText="Rp "+m;
-  keluarTotal.innerText="Rp "+k;
-  jumlah.innerText=data.length;
+  saldo.innerText = "Rp " + (m - k).toLocaleString("id-ID");
+masukTotal.innerText = "Rp " + m.toLocaleString("id-ID");
+keluarTotal.innerText = "Rp " + k.toLocaleString("id-ID");
 }
-
 /* ===== SIMPAN ===== */
 async function simpan(){
   if(role!=="bendahara")return alert("Akses ditolak");
