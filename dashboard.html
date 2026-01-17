@@ -214,7 +214,6 @@ body{
   <img id="fotoPreview">
 </div>
 
-<script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ================== AUTH ================== */
@@ -326,6 +325,116 @@ function logout(){
 
 loadData();
 </script>
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+/* ================== AUTH ================== */
+if(localStorage.getItem("login")!=="true"){
+  location="login.html";
+}
+const role = localStorage.getItem("role") || "publik";
+
+/* ================== SUPABASE ================== */
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ================== ELEMENT ================== */
+const tgl = document.getElementById("tgl");
+const ket = document.getElementById("ket");
+const masuk = document.getElementById("masuk");
+const keluar = document.getElementById("keluar");
+const foto = document.getElementById("foto");
+const formInput = document.getElementById("formInput");
+
+/* ================== AKSES ================== */
+if(role !== "bendahara" && formInput){
+  formInput.style.display="none";
+}
+
+/* ================== LOAD ================== */
+async function loadData(){
+  const { data, error } = await sb
+    .from("kas")
+    .select("*")
+    .order("tanggal",{ascending:false});
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  let html="", m=0, k=0;
+  data.forEach(r=>{
+    m+=r.masuk||0;
+    k+=r.keluar||0;
+    html+=`
+      <tr>
+        <td>${r.tanggal}</td>
+        <td>${r.keterangan}</td>
+        <td>${r.masuk?"+Rp "+r.masuk:"-Rp "+r.keluar}</td>
+        <td>${r.foto?`<img src="${r.foto}" onclick="viewFoto('${r.foto}')">`:"-"}</td>
+      </tr>`;
+  });
+
+  document.getElementById("list").innerHTML = html;
+  document.getElementById("saldo").innerText = "Rp "+(m-k);
+  document.getElementById("masukTotal").innerText = "Rp "+m;
+  document.getElementById("keluarTotal").innerText = "Rp "+k;
+  document.getElementById("jumlah").innerText = data.length;
+}
+
+/* ================== SIMPAN ================== */
+async function simpan(){
+  if(role!=="bendahara"){
+    alert("Akses ditolak");
+    return;
+  }
+
+  let fotoData="";
+  if(foto.files[0]){
+    const r=new FileReader();
+    r.onload=async()=>{
+      await kirim(r.result);
+    };
+    r.readAsDataURL(foto.files[0]);
+  }else{
+    await kirim("");
+  }
+}
+
+async function kirim(fotoData){
+  const { error } = await sb.from("kas").insert([{
+    tanggal: tgl.value,
+    keterangan: ket.value,
+    masuk: Number(masuk.value||0),
+    keluar: Number(keluar.value||0),
+    foto: fotoData
+  }]);
+
+  if(error){
+    alert("Gagal simpan");
+    console.error(error);
+    return;
+  }
+
+  alert("Tersimpan");
+  loadData();
+}
+
+/* ================== UTIL ================== */
+function viewFoto(src){
+  document.getElementById("fotoPreview").src=src;
+  document.getElementById("fotoModal").style.display="flex";
+}
+
+function logout(){
+  localStorage.clear();
+  location="login.html";
+}
+
+loadData();
+</script>
 </body>
 </html>
