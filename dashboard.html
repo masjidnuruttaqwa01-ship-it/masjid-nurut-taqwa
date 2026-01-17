@@ -77,6 +77,59 @@ img{width:40px;border-radius:6px;cursor:pointer}
   display:none;align-items:center;justify-content:center;
 }
 #fotoModal img{max-width:90%}
+  /* ===== FORM GRID ===== */
+.form h3{
+  text-align:center;
+  margin-top:0;
+  margin-bottom:14px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+
+/* ===== INPUT SERAGAM ===== */
+.form-grid input{
+  height:52px;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:14px;
+}
+
+/* samakan input date */
+.form-grid input[type="date"]{
+  appearance:none;
+  -webkit-appearance:none;
+}
+
+/* ===== FILE INPUT MEWAH ===== */
+.file-box{
+  height:54px;
+  border:2px dashed #0f766e;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  background:#f9fafb;
+}
+.file-box input{
+  display:none;
+}
+.file-box span{
+  color:#064e3b;
+  font-weight:600;
+}
+
+/* ===== BUTTON ===== */
+.form-grid button{
+  height:54px;
+  border-radius:14px;
+  font-size:16px;
+}
 </style>
 </head>
 
@@ -106,14 +159,24 @@ img{width:40px;border-radius:6px;cursor:pointer}
 </div>
 
 <div class="form" id="formInput">
-  <input type="date" id="tgl">
-  <input type="text" id="ket" placeholder="Keterangan">
-  <input type="number" id="masuk">
-  <input type="number" id="keluar">
-  <input type="file" id="foto">
-  <button onclick="simpan()">💾 Simpan</button>
-</div>
+  <h3>Tambah Transaksi</h3>
 
+  <div class="form-grid">
+    <input type="date" id="tgl">
+
+    <input type="text" id="ket" placeholder="Keterangan">
+
+    <input type="number" id="masuk" placeholder="Pemasukan (Rp)">
+
+    <input type="number" id="keluar" placeholder="Pengeluaran (Rp)">
+
+    <label class="file-box">
+      <input type="file" id="foto" accept="image/*">
+      <span>Pilih Bukti (Foto)</span>
+    </label>
+
+    <button onclick="simpan()">💾 Simpan</button>
+  </div>
 </div>
 
 <div id="fotoModal" onclick="this.style.display='none'">
