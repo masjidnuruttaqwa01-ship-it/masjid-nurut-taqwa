@@ -117,6 +117,27 @@ function logout() {
   localStorage.clear();
   location = "login.html";
 }
+/*================= KIRIM ================*/
+async function kirim(fotoData){
+  const { data, error } = await sb
+    .from("kas")
+    .insert([{
+      tanggal: tgl.value,
+      keterangan: ket.value,
+      masuk: Number(masuk.value || 0),
+      keluar: Number(keluar.value || 0),
+      saldo: 0,
+      foto: fotoData
+    }]);
 
+  if(error){
+    console.error(error);
+    alert(error.message);
+    return;
+  }
+
+  alert("Transaksi berhasil disimpan");
+  loadData();
+}
 /* ================= INIT ================= */
 load();
