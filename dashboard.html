@@ -151,27 +151,6 @@ body{
   max-height:90%;
   border-radius:14px;
 }
-  .saldo-angka{
-  font-size:28px;
-  font-weight:700;
-  line-height:1.2;
-  word-break:break-word;
-}
-
-/* kalau saldo besar */
-.saldo-angka.kecil{
-  font-size:22px;
-}
-
-/* layar HP kecil */
-@media (max-width:400px){
-  .saldo-angka{
-    font-size:24px;
-  }
-  .saldo-angka.kecil{
-    font-size:18px;
-  }
-}
 </style>
 </head>
 
@@ -191,10 +170,7 @@ body{
   <div class="box">Keluar<br><b id="keluarTotal">Rp 0</b></div>
 </div>
 
-<div class="box saldo-box">
-  <small>Saldo</small>
-  <b id="saldo" class="saldo-angka">Rp 0</b>
-</div>
+<div class="table-box">
 <table>
 <thead>
 <tr><th>Tgl</th><th>Keterangan</th><th>Rp</th><th>Bukti</th></tr>
@@ -279,14 +255,7 @@ async function loadData(){
 </tr>`;
   });
   list.innerHTML=html;
-  const saldoValue = m - k;
-saldo.innerText = "Rp " + saldoValue.toLocaleString("id-ID");
-
-if(saldoValue >= 1000000){
-  saldo.classList.add("kecil");
-} else {
-  saldo.classList.remove("kecil");
-}
+  saldo.innerText = "Rp " + (m - k).toLocaleString("id-ID");
 masukTotal.innerText = "Rp " + m.toLocaleString("id-ID");
 keluarTotal.innerText = "Rp " + k.toLocaleString("id-ID");
 }
