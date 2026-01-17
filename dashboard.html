@@ -151,13 +151,34 @@ body{
   max-height:90%;
   border-radius:14px;
 }
+  .header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.back{
+  background:rgba(255,255,255,.15);
+  border:none;
+  color:#fff;
+  font-size:18px;
+  padding:6px 12px;
+  border-radius:10px;
+  cursor:pointer;
+}
+.back:active{
+  transform:scale(.95);
+}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <b>📊 Keuangan Masjid</b>
+  <div class="header-left">
+    <button class="back" onclick="goHome()">⬅</button>
+    <b>📊 Keuangan Masjid</b>
+  </div>
   <button class="logout" onclick="logout()">Logout</button>
 </div>
 
@@ -361,6 +382,11 @@ function toggleRiwayat(){
 
   riwayatVisible = !riwayatVisible;
 }
+  <script>
+function goHome(){
+  window.location.href = "index.html";
+}
+</script>
 </script>
 
 </body>
