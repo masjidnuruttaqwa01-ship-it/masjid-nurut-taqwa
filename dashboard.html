@@ -229,6 +229,12 @@ if(role!=="bendahara"){
 }
 
 /* ===== LOAD ===== */
+  function formatRupiahPremium(n){
+  if(n >= 1000000000) return "Rp " + (n/1000000000).toFixed(1) + " M";
+  if(n >= 1000000) return "Rp " + (n/1000000).toFixed(1) + " JT";
+  if(n >= 1000) return "Rp " + (n/1000).toFixed(0) + " RB";
+  return "Rp " + n.toLocaleString("id-ID");
+}
 async function loadData(){
   const {data,error}=await sb.from("kas").select("*").order("tanggal",{ascending:false});
   if(error){console.error(error);return;}
@@ -255,9 +261,9 @@ async function loadData(){
 </tr>`;
   });
   list.innerHTML=html;
-  saldo.innerText = "Rp " + (m - k).toLocaleString("id-ID");
-masukTotal.innerText = "Rp " + m.toLocaleString("id-ID");
-keluarTotal.innerText = "Rp " + k.toLocaleString("id-ID");
+  saldo.innerText = formatRupiahPremium(m - k);
+masukTotal.innerText = formatRupiahPremium(m);
+keluarTotal.innerText = formatRupiahPremium(k);
  const totalTransaksi = data.length;
 document.getElementById("jumlah").innerText = totalTransaksi; 
 }
