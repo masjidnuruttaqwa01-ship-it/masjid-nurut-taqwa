@@ -1459,5 +1459,19 @@ cards.forEach(card=>{
   observer.observe(card);
 });
 </script>
+    <script>
+function toggleSambutan(){
+  const content = document.getElementById("sambutanContent");
+  const icon = document.getElementById("sambutanIcon");
+
+  if(content.style.display === "none"){
+    content.style.display = "block";
+    icon.innerText = "➖";
+  }else{
+    content.style.display = "none";
+    icon.innerText = "➕";
+  }
+}
+    </script>
   </body>
 </html>
