@@ -842,6 +842,49 @@ footer{
   margin-top:0 !important;
   padding-top:30px;
 }
+  .mobile-menu{
+  padding:20px;
+}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+/* CARD MENU */
+.menu-item{
+  background:#ffffff;
+  padding:14px 12px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:600;
+  font-size:14px;
+  color:#064e3b;
+  text-decoration:none;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  transition:all .2s ease;
+}
+
+.menu-item:hover{
+  background:#0f766e;
+  color:#fff;
+  transform:translateY(-2px);
+}
+
+/* LOGIN DKM */
+.menu-login{
+  display:block;
+  margin-top:20px;
+  padding:14px;
+  text-align:center;
+  background:linear-gradient(135deg,#dc2626,#b91c1c);
+  color:#fff;
+  font-weight:700;
+  border-radius:16px;
+  text-decoration:none;
+  box-shadow:0 10px 25px rgba(220,38,38,.4);
+}
 </style>
 </head>
 <body>
@@ -863,18 +906,25 @@ footer{
 </header>
 
 <div class="mobile-menu" id="menu">
-  <a href="#profil">Profil Masjid</a>
-  <a href="#sejarah">Sejarah</a>
-  <a href="#visi">Visi & Misi</a>
-  <a href="#program">Program Unggulan</a>
-  <a href="#agenda">Agenda</a>
-  <a href="#jadwal">Jadwal Sholat</a>
-  <a href="#zakat">Zakat & Infaq</a>
-  <a href="#dkm">Struktur DKM</a>
- <a href="login.html" class="login-dkm-btn">Login DKM</a> 
-  <a href="#tata-tertib">Tata Tertib</a>
-  <a href="#faq">FAQ</a>
-  <a href="#kontak">Kontak</a>
+
+  <div class="menu-grid">
+
+    <a href="#profil" class="menu-item">Profil Masjid</a>
+    <a href="#sejarah" class="menu-item">Sejarah</a>
+    <a href="#visi" class="menu-item">Visi & Misi</a>
+    <a href="#program" class="menu-item">Program Unggulan</a>
+    <a href="#agenda" class="menu-item">Agenda</a>
+    <a href="#jadwal" class="menu-item">Jadwal Sholat</a>
+    <a href="#zakat" class="menu-item">Zakat & Infaq</a>
+    <a href="#dkm" class="menu-item">Struktur DKM</a>
+    <a href="#tata-tertib" class="menu-item">Tata Tertib</a>
+    <a href="#faq" class="menu-item">FAQ</a>
+    <a href="#kontak" class="menu-item">Kontak</a>
+
+  </div>
+
+  <a href="login.html" class="menu-login">Login DKM</a>
+
 </div>
 
 <!-- ================= HERO ================= -->
