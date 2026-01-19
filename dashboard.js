@@ -141,3 +141,25 @@ async function kirim(fotoData){
 }
 /* ================= INIT ================= */
 load();
+async function loadNotif(){
+  const { data } = await sb
+    .from("notifications")
+    .select("*")
+    .order("created_at",{ascending:false})
+    .limit(3);
+
+  if(!data || data.length===0) return;
+
+  let html="";
+  data.forEach(n=>{
+    html+=`<div style="background:#fff;color:#064e3b;
+      padding:10px;border-radius:10px;margin-bottom:8px">
+      🔔 ${n.pesan}
+    </div>`;
+  });
+
+  const box=document.getElementById("notifBox");
+  box.innerHTML=html;
+  box.style.display="block";
+}
+loadNotif();
