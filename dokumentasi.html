@@ -11,7 +11,7 @@
 body{
   margin:0;
   font-family:Poppins,system-ui,sans-serif;
-  background:#f4f7f5;
+  background:#f6f8f6;
   color:#1f2933;
 }
 
@@ -20,16 +20,13 @@ body{
   background:#0f6b44;
   color:#fff;
   padding:16px;
-  text-align:center;
-  font-size:18px;
+  font-size:20px;
   font-weight:700;
 }
 
 /* CONTAINER */
 .container{
-  padding:16px;
-  max-width:900px;
-  margin:auto;
+  padding:18px;
 }
 
 /* CARD DOKUMENTASI */
@@ -38,7 +35,7 @@ body{
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 10px 25px rgba(0,0,0,.15);
-  margin-bottom:20px;
+  margin-bottom:22px;
 }
 
 .dok-card img{
@@ -51,7 +48,7 @@ body{
 }
 
 .dok-body h3{
-  margin:0 0 6px;
+  margin:0 0 8px;
   font-size:18px;
   color:#0f6b44;
 }
@@ -59,22 +56,18 @@ body{
 .dok-body p{
   margin:0;
   font-size:14px;
-  color:#334155;
   line-height:1.6;
+  color:#334155;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-📸 Dokumentasi Kegiatan Masjid
-</div>
+<div class="header">📸 Dokumentasi Kegiatan Masjid</div>
 
 <div class="container">
-  <div id="listDokumentasi">
-    Memuat dokumentasi...
-  </div>
+  <div id="listDokumentasi"></div>
 </div>
 
 <!-- SUPABASE -->
@@ -83,11 +76,7 @@ body{
 /* ===== SUPABASE INIT ===== */
 const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
 const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
-
-const sb = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /* ===== LOAD DOKUMENTASI ===== */
 async function loadDokumentasi(){
@@ -96,19 +85,13 @@ async function loadDokumentasi(){
     .select("foto, judul, deskripsi")
     .order("tanggal", { ascending:false });
 
-  const container = document.getElementById("listDokumentasi");
-  container.innerHTML = "";
-
   if(error){
-    container.innerHTML = "Gagal memuat data";
     console.error(error);
     return;
   }
 
-  if(data.length === 0){
-    container.innerHTML = "Belum ada dokumentasi";
-    return;
-  }
+  const box = document.getElementById("listDokumentasi");
+  box.innerHTML = "";
 
   data.forEach(item=>{
     const card = document.createElement("div");
@@ -120,7 +103,7 @@ async function loadDokumentasi(){
         <p>${item.deskripsi ?? ""}</p>
       </div>
     `;
-    container.appendChild(card);
+    box.appendChild(card);
   });
 }
 
