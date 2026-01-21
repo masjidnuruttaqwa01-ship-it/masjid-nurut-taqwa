@@ -1516,5 +1516,68 @@ sb.channel('kas-realtime')
     <div id="notif" class="notif">
   <span id="notifText">Transaksi baru masuk</span>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+/* ===== SUPABASE INIT ===== */
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
+
+const sb = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+    </script>
+    <script>
+let currentSlide = 0;
+let slides = [];
+
+/* LOAD GALERI DARI SUPABASE */
+async function loadGaleri() {
+  const { data, error } = await sb
+    .from("dokumentasi")
+    .select("foto, judul")
+    .order("tanggal", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const slider = document.getElementById("gallerySlider");
+  slider.innerHTML = "";
+  slides = [];
+
+  data.forEach((item, index) => {
+    const slide = document.createElement("div");
+    slide.className = "gallery-slide" + (index === 0 ? " active" : "");
+    slide.innerHTML = `
+      <img src="${item.foto}" alt="${item.judul}">
+    `;
+    slider.appendChild(slide);
+    slides.push(slide);
+  });
+}
+
+/* SLIDER CONTROL */
+function showSlide(index) {
+  slides.forEach(s => s.classList.remove("active"));
+  slides[index].classList.add("active");
+}
+
+function nextSlide() {
+  if (!slides.length) return;
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+function prevSlide() {
+  if (!slides.length) return;
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  showSlide(currentSlide);
+}
+
+loadGaleri();
+    </script>
   </body>
 </html>
