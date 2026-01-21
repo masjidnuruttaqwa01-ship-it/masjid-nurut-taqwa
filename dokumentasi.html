@@ -124,6 +124,9 @@ header{
 @media(max-width:600px){
   .gallery-slide img{height:220px}
 }
+  .gallery-slider{
+  touch-action: pan-y;
+  }
 </style>
 </head>
 
@@ -316,7 +319,44 @@ function autoSlide(){
 }
 
 loadGaleri();
+  <script>
+/* ===== SWIPE SUPPORT (HP) ===== */
+const slider = document.getElementById("gallerySlider");
+
+let startX = 0;
+let endX = 0;
+
+slider.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+}, { passive: true });
+
+slider.addEventListener("touchmove", e => {
+  endX = e.touches[0].clientX;
+}, { passive: true });
+
+slider.addEventListener("touchend", () => {
+  const diff = startX - endX;
+
+  // threshold geser
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) {
+      nextSlide(); // swipe kiri
+    } else {
+      prevSlide(); // swipe kanan
+    }
+  }
+
+  startX = 0;
+  endX = 0;
+});
+</script>
 setInterval(autoSlide, 4000); // 4 detik
+  <script>
+setInterval(()=>{
+  if(slides.length > 0){
+    nextSlide();
+  }
+}, 5000);
 </script>
 </body>
 </html>
