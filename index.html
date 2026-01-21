@@ -1557,6 +1557,40 @@ function startAutoSlide(){
 }
 
 loadGaleri();
+      <script>
+/* ===== SWIPE GALERI (HP) ===== */
+let startX = 0;
+let endX = 0;
+
+const sliderEl = document.getElementById("gallerySlider");
+
+// sentuh awal
+sliderEl.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+}, { passive: true });
+
+// geser
+sliderEl.addEventListener("touchmove", e => {
+  endX = e.touches[0].clientX;
+}, { passive: true });
+
+// lepas sentuhan
+sliderEl.addEventListener("touchend", () => {
+  const diff = startX - endX;
+
+  // minimal geser 50px biar ga sensitif
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) {
+      // swipe kiri → next
+      currentSlide = (currentSlide + 1) % slides.length;
+    } else {
+      // swipe kanan → prev
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    }
+    showSlide(currentSlide);
+  }
+});
+</script>
     </script>
   </body>
 </html>
