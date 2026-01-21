@@ -843,6 +843,30 @@ footer{
 .notif.show{
   transform:translateX(-50%) translateY(0);
 }
+  .gallery-slide{
+  position:relative;
+}
+
+.gallery-caption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:12px 14px;
+  background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.05));
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+  border-radius:0 0 18px 18px;
+  box-sizing:border-box;
+}
+
+@media(max-width:600px){
+  .gallery-caption{
+    font-size:13px;
+    padding:10px 12px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1030,7 +1054,10 @@ footer{
 </section>
 <section id="galeri">
   <div class="section-title">Galeri Kegiatan Masjid</div>
-
+<div class="gallery-slide active">
+  <img src="..." alt="">
+  <div class="gallery-caption"></div>
+</div>
   <div class="gallery-slider" id="gallerySlider">
     <!-- DIISI OTOMATIS DARI DOKUMENTASI -->
   </div>
@@ -1532,14 +1559,19 @@ async function loadGaleri() {
   slides = [];
 
   data.forEach((item, index) => {
-    const slide = document.createElement("div");
-    slide.className = "gallery-slide" + (index === 0 ? " active" : "");
-    slide.innerHTML = `
-      <img src="${item.foto}" alt="${item.judul}">
-    `;
-    slider.appendChild(slide);
-    slides.push(slide);
-  });
+  const slide = document.createElement("div");
+  slide.className = "gallery-slide" + (index === 0 ? " active" : "");
+
+  slide.innerHTML = `
+    <img src="${item.foto}" alt="${item.judul}">
+    <div class="gallery-caption">
+      ${item.judul || "Kegiatan Masjid"}
+    </div>
+  `;
+
+  slider.appendChild(slide);
+  slides.push(slide);
+});
 }
 
 /* SLIDER CONTROL */
