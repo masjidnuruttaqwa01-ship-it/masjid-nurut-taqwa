@@ -130,6 +130,22 @@ body{
 .hapus-galeri:hover{
   opacity:1;
 }
+  .hapus-galeri{
+  position:absolute;
+  bottom:12px;
+  right:12px;
+  background:#dc2626;
+  color:#fff;
+  border:none;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:12px;
+  cursor:pointer;
+  z-index:10;
+  }
+  .gallery-slide{
+  position:relative;
+  }
 </style>
 </head>
 
@@ -215,28 +231,37 @@ let slides=[], idx=0;
 async function loadGaleri(){
   const { data, error } = await sb
     .from("dokumentasi")
-    .select("*")
-    .order("tanggal",{ascending:false});
+    .select("id, foto, judul")
+    .order("tanggal", { ascending:false });
 
-  if(error){console.error(error);return;}
+  if(error){
+    console.error(error);
+    return;
+  }
 
-  const gallery=document.getElementById("gallery");
-  data.forEach((r,i)=>{
-    const div=document.createElement("div");
-    div.className="gallery-slide"+(i===0?" active":"");
-    div.innerHTML=`
-      <img src="${r.foto}">
-      <div class="caption">
-        <h4>${r.judul}</h4>
-        <p>${r.deskripsi||""}</p>
-      </div>`;
-    gallery.appendChild(div);
+  const slider = document.getElementById("gallerySlider");
+  slider.innerHTML = "";
+  slides = [];
+
+  data.forEach((item, index) => {
+    const slide = document.createElement("div");
+    slide.className = "gallery-slide" + (index === 0 ? " active" : "");
+
+    slide.innerHTML = `
+      <img src="${item.foto}" alt="${item.judul}">
+      <div class="gallery-caption">${item.judul}</div>
+
+      ${role === "bendahara" ? `
+        <button class="hapus-galeri" onclick="hapusGaleri(${item.id})">
+          🗑 Hapus
+        </button>
+      ` : ""}
+    `;
+
+    slider.appendChild(slide);
+    slides.push(slide);
   });
-
-  slides=document.querySelectorAll(".gallery-slide");
 }
-loadGaleri();
-
 /* ================== SLIDER ================== */
 function show(i){
   slides.forEach(s=>s.classList.remove("active"));
@@ -267,6 +292,9 @@ slide.innerHTML = `
   }
 
   alert("Dokumentasi berhasil dihapus");
+    <script>
+  const role = localStorage.getItem("role"); 
+</script>
   loadGaleri(); // reload slider
   }
 </script>
