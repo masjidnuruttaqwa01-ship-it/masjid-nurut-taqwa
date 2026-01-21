@@ -392,5 +392,14 @@ function goHome(){
 }
 
 </script>
+  <script>
+  const role = localStorage.getItem("role") || "publik";
+
+  // HANYA DKM / BENDAHARA yang boleh lihat dokumentasi
+  if(role !== "bendahara" && role !== "admin"){
+    const box = document.getElementById("boxDokumentasi");
+    if(box) box.style.display = "none";
+  }
+  </script>
 </body>
 </html>
