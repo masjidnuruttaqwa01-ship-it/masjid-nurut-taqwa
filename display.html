@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Display Masjid – Jadwal Sholat & Azan</title>
+<title>Display Masjid – Jadwal Sholat & Live Haramain</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
 
@@ -16,11 +16,11 @@ body{
   overflow:hidden;
 }
 
-/* ===== BACKGROUND SLIDER ===== */
+/* ===== BACKGROUND ===== */
 .bg{
   position:fixed;
   inset:0;
-  z-index:-1;
+  z-index:-2;
   background-size:cover;
   background-position:center;
   animation:bgSlide 30s infinite;
@@ -36,6 +36,8 @@ body{
 .overlay{
   background:rgba(0,0,0,.55);
   min-height:100vh;
+  position:relative;
+  z-index:1;
 }
 
 /* ===== HEADER ===== */
@@ -54,7 +56,6 @@ body{
   text-align:center;
   margin:8px 0;
   font-size:14px;
-  opacity:.9;
 }
 
 /* ===== SHOLAT ===== */
@@ -88,7 +89,6 @@ body{
   font-weight:700;
   color:#facc15;
   display:none;
-  margin-top:10px;
 }
 
 /* ===== IQOMAH ===== */
@@ -121,54 +121,18 @@ body{
   100%{transform:translateX(-100%)}
 }
 
-/* ===== PENGUMUMAN ===== */
-.pengumuman{
-  text-align:center;
-  font-size:16px;
-  margin:10px;
-  opacity:.9;
-}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:768px){
-  .clock{font-size:28px}
-  .azan,.iqomah{font-size:30px}
-}
-  /* ===== LIVE KABAH ===== */
-.kabah-section{
-  display:none;
-  margin:20px 28px;
-  padding:22px;
-  border-radius:28px;
-  background:rgba(0,0,0,.35);
-  backdrop-filter:blur(16px);
-  box-shadow:0 20px 60px rgba(0,0,0,.45);
-}
-
-.kabah-title{
-  text-align:center;
-  font-size:22px;
-  font-weight:700;
-  color:#fde047;
-  margin-bottom:14px;
-}
-
-.kabah-frame{
+/* ===== LIVE HARAMAIN ===== */
+.haramain-section{
+  display:block;
   position:relative;
-  padding-top:56.25%; /* 16:9 */
-  border-radius:20px;
-  overflow:hidden;
+  z-index:5;
+  margin:24px;
+  padding:24px;
+  border-radius:32px;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(18px);
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
 }
-
-.kabah-frame iframe{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
-}
-  /* ===== LIVE HARAMAIN ===== */
-
 
 .haramain-title{
   text-align:center;
@@ -176,12 +140,11 @@ body{
   font-weight:700;
   color:#fde047;
   margin-bottom:16px;
-  letter-spacing:.5px;
 }
 
 .haramain-frame{
   position:relative;
-  padding-top:56.25%; /* 16:9 */
+  padding-top:56.25%;
   border-radius:24px;
   overflow:hidden;
 }
@@ -191,15 +154,7 @@ body{
   inset:0;
   width:100%;
   height:100%;
-  border.haramain-section{
-  display:block;
-  margin:24px;
-  padding:24px;
-  border-radius:32px;
-  background:rgba(0,0,0,.38);
-  backdrop-filter:blur(18px);
-  box-shadow:0 30px 80px rgba(0,0,0,.45);
-  }:0;
+  border:0;
 }
 </style>
 </head>
@@ -207,72 +162,66 @@ body{
 <body onclick="openFullscreen()">
 
 <div class="bg"></div>
+
 <div class="overlay">
 
-<div class="header">
-  <b>🕌 Masjid – Kota Cirebon</b>
-  <div class="clock" id="clock">00:00</div>
-</div>
-
-<div class="info" id="tanggal"></div>
-
-<div class="azan" id="azanText">AZAN</div>
-<div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
-
-<div class="sholat-bar" id="sholatBar"></div>
-
-<div class="pengumuman">
-  📌 Khutbah Jumat: 11.45 WIB • Kajian Ahad Ba’da Subuh
-</div>
-
-<div class="marquee">
-  <span>
-    Selamat datang di Masjid • Mohon matikan atau senyapkan HP • Jaga kebersihan dan kekhusyukan ibadah
-  </span>
-</div>
-
-<audio id="azanAudio" src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
-
-</div>
-<!-- ===== LIVE HARAMAIN ===== -->
-<!-- ===== LIVE HARAMAIN ===== -->
-<div class="haramain-section" id="haramainSection">
-
-  <div class="haramain-title">
-    🕋 Live Masjidil Haram – Makkah
+  <div class="header">
+    <b>🕌 Masjid – Kota Cirebon</b>
+    <div class="clock" id="clock">00:00</div>
   </div>
 
+  <div class="info" id="tanggal"></div>
+
+  <div class="azan" id="azanText">AZAN</div>
+  <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
+
+  <div class="sholat-bar" id="sholatBar"></div>
+
+  <div class="marquee">
+    <span>
+      Selamat datang di Masjid • Mohon matikan atau senyapkan HP • Jaga kekhusyukan ibadah
+    </span>
+  </div>
+
+</div>
+
+<!-- ===== LIVE HARAMAIN ===== -->
+<div class="haramain-section" id="haramainSection">
+  <div class="haramain-title">🕋 Live Masjidil Haram – Makkah</div>
   <div class="haramain-frame">
     <iframe
+      id="haramainVideo"
       src="https://www.youtube.com/embed/2QjvY4d9zjI?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1"
       allow="autoplay; encrypted-media"
       allowfullscreen>
     </iframe>
   </div>
-
 </div>
+
+<audio id="azanAudio"
+src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
+
 <script>
-/* ===== FULLSCREEN ===== */
+/* FULLSCREEN */
 function openFullscreen(){
   if(document.documentElement.requestFullscreen){
     document.documentElement.requestFullscreen();
   }
 }
 
-/* ===== JAM ===== */
-function clock(){
+/* JAM */
+function updateClock(){
   const d=new Date();
-  document.getElementById("clock").innerText=
-    d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+  clock.innerText=d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
-setInterval(clock,1000);clock();
+setInterval(updateClock,1000);updateClock();
 
-/* ===== TANGGAL ===== */
+/* TANGGAL */
 tanggal.innerText=new Date().toLocaleDateString("id-ID",{
   weekday:"long",day:"numeric",month:"long",year:"numeric"
 });
 
-/* ===== SHOLAT API ===== */
+/* JADWAL SHOLAT */
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
 .then(r=>r.json())
 .then(res=>{
@@ -293,7 +242,7 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
   setInterval(cekWaktu,30000);
 });
 
-/* ===== AZAN & IQOMAH ===== */
+/* AZAN + IQOMAH */
 let iqomahTimer=null;
 function cekWaktu(){
   const now=new Date().toTimeString().slice(0,5);
@@ -321,6 +270,21 @@ function cekWaktu(){
     }
   });
 }
+
+/* TOGGLE LIVE HARAMAIN */
+const haramain=document.getElementById("haramainSection");
+const video=document.getElementById("haramainVideo");
+
+setInterval(()=>{
+  if(haramain.style.display==="none"){
+    haramain.style.display="block";
+    video.src="https://www.youtube.com/embed/2QjvY4d9zjI?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1";
+  }else{
+    haramain.style.display="none";
+    video.src="";
+  }
+},180000); // 3 menit
 </script>
+
 </body>
 </html>
