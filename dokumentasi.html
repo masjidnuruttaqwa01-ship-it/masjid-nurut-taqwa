@@ -241,6 +241,60 @@ async function hapusDok(id){
 
 loadGaleri();
 </script>
+<script>
+/* ===== SUPABASE ===== */
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+const slider = document.getElementById("gallerySlider");
+let slideIndex = 0;
+let slides = [];
+
+/* ===== LOAD DOKUMENTASI ===== */
+async function loadGaleri(){
+  const { data, error } = await sb
+    .from("dokumentasi")
+    .select("*")
+    .order("created_at", { ascending:false });
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  if(!data || data.length === 0){
+    slider.innerHTML = "<p style='text-align:center'>Belum ada dokumentasi</p>";
+    return;
+  }
+
+  let html = "";
+  data.forEach((d,i)=>{
+    html += `
+      <div class="gallery-slide ${i===0?"active":""}">
+        <img src="${d.foto}" alt="${d.judul}">
+        <div class="gallery-caption">
+          ${d.judul}<br>
+          <small>${d.deskripsi || ""}</small>
+        </div>
+      </div>
+    `;
+  });
+
+  slider.innerHTML = html;
+  slides = document.querySelectorAll(".gallery-slide");
+}
+
+/* ===== AUTO SLIDE ===== */
+function autoSlide(){
+  if(slides.length === 0) return;
+  slides.forEach(s=>s.classList.remove("active"));
+  slideIndex = (slideIndex + 1) % slides.length;
+  slides[slideIndex].classList.add("active");
+}
+
+loadGaleri();
+setInterval(autoSlide, 4000); // 4 detik
+</script>
 </body>
 </html>
