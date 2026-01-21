@@ -58,6 +58,10 @@ button{
   color:#fff;
   border:none;
   font-weight:600;
+  cursor:pointer;
+}
+button:hover{
+  background:#128c59;
 }
 
 /* LIST */
@@ -107,8 +111,13 @@ button{
   color:#fff;
   border:none;
   border-radius:8px;
-  padding:6px 8px;
+  padding:6px 10px;
   font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+}
+.delete-btn:hover{
+  background:#b91c1c;
 }
 
 /* EMPTY */
@@ -116,21 +125,6 @@ button{
   text-align:center;
   padding:30px;
   color:#777;
-}
-  .delete-btn{
-  margin:12px 16px 16px;
-  background:#dc2626;
-  color:#fff;
-  border:none;
-  border-radius:12px;
-  padding:8px 14px;
-  font-size:13px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.delete-btn:hover{
-  background:#b91c1c;
 }
 </style>
 </head>
@@ -140,8 +134,8 @@ button{
 <header>📸 Dokumentasi Kegiatan Masjid</header>
 
 <div class="container">
-  <script>
-  <!-- FORM UPLOAD (DKM SAJA) -->
+
+  <!-- FORM UPLOAD (HANYA DKM) -->
   <div class="form-box" id="formDKM">
     <h3>Upload Dokumentasi</h3>
     <input type="text" id="judul" placeholder="Judul / Kegiatan">
@@ -156,6 +150,7 @@ button{
 
 </div>
 
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
@@ -163,9 +158,9 @@ const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /* ROLE */
-const role = localStorage.getItem("role"); // dkm / anggota
+const role = localStorage.getItem("role"); // "dkm" / "anggota"
 if(role !== "dkm"){
-  document.getElementById("formDKM").style.display="none";
+  document.getElementById("formDKM").style.display = "none";
 }
 
 /* LOAD DATA */
@@ -188,19 +183,56 @@ async function load(){
     div.className = "item";
 
     div.innerHTML = `
-      <img src="${item.foto}">
-      <div class="caption">${item.judul || "-"}</div>
-
-      <!-- TOMBOL HAPUS MANUAL -->
-      <button class="delete-btn"
-        onclick="hapusDokumentasi(${item.id})">
-        🗑 Hapus
-      </button>
+      <img src="${item.foto}" class="thumb">
+      <div class="info">
+        <b>${item.judul || "-"}</b>
+        <small>${new Date(item.tanggal).toLocaleDateString()}</small>
+      </div>
+      ${role === "dkm" ? `
+        <button class="delete-btn" onclick="hapusDokumentasi(${item.id})">
+          🗑
+        </button>` : ``}
     `;
 
     box.appendChild(div);
   });
 }
+
+/* UPLOAD */
+async function upload(){
+  const file = document.getElementById("foto").files[0];
+  const judul = document.getElementById("judul").value;
+
+  if(!file) return alert("Pilih foto terlebih dahulu");
+
+  const fileName = Date.now() + "_" + file.name;
+  const upload = await sb.storage.from("dokumentasi").upload(fileName, file);
+
+  if(upload.error){
+    alert("Gagal upload file");
+    return;
+  }
+
+  const url = sb.storage.from("dokumentasi")
+    .getPublicUrl(fileName).data.publicUrl;
+
+  const insert = await sb.from("dokumentasi").insert({
+    judul,
+    foto: url,
+    tanggal: new Date().toISOString()
+  });
+
+  if(insert.error){
+    alert("Gagal menyimpan data");
+    return;
+  }
+
+  document.getElementById("judul").value = "";
+  document.getElementById("foto").value = "";
+  load();
+}
+
+/* HAPUS */
 async function hapusDokumentasi(id){
   if(!confirm("Yakin ingin menghapus dokumentasi ini?")) return;
 
@@ -211,39 +243,9 @@ async function hapusDokumentasi(id){
 
   if(error){
     alert("Gagal menghapus");
-    console.error(error);
     return;
   }
 
-  load();
-}
-
-/* UPLOAD */
-async function upload(){
-  const file=document.getElementById("foto").files[0];
-  const judul=document.getElementById("judul").value;
-  if(!file) return alert("Pilih foto");
-
-  const name=Date.now()+"_"+file.name;
-  await sb.storage.from("dokumentasi").upload(name,file);
-
-  const url=sb.storage.from("dokumentasi").getPublicUrl(name).data.publicUrl;
-
-  await sb.from("dokumentasi").insert({
-    judul,
-    foto:url,
-    tanggal:new Date().toISOString()
-  });
-
-  document.getElementById("judul").value="";
-  document.getElementById("foto").value="";
-  load();
-}
-
-/* HAPUS */
-async function hapus(id){
-  if(!confirm("Hapus dokumentasi?")) return;
-  await sb.from("dokumentasi").delete().eq("id",id);
   load();
 }
 
