@@ -167,6 +167,40 @@ body{
   height:100%;
   border:0;
 }
+  /* ===== LIVE HARAMAIN ===== */
+.haramain-section{
+  display:none;
+  margin:24px;
+  padding:24px;
+  border-radius:32px;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(18px);
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+.haramain-title{
+  text-align:center;
+  font-size:24px;
+  font-weight:700;
+  color:#fde047;
+  margin-bottom:16px;
+  letter-spacing:.5px;
+}
+
+.haramain-frame{
+  position:relative;
+  padding-top:56.25%; /* 16:9 */
+  border-radius:24px;
+  overflow:hidden;
+}
+
+.haramain-frame iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
 </style>
 </head>
 
@@ -254,6 +288,23 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
     </iframe>
   </div>
 </div>
+  <!-- ===== LIVE HARAMAIN ===== -->
+<div class="haramain-section" id="haramain">
+
+  <div class="haramain-title" id="haramainTitle">
+    🕋 Live Masjidil Haram – Makkah
+  </div>
+
+  <div class="haramain-frame">
+    <iframe
+      id="haramainVideo"
+      src="https://www.youtube.com/embed/2QjvY4d9zjI?autoplay=1&mute=1&controls=0&rel=0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+</div>
 /* ===== AZAN & IQOMAH ===== */
 let iqomahTimer=null;
 function cekWaktu(){
@@ -297,6 +348,43 @@ setInterval(()=>{
   }
 }, 180000); // 3 menit
 </script>
+<script>
+const haramain = document.getElementById("haramain");
+const video   = document.getElementById("haramainVideo");
+const title   = document.getElementById("haramainTitle");
 
+let mode = 0; // 0 = Makkah, 1 = Madinah
+
+const MAKKAH  = {
+  title: "🕋 Live Masjidil Haram – Makkah",
+  url: "https://www.youtube.com/embed/2QjvY4d9zjI?autoplay=1&mute=1&controls=0&rel=0"
+};
+
+const MADINAH = {
+  title: "🕌 Live Masjid Nabawi – Madinah",
+  url: "https://www.youtube.com/embed/7Zq8R5mNf2k?autoplay=1&mute=1&controls=0&rel=0"
+};
+
+/* TAMPILKAN SETIAP 5 MENIT */
+setInterval(()=>{
+  haramain.style.display = "block";
+
+  if(mode === 0){
+    title.innerText = MAKKAH.title;
+    video.src = MAKKAH.url;
+    mode = 1;
+  }else{
+    title.innerText = MADINAH.title;
+    video.src = MADINAH.url;
+    mode = 0;
+  }
+
+}, 300000); // 5 menit
+
+/* AUTO HIDE SETELAH 1 MENIT */
+setInterval(()=>{
+  haramain.style.display = "none";
+}, 360000); // 6 menit
+</script>
 </body>
 </html>
