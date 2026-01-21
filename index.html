@@ -1046,9 +1046,8 @@ footer{
     <!-- DIISI OTOMATIS DARI DOKUMENTASI -->
   </div>
 
-  <section id="galeri">
-  <div class="section-title">Galeri Kegiatan Masjid</div>
-  <div class="gallery-slider" id="gallerySlider"></div>
+  <button class="gallery-btn prev" onclick="prevSlide()">‹</button>
+  <button class="gallery-btn next" onclick="nextSlide()">›</button>
 </section>
 <!-- AYAT AL-QUR'AN HARI INI -->
 <div class="ayat-box">
@@ -1514,54 +1513,65 @@ sb.channel('kas-realtime')
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
 /* ===== SUPABASE INIT ===== */
-<script>
 const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
 const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+const sb = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+    </script>
+    <script>
+let currentSlide = 0;
 let slides = [];
-let index = 0;
 
-async function loadGaleri(){
+/* LOAD GALERI DARI SUPABASE */
+async function loadGaleri() {
   const { data, error } = await sb
     .from("dokumentasi")
-    .select("foto, judul, deskripsi")
-    .order("created_at", { ascending: false });
+    .select("foto, judul")
+    .order("tanggal", { ascending: false })
+    .limit(10);
 
-  if(error){
+  if (error) {
     console.error(error);
     return;
   }
 
   const slider = document.getElementById("gallerySlider");
   slider.innerHTML = "";
+  slides = [];
 
-  data.forEach((d,i)=>{
-    const div = document.createElement("div");
-    div.className = "gallery-slide" + (i===0 ? " active":"");
-    div.innerHTML = `
-      <img src="${d.foto}">
-      <div class="gallery-caption">
-        ${d.judul || ""}
-        <br><small>${d.deskripsi || ""}</small>
-      </div>
+  data.forEach((item, index) => {
+    const slide = document.createElement("div");
+    slide.className = "gallery-slide" + (index === 0 ? " active" : "");
+    slide.innerHTML = `
+      <img src="${item.foto}" alt="${item.judul}">
     `;
-    slider.appendChild(div);
+    slider.appendChild(slide);
+    slides.push(slide);
   });
-
-  slides = document.querySelectorAll(".gallery-slide");
 }
 
-function autoSlide(){
-  if(slides.length < 2) return;
-  slides[index].classList.remove("active");
-  index = (index + 1) % slides.length;
+/* SLIDER CONTROL */
+function showSlide(index) {
+  slides.forEach(s => s.classList.remove("active"));
   slides[index].classList.add("active");
 }
 
+function nextSlide() {
+  if (!slides.length) return;
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+function prevSlide() {
+  if (!slides.length) return;
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  showSlide(currentSlide);
+}
+
 loadGaleri();
-setInterval(autoSlide, 4000); // ⏱️ 4 detik
-</script>
     </script>
   </body>
 </html>
