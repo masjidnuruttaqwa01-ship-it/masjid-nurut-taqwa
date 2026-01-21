@@ -114,6 +114,22 @@ body{
 }
 .gallery-btn.prev{left:10px}
 .gallery-btn.next{right:10px}
+  .hapus-galeri{
+  position:absolute;
+  bottom:12px;
+  right:12px;
+  background:#dc2626;
+  color:#fff;
+  border:none;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:12px;
+  cursor:pointer;
+  opacity:.85;
+}
+.hapus-galeri:hover{
+  opacity:1;
+}
 </style>
 </head>
 
@@ -228,6 +244,31 @@ function show(i){
 }
 function next(){idx=(idx+1)%slides.length;show(idx)}
 function prev(){idx=(idx-1+slides.length)%slides.length;show(idx)}
+slide.innerHTML = `
+  <img src="${item.foto}" alt="${item.judul}">
+  ${role === "bendahara" ? `
+    <button class="hapus-galeri" onclick="hapusGaleri(${item.id})">
+      🗑 Hapus
+    </button>
+  ` : ""}
+`;
+  async function hapusGaleri(id){
+  if(!confirm("Yakin hapus dokumentasi ini?")) return;
+
+  const { error } = await sb
+    .from("dokumentasi")
+    .delete()
+    .eq("id", id);
+
+  if(error){
+    alert("Gagal menghapus");
+    console.error(error);
+    return;
+  }
+
+  alert("Dokumentasi berhasil dihapus");
+  loadGaleri(); // reload slider
+  }
 </script>
 
 </body>
