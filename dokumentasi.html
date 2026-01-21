@@ -2,130 +2,131 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dokumentasi Kegiatan | Masjid Nurut Taqwa</title>
+<title>Dokumentasi Kegiatan Masjid</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" href="images/icon-masjid.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Poppins,system-ui,sans-serif;
-  background:#f4f7f5;
-  color:#1f2933;
+  font-family:Poppins;
+  background:#f4f7f6;
 }
 
-/* HEADER */
 header{
-  background:#0f6b44;
+  background:#064e3b;
   color:#fff;
-  padding:14px 16px;
+  padding:16px;
+  text-align:center;
   font-weight:700;
-  font-size:16px;
 }
 
-/* CONTAINER */
 .container{
-  max-width:900px;
-  margin:auto;
-  padding:14px;
+  padding:16px;
 }
 
-/* FORM */
+/* ===== FORM ===== */
 .form-box{
   background:#fff;
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,.1);
+  padding:16px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
+  margin-bottom:20px;
 }
-.form-box h3{
-  margin:0 0 10px;
-  font-size:15px;
-  color:#0f6b44;
-}
-input,button{
+.form-box input,.form-box textarea,.form-box button{
   width:100%;
-  padding:10px;
-  margin-top:8px;
-  border-radius:8px;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:10px;
   border:1px solid #ddd;
-  font-size:14px;
 }
-button{
-  background:#0f6b44;
+.form-box button{
+  background:#0f766e;
   color:#fff;
+  font-weight:700;
   border:none;
-  font-weight:600;
-  cursor:pointer;
-}
-button:hover{
-  background:#128c59;
 }
 
-/* LIST */
-.list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+/* ===== GALERI ===== */
+.section-title{
+  font-size:20px;
+  font-weight:700;
+  color:#064e3b;
+  margin:16px 0;
 }
 
-/* ITEM KECIL */
-.item{
-  display:flex;
-  gap:12px;
-  background:#fff;
-  border-radius:12px;
-  padding:10px;
-  align-items:center;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
+.gallery-slider{
+  position:relative;
+  max-width:100%;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 26px rgba(0,0,0,.15);
+  background:#000;
 }
 
-/* FOTO KECIL */
-.thumb{
-  width:64px;
-  height:64px;
-  border-radius:8px;
-  object-fit:cover;
-  flex-shrink:0;
+.gallery-slide{
+  display:none;
+  position:relative;
 }
 
-/* INFO */
-.info{
-  flex:1;
-}
-.info b{
+.gallery-slide.active{
   display:block;
-  font-size:14px;
-  color:#0f6b44;
-}
-.info small{
-  font-size:12px;
-  color:#666;
 }
 
-/* HAPUS */
-.delete-btn{
+.gallery-slide img{
+  width:100%;
+  height:360px;
+  object-fit:cover;
+}
+
+.gallery-caption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,.8));
+  color:#fff;
+  padding:14px;
+  font-size:14px;
+}
+
+.hapus-galeri{
+  position:absolute;
+  top:12px;
+  right:12px;
   background:#dc2626;
   color:#fff;
   border:none;
-  border-radius:8px;
   padding:6px 10px;
+  border-radius:8px;
   font-size:12px;
-  font-weight:600;
   cursor:pointer;
 }
-.delete-btn:hover{
-  background:#b91c1c;
-}
 
-/* EMPTY */
-.empty{
-  text-align:center;
-  padding:30px;
-  color:#777;
+/* ===== BUTTON ===== */
+.gallery-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,.5);
+  color:#fff;
+  border:none;
+  font-size:28px;
+  padding:6px 14px;
+  cursor:pointer;
+  border-radius:50%;
 }
+.gallery-btn.prev{left:10px}
+.gallery-btn.next{right:10px}
+
+@media(max-width:600px){
+  .gallery-slide img{height:220px}
+}
+  .gallery-slider{
+  touch-action: pan-y;
+  }
 </style>
 </head>
 
@@ -135,122 +136,228 @@ button:hover{
 
 <div class="container">
 
-  <!-- FORM UPLOAD (HANYA DKM) -->
-  <div class="form-box" id="formDKM">
-    <h3>Upload Dokumentasi</h3>
-    <input type="text" id="judul" placeholder="Judul / Kegiatan">
-    <input type="file" id="foto" accept="image/*">
-    <button onclick="upload()">Upload</button>
-  </div>
+<!-- FORM UPLOAD -->
+<div class="form-box" id="formUpload">
+  <input type="text" id="judul" placeholder="Judul Kegiatan">
+  <textarea id="deskripsi" placeholder="Deskripsi singkat"></textarea>
+  <input type="file" id="foto">
+  <button type="button" onclick="upload()">Upload Dokumentasi</button>
+</div>
 
-  <!-- LIST -->
-  <div id="listDokumentasi" class="list">
-    <div class="empty">Memuat data…</div>
-  </div>
+<div class="section-title">Galeri Kegiatan</div>
+
+<div class="gallery-slider" id="gallerySlider"></div>
+<button class="gallery-btn prev" onclick="prevSlide()">‹</button>
+<button class="gallery-btn next" onclick="nextSlide()">›</button>
 
 </div>
 
-<!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+/* ===== ROLE ===== */
+const role = localStorage.getItem("role");
+
+/* ===== SUPABASE ===== */
 const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
 const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ROLE */
-const role = localStorage.getItem("role"); // "dkm" / "anggota"
-if(role !== "dkm"){
-  document.getElementById("formDKM").style.display = "none";
+/* ===== HIDE FORM ===== */
+if(role!=="bendahara"){
+  document.getElementById("formUpload").style.display="none";
 }
 
-/* LOAD DATA */
-async function load(){
+/* ===== SLIDER ===== */
+let slides=[];
+let currentSlide=0;
+
+function showSlide(i){
+  slides.forEach(s=>s.classList.remove("active"));
+  slides[i].classList.add("active");
+}
+
+function nextSlide(){
+  if(!slides.length) return;
+  currentSlide=(currentSlide+1)%slides.length;
+  showSlide(currentSlide);
+}
+
+function prevSlide(){
+  if(!slides.length) return;
+  currentSlide=(currentSlide-1+slides.length)%slides.length;
+  showSlide(currentSlide);
+}
+
+/* ===== LOAD GALERI ===== */
+async function loadGaleri(){
   const { data, error } = await sb
     .from("dokumentasi")
     .select("*")
     .order("tanggal",{ascending:false});
 
-  const box = document.getElementById("listDokumentasi");
-  box.innerHTML = "";
+  if(error){console.error(error);return;}
 
-  if(error || !data || data.length === 0){
-    box.innerHTML = "<div class='empty'>Belum ada dokumentasi</div>";
-    return;
-  }
+  const slider=document.getElementById("gallerySlider");
+  slider.innerHTML="";
+  slides=[];
 
-  data.forEach(item=>{
-    const div = document.createElement("div");
-    div.className = "item";
-
-    div.innerHTML = `
-      <img src="${item.foto}" class="thumb">
-      <div class="info">
-        <b>${item.judul || "-"}</b>
-        <small>${new Date(item.tanggal).toLocaleDateString()}</small>
+  data.forEach((item,i)=>{
+    const d=document.createElement("div");
+    d.className="gallery-slide"+(i===0?" active":"");
+    d.innerHTML=`
+      <img src="${item.foto}">
+      <div class="gallery-caption">
+        <b>${item.judul}</b><br>${item.deskripsi||""}
       </div>
-      ${role === "dkm" ? `
-        <button class="delete-btn" onclick="hapusDokumentasi(${item.id})">
-          🗑
-        </button>` : ``}
+      ${role==="bendahara"
+        ? `<button class="hapus-galeri" onclick="hapusDok(${item.id})">🗑</button>`
+        : ""}
     `;
-
-    box.appendChild(div);
+    slider.appendChild(d);
+    slides.push(d);
   });
 }
 
-/* UPLOAD */
+/* ===== UPLOAD ===== */
 async function upload(){
+  alert("Upload diklik"); // ⬅️ tes dulu
+
   const file = document.getElementById("foto").files[0];
-  const judul = document.getElementById("judul").value;
+  const judul = document.getElementById("judul").value.trim();
+  const deskripsi = document.getElementById("deskripsi").value.trim();
 
   if(!file) return alert("Pilih foto terlebih dahulu");
+  if(!judul) return alert("Judul wajib diisi");
 
-  const fileName = Date.now() + "_" + file.name;
-  const upload = await sb.storage.from("dokumentasi").upload(fileName, file);
+  const filename = Date.now() + "_" + file.name;
 
-  if(upload.error){
-    alert("Gagal upload file");
+  const { error: uploadError } = await sb
+    .storage
+    .from("dokumentasi")
+    .upload(filename, file);
+
+  if(uploadError){
+    alert("Upload gagal: " + uploadError.message);
     return;
   }
 
-  const url = sb.storage.from("dokumentasi")
-    .getPublicUrl(fileName).data.publicUrl;
+  const fotoURL = sb
+    .storage
+    .from("dokumentasi")
+    .getPublicUrl(filename)
+    .data.publicUrl;
 
-  const insert = await sb.from("dokumentasi").insert({
+  await sb.from("dokumentasi").insert({
     judul,
-    foto: url,
+    deskripsi,
+    foto: fotoURL,
     tanggal: new Date().toISOString()
   });
 
-  if(insert.error){
-    alert("Gagal menyimpan data");
-    return;
-  }
-
-  document.getElementById("judul").value = "";
-  document.getElementById("foto").value = "";
+  alert("Upload berhasil");
   load();
 }
 
-/* HAPUS */
-async function hapusDokumentasi(id){
-  if(!confirm("Yakin ingin menghapus dokumentasi ini?")) return;
+/* ===== HAPUS ===== */
+async function hapusDok(id){
+  if(!confirm("Hapus dokumentasi?"))return;
+  await sb.from("dokumentasi").delete().eq("id",id);
+  loadGaleri();
+}
 
-  const { error } = await sb
+loadGaleri();
+</script>
+<script>
+/* ===== SUPABASE ===== */
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const slider = document.getElementById("gallerySlider");
+let slideIndex = 0;
+let slides = [];
+
+/* ===== LOAD DOKUMENTASI ===== */
+async function loadGaleri(){
+  const { data, error } = await sb
     .from("dokumentasi")
-    .delete()
-    .eq("id", id);
+    .select("*")
+    .order("created_at", { ascending:false });
 
   if(error){
-    alert("Gagal menghapus");
+    console.error(error);
     return;
   }
 
-  load();
+  if(!data || data.length === 0){
+    slider.innerHTML = "<p style='text-align:center'>Belum ada dokumentasi</p>";
+    return;
+  }
+
+  let html = "";
+  data.forEach((d,i)=>{
+    html += `
+      <div class="gallery-slide ${i===0?"active":""}">
+        <img src="${d.foto}" alt="${d.judul}">
+        <div class="gallery-caption">
+          ${d.judul}<br>
+          <small>${d.deskripsi || ""}</small>
+        </div>
+      </div>
+    `;
+  });
+
+  slider.innerHTML = html;
+  slides = document.querySelectorAll(".gallery-slide");
 }
 
-load();
-</script>
+/* ===== AUTO SLIDE ===== */
+function autoSlide(){
+  if(slides.length === 0) return;
+  slides.forEach(s=>s.classList.remove("active"));
+  slideIndex = (slideIndex + 1) % slides.length;
+  slides[slideIndex].classList.add("active");
+}
 
+loadGaleri();
+  <script>
+/* ===== SWIPE SUPPORT (HP) ===== */
+const slider = document.getElementById("gallerySlider");
+
+let startX = 0;
+let endX = 0;
+
+slider.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+}, { passive: true });
+
+slider.addEventListener("touchmove", e => {
+  endX = e.touches[0].clientX;
+}, { passive: true });
+
+slider.addEventListener("touchend", () => {
+  const diff = startX - endX;
+
+  // threshold geser
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) {
+      nextSlide(); // swipe kiri
+    } else {
+      prevSlide(); // swipe kanan
+    }
+  }
+
+  startX = 0;
+  endX = 0;
+});
+</script>
+  <script>
+setInterval(autoSlide, 4000); // 4 detik
+  <script>
+setInterval(()=>{
+  if(slides.length > 0){
+    nextSlide();
+  }
+}, 5000);
+</script>
 </body>
 </html>
