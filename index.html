@@ -1276,15 +1276,6 @@ fetch(`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.g
   </script>
   <script>
 /* ===== GALERI KEGIATAN ===== */
-const slidesGaleri = document.querySelectorAll('.gallery-slide');
-const prevBtn = document.querySelector('.gallery-btn.prev');
-const nextBtn = document.querySelector('.gallery-btn.next');
-let galeriIndex = 0;
-
-function showGaleri(index){
-  slidesGaleri.forEach(slide => slide.classList.remove('active'));
-  slidesGaleri[index].classList.add('active');
-}
 
 nextBtn.addEventListener('click', () => {
   galeriIndex = (galeriIndex + 1) % slidesGaleri.length;
