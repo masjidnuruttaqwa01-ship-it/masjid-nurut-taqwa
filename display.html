@@ -200,7 +200,22 @@ body{
 
 <audio id="azanAudio"
 src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
-
+<button id="enableSound"
+style="
+position:fixed;
+top:10px;
+right:10px;
+z-index:9999;
+padding:10px 14px;
+font-size:14px;
+border-radius:10px;
+border:none;
+background:#22c55e;
+color:#fff;
+font-weight:700;
+">
+🔊 Aktifkan Suara
+</button>
 <script>
 /* FULLSCREEN */
 function openFullscreen(){
@@ -276,21 +291,42 @@ function cekWaktu(){
 const haramain = document.getElementById("haramainSection");
 const video = document.getElementById("haramainVideo");
 
-let tampil = false;
+// URL LIVE KA'BAH
+const LIVE_URL =
+  "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1";
 
-setInterval(() => {
-  tampil = !tampil;
+// DURASI
+const TAMPIL_LIVE = 5 * 60 * 1000; // 5 menit
+const TRANSISI = 1000;            // 1 detik
 
-  if(tampil){
-    haramain.classList.add("show");
-    video.src =
-      "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1";
-  }else{
-    haramain.classList.remove("show");
-    video.src = "";
-  }
-}, 10000); // 10 detik
+function tampilkanLiveKabah(){
+  haramain.style.display = "block";
+  video.src = LIVE_URL;
+
+  // setelah 5 menit → sembunyikan
+  setTimeout(sembunyikanLiveKabah, TAMPIL_LIVE);
+}
+
+function sembunyikanLiveKabah(){
+  haramain.style.display = "none";
+  video.src = ""; // stop stream (WAJIB)
+
+  // tunggu 1 detik → tampilkan lagi
+  setTimeout(tampilkanLiveKabah, TRANSISI);
+}
+
+// MULAI LOOP
+tampilkanLiveKabah();
+  <script>
+const btn = document.getElementById("enableSound");
+const video = document.getElementById("haramainVideo");
+
+btn.onclick = () => {
+  video.src =
+    "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0";
+
+  btn.style.display = "none"; // hilangkan tombol
+};
 </script>
-
 </body>
 </html>
