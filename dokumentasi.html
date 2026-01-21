@@ -3,111 +3,210 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dokumentasi Kegiatan Masjid</title>
+<title>Dokumentasi Kegiatan | Masjid Nurut Taqwa</title>
 
 <link rel="icon" href="images/icon-masjid.png">
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:Poppins,system-ui,sans-serif;
-  background:#f6f8f6;
+  background:#f4f7f5;
   color:#1f2933;
 }
 
 /* HEADER */
-.header{
+header{
   background:#0f6b44;
   color:#fff;
   padding:16px;
-  font-size:20px;
+  text-align:center;
   font-weight:700;
+  font-size:18px;
 }
 
 /* CONTAINER */
 .container{
+  max-width:900px;
+  margin:auto;
   padding:18px;
 }
 
-/* CARD DOKUMENTASI */
-.dok-card{
-  background:#ffffff;
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
+/* FORM UPLOAD */
+.form-box{
+  background:#fff;
+  border-radius:16px;
+  padding:18px;
   margin-bottom:22px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
 }
 
-.dok-card img{
-  width:100%;
-  display:block;
-}
-
-.dok-body{
-  padding:16px;
-}
-
-.dok-body h3{
-  margin:0 0 8px;
-  font-size:18px;
+.form-box h3{
+  margin-top:0;
   color:#0f6b44;
 }
 
-.dok-body p{
-  margin:0;
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
   font-size:14px;
-  line-height:1.6;
-  color:#334155;
+}
+
+button{
+  background:#0f6b44;
+  color:#fff;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#128c59;
+}
+
+/* LIST DOKUMENTASI */
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.item{
+  background:#fff;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 26px rgba(0,0,0,.12);
+}
+
+.item img{
+  width:100%;
+  display:block;
+  object-fit:cover;
+}
+
+.caption{
+  padding:14px 16px;
+  font-weight:600;
+  color:#0f6b44;
+}
+
+/* HAPUS */
+.delete-btn{
+  margin:0 16px 16px;
+  background:#dc2626;
+  color:#fff;
+  border:none;
+  border-radius:20px;
+  padding:8px 14px;
+  font-size:13px;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  padding:40px;
+  color:#555;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">📸 Dokumentasi Kegiatan Masjid</div>
+<header>📸 Dokumentasi Kegiatan Masjid</header>
 
 <div class="container">
-  <div id="listDokumentasi"></div>
+
+  <!-- FORM UPLOAD (DKM) -->
+  <div class="form-box" id="formDKM">
+    <h3>Upload Dokumentasi</h3>
+    <input type="text" id="judul" placeholder="Judul / Keterangan kegiatan">
+    <input type="file" id="foto" accept="image/*">
+    <button onclick="upload()">Upload</button>
+  </div>
+
+  <!-- LIST -->
+  <div id="listDokumentasi" class="list">
+    <div class="empty">Memuat dokumentasi…</div>
+  </div>
+
 </div>
 
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* ===== SUPABASE INIT ===== */
 const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
 const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ===== LOAD DOKUMENTASI ===== */
-async function loadDokumentasi(){
+/* ROLE */
+const role = localStorage.getItem("role"); // "dkm" / "anggota"
+if(role !== "dkm"){
+  document.getElementById("formDKM").style.display="none";
+}
+
+/* LOAD */
+async function load(){
   const { data, error } = await sb
     .from("dokumentasi")
-    .select("foto, judul, deskripsi")
-    .order("tanggal", { ascending:false });
+    .select("*")
+    .order("tanggal",{ascending:false});
 
-  if(error){
-    console.error(error);
+  const box = document.getElementById("listDokumentasi");
+  box.innerHTML="";
+
+  if(error || !data.length){
+    box.innerHTML="<div class='empty'>Belum ada dokumentasi</div>";
     return;
   }
 
-  const box = document.getElementById("listDokumentasi");
-  box.innerHTML = "";
-
   data.forEach(item=>{
-    const card = document.createElement("div");
-    card.className = "dok-card";
-    card.innerHTML = `
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
       <img src="${item.foto}">
-      <div class="dok-body">
-        <h3>${item.judul}</h3>
-        <p>${item.deskripsi ?? ""}</p>
-      </div>
+      <div class="caption">${item.judul || ""}</div>
+      ${role==="dkm"
+        ? `<button class="delete-btn" onclick="hapus(${item.id})">Hapus</button>`
+        : ``}
     `;
-    box.appendChild(card);
+    box.appendChild(div);
   });
 }
 
-loadDokumentasi();
+/* UPLOAD */
+async function upload(){
+  const file=document.getElementById("foto").files[0];
+  const judul=document.getElementById("judul").value;
+  if(!file)return alert("Pilih foto");
+
+  const name=Date.now()+"_"+file.name;
+  await sb.storage.from("dokumentasi").upload(name,file);
+
+  const url=sb.storage.from("dokumentasi").getPublicUrl(name).data.publicUrl;
+
+  await sb.from("dokumentasi").insert({
+    judul,
+    foto:url,
+    tanggal:new Date().toISOString()
+  });
+
+  document.getElementById("judul").value="";
+  document.getElementById("foto").value="";
+  load();
+}
+
+/* HAPUS */
+async function hapus(id){
+  if(!confirm("Hapus dokumentasi?"))return;
+  await sb.from("dokumentasi").delete().eq("id",id);
+  load();
+}
+
+load();
 </script>
 
 </body>
