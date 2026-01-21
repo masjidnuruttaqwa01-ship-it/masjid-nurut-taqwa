@@ -9,94 +9,100 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Poppins,sans-serif;
-  background:linear-gradient(180deg,#064e3b,#0f766e);
-  color:#fff;
+  font-family:Poppins;
+  background:#f4f7f6;
 }
 
-/* ===== HEADER ===== */
-.header{
-  padding:16px;
+header{
   background:#064e3b;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.header h1{font-size:18px;margin:0}
-.header a{
-  color:#fff;text-decoration:none;
-  background:#0f766e;padding:8px 14px;border-radius:10px;
-}
-
-/* ===== CONTAINER ===== */
-.container{padding:16px}
-
-/* ===== UPLOAD ===== */
-.upload-box{
-  background:#fff;
-  color:#064e3b;
+  color:#fff;
   padding:16px;
-  border-radius:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  text-align:center;
+  font-weight:700;
+}
+
+.container{
+  padding:16px;
+}
+
+/* ===== FORM ===== */
+.form-box{
+  background:#fff;
+  padding:16px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
   margin-bottom:20px;
 }
-.upload-box h3{text-align:center;margin-top:0}
-.upload-box input,
-.upload-box textarea{
+.form-box input,.form-box textarea,.form-box button{
   width:100%;
   padding:12px;
-  border-radius:12px;
-  border:1px solid #ccc;
-  margin-bottom:12px;
-  font-family:Poppins;
+  margin-bottom:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
 }
-.upload-box textarea{resize:none;height:80px}
-.upload-box button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:linear-gradient(135deg,#0f766e,#064e3b);
+.form-box button{
+  background:#0f766e;
   color:#fff;
   font-weight:700;
+  border:none;
 }
 
 /* ===== GALERI ===== */
 .section-title{
-  text-align:center;
-  font-size:18px;
+  font-size:20px;
   font-weight:700;
-  margin-bottom:12px;
+  color:#064e3b;
+  margin:16px 0;
 }
 
 .gallery-slider{
   position:relative;
-  background:#fff;
-  border-radius:22px;
+  max-width:100%;
+  border-radius:18px;
   overflow:hidden;
-  box-shadow:0 12px 30px rgba(0,0,0,.3);
+  box-shadow:0 10px 26px rgba(0,0,0,.15);
+  background:#000;
 }
+
 .gallery-slide{
   display:none;
-  color:#064e3b;
+  position:relative;
 }
-.gallery-slide.active{display:block}
+
+.gallery-slide.active{
+  display:block;
+}
+
 .gallery-slide img{
   width:100%;
-  height:240px;
+  height:360px;
   object-fit:cover;
 }
-.caption{
+
+.gallery-caption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,.8));
+  color:#fff;
   padding:14px;
+  font-size:14px;
 }
-.caption h4{margin:0 0 6px 0}
-.caption p{
-  margin:0;
-  font-size:13px;
-  opacity:.85;
+
+.hapus-galeri{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:#dc2626;
+  color:#fff;
+  border:none;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:12px;
+  cursor:pointer;
 }
 
 /* ===== BUTTON ===== */
@@ -108,194 +114,132 @@ body{
   color:#fff;
   border:none;
   font-size:28px;
-  width:44px;
-  height:44px;
+  padding:6px 14px;
+  cursor:pointer;
   border-radius:50%;
 }
 .gallery-btn.prev{left:10px}
 .gallery-btn.next{right:10px}
-  .hapus-galeri{
-  position:absolute;
-  bottom:12px;
-  right:12px;
-  background:#dc2626;
-  color:#fff;
-  border:none;
-  padding:6px 10px;
-  border-radius:8px;
-  font-size:12px;
-  cursor:pointer;
-  opacity:.85;
+
+@media(max-width:600px){
+  .gallery-slide img{height:220px}
 }
-.hapus-galeri:hover{
-  opacity:1;
-}
-  .hapus-galeri{
-  position:absolute;
-  bottom:12px;
-  right:12px;
-  background:#dc2626;
-  color:#fff;
-  border:none;
-  padding:6px 10px;
-  border-radius:8px;
-  font-size:12px;
-  cursor:pointer;
-  z-index:10;
-  }
-  .gallery-slide{
-  position:relative;
-  }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <h1>📸 Dokumentasi Kegiatan</h1>
-  <a href="index.html">← Kembali</a>
-</div>
+<header>📸 Dokumentasi Kegiatan Masjid</header>
 
 <div class="container">
 
-<!-- ===== UPLOAD (HANYA DKM) ===== -->
-<div class="upload-box" id="uploadBox">
-  <h3>Upload Dokumentasi</h3>
-  <input type="text" id="judul" placeholder="Judul kegiatan">
-  <textarea id="deskripsi" placeholder="Deskripsi singkat kegiatan"></textarea>
-  <input type="file" id="foto" accept="image/*">
-  <button onclick="uploadDokumentasi()">⬆ Upload</button>
+<!-- FORM UPLOAD -->
+<div class="form-box" id="formUpload">
+  <input type="text" id="judul" placeholder="Judul Kegiatan">
+  <textarea id="deskripsi" placeholder="Deskripsi singkat"></textarea>
+  <input type="file" id="foto">
+  <button onclick="uploadDok()">Upload Dokumentasi</button>
 </div>
 
-<!-- ===== GALERI ===== -->
-<div class="section-title">Galeri Kegiatan Masjid</div>
+<div class="section-title">Galeri Kegiatan</div>
 
-<div class="gallery-slider" id="gallery">
-  <button class="gallery-btn prev" onclick="prev()">‹</button>
-  <button class="gallery-btn next" onclick="next()">›</button>
-</div>
+<div class="gallery-slider" id="gallerySlider"></div>
+<button class="gallery-btn prev" onclick="prevSlide()">‹</button>
+<button class="gallery-btn next" onclick="nextSlide()">›</button>
 
 </div>
 
 <script>
-/* ================== AUTH ================== */
-if(localStorage.getItem("login")!=="true"){
-  location="login.html";
-}
-const role = localStorage.getItem("role") || "publik";
+/* ===== ROLE ===== */
+const role = localStorage.getItem("role");
 
-/* ================== SUPABASE ================== */
+/* ===== SUPABASE ===== */
 const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
 const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ================== AKSES UPLOAD ================== */
-if(role !== "bendahara"){
-  document.getElementById("uploadBox").style.display="none";
+/* ===== HIDE FORM ===== */
+if(role!=="bendahara"){
+  document.getElementById("formUpload").style.display="none";
 }
 
-/* ================== UPLOAD ================== */
-async function uploadDokumentasi(){
-  const judul = document.getElementById("judul").value;
-  const deskripsi = document.getElementById("deskripsi").value;
-  const file = document.getElementById("foto").files[0];
+/* ===== SLIDER ===== */
+let slides=[];
+let currentSlide=0;
 
-  if(!judul || !file){
-    alert("Judul & foto wajib diisi");
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = async ()=>{
-    const { error } = await sb.from("dokumentasi").insert([{
-      judul: judul,
-      deskripsi: deskripsi,
-      foto: reader.result,
-      tanggal: new Date()
-    }]);
-
-    if(error){
-      alert("Gagal upload");
-      console.error(error);
-    }else{
-      alert("Berhasil upload dokumentasi");
-      location.reload();
-    }
-  };
-  reader.readAsDataURL(file);
-}
-
-/* ================== LOAD GALERI ================== */
-let slides=[], idx=0;
-
-async function loadGaleri(){
-  const { data, error } = await sb
-    .from("dokumentasi")
-    .select("id, foto, judul")
-    .order("tanggal", { ascending:false });
-
-  if(error){
-    console.error(error);
-    return;
-  }
-
-  const slider = document.getElementById("gallerySlider");
-  slider.innerHTML = "";
-  slides = [];
-
-  data.forEach((item, index) => {
-    const slide = document.createElement("div");
-    slide.className = "gallery-slide" + (index === 0 ? " active" : "");
-
-    slide.innerHTML = `
-      <img src="${item.foto}" alt="${item.judul}">
-      <div class="gallery-caption">${item.judul}</div>
-
-      ${role === "bendahara" ? `
-        <button class="hapus-galeri" onclick="hapusGaleri(${item.id})">
-          🗑 Hapus
-        </button>
-      ` : ""}
-    `;
-
-    slider.appendChild(slide);
-    slides.push(slide);
-  });
-}
-/* ================== SLIDER ================== */
-function show(i){
+function showSlide(i){
   slides.forEach(s=>s.classList.remove("active"));
   slides[i].classList.add("active");
 }
-function next(){idx=(idx+1)%slides.length;show(idx)}
-function prev(){idx=(idx-1+slides.length)%slides.length;show(idx)}
-slide.innerHTML = `
-  <img src="${item.foto}" alt="${item.judul}">
-  ${role === "bendahara" ? `
-    <button class="hapus-galeri" onclick="hapusGaleri(${item.id})">
-      🗑 Hapus
-    </button>
-  ` : ""}
-`;
-  async function hapusGaleri(id){
-  if(!confirm("Yakin hapus dokumentasi ini?")) return;
 
-  const { error } = await sb
+function nextSlide(){
+  if(!slides.length) return;
+  currentSlide=(currentSlide+1)%slides.length;
+  showSlide(currentSlide);
+}
+
+function prevSlide(){
+  if(!slides.length) return;
+  currentSlide=(currentSlide-1+slides.length)%slides.length;
+  showSlide(currentSlide);
+}
+
+/* ===== LOAD GALERI ===== */
+async function loadGaleri(){
+  const { data, error } = await sb
     .from("dokumentasi")
-    .delete()
-    .eq("id", id);
+    .select("*")
+    .order("tanggal",{ascending:false});
 
-  if(error){
-    alert("Gagal menghapus");
-    console.error(error);
-    return;
-  }
+  if(error){console.error(error);return;}
 
-  alert("Dokumentasi berhasil dihapus");
-    <script>
-  const role = localStorage.getItem("role"); 
-  loadGaleri(); // reload slider
-  }
+  const slider=document.getElementById("gallerySlider");
+  slider.innerHTML="";
+  slides=[];
+
+  data.forEach((item,i)=>{
+    const d=document.createElement("div");
+    d.className="gallery-slide"+(i===0?" active":"");
+    d.innerHTML=`
+      <img src="${item.foto}">
+      <div class="gallery-caption">
+        <b>${item.judul}</b><br>${item.deskripsi||""}
+      </div>
+      ${role==="bendahara"
+        ? `<button class="hapus-galeri" onclick="hapusDok(${item.id})">🗑</button>`
+        : ""}
+    `;
+    slider.appendChild(d);
+    slides.push(d);
+  });
+}
+
+/* ===== UPLOAD ===== */
+async function uploadDok(){
+  const f=document.getElementById("foto").files[0];
+  if(!f) return alert("Pilih foto");
+
+  const r=new FileReader();
+  r.onload=async()=>{
+    const {error}=await sb.from("dokumentasi").insert([{
+      judul:judul.value,
+      deskripsi:deskripsi.value,
+      foto:r.result
+    }]);
+    if(error){alert(error.message);return;}
+    loadGaleri();
+  };
+  r.readAsDataURL(f);
+}
+
+/* ===== HAPUS ===== */
+async function hapusDok(id){
+  if(!confirm("Hapus dokumentasi?"))return;
+  await sb.from("dokumentasi").delete().eq("id",id);
+  loadGaleri();
+}
+
+loadGaleri();
 </script>
 
 </body>
