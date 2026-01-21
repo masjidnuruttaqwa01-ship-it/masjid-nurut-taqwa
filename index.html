@@ -933,6 +933,12 @@ footer{
   margin:0;
   opacity:.85;
 }
+  .gallery-slide {
+  display: none;
+}
+.gallery-slide.active {
+  display: block;
+}
 </style>
 </head>
 <body>
@@ -1024,19 +1030,6 @@ footer{
     <p><b>Ketua DKM<br>H. Ahmad</b></p>
   </div>
   </section>
-<!-- DOKUMENTASI KEGIATAN -->
-<section id="dokumentasi-section" class="dok-section">
-  <div class="dok-header">
-    <h2>📸 Dokumentasi Kegiatan</h2>
-    <button onclick="toggleDok()">Sembunyikan</button>
-  </div>
-
-  <div class="dok-slider">
-    <div class="dok-track" id="dokList">
-      <!-- data dari supabase -->
-    </div>
-  </div>
-</section>
 <!-- ================= SEJARAH ================= -->
 <section class="accordion">
   <div class="accordion-header">
@@ -1133,26 +1126,12 @@ footer{
 <section id="galeri">
   <div class="section-title">Galeri Kegiatan Masjid</div>
 
-  <div class="gallery-slider">
-    <div class="gallery-slide active">
-      <img src="images/kegiatantpa.jpg" alt="Kegiatan TPA">
-    </div>
-    <div class="gallery-slide">
-      <img src="images/kegiatanpengajian.jpg" alt="Pengajian">
-    </div>
-    <div class="gallery-slide">
-      <img src="images/kegiatanjum'at.jpg" alt="Kegiatan Sosial">
-    </div>
-    <div class="gallery-slide">
-      <img src="images/kegiatanpengajian2.jpg" alt="Ramadhan">
-    </div>
-    <div class="gallery-slide">
-      <img src="images/kegiatanpengajian3.jpg" alt="Ramadhan">
-    </div>
-
-    <button class="gallery-btn prev">‹</button>
-    <button class="gallery-btn next">›</button>
+  <div class="gallery-slider" id="gallerySlider">
+    <!-- ISI DARI SUPABASE -->
   </div>
+
+  <button class="gallery-btn prev" onclick="prevSlide()">‹</button>
+  <button class="gallery-btn next" onclick="nextSlide()">›</button>
 </section>
 <!-- AYAT AL-QUR'AN HARI INI -->
 <div class="ayat-box">
@@ -1379,42 +1358,7 @@ fetch(`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.g
   <span class="chat-icon">🕌</span>
 </a>
   </script>
-  <script>
-/* ===== GALERI KEGIATAN ===== */
-const slidesGaleri = document.querySelectorAll('.gallery-slide');
-const prevBtn = document.querySelector('.gallery-btn.prev');
-const nextBtn = document.querySelector('.gallery-btn.next');
-let galeriIndex = 0;
 
-function showGaleri(index){
-  slidesGaleri.forEach(slide => slide.classList.remove('active'));
-  slidesGaleri[index].classList.add('active');
-}
-
-nextBtn.addEventListener('click', () => {
-  galeriIndex = (galeriIndex + 1) % slidesGaleri.length;
-  showGaleri(galeriIndex);
-});
-
-prevBtn.addEventListener('click', () => {
-  galeriIndex = (galeriIndex - 1 + slidesGaleri.length) % slidesGaleri.length;
-  showGaleri(galeriIndex);
-});
-
-/* auto slide */
-setInterval(() => {
-  galeriIndex = (galeriIndex + 1) % slidesGaleri.length;
-  showGaleri(galeriIndex);
-}, 5000);
-  </script>
-<script>
-document.querySelectorAll('.accordion-header').forEach(header=>{
-  header.addEventListener('click', ()=>{
-    const acc = header.parentElement;
-    acc.classList.toggle('active');
-  });
-});
-</script>
 <script>
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
   .then(res => res.json())
@@ -1617,47 +1561,56 @@ sb.channel('kas-realtime')
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
-const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-async function loadDokumentasi(){
+</script>
+<script>
+let currentSlide = 0;
+let slides = [];
+
+async function loadGaleri() {
   const { data, error } = await sb
     .from("dokumentasi")
-    .select("*")
-    .order("tanggal",{ascending:false})
+    .select("foto, judul")
+    .order("tanggal", { ascending: false })
     .limit(10);
 
-  if(error){
+  if (error) {
     console.error(error);
     return;
   }
 
-  let html="";
-  data.forEach(d=>{
-    html+=`
-      <div class="dok-card">
-        <img src="${d.foto}">
-        <div class="content">
-          <h4>${d.judul}</h4>
-          <p>${d.deskripsi || ""}</p>
-        </div>
-      </div>
+  const slider = document.getElementById("gallerySlider");
+  slider.innerHTML = "";
+  slides = [];
+
+  data.forEach((item, index) => {
+    const slide = document.createElement("div");
+    slide.className = "gallery-slide" + (index === 0 ? " active" : "");
+    slide.innerHTML = `
+      <img src="${item.foto}" alt="${item.judul}">
     `;
+    slider.appendChild(slide);
+    slides.push(slide);
   });
-
-  document.getElementById("dokList").innerHTML = html;
 }
 
-// hide / show
-function toggleDok(){
-  const el = document.getElementById("dokumentasi-section");
-  el.style.display = el.style.display === "none" ? "block" : "none";
+function showSlide(index) {
+  slides.forEach(s => s.classList.remove("active"));
+  slides[index].classList.add("active");
 }
 
-loadDokumentasi();
-</script>
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+function prevSlide() {
+  currentSlide =
+    (currentSlide - 1 + slides.length) % slides.length;
+  showSlide(currentSlide);
+}
+
+loadGaleri();
 </script>
   </body>
 </html>
