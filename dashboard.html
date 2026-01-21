@@ -403,5 +403,17 @@ function goHome(){
     if(box) box.style.display = "none";
   }
   </script>
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const role = localStorage.getItem("role") || "publik";
+  const boxDok = document.getElementById("boxDokumentasi");
+
+  if (role === "anggota" || role === "publik") {
+    if (boxDok) {
+      boxDok.style.display = "none";
+    }
+  }
+});
+</script>
 </body>
 </html>
