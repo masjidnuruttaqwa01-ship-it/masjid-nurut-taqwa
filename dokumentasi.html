@@ -196,23 +196,55 @@ async function load(){
 
 /* ===== UPLOAD ===== */
 async function upload(){
-  const file=document.getElementById("foto").files[0];
-  const judul=document.getElementById("judul").value;
-  if(!file)return alert("Pilih foto");
+  const file = document.getElementById("foto").files[0];
+  const judul = document.getElementById("judul").value || "-";
 
-  const name=Date.now()+"_"+file.name;
-  await sb.storage.from("dokumentasi").upload(name,file);
-  const url=sb.storage.from("dokumentasi")
-            .getPublicUrl(name).data.publicUrl;
+  if(!file){
+    alert("Pilih foto dulu");
+    return;
+  }
 
-  await sb.from("dokumentasi").insert({
-    judul,
-    foto:url,
-    tanggal:new Date().toISOString()
-  });
+  const fileName = `${Date.now()}_${file.name}`;
 
-  document.getElementById("judul").value="";
-  document.getElementById("foto").value="";
+  // UPLOAD KE STORAGE
+  const { error: uploadError } = await sb
+    .storage
+    .from("dokumentasi")
+    .upload(fileName, file);
+
+  if(uploadError){
+    alert("Upload gagal");
+    console.error(uploadError);
+    return;
+  }
+
+  // AMBIL URL PUBLIK YANG BENAR
+  const { data } = sb
+    .storage
+    .from("dokumentasi")
+    .getPublicUrl(fileName);
+
+  const publicUrl = data.publicUrl;
+
+  console.log("URL FOTO:", publicUrl); // 🔥 DEBUG
+
+  // SIMPAN KE DATABASE
+  const { error } = await sb
+    .from("dokumentasi")
+    .insert({
+      judul: judul,
+      foto: publicUrl
+    });
+
+  if(error){
+    alert("Gagal simpan database");
+    console.error(error);
+    return;
+  }
+
+  document.getElementById("judul").value = "";
+  document.getElementById("foto").value = "";
+
   load();
 }
 
