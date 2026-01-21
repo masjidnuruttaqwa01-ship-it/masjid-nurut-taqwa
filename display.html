@@ -168,15 +168,7 @@ body{
   border:0;
 }
   /* ===== LIVE HARAMAIN ===== */
-.haramain-section{
-  display:none;
-  margin:24px;
-  padding:24px;
-  border-radius:32px;
-  background:rgba(0,0,0,.38);
-  backdrop-filter:blur(18px);
-  box-shadow:0 30px 80px rgba(0,0,0,.45);
-}
+
 
 .haramain-title{
   text-align:center;
@@ -199,7 +191,15 @@ body{
   inset:0;
   width:100%;
   height:100%;
-  border:0;
+  border.haramain-section{
+  display:block;
+  margin:24px;
+  padding:24px;
+  border-radius:32px;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(18px);
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+  }:0;
 }
 </style>
 </head>
@@ -321,25 +321,6 @@ function cekWaktu(){
     }
   });
 }
-</script>
-<script>
-const haramain = document.getElementById("haramainSection");
-const video = document.getElementById("haramainVideo");
-
-let tampilHaramain = false;
-
-setInterval(() => {
-  tampilHaramain = !tampilHaramain;
-
-  if (tampilHaramain) {
-    haramain.style.display = "block";
-    video.src =
-      "https://www.youtube.com/embed/2QjvY4d9zjI?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1";
-  } else {
-    haramain.style.display = "none";
-    video.src = ""; // stop video (penting!)
-  }
-}, 180000); // 3 menit
 </script>
 </body>
 </html>
