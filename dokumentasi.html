@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Dokumentasi Kegiatan</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins;
+  background:#f8fafc;
+}
+header{
+  background:#064e3b;
+  color:#fff;
+  padding:16px;
+  font-weight:700;
+}
+.container{padding:16px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.card{
+  background:#fff;
+  border-radius:14px;
+  overflow:hidden;
+}
+.card img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+}
+.card .info{
+  padding:10px;
+}
+.form{
+  background:#fff;
+  padding:16px;
+  border-radius:16px;
+  margin-bottom:20px;
+}
+.form input,.form textarea,.form button{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+.form button{
+  background:#064e3b;
+  color:#fff;
+  border:none;
+  font-weight:700;
+}
+</style>
+</head>
+
+<body>
+
+<header>📸 Dokumentasi Kegiatan Masjid</header>
+
+<div class="container">
+
+<!-- FORM UPLOAD -->
+<div class="form" id="formDok">
+  <input type="date" id="tgl">
+  <input type="text" id="judul" placeholder="Judul kegiatan">
+  <textarea id="desk" placeholder="Deskripsi singkat"></textarea>
+  <input type="file" id="foto">
+  <button onclick="simpan()">💾 Simpan Dokumentasi</button>
+</div>
+
+<!-- LIST -->
+<div class="grid" id="list"></div>
+
+</div>
+
+<script>
+const SUPABASE_URL = "PASTE_URL_KAMU";
+const SUPABASE_KEY = "PASTE_KEY_KAMU";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* === SIMPAN === */
+async function simpan(){
+  const tgl = document.getElementById("tgl").value;
+  const judul = document.getElementById("judul").value;
+  const desk = document.getElementById("desk").value;
+  const file = document.getElementById("foto").files[0];
+
+  if(!tgl || !judul || !file){
+    alert("Lengkapi data");
+    return;
+  }
+
+  const r = new FileReader();
+  r.onload = async ()=>{
+    const { error } = await sb.from("dokumentasi").insert([{
+      tanggal:tgl,
+      judul:judul,
+      deskripsi:desk,
+      foto:r.result
+    }]);
+
+    if(error){
+      alert(error.message);
+      return;
+    }
+
+    alert("Dokumentasi tersimpan");
+    loadData();
+  };
+  r.readAsDataURL(file);
+}
+
+/* === LOAD === */
+async function loadData(){
+  const { data, error } = await sb
+    .from("dokumentasi")
+    .select("*")
+    .order("tanggal",{ascending:false});
+
+  if(error){console.error(error);return;}
+
+  let html="";
+  data.forEach(d=>{
+    html+=`
+    <div class="card">
+      <img src="${d.foto}">
+      <div class="info">
+        <b>${d.judul}</b><br>
+        <small>${d.tanggal}</small><br>
+        ${d.deskripsi||""}
+      </div>
+    </div>`;
+  });
+
+  document.getElementById("list").innerHTML=html;
+}
+
+loadData();
+</script>
+
+</body>
+</html>
