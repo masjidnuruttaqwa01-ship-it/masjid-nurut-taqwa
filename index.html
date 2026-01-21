@@ -1511,16 +1511,14 @@ const sb = supabase.createClient(
 );
     </script>
     <script>
-let currentSlide = 0;
 let slides = [];
+let currentSlide = 0;
 
-/* LOAD GALERI DARI SUPABASE */
 async function loadGaleri() {
   const { data, error } = await sb
     .from("dokumentasi")
     .select("foto, judul")
-    .order("tanggal", { ascending: false })
-    .limit(10);
+    .order("tanggal", { ascending: false });
 
   if (error) {
     console.error(error);
@@ -1535,29 +1533,27 @@ async function loadGaleri() {
     const slide = document.createElement("div");
     slide.className = "gallery-slide" + (index === 0 ? " active" : "");
     slide.innerHTML = `
-      <img src="${item.foto}" alt="${item.judul}">
+      <img src="${item.foto}">
+      <div class="gallery-caption">${item.judul || ""}</div>
     `;
     slider.appendChild(slide);
     slides.push(slide);
   });
+
+  startAutoSlide();
 }
 
-/* SLIDER CONTROL */
-function showSlide(index) {
+function showSlide(i){
   slides.forEach(s => s.classList.remove("active"));
-  slides[index].classList.add("active");
+  slides[i].classList.add("active");
 }
 
-function nextSlide() {
-  if (!slides.length) return;
-  currentSlide = (currentSlide + 1) % slides.length;
-  showSlide(currentSlide);
-}
-
-function prevSlide() {
-  if (!slides.length) return;
-  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-  showSlide(currentSlide);
+function startAutoSlide(){
+  if(slides.length < 2) return;
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }, 5000);
 }
 
 loadGaleri();
