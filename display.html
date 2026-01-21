@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Display Masjid – Kota Cirebon</title>
+<title>Display Masjid – Jadwal Sholat & Azan</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
 
@@ -12,27 +12,48 @@
 body{
   margin:0;
   font-family:Poppins,sans-serif;
-  background:#064e3b;
   color:#fff;
   overflow:hidden;
 }
 
+/* ===== BACKGROUND SLIDER ===== */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background-size:cover;
+  background-position:center;
+  animation:bgSlide 30s infinite;
+}
+@keyframes bgSlide{
+  0%{background-image:url('https://images.unsplash.com/photo-1585030179234-6d0f3a38d2f4')}
+  33%{background-image:url('https://images.unsplash.com/photo-1588072432836-e10032774350')}
+  66%{background-image:url('https://images.unsplash.com/photo-1600185365483-26d7c7f4c32c')}
+  100%{background-image:url('https://images.unsplash.com/photo-1585030179234-6d0f3a38d2f4')}
+}
+
+/* ===== OVERLAY ===== */
+.overlay{
+  background:rgba(0,0,0,.55);
+  min-height:100vh;
+}
+
 /* ===== HEADER ===== */
 .header{
-  background:#053c2c;
-  padding:16px 20px;
+  padding:14px 20px;
+  background:rgba(6,78,59,.85);
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
-.header b{font-size:22px}
-.clock{font-size:42px;font-weight:700}
+.header b{font-size:20px}
+.clock{font-size:38px;font-weight:700}
 
-/* ===== TANGGAL ===== */
-.tanggal{
+/* ===== INFO ===== */
+.info{
   text-align:center;
-  margin:6px 0 10px;
-  font-size:15px;
+  margin:8px 0;
+  font-size:14px;
   opacity:.9;
 }
 
@@ -40,30 +61,30 @@ body{
 .sholat-bar{
   display:grid;
   grid-template-columns:repeat(7,1fr);
-  gap:10px;
-  padding:14px;
+  gap:6px;
+  padding:12px;
 }
 .sholat{
   background:#0f766e;
-  padding:18px 6px;
-  border-radius:18px;
+  padding:14px 6px;
+  border-radius:16px;
   text-align:center;
 }
-.sholat b{display:block;font-size:20px}
+.sholat b{display:block;font-size:18px}
 .active{
   background:#7c3aed;
-  animation:pulse 1.3s infinite;
+  animation:pulse 1.2s infinite;
 }
 @keyframes pulse{
   0%{box-shadow:0 0 0 0 rgba(124,58,237,.7)}
-  70%{box-shadow:0 0 0 28px rgba(124,58,237,0)}
+  70%{box-shadow:0 0 0 25px rgba(124,58,237,0)}
   100%{box-shadow:0 0 0 0 rgba(124,58,237,0)}
 }
 
 /* ===== AZAN ===== */
 .azan{
   text-align:center;
-  font-size:52px;
+  font-size:46px;
   font-weight:700;
   color:#facc15;
   display:none;
@@ -73,103 +94,102 @@ body{
 /* ===== IQOMAH ===== */
 .iqomah{
   text-align:center;
-  font-size:46px;
+  font-size:42px;
   font-weight:700;
   color:#22c55e;
   display:none;
 }
-
-/* ===== JADWAL KHUTBAH ===== */
-.jadwal{
-  background:#ffffff;
-  color:#064e3b;
-  margin:12px 18px;
-  border-radius:18px;
-  padding:14px;
-  font-size:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
-}
-.jadwal b{display:block;margin-bottom:6px}
 
 /* ===== RUNNING TEXT ===== */
 .marquee{
   position:absolute;
   bottom:0;
   width:100%;
-  background:#053c2c;
-  padding:12px;
-  font-size:20px;
+  background:#064e3b;
+  padding:10px;
+  font-size:18px;
   white-space:nowrap;
   overflow:hidden;
 }
 .marquee span{
   display:inline-block;
   padding-left:100%;
-  animation:marquee 30s linear infinite;
+  animation:marquee 25s linear infinite;
 }
 @keyframes marquee{
   0%{transform:translateX(0)}
   100%{transform:translateX(-100%)}
 }
 
+/* ===== PENGUMUMAN ===== */
+.pengumuman{
+  text-align:center;
+  font-size:16px;
+  margin:10px;
+  opacity:.9;
+}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  .clock{font-size:30px}
-  .azan,.iqomah{font-size:32px}
+  .clock{font-size:28px}
+  .azan,.iqomah{font-size:30px}
 }
 </style>
 </head>
 
-<body>
+<body onclick="openFullscreen()">
+
+<div class="bg"></div>
+<div class="overlay">
 
 <div class="header">
   <b>🕌 Masjid – Kota Cirebon</b>
   <div class="clock" id="clock">00:00</div>
 </div>
 
-<div class="tanggal" id="tanggal"></div>
+<div class="info" id="tanggal"></div>
 
 <div class="azan" id="azanText">AZAN</div>
 <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
 
 <div class="sholat-bar" id="sholatBar"></div>
 
-<!-- ===== JADWAL KHUTBAH / PENGAJIAN ===== -->
-<div class="jadwal">
-  <b>📅 Jadwal Kegiatan</b>
-  🕌 Khutbah Jumat : 11.45 WIB<br>
-  📖 Kajian Ahad    : Ba’da Subuh<br>
-  📚 TPA Anak-anak  : Senin–Kamis (16.00 WIB)
+<div class="pengumuman">
+  📌 Khutbah Jumat: 11.45 WIB • Kajian Ahad Ba’da Subuh
 </div>
 
-<!-- ===== RUNNING TEXT ===== -->
 <div class="marquee">
   <span>
     Selamat datang di Masjid • Mohon matikan atau senyapkan HP • Jaga kebersihan dan kekhusyukan ibadah
   </span>
 </div>
 
-<!-- ===== AUDIO AZAN ===== -->
-<audio id="azanAudio"
-src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
+<audio id="azanAudio" src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
+
+</div>
 
 <script>
-/* ===== FULLSCREEN OTOMATIS ===== */
-document.documentElement.requestFullscreen?.();
+/* ===== FULLSCREEN ===== */
+function openFullscreen(){
+  if(document.documentElement.requestFullscreen){
+    document.documentElement.requestFullscreen();
+  }
+}
 
 /* ===== JAM ===== */
-function updateClock(){
+function clock(){
   const d=new Date();
-  clock.innerText=d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+  document.getElementById("clock").innerText=
+    d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
-setInterval(updateClock,1000);updateClock();
+setInterval(clock,1000);clock();
 
 /* ===== TANGGAL ===== */
 tanggal.innerText=new Date().toLocaleDateString("id-ID",{
   weekday:"long",day:"numeric",month:"long",year:"numeric"
 });
 
-/* ===== JADWAL SHOLAT ===== */
+/* ===== SHOLAT API ===== */
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
 .then(r=>r.json())
 .then(res=>{
@@ -190,8 +210,8 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
   setInterval(cekWaktu,30000);
 });
 
-/* ===== AZAN + HITUNG MUNDUR IQOMAH ===== */
-let iqTimer=null;
+/* ===== AZAN & IQOMAH ===== */
+let iqomahTimer=null;
 function cekWaktu(){
   const now=new Date().toTimeString().slice(0,5);
   document.querySelectorAll(".sholat").forEach(el=>{
@@ -200,16 +220,15 @@ function cekWaktu(){
       azanText.style.display="block";
       azanAudio.play();
 
-      let sisa=600; // 10 menit
+      let sisa=600;
       iqomahText.style.display="block";
-
-      iqTimer=setInterval(()=>{
+      iqomahTimer=setInterval(()=>{
         let m=Math.floor(sisa/60);
         let d=sisa%60;
         iqomahText.innerText=`IQOMAH ${m}:${d.toString().padStart(2,"0")}`;
         sisa--;
         if(sisa<0){
-          clearInterval(iqTimer);
+          clearInterval(iqomahTimer);
           iqomahText.style.display="none";
           azanText.style.display="none";
         }
