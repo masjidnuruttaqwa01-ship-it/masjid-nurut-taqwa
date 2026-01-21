@@ -138,7 +138,7 @@ header{
   <input type="text" id="judul" placeholder="Judul Kegiatan">
   <textarea id="deskripsi" placeholder="Deskripsi singkat"></textarea>
   <input type="file" id="foto">
-  <button onclick="uploadDok()">Upload Dokumentasi</button>
+  <button type="button" onclick="upload()">Upload Dokumentasi</button>
 </div>
 
 <div class="section-title">Galeri Kegiatan</div>
@@ -215,21 +215,43 @@ async function loadGaleri(){
 }
 
 /* ===== UPLOAD ===== */
-async function uploadDok(){
-  const f=document.getElementById("foto").files[0];
-  if(!f) return alert("Pilih foto");
+async function upload(){
+  alert("Upload diklik"); // ⬅️ tes dulu
 
-  const r=new FileReader();
-  r.onload=async()=>{
-    const {error}=await sb.from("dokumentasi").insert([{
-      judul:judul.value,
-      deskripsi:deskripsi.value,
-      foto:r.result
-    }]);
-    if(error){alert(error.message);return;}
-    loadGaleri();
-  };
-  r.readAsDataURL(f);
+  const file = document.getElementById("foto").files[0];
+  const judul = document.getElementById("judul").value.trim();
+  const deskripsi = document.getElementById("deskripsi").value.trim();
+
+  if(!file) return alert("Pilih foto terlebih dahulu");
+  if(!judul) return alert("Judul wajib diisi");
+
+  const filename = Date.now() + "_" + file.name;
+
+  const { error: uploadError } = await sb
+    .storage
+    .from("dokumentasi")
+    .upload(filename, file);
+
+  if(uploadError){
+    alert("Upload gagal: " + uploadError.message);
+    return;
+  }
+
+  const fotoURL = sb
+    .storage
+    .from("dokumentasi")
+    .getPublicUrl(filename)
+    .data.publicUrl;
+
+  await sb.from("dokumentasi").insert({
+    judul,
+    deskripsi,
+    foto: fotoURL,
+    tanggal: new Date().toISOString()
+  });
+
+  alert("Upload berhasil");
+  load();
 }
 
 /* ===== HAPUS ===== */
