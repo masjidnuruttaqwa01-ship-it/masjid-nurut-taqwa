@@ -140,7 +140,7 @@ button{
 <header>📸 Dokumentasi Kegiatan Masjid</header>
 
 <div class="container">
-
+  <script>
   <!-- FORM UPLOAD (DKM SAJA) -->
   <div class="form-box" id="formDKM">
     <h3>Upload Dokumentasi</h3>
@@ -169,7 +169,6 @@ if(role !== "dkm"){
 }
 
 /* LOAD DATA */
-<script>
 async function load(){
   const { data, error } = await sb
     .from("dokumentasi")
@@ -218,8 +217,6 @@ async function hapusDokumentasi(id){
 
   load();
 }
-</script>
-</script>
 
 /* UPLOAD */
 async function upload(){
