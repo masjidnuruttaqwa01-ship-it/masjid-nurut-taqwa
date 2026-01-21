@@ -195,56 +195,27 @@ async function load(){
 }
 
 /* ===== UPLOAD ===== */
-<script>
 async function upload(){
-  const file = document.getElementById("foto").files[0];
-  const judul = document.getElementById("judul").value;
+  const file=document.getElementById("foto").files[0];
+  const judul=document.getElementById("judul").value;
+  if(!file)return alert("Pilih foto");
 
-  if(!file) return alert("Pilih foto");
+  const name=Date.now()+"_"+file.name;
+  await sb.storage.from("dokumentasi").upload(name,file);
+  const url=sb.storage.from("dokumentasi")
+            .getPublicUrl(name).data.publicUrl;
 
-  const fileName = Date.now() + "-" + file.name;
-
-  // upload ke storage
-  const { error: uploadError } = await sb
-    .storage
-    .from("dokumentasi")
-    .upload(fileName, file, { upsert: true });
-
-  if(uploadError){
-    alert("Gagal upload foto");
-    console.error(uploadError);
-    return;
-  }
-
-  // ambil URL PUBLIC
-  const { data } = sb
-    .storage
-    .from("dokumentasi")
-    .getPublicUrl(fileName);
-
-  const fotoUrl = data.publicUrl;
-
-  // simpan ke tabel
-  const { error } = await sb
-    .from("dokumentasi")
-    .insert({
-      judul: judul,
-      foto: fotoUrl,
-      tanggal: new Date().toISOString()
-    });
-
-  if(error){
-    alert("Gagal simpan data");
-    console.error(error);
-    return;
-  }
+  await sb.from("dokumentasi").insert({
+    judul,
+    foto:url,
+    tanggal:new Date().toISOString()
+  });
 
   document.getElementById("judul").value="";
   document.getElementById("foto").value="";
   load();
 }
-</script>
-<script>
+
 /* ===== HAPUS ===== */
 async function hapus(id){
   if(!confirm("Hapus dokumentasi ini?"))return;
