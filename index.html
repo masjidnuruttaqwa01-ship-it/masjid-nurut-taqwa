@@ -301,6 +301,14 @@ footer{
   font-size:13px;
 }
   /* ===== GALERI SLIDER ===== */
+  .gallery-slider{
+  position: relative;
+  width: 100%;
+  height: 260px;        /* WAJIB */
+  overflow: hidden;
+  border-radius: 18px;
+  background: #e5efe9; /* fallback */
+  }
 .gallery-slider{
   position:relative;
   overflow:hidden;
@@ -1510,24 +1518,32 @@ const sb = supabase.createClient(
   SUPABASE_KEY
 );
     </script>
-    <script>
-let slides = [];
+<script>
 let currentSlide = 0;
+let slides = [];
+let autoSlideTimer = null;
 
+/* ===== LOAD GALERI DARI SUPABASE ===== */
 async function loadGaleri() {
   const { data, error } = await sb
     .from("dokumentasi")
     .select("foto, judul")
-    .order("tanggal", { ascending: false });
+    .order("tanggal", { ascending: false })
+    .limit(10);
 
   if (error) {
-    console.error(error);
+    console.error("Supabase error:", error);
     return;
   }
 
   const slider = document.getElementById("gallerySlider");
   slider.innerHTML = "";
   slides = [];
+
+  if (!data || data.length === 0) {
+    slider.innerHTML = "<p style='text-align:center;padding:20px'>Belum ada dokumentasi</p>";
+    return;
+  }
 
   data.forEach((item, index) => {
     const slide = document.createElement("div");
@@ -1540,24 +1556,57 @@ async function loadGaleri() {
     slides.push(slide);
   });
 
-  startAutoSlide();
+  startAutoSlide(); // 🔥 PENTING
 }
 
-function showSlide(i){
+/* ===== SLIDE CONTROL ===== */
+function showSlide(index) {
+  if (!slides.length) return;
   slides.forEach(s => s.classList.remove("active"));
-  slides[i].classList.add("active");
+  slides[index].classList.add("active");
 }
 
-function startAutoSlide(){
-  if(slides.length < 2) return;
-  setInterval(() => {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
+function nextSlide() {
+  if (!slides.length) return;
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+function prevSlide() {
+  if (!slides.length) return;
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  showSlide(currentSlide);
+}
+
+/* ===== AUTO SLIDE ===== */
+function startAutoSlide() {
+  clearInterval(autoSlideTimer);
+  autoSlideTimer = setInterval(() => {
+    nextSlide();
   }, 5000);
 }
 
+/* ===== SWIPE HP ===== */
+let startX = 0;
+const sliderEl = document.getElementById("gallerySlider");
+
+sliderEl.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+}, { passive: true });
+
+sliderEl.addEventListener("touchend", e => {
+  const endX = e.changedTouches[0].clientX;
+  const diff = startX - endX;
+
+  if (Math.abs(diff) > 50) {
+    diff > 0 ? nextSlide() : prevSlide();
+    startAutoSlide(); // reset timer setelah swipe
+  }
+});
+
+/* ===== INIT ===== */
 loadGaleri();
-      <script>
+</script>
 /* ===== SWIPE GALERI (HP) ===== */
 let startX = 0;
 let endX = 0;
