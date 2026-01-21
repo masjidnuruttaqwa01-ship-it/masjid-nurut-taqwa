@@ -117,6 +117,21 @@ button{
   padding:30px;
   color:#777;
 }
+  .delete-btn{
+  margin:12px 16px 16px;
+  background:#dc2626;
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  padding:8px 14px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.delete-btn:hover{
+  background:#b91c1c;
+}
 </style>
 </head>
 
@@ -154,36 +169,57 @@ if(role !== "dkm"){
 }
 
 /* LOAD DATA */
+<script>
 async function load(){
   const { data, error } = await sb
     .from("dokumentasi")
     .select("*")
     .order("tanggal",{ascending:false});
 
-  const box=document.getElementById("listDokumentasi");
-  box.innerHTML="";
+  const box = document.getElementById("listDokumentasi");
+  box.innerHTML = "";
 
-  if(error || !data.length){
-    box.innerHTML="<div class='empty'>Belum ada dokumentasi</div>";
+  if(error || !data || data.length === 0){
+    box.innerHTML = "<div class='empty'>Belum ada dokumentasi</div>";
     return;
   }
 
   data.forEach(item=>{
-    const div=document.createElement("div");
-    div.className="item";
-    div.innerHTML=`
-      <img src="${item.foto}" class="thumb">
-      <div class="info">
-        <b>${item.judul || "Tanpa judul"}</b>
-        <small>${new Date(item.tanggal).toLocaleDateString("id-ID")}</small>
-      </div>
-      ${role==="dkm"
-        ? `<button class="delete-btn" onclick="hapus(${item.id})">🗑</button>`
-        : ``}
+    const div = document.createElement("div");
+    div.className = "item";
+
+    div.innerHTML = `
+      <img src="${item.foto}">
+      <div class="caption">${item.judul || "-"}</div>
+
+      <!-- TOMBOL HAPUS MANUAL -->
+      <button class="delete-btn"
+        onclick="hapusDokumentasi(${item.id})">
+        🗑 Hapus
+      </button>
     `;
+
     box.appendChild(div);
   });
 }
+async function hapusDokumentasi(id){
+  if(!confirm("Yakin ingin menghapus dokumentasi ini?")) return;
+
+  const { error } = await sb
+    .from("dokumentasi")
+    .delete()
+    .eq("id", id);
+
+  if(error){
+    alert("Gagal menghapus");
+    console.error(error);
+    return;
+  }
+
+  load();
+}
+</script>
+</script>
 
 /* UPLOAD */
 async function upload(){
