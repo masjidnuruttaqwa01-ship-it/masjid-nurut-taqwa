@@ -378,6 +378,61 @@ body{
 .friday-mode .active{
   background:#f59e0b;
 }
+ /* ===== MODE KHUTBAH LIVE ===== */
+.khutbah-live{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#020617,#064e3b);
+  z-index:99999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.khutbah-live.show{
+  display:flex;
+}
+
+.khutbah-box{
+  text-align:center;
+  color:#f8fafc;
+  padding:60px 80px;
+  border-radius:36px;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(18px);
+  box-shadow:0 40px 120px rgba(0,0,0,.6);
+}
+
+.khutbah-box h1{
+  font-size:52px;
+  margin-bottom:10px;
+  color:#fde047;
+}
+
+.khutbah-box p{
+  font-size:22px;
+  opacity:.9;
+}
+
+.khutbah-info{
+  display:flex;
+  justify-content:center;
+  gap:80px;
+  margin:40px 0;
+  font-size:26px;
+}
+
+.khutbah-info span{
+  font-size:30px;
+  font-weight:700;
+  color:#22c55e;
+}
+
+.khutbah-note{
+  margin-top:30px;
+  font-size:20px;
+  opacity:.85;
+} 
 </style>
 
 </head>
@@ -704,6 +759,63 @@ setInterval(cekNotifJumat,1000);
 if(new Date().getDay() === 5){
   document.body.classList.add("friday-mode");
 }
+  </script>
+<!-- ===== MODE KHUTBAH LIVE ===== -->
+<div class="khutbah-live" id="khutbahLive">
+  <div class="khutbah-box">
+    <h1>Khutbah Jum’at</h1>
+    <p>Masjid Nurut Taqwa – Kota Cirebon</p>
+
+    <div class="khutbah-info">
+      <div>🧕 <b>Khatib</b><br><span id="namaKhatib">–</span></div>
+      <div>🕌 <b>Imam</b><br><span id="namaImam">–</span></div>
+    </div>
+
+    <div class="khutbah-note">
+      Mohon jamaah menjaga ketenangan dan kekhusyukan
+    </div>
+  </div>
+</div>  
+  <script>
+/* ===== MODE KHUTBAH LIVE OTOMATIS ===== */
+const khutbahBox = document.getElementById("khutbahLive");
+
+// JAM KHUTBAH
+const KHUTBAH_START = "11:45";
+const KHUTBAH_END   = "12:30";
+
+function cekKhutbah(){
+  const now = new Date();
+  if(now.getDay() !== 5) return; // hanya Jumat
+
+  const jam = now.toTimeString().slice(0,5);
+
+  if(jam >= KHUTBAH_START && jam <= KHUTBAH_END){
+    khutbahBox.classList.add("show");
+  }else{
+    khutbahBox.classList.remove("show");
+  }
+}
+
+setInterval(cekKhutbah,1000);
+</script>
+  <script>
+async function loadKhutbahData(){
+  const today = new Date().toISOString().slice(0,10);
+
+  const { data } = await sb
+    .from("jadwal_jumat")
+    .select("*")
+    .eq("tanggal", today)
+    .single();
+
+  if(!data) return;
+
+  document.getElementById("namaKhatib").innerText = data.khatib;
+  document.getElementById("namaImam").innerText  = data.imam;
+}
+
+loadKhutbahData();
   </script>
 </body>
 </html>
