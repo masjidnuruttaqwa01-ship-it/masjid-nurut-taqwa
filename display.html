@@ -12,7 +12,12 @@
 
 body{
   font-family:Poppins,sans-serif;
-  background:#000;
+  background:
+    linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.18)),
+    url("https://images.unsplash.com/photo-1548013146-72479768bada");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
   overflow:hidden;
   color:#0f172a;
 }
@@ -27,74 +32,39 @@ body{
 
 /* ===== HEADER ===== */
 .header{
-  height:86px;
+  height:82px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 42px;
-
-  background:linear-gradient(
-    to right,
-    rgba(255,255,255,.45),
-    rgba(255,255,255,.25)
-  );
-  backdrop-filter:blur(16px) saturate(160%);
-  border-bottom:1px solid rgba(255,255,255,.35);
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,.18),
-    inset 0 1px 0 rgba(255,255,255,.5);
+  padding:0 36px;
+  background:rgba(255,255,255,.6);
+  backdrop-filter:blur(14px);
 }
-
 .header b{
-  font-size:30px;
+  font-size:28px;
   font-weight:700;
-  letter-spacing:.5px;
 }
-
 .clock{
-  font-size:48px;
+  font-size:44px;
   font-weight:700;
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
 }
 
 /* ===== TANGGAL ===== */
 .info{
   text-align:center;
-  padding:8px 0;
-  font-size:17px;
-  letter-spacing:.3px;
-
-  background:rgba(255,255,255,.22);
+  padding:6px 0;
+  font-size:16px;
+  background:rgba(255,255,255,.4);
   backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(255,255,255,.25);
-
-  color:#1e293b;
 }
 
-/* ===== AREA UTAMA ===== */
+/* ===== VIDEO ===== */
 .video-area{
   flex:1;
   position:relative;
-  background:#000;
-  overflow:hidden;
 }
-.video-area::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0,0,0,.35),
-      rgba(0,0,0,.05) 40%,
-      rgba(0,0,0,.25)
-    );
-  pointer-events:none;
-  z-index:2;
-}
-/* VIDEO MAKKAH (TETAP HIDUP) */
-#haramainVideo{
+
+.video-area iframe{
   position:absolute;
   inset:0;
   width:100%;
@@ -102,105 +72,171 @@ body{
   border:0;
   z-index:1;
 }
+<!-- WALLPAPER MODE -->
+<div id="wallpaperMode" class="wallpaper-mode">
+  <div class="wallpaper-text">
+    ﷽ <br>
+    “Sesungguhnya sholat itu adalah kewajiban yang ditentukan waktunya”
+    <br><small>(QS. An-Nisa: 103)</small>
+  </div>
+</div>
 
-/* WALLPAPER SLIDE */
-#wallpaperLayer{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  opacity:0;
-  z-index:2;
-  transition:opacity 1.5s ease;
-}
-
-/* ===== AZAN & IQOMAH ===== */
+<!-- AYAT / HADITS MODE -->
+<div id="ayatMode" class="ayat-mode">
+  <div class="ayat-text" id="ayatText">
+    “Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lain.”
+  </div>
+</div>
+/* ===== AZAN / IQOMAH ===== */
 .azan,
 .iqomah{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-size:80px;
-  font-weight:800;
-  letter-spacing:6px;
+  font-size:72px;
+  font-weight:700;
   display:none;
-  z-index:10;
-
-  text-shadow:
-    0 0 40px rgba(255,255,255,.8),
-    0 0 80px rgba(255,255,255,.6);
+  z-index:5;
 }
 
 .azan{
-  color:#fde047;
+  color:#facc15;
+  text-shadow:0 0 40px rgba(250,204,21,.9);
 }
 
 .iqomah{
   color:#38bdf8;
+  text-shadow:0 0 40px rgba(56,189,248,.9);
 }
 
 /* ===== JADWAL SHOLAT ===== */
 .sholat-bottom{
-  background:rgba(255,255,255,.28);
-  backdrop-filter:blur(14px) saturate(150%);
-  padding:18px 26px;
+  background:rgba(255,255,255,.5);
+  backdrop-filter:blur(14px);
+  padding:14px 20px;
+}
 
-  box-shadow:
-    0 -12px 40px rgba(0,0,0,.25),
-    inset 0 1px 0 rgba(255,255,255,.4);
+.sholat-bar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
 }
 
 .sholat{
-  background:rgba(255,255,255,.55);
-  border-radius:20px;
-  padding:16px 10px;
+  background:rgba(255,255,255,.7);
+  border-radius:18px;
+  padding:14px 8px;
   text-align:center;
-  font-size:15px;
-  transition:.4s ease;
-
-  box-shadow:
-    0 8px 20px rgba(0,0,0,.15),
-    inset 0 1px 0 rgba(255,255,255,.6);
+  font-size:14px;
 }
 
 .sholat b{
   display:block;
-  font-size:24px;
-  margin-top:6px;
+  font-size:22px;
+  margin-top:4px;
 }
-  .sholat.active{
-  background:linear-gradient(135deg,#f59e0b,#facc15);
-  color:#fff;
 
-  box-shadow:
-    0 0 30px rgba(245,158,11,.9),
-    0 0 60px rgba(245,158,11,.6);
-  }
-  .header,
-.sholat-bottom{
-  box-shadow:0 8px 30px rgba(0,0,0,.15);
+.sholat.active{
+  background:#f59e0b;
+  color:#fff;
+  box-shadow:0 0 30px rgba(245,158,11,.9);
 }
+
 /* ===== RUNNING TEXT ===== */
 .marquee{
-  height:48px;
+  height:44px;
   display:flex;
   align-items:center;
-  background:rgba(15,23,42,.75);
-  backdrop-filter:blur(12px);
+  background:rgba(15,23,42,.65);
+  backdrop-filter:blur(10px);
   color:#fff;
-
-  box-shadow:0 -6px 20px rgba(0,0,0,.4);
+  overflow:hidden;
 }
+
 .marquee span{
   white-space:nowrap;
   padding-left:100%;
   animation:marquee 22s linear infinite;
   font-size:18px;
 }
+
 @keyframes marquee{
   from{transform:translateX(0)}
   to{transform:translateX(-100%)}
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .clock{font-size:30px}
+  .azan,.iqomah{font-size:44px}
+}
+  /* VIDEO & SLIDESHOW LAYER */
+.video-area iframe,
+.slideshow{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  transition:opacity 1.5s ease;
+}
+
+/* VIDEO AKTIF */
+.video-show iframe{
+  opacity:1;
+  pointer-events:auto;
+}
+.video-show .slideshow{
+  opacity:0;
+}
+
+/* WALLPAPER AKTIF */
+.wallpaper-show iframe{
+  opacity:0;
+  pointer-events:none;
+}
+.wallpaper-show .slideshow{
+  opacity:1;
+}
+
+/* SLIDESHOW */
+.slideshow{
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+  .wallpaper-mode,
+.ayat-mode{
+  position:absolute;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px;
+  backdrop-filter:blur(4px);
+}
+
+.wallpaper-mode{
+  background:rgba(255,255,255,0.15);
+}
+
+.wallpaper-text{
+  font-size:34px;
+  font-weight:600;
+  color:#0f172a;
+  text-shadow:0 4px 20px rgba(0,0,0,.25);
+}
+
+.ayat-mode{
+  background:rgba(15,23,42,0.65);
+}
+
+.ayat-text{
+  font-size:38px;
+  color:#ffffff;
+  font-weight:600;
+  line-height:1.4;
 }
 </style>
 </head>
@@ -209,31 +245,36 @@ body{
 
 <div class="overlay">
 
+  <!-- HEADER -->
   <div class="header">
     <b>🕌 Masjid Nurut Taqwa</b>
     <div class="clock" id="clock">00:00</div>
   </div>
 
+  <!-- TANGGAL -->
   <div class="info" id="tanggal"></div>
 
+  <!-- VIDEO -->
   <div class="video-area">
-    <iframe
-      id="haramainVideo"
-      src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0&playsinline=1"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
-
-    <div id="wallpaperLayer"></div>
 
     <div class="azan" id="azanText">AZAN</div>
     <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
+
+    <iframe id="haramainVideo"
+      src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+ <!-- WALLPAPER -->
+  <div class="slideshow" id="slideshow"></div>
   </div>
 
+  <!-- JADWAL SHOLAT -->
   <div class="sholat-bottom">
     <div class="sholat-bar" id="sholatBar"></div>
   </div>
 
+  <!-- RUNNING TEXT -->
   <div class="marquee">
     <span>
       Selamat datang di Masjid Nurut Taqwa • Mohon matikan atau senyapkan HP • Jaga kekhusyukan ibadah
@@ -278,7 +319,7 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
   setInterval(cekWaktu,30000);
 });
 
-/* AZAN */
+/* AZAN + IQOMAH */
 function cekWaktu(){
   const now=new Date().toTimeString().slice(0,5);
   document.querySelectorAll(".sholat").forEach(el=>{
@@ -287,40 +328,140 @@ function cekWaktu(){
       el.classList.add("active");
       azanText.style.display="block";
       azanAudio.play();
-      setTimeout(()=>azanText.style.display="none",60000);
+aktifkanAzan();
+      let sisa=600;
+      iqomahText.style.display="block";
+      const timer=setInterval(()=>{
+        let m=Math.floor(sisa/60);
+        let d=sisa%60;
+        iqomahText.innerText=`IQOMAH ${m}:${d.toString().padStart(2,"0")}`;
+        sisa--;
+        if(sisa<0){
+          clearInterval(timer);
+          azanText.style.display="none";
+          iqomahText.style.display="none";
+        }
+      },1000);
+      lanjutSetelahIbadah();
     }
   });
 }
+</script>
+<script>
+/* ===== MODE VIDEO ↔ WALLPAPER ===== */
 
-/* ===== VIDEO ↔ WALLPAPER (AMAN) ===== */
-const wallpaper=document.getElementById("wallpaperLayer");
+const videoArea = document.querySelector(".video-area");
+const video = document.getElementById("haramainVideo");
+const slideshow = document.getElementById("slideshow");
 
-const wallpapers=[
+const wallpapers = [
   "https://images.unsplash.com/photo-1548013146-72479768bada",
   "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f",
   "https://images.unsplash.com/photo-1591608516485-72ef5f7e9b96"
 ];
 
-let idx=0;
+let slideIndex = 0;
+
+/* GANTI WALLPAPER */
 function nextWallpaper(){
-  wallpaper.style.backgroundImage=`url('${wallpapers[idx]}')`;
-  idx=(idx+1)%wallpapers.length;
+  slideshow.style.backgroundImage = `url('${wallpapers[slideIndex]}')`;
+  slideIndex = (slideIndex + 1) % wallpapers.length;
 }
 
-/* LOOP: 1 menit video → 30 detik wallpaper */
-setInterval(()=>{
-  wallpaper.style.opacity="0";
-  setTimeout(()=>{
-    nextWallpaper();
-    wallpaper.style.opacity="1";
-  },60000);
-},90000);
+/* TAMPILKAN VIDEO */
+function showVideo(){
+  videoArea.classList.add("video-show");
+  videoArea.classList.remove("wallpaper-show");
 
-setInterval(nextWallpaper,8000);
+  video.src = "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0";
 
-/* UNLOCK AUDIO */
-document.addEventListener("click",()=>{}, {once:true});
+  setTimeout(showWallpaper, 1 * 60 * 1000); // 1 menit
+}
+
+/* TAMPILKAN WALLPAPER */
+function showWallpaper(){
+  videoArea.classList.add("wallpaper-show");
+  videoArea.classList.remove("video-show");
+
+  video.src = ""; // stop video
+  nextWallpaper();
+
+  setTimeout(showVideo, 2 * 60 * 1000); // 2 menit
+}
+
+/* SLIDESHOW BERJALAN */
+setInterval(nextWallpaper, 8000); // ganti gambar tiap 8 detik
+
+/* START */
+showVideo();
 </script>
+  <script>
+document.addEventListener("click", () => {
+  const v = document.getElementById("haramainVideo");
+  if(v){
+    v.src = v.src.replace("mute=1","mute=0");
+  }
+},{ once:true });
+</script>
+  <script>
+/* ===== ROTASI KONTEN CERDAS ===== */
 
+const video = document.getElementById("haramainVideo");
+const wallpaper = document.getElementById("wallpaperMode");
+const ayat = document.getElementById("ayatMode");
+
+let mode = 0; // 0=video,1=wallpaper,2=ayat
+let rotasiTimer = null;
+let azanAktif = false;
+
+/* DURASI (ms) */
+const DURASI_VIDEO = 5 * 60 * 1000; // 5 menit
+const DURASI_WALLPAPER = 60 * 1000; // 1 menit
+const DURASI_AYAT = 20 * 1000; // 20 detik
+
+function mulaiRotasi(){
+  if(azanAktif) return;
+
+  clearTimeout(rotasiTimer);
+
+  // SEMUA MATI DULU
+  video.style.display="none";
+  wallpaper.style.display="none";
+  ayat.style.display="none";
+
+  if(mode===0){
+    video.style.display="block";
+    video.src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0";
+    rotasiTimer=setTimeout(()=>{mode=1;mulaiRotasi()},DURASI_VIDEO);
+  }
+  else if(mode===1){
+    video.src="";
+    wallpaper.style.display="flex";
+    rotasiTimer=setTimeout(()=>{mode=2;mulaiRotasi()},DURASI_WALLPAPER);
+  }
+  else{
+    ayat.style.display="flex";
+    rotasiTimer=setTimeout(()=>{mode=0;mulaiRotasi()},DURASI_AYAT);
+  }
+}
+
+/* ===== HENTIKAN SAAT AZAN ===== */
+function aktifkanAzan(){
+  azanAktif=true;
+  clearTimeout(rotasiTimer);
+  video.src="";
+  wallpaper.style.display="none";
+  ayat.style.display="none";
+}
+
+/* ===== LANJUT SETELAH IQOMAH ===== */
+function lanjutSetelahIbadah(){
+  azanAktif=false;
+  mulaiRotasi();
+}
+
+/* JALANKAN PERTAMA KALI */
+mulaiRotasi();
+</script>
 </body>
 </html>
