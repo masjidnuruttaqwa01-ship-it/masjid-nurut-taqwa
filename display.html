@@ -12,11 +12,10 @@
 body{
   font-family:Poppins,sans-serif;
   background:#000;
-  color:#000;
   overflow:hidden;
 }
 
-/* ===== LAYOUT UTAMA TV ===== */
+/* ===== LAYOUT ===== */
 .overlay{
   position:fixed;
   inset:0;
@@ -27,42 +26,40 @@ body{
 
 /* ===== HEADER ===== */
 .header{
-  height:72px;
+  height:80px;
   background:#ffffff;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 28px;
-  flex-shrink:0;
+  padding:0 32px;
+  box-shadow:0 4px 20px rgba(0,0,0,.15);
 }
 .header b{
-  font-size:26px;
+  font-size:28px;
   font-weight:700;
-  color:#111827;
+  color:#1e3a8a;
 }
 .clock{
-  font-size:40px;
+  font-size:42px;
   font-weight:700;
-  color:#111827;
+  color:#1d4ed8;
 }
 
 /* ===== TANGGAL ===== */
 .info{
   text-align:center;
-  padding:6px 0;
+  padding:8px 0;
   font-size:16px;
-  background:#f3f4f6;
-  color:#1f2937;
-  flex-shrink:0;
+  background:#f1f5f9;
+  color:#334155;
 }
 
-/* ===== VIDEO FULL AREA ===== */
+/* ===== VIDEO ===== */
 .video-area{
   flex:1;
   position:relative;
   background:#000;
 }
-
 .video-area iframe{
   position:absolute;
   inset:0;
@@ -78,72 +75,69 @@ body{
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-size:64px;
+  font-size:72px;
   font-weight:700;
   display:none;
-  z-index:5;
-  text-shadow:0 0 30px rgba(0,0,0,.6);
+  z-index:10;
+  text-shadow:0 0 40px rgba(0,0,0,.6);
 }
-.azan{color:#facc15}
-.iqomah{color:#22c55e}
+.azan{color:#f59e0b}
+.iqomah{color:#3b82f6}
 
-/* ===== JADWAL SHOLAT BAWAH ===== */
+/* ===== JADWAL SHOLAT ===== */
 .sholat-bottom{
   background:#ffffff;
-  padding:12px 18px;
-  flex-shrink:0;
+  padding:14px 20px;
 }
-
 .sholat-bar{
   display:grid;
   grid-template-columns:repeat(7,1fr);
-  gap:10px;
+  gap:12px;
 }
-
 .sholat{
-  background:#e5e7eb;
+  background:#e0f2fe;
+  border-radius:18px;
   padding:14px 8px;
-  border-radius:16px;
   text-align:center;
   font-size:14px;
-  color:#111827;
+  color:#0f172a;
 }
 .sholat b{
   display:block;
-  font-size:20px;
-  margin-top:4px;
+  font-size:22px;
+  margin-top:6px;
 }
 .sholat.active{
-  background:#7c3aed;
-  color:#ffffff;
-  box-shadow:0 0 20px rgba(124,58,237,.7);
+  background:linear-gradient(135deg,#8b5cf6,#6366f1);
+  color:#fff;
+  box-shadow:0 0 25px rgba(139,92,246,.7);
 }
 
 /* ===== RUNNING TEXT ===== */
 .marquee{
-  height:42px;
-  background:#f3f4f6;
+  height:44px;
+  background:#ffffff;
+  border-top:1px solid #e5e7eb;
   overflow:hidden;
   display:flex;
   align-items:center;
-  flex-shrink:0;
 }
 .marquee span{
   white-space:nowrap;
   padding-left:100%;
   animation:marquee 22s linear infinite;
   font-size:18px;
-  color:#111827;
+  color:#1f2937;
 }
 @keyframes marquee{
   from{transform:translateX(0)}
   to{transform:translateX(-100%)}
 }
 
-/* ===== RESPONSIVE TV ===== */
+/* ===== RESPONSIVE ===== */
 @media(max-width:768px){
   .clock{font-size:30px}
-  .azan,.iqomah{font-size:42px}
+  .azan,.iqomah{font-size:44px}
 }
 </style>
 </head>
@@ -161,21 +155,20 @@ body{
   <!-- TANGGAL -->
   <div class="info" id="tanggal"></div>
 
-  <!-- VIDEO FULL -->
+  <!-- VIDEO -->
   <div class="video-area">
-
     <div class="azan" id="azanText">AZAN</div>
     <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
 
-    <iframe id="haramainVideo"
+    <iframe
+      id="haramainVideo"
       src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0"
       allow="autoplay; encrypted-media"
       allowfullscreen>
     </iframe>
-
   </div>
 
-  <!-- JADWAL SHOLAT -->
+  <!-- SHOLAT -->
   <div class="sholat-bottom">
     <div class="sholat-bar" id="sholatBar"></div>
   </div>
