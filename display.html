@@ -12,12 +12,7 @@
 
 body{
   font-family:Poppins,sans-serif;
-  background:
-    linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.18)),
-    url("https://images.unsplash.com/photo-1548013146-72479768bada");
-  background-size:cover;
-  background-position:center;
-  background-attachment:fixed;
+  background:#000;
   overflow:hidden;
   color:#0f172a;
 }
@@ -32,20 +27,19 @@ body{
 
 /* ===== HEADER ===== */
 .header{
-  height:82px;
+  height:80px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 36px;
-  background:rgba(255,255,255,.6);
+  background:rgba(255,255,255,.65);
   backdrop-filter:blur(14px);
 }
 .header b{
   font-size:28px;
-  font-weight:700;
 }
 .clock{
-  font-size:44px;
+  font-size:42px;
   font-weight:700;
 }
 
@@ -54,17 +48,20 @@ body{
   text-align:center;
   padding:6px 0;
   font-size:16px;
-  background:rgba(255,255,255,.4);
+  background:rgba(255,255,255,.45);
   backdrop-filter:blur(10px);
 }
 
-/* ===== VIDEO ===== */
+/* ===== AREA UTAMA ===== */
 .video-area{
   flex:1;
   position:relative;
+  background:#000;
+  overflow:hidden;
 }
 
-.video-area iframe{
+/* VIDEO MAKKAH (TETAP HIDUP) */
+#haramainVideo{
   position:absolute;
   inset:0;
   width:100%;
@@ -73,7 +70,18 @@ body{
   z-index:1;
 }
 
-/* ===== AZAN / IQOMAH ===== */
+/* WALLPAPER SLIDE */
+#wallpaperLayer{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  z-index:2;
+  transition:opacity 1.5s ease;
+}
+
+/* ===== AZAN & IQOMAH ===== */
 .azan,
 .iqomah{
   position:absolute;
@@ -85,12 +93,10 @@ body{
   display:none;
   z-index:5;
 }
-
 .azan{
   color:#facc15;
   text-shadow:0 0 40px rgba(250,204,21,.9);
 }
-
 .iqomah{
   color:#38bdf8;
   text-shadow:0 0 40px rgba(56,189,248,.9);
@@ -98,31 +104,26 @@ body{
 
 /* ===== JADWAL SHOLAT ===== */
 .sholat-bottom{
-  background:rgba(255,255,255,.5);
+  background:rgba(255,255,255,.6);
   backdrop-filter:blur(14px);
   padding:14px 20px;
 }
-
 .sholat-bar{
   display:grid;
   grid-template-columns:repeat(7,1fr);
   gap:10px;
 }
-
 .sholat{
-  background:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.75);
   border-radius:18px;
   padding:14px 8px;
   text-align:center;
   font-size:14px;
 }
-
 .sholat b{
   display:block;
   font-size:22px;
-  margin-top:4px;
 }
-
 .sholat.active{
   background:#f59e0b;
   color:#fff;
@@ -134,121 +135,19 @@ body{
   height:44px;
   display:flex;
   align-items:center;
-  background:rgba(15,23,42,.65);
-  backdrop-filter:blur(10px);
+  background:rgba(15,23,42,.75);
   color:#fff;
   overflow:hidden;
 }
-
 .marquee span{
   white-space:nowrap;
   padding-left:100%;
   animation:marquee 22s linear infinite;
   font-size:18px;
 }
-
 @keyframes marquee{
   from{transform:translateX(0)}
   to{transform:translateX(-100%)}
-}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:768px){
-  .clock{font-size:30px}
-  .azan,.iqomah{font-size:44px}
-}
-  /* VIDEO & SLIDESHOW LAYER */
-.video-area iframe,
-.slideshow{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  transition:opacity 1.5s ease;
-}
-
-/* VIDEO AKTIF */
-.video-show iframe{
-  opacity:1;
-  pointer-events:auto;
-}
-.video-show .slideshow{
-  opacity:0;
-}
-
-/* WALLPAPER AKTIF */
-.wallpaper-show iframe{
-  opacity:0;
-  pointer-events:none;
-}
-.wallpaper-show .slideshow{
-  opacity:1;
-}
-
-/* SLIDESHOW */
-.slideshow{
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-}
-  .admin-panel{
-  position:fixed;
-  right:12px;
-  bottom:12px;
-  z-index:99999;
-  background:rgba(255,255,255,.9);
-  backdrop-filter:blur(10px);
-  border-radius:18px;
-  padding:14px;
-  width:220px;
-  box-shadow:0 20px 40px rgba(0,0,0,.35);
-}
-
-.admin-title{
-  text-align:center;
-  font-weight:700;
-  margin-bottom:10px;
-  color:#0f172a;
-}
-
-.admin-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.admin-grid button{
-  padding:10px 8px;
-  border:none;
-  border-radius:12px;
-  font-weight:600;
-  background:#e5e7eb;
-  cursor:pointer;
-}
-
-.admin-grid button:active{
-  transform:scale(.95);
-}
-
-/* MODE MALAM */
-body.night{
-  filter:brightness(.6) contrast(1.05);
-}
-  .video-area{
-  position:relative;
-  width:100%;
-  height:100%;
-}
-
-#wallpaperLayer{
-  position:absolute;
-  inset:0;
-  background:url("https://images.unsplash.com/photo-1548013146-72479768bada")
-             center/cover no-repeat;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .8s ease;
-  z-index:5;
 }
 </style>
 </head>
@@ -257,33 +156,31 @@ body.night{
 
 <div class="overlay">
 
-  <!-- HEADER -->
   <div class="header">
     <b>🕌 Masjid Nurut Taqwa</b>
     <div class="clock" id="clock">00:00</div>
   </div>
 
-  <!-- TANGGAL -->
   <div class="info" id="tanggal"></div>
 
-  <!-- VIDEO -->
   <div class="video-area">
-  <iframe
-    id="haramainVideo"
-    src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0&playsinline=1"
-    allow="autoplay; encrypted-media"
-    allowfullscreen>
-  </iframe>
+    <iframe
+      id="haramainVideo"
+      src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0&playsinline=1"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
 
-  <div id="wallpaperLayer"></div>
-</div>
+    <div id="wallpaperLayer"></div>
 
-  <!-- JADWAL SHOLAT -->
+    <div class="azan" id="azanText">AZAN</div>
+    <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
+  </div>
+
   <div class="sholat-bottom">
     <div class="sholat-bar" id="sholatBar"></div>
   </div>
 
-  <!-- RUNNING TEXT -->
   <div class="marquee">
     <span>
       Selamat datang di Masjid Nurut Taqwa • Mohon matikan atau senyapkan HP • Jaga kekhusyukan ibadah
@@ -328,7 +225,7 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
   setInterval(cekWaktu,30000);
 });
 
-/* AZAN + IQOMAH */
+/* AZAN */
 function cekWaktu(){
   const now=new Date().toTimeString().slice(0,5);
   document.querySelectorAll(".sholat").forEach(el=>{
@@ -337,246 +234,40 @@ function cekWaktu(){
       el.classList.add("active");
       azanText.style.display="block";
       azanAudio.play();
-
-      let sisa=600;
-      iqomahText.style.display="block";
-      const timer=setInterval(()=>{
-        let m=Math.floor(sisa/60);
-        let d=sisa%60;
-        iqomahText.innerText=`IQOMAH ${m}:${d.toString().padStart(2,"0")}`;
-        sisa--;
-        if(sisa<0){
-          clearInterval(timer);
-          azanText.style.display="none";
-          iqomahText.style.display="none";
-        }
-      },1000);
+      setTimeout(()=>azanText.style.display="none",60000);
     }
   });
 }
-</script>
-<script>
-/* ===== MODE VIDEO ↔ WALLPAPER ===== */
 
-const videoArea = document.querySelector(".video-area");
-const video = document.getElementById("haramainVideo");
-const slideshow = document.getElementById("slideshow");
+/* ===== VIDEO ↔ WALLPAPER (AMAN) ===== */
+const wallpaper=document.getElementById("wallpaperLayer");
 
-const wallpapers = [
+const wallpapers=[
   "https://images.unsplash.com/photo-1548013146-72479768bada",
   "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f",
   "https://images.unsplash.com/photo-1591608516485-72ef5f7e9b96"
 ];
 
-let slideIndex = 0;
-
-/* GANTI WALLPAPER */
+let idx=0;
 function nextWallpaper(){
-  slideshow.style.backgroundImage = `url('${wallpapers[slideIndex]}')`;
-  slideIndex = (slideIndex + 1) % wallpapers.length;
+  wallpaper.style.backgroundImage=`url('${wallpapers[idx]}')`;
+  idx=(idx+1)%wallpapers.length;
 }
 
-/* TAMPILKAN VIDEO */
-function showVideo(){
-  videoArea.classList.add("video-show");
-  videoArea.classList.remove("wallpaper-show");
-
-  video.src = "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0";
-
-  setTimeout(showWallpaper, 1 * 60 * 1000); // 1 menit
-}
-
-/* TAMPILKAN WALLPAPER */
-function showWallpaper(){
-  videoArea.classList.add("wallpaper-show");
-  videoArea.classList.remove("video-show");
-
-  video.src = ""; // stop video
-  nextWallpaper();
-
-  setTimeout(showVideo, 2 * 60 * 1000); // 2 menit
-}
-
-/* SLIDESHOW BERJALAN */
-setInterval(nextWallpaper, 8000); // ganti gambar tiap 8 detik
-
-/* START */
-showVideo();
-</script>
-  <script>
-document.addEventListener("click", () => {
-  const v = document.getElementById("haramainVideo");
-  if(v){
-    v.src = v.src.replace("mute=1","mute=0");
-  }
-},{ once:true });
-</script>
-
-  <script>
-/* ===== REMOTE CONTROL VIA localStorage ===== */
-
-function remote(cmd){
-  // simpan ke storage (untuk device lain)
-  localStorage.setItem("tvCommand", cmd);
-  localStorage.setItem("tvCommandTime", Date.now());
-
-  // EKSEKUSI LANGSUNG (INI YANG PENTING)
-  jalankanPerintah(cmd);
-}
-
-/* LISTENER DI TV */
-window.addEventListener("storage", e=>{
-  if(e.key==="tvCommand"){
-    jalankanPerintah(e.newValue);
-  }
-});
-
-/* EKSEKUSI */
-function jalankanPerintah(cmd){
-  switch(cmd){
-    case "video":
-      mode=0; mulaiRotasi(); break;
-    case "wallpaper":
-      mode=1; mulaiRotasi(); break;
-    case "ayat":
-      mode=2; mulaiRotasi(); break;
-    case "pause":
-      clearTimeout(rotasiTimer);
-      document.getElementById("haramainVideo").src="";
-      break;
-    case "play":
-      mulaiRotasi(); break;
-    case "mute":
-      document.getElementById("haramainVideo").src=
-        document.getElementById("haramainVideo").src.replace("mute=0","mute=1");
-      break;
-    case "unmute":
-      document.getElementById("haramainVideo").src=
-        document.getElementById("haramainVideo").src.replace("mute=1","mute=0");
-      break;
-    case "skip":
-      mode=(mode+1)%3; mulaiRotasi(); break;
-    case "night":
-      document.body.classList.add("night"); break;
-    case "normal":
-      document.body.classList.remove("night"); break;
-    case "alert":
-      tampilDarurat(); break;
-  }
-}
-
-/* DARURAT */
-function tampilDarurat(){
-  clearTimeout(rotasiTimer);
-  document.getElementById("haramainVideo").src="";
-  wallpaper.style.display="flex";
-  wallpaper.innerHTML="<div class='wallpaper-text'>🚨 PERHATIAN<br>Mohon tetap tenang dan ikuti arahan DKM</div>";
-}
-</script>
-  <script>
-/* ===============================
-   TV MODE CONTROLLER
-================================ */
-
-let tvMode = "wallpaper"; 
-let rotasiTimer = null;
-
-/* EKSEKUSI PERINTAH */
-function jalankanPerintah(cmd){
-  console.log("TV COMMAND:", cmd);
-
-  if(cmd === "wallpaper"){
-    tvMode = "wallpaper";
-    tampilWallpaper();
-  }
-
-  if(cmd === "video"){
-    tvMode = "video";
-    tampilVideo();
-  }
-
-  if(cmd === "azan"){
-    azanText.style.display = "block";
-    azanAudio.play();
-  }
-
-  if(cmd === "reset"){
-    location.reload();
-  }
-}
-
-/* LISTEN DARI ADMIN */
-window.addEventListener("storage", e=>{
-  if(e.key === "tvCommand"){
-    jalankanPerintah(e.newValue);
-  }
-});
-
-/* ===== MODE ===== */
-function tampilWallpaper(){
-  document.body.classList.remove("mode-video");
-  document.getElementById("haramainVideo").style.display = "none";
-}
-
-function tampilVideo(){
-  const v = document.getElementById("haramainVideo");
-  v.style.display = "block";
-  v.src = "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0";
-}
-</script>
-  <script>
-const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
-const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-function jalankanPerintah(cmd){
-  console.log("TV CMD:", cmd);
-
-  if(cmd==="wallpaper"){
-    document.getElementById("haramainVideo").style.display="none";
-  }
-
-  if(cmd==="video"){
-    const v=document.getElementById("haramainVideo");
-    v.style.display="block";
-    v.src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0";
-  }
-
-  if(cmd==="azan"){
-    azanText.style.display="block";
-    azanAudio.play();
-  }
-}
-
-/* LISTEN REALTIME */
-sb.channel("tv-control")
-  .on("postgres_changes", {
-    event: "UPDATE",
-    schema: "public",
-    table: "tv_control"
-  }, payload => {
-    jalankanPerintah(payload.new.command);
-  })
-  .subscribe();
-    <script>
-const wallpaper = document.getElementById("wallpaperLayer");
-
-// TAMPIL VIDEO 1 MENIT
-function showVideo(){
-  wallpaper.style.opacity = "0";
-}
-
-// TAMPIL WALLPAPER
-function showWallpaper(){
-  wallpaper.style.opacity = "1";
-}
-
-// LOOP: 1 menit video → 30 detik wallpaper
+/* LOOP: 1 menit video → 30 detik wallpaper */
 setInterval(()=>{
-  showVideo();
-  setTimeout(showWallpaper, 60 * 1000);
-}, 90 * 1000);
+  wallpaper.style.opacity="0";
+  setTimeout(()=>{
+    nextWallpaper();
+    wallpaper.style.opacity="1";
+  },60000);
+},90000);
+
+setInterval(nextWallpaper,8000);
+
+/* UNLOCK AUDIO */
+document.addEventListener("click",()=>{}, {once:true});
 </script>
-</script>
+
 </body>
 </html>
