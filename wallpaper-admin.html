@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Wallpaper TV Masjid</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:#f1f5f9;
+  color:#0f172a;
+}
+.header{
+  background:#0f172a;
+  color:#fff;
+  padding:16px;
+  text-align:center;
+  font-size:18px;
+  font-weight:700;
+}
+.container{
+  max-width:600px;
+  margin:auto;
+  padding:16px;
+}
+.box{
+  background:#fff;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:14px;
+}
+button{
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+}
+button.danger{
+  background:#dc2626;
+}
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.item{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  background:#fff;
+  padding:10px;
+  border-radius:14px;
+  box-shadow:0 6px 14px rgba(0,0,0,.1);
+}
+.item img{
+  width:64px;
+  height:64px;
+  border-radius:10px;
+  object-fit:cover;
+}
+.item b{
+  display:block;
+}
+.item small{
+  color:#64748b;
+}
+.actions{
+  margin-left:auto;
+  display:flex;
+  gap:6px;
+}
+.actions button{
+  padding:6px 10px;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🖼️ Admin Wallpaper TV Masjid</div>
+
+<div class="container">
+
+  <!-- UPLOAD -->
+  <div class="box">
+    <b>Upload Wallpaper Baru</b>
+    <input type="text" id="title" placeholder="Judul (opsional)">
+    <input type="file" id="file" accept="image/*">
+    <button onclick="upload()">Upload</button>
+  </div>
+
+  <!-- LIST -->
+  <div class="box">
+    <b>Daftar Wallpaper</b>
+    <div id="list" class="list">Memuat…</div>
+  </div>
+
+</div>
+
+<script>
+/* ===== SUPABASE ===== */
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ===== LOAD LIST ===== */
+async function load(){
+  const { data, error } = await sb
+    .from("tv_wallpaper")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+  const box=document.getElementById("list");
+  box.innerHTML="";
+
+  if(!data || data.length===0){
+    box.innerHTML="Belum ada wallpaper";
+    return;
+  }
+
+  data.forEach(r=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
+      <img src="${r.image_url}">
+      <div>
+        <b>${r.title||"Tanpa judul"}</b>
+        <small>${r.active?"Aktif":"Nonaktif"}</small>
+      </div>
+      <div class="actions">
+        <button onclick="toggle(${r.id},${r.active})">
+          ${r.active?"OFF":"ON"}
+        </button>
+        <button class="danger" onclick="hapus(${r.id})">Hapus</button>
+      </div>
+    `;
+    box.appendChild(div);
+  });
+}
+
+/* ===== UPLOAD ===== */
+async function upload(){
+  const file=document.getElementById("file").files[0];
+  const title=document.getElementById("title").value;
+
+  if(!file) return alert("Pilih gambar");
+
+  const name=Date.now()+"_"+file.name;
+
+  await sb.storage.from("wallpaper").upload(name,file);
+
+  const url=sb.storage.from("wallpaper").getPublicUrl(name).data.publicUrl;
+
+  await sb.from("tv_wallpaper").insert({
+    title,
+    image_url:url,
+    active:true
+  });
+
+  document.getElementById("file").value="";
+  document.getElementById("title").value="";
+  load();
+}
+
+/* ===== TOGGLE ===== */
+async function toggle(id,active){
+  await sb.from("tv_wallpaper")
+    .update({active:!active})
+    .eq("id",id);
+  load();
+}
+
+/* ===== HAPUS ===== */
+async function hapus(id){
+  if(!confirm("Hapus wallpaper ini?")) return;
+  await sb.from("tv_wallpaper").delete().eq("id",id);
+  load();
+}
+
+load();
+</script>
+
+</body>
+</html>
