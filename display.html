@@ -121,19 +121,18 @@ body{
   100%{transform:translateX(-100%)}
 }
 
-/* ===== LIVE HARAMAIN (TIDAK NUTUP LAYOUT) ===== */
+/* ===== LIVE HARAMAIN (AMAN, TIDAK NUTUP JADWAL) ===== */
 .haramain-section{
-  position:absolute;          /* ⬅️ BUKAN fixed */
-  top:140px;                  /* ⬅️ di bawah header + jadwal */
+  position:absolute;
+  top:220px;              /* ⬅️ INI KUNCI UTAMA (turun di bawah header + jadwal) */
   left:0;
   right:0;
 
-  z-index:50;                 /* ⬅️ aman, tidak menimpa header */
+  z-index:10;             /* ⬅️ lebih rendah dari header & sholat */
   display:flex;
   justify-content:center;
-  align-items:flex-start;
 
-  background:transparent;     /* ⬅️ transparan */
+  background:transparent;
   pointer-events:none;
 
   opacity:0;
@@ -147,14 +146,15 @@ body{
 
 /* FRAME VIDEO */
 .haramain-frame{
-  width:92%;
-  max-width:1100px;
+  width:90%;
+  max-width:1000px;
   aspect-ratio:16 / 9;
-  border-radius:22px;
+
+  border-radius:20px;
   overflow:hidden;
 
   background:#000;
-  box-shadow:0 25px 70px rgba(0,0,0,.35);
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
 }
 
 /* VIDEO */
