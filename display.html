@@ -138,21 +138,19 @@ body{
 
 /* ===== LIVE HARAMAIN (AMAN, TIDAK NUTUP JADWAL) ===== */
 .haramain-section{
-  position:fixed;
-  top:130px;
-  left:50%;
-  transform:translateX(-50%);
-  width:78%;
-  max-width:1200px;
-  z-index:20;
+  position:absolute;
+  top:220px;              /* ⬅️ INI KUNCI UTAMA (turun di bawah header + jadwal) */
+  left:0;
+  right:0;
 
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(14px);
-  border-radius:28px;
-  padding:18px;
+  z-index:10;             /* ⬅️ lebih rendah dari header & sholat */
+  display:flex;
+  justify-content:center;
+
+  background:transparent;
+  pointer-events:none;
 
   opacity:0;
-  pointer-events:none;
   transition:opacity .6s ease;
 }
 
