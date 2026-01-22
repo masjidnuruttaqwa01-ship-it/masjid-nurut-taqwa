@@ -302,24 +302,6 @@ body{
 src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 
   <script>
-/* ===== KALENDER HIJRIAH REALTIME ===== */
-function updateHijriah(){
-  const today = new Date();
-  const hijri = today.toLocaleDateString("id-ID-u-ca-islamic", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
-
-  document.getElementById("hijriah").innerText =
-    hijri + " H";
-}
-
-updateHijriah();
-
-/* UPDATE SETIAP JAM (AMAN & RINGAN) */
-setInterval(updateHijriah, 60 * 60 * 1000);
-</script>
 /* JAM */
 function updateClock(){
   clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
@@ -495,6 +477,25 @@ function lanjutSetelahIbadah(){
 
 /* JALANKAN PERTAMA KALI */
 mulaiRotasi();
+</script>
+  <script>
+  /* ===== KALENDER HIJRIAH REALTIME ===== */
+function updateHijriah(){p
+  const today = new Date();
+  const hijri = today.toLocaleDateString("id-ID-u-ca-islamic", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  document.getElementById("hijriah").innerText =
+    hijri + " H";
+}
+
+updateHijriah();
+
+/* UPDATE SETIAP JAM (AMAN & RINGAN) */
+setInterval(updateHijriah, 60 * 60 * 1000);
 </script>
 </body>
 </html>
