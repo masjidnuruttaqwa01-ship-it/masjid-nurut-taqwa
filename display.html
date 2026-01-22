@@ -157,6 +157,40 @@ body{
   .clock{font-size:30px}
   .azan,.iqomah{font-size:44px}
 }
+  /* VIDEO & SLIDESHOW LAYER */
+.video-area iframe,
+.slideshow{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  transition:opacity 1.5s ease;
+}
+
+/* VIDEO AKTIF */
+.video-show iframe{
+  opacity:1;
+  pointer-events:auto;
+}
+.video-show .slideshow{
+  opacity:0;
+}
+
+/* WALLPAPER AKTIF */
+.wallpaper-show iframe{
+  opacity:0;
+  pointer-events:none;
+}
+.wallpaper-show .slideshow{
+  opacity:1;
+}
+
+/* SLIDESHOW */
+.slideshow{
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
 </style>
 </head>
 
@@ -184,7 +218,8 @@ body{
       allow="autoplay; encrypted-media"
       allowfullscreen>
     </iframe>
-
+ <!-- WALLPAPER -->
+  <div class="slideshow" id="slideshow"></div>
   </div>
 
   <!-- JADWAL SHOLAT -->
@@ -264,6 +299,53 @@ function cekWaktu(){
   });
 }
 </script>
+<script>
+/* ===== MODE VIDEO ↔ WALLPAPER ===== */
 
+const videoArea = document.querySelector(".video-area");
+const video = document.getElementById("haramainVideo");
+const slideshow = document.getElementById("slideshow");
+
+const wallpapers = [
+  "https://images.unsplash.com/photo-1548013146-72479768bada",
+  "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f",
+  "https://images.unsplash.com/photo-1591608516485-72ef5f7e9b96"
+];
+
+let slideIndex = 0;
+
+/* GANTI WALLPAPER */
+function nextWallpaper(){
+  slideshow.style.backgroundImage = `url('${wallpapers[slideIndex]}')`;
+  slideIndex = (slideIndex + 1) % wallpapers.length;
+}
+
+/* TAMPILKAN VIDEO */
+function showVideo(){
+  videoArea.classList.add("video-show");
+  videoArea.classList.remove("wallpaper-show");
+
+  video.src = "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0";
+
+  setTimeout(showWallpaper, 1 * 60 * 1000); // 1 menit
+}
+
+/* TAMPILKAN WALLPAPER */
+function showWallpaper(){
+  videoArea.classList.add("wallpaper-show");
+  videoArea.classList.remove("video-show");
+
+  video.src = ""; // stop video
+  nextWallpaper();
+
+  setTimeout(showVideo, 2 * 60 * 1000); // 2 menit
+}
+
+/* SLIDESHOW BERJALAN */
+setInterval(nextWallpaper, 8000); // ganti gambar tiap 8 detik
+
+/* START */
+showVideo();
+</script>
 </body>
 </html>
