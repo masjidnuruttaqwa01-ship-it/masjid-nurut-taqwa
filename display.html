@@ -289,14 +289,14 @@ function cekWaktu(){
 }
 </script>
 <script>
-/* ===== LIVE HARAMAIN (5 MENIT ON / 1 DETIK OFF) ===== */
+/* ===== LIVE HARAMAIN (5 MENIT ON / 1 MENIT OFF) ===== */
 
 const haramain = document.getElementById("haramainSection");
 const video = document.getElementById("haramainVideo");
 
 // WAKTU (ms)
-const SHOW_TIME = 5 * 60 * 1000; // 5 menit
-const GAP_TIME  = 10000;          // 10 detik
+const SHOW_TIME = 5 * 60 * 1000; // 5 menit ON
+const GAP_TIME  = 1 * 60 * 1000; // 1 menit OFF
 
 function showHaramain(){
   haramain.classList.add("show");
@@ -308,7 +308,7 @@ function showHaramain(){
 
 function hideHaramain(){
   haramain.classList.remove("show");
-  video.src = ""; // STOP video (penting!)
+  video.src = ""; // STOP video
   setTimeout(showHaramain, GAP_TIME);
 }
 
