@@ -528,5 +528,40 @@ function tampilVideo(){
   v.src = "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0";
 }
 </script>
+  <script>
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function jalankanPerintah(cmd){
+  console.log("TV CMD:", cmd);
+
+  if(cmd==="wallpaper"){
+    document.getElementById("haramainVideo").style.display="none";
+  }
+
+  if(cmd==="video"){
+    const v=document.getElementById("haramainVideo");
+    v.style.display="block";
+    v.src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0";
+  }
+
+  if(cmd==="azan"){
+    azanText.style.display="block";
+    azanAudio.play();
+  }
+}
+
+/* LISTEN REALTIME */
+sb.channel("tv-control")
+  .on("postgres_changes", {
+    event: "UPDATE",
+    schema: "public",
+    table: "tv_control"
+  }, payload => {
+    jalankanPerintah(payload.new.command);
+  })
+  .subscribe();
+</script>
 </body>
 </html>
