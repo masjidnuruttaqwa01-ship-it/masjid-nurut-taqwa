@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remote TV Masjid</title>
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#0f172a;
+  color:#fff;
+}
+h2{
+  text-align:center;
+  margin:16px 0;
+}
+.btn{
+  display:block;
+  width:90%;
+  margin:12px auto;
+  padding:16px;
+  font-size:18px;
+  font-weight:700;
+  border:none;
+  border-radius:14px;
+  background:#1e293b;
+  color:#fff;
+}
+.wallpaper{background:#0ea5e9}
+.video{background:#7c3aed}
+.azan{background:#f59e0b}
+.reset{background:#dc2626}
+</style>
+</head>
+
+<body>
+
+<h2>📱 Remote TV Masjid</h2>
+
+<button class="btn wallpaper" onclick="remote('wallpaper')">
+🖼 Wallpaper
+</button>
+
+<button class="btn video" onclick="remote('video')">
+🎥 Live Haramain
+</button>
+
+<button class="btn azan" onclick="remote('azan')">
+🔊 AZAN
+</button>
+
+<button class="btn reset" onclick="remote('reset')">
+♻ Reset TV
+</button>
+
+<script>
+function remote(cmd){
+  // simpan untuk device lain
+  localStorage.setItem("tvCommand", cmd);
+  localStorage.setItem("tvCommandTime", Date.now());
+
+  // EKSEKUSI LANGSUNG (WAJIB)
+  if(window.opener && window.opener.jalankanPerintah){
+    window.opener.jalankanPerintah(cmd);
+  }
+
+  alert("Perintah dikirim: " + cmd);
+}
+</script>
+
+</body>
+</html>
