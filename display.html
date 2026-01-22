@@ -159,6 +159,23 @@ body{
 </head>
 
 <body onclick="openFullscreen()">
+  <button id="enableSound"
+style="
+position:fixed;
+top:16px;
+right:16px;
+z-index:99999;
+padding:12px 16px;
+border-radius:14px;
+border:none;
+background:#22c55e;
+color:#fff;
+font-weight:700;
+font-size:14px;
+box-shadow:0 8px 20px rgba(0,0,0,.35);
+">
+🔊 Aktifkan Suara Live Ka'bah
+  </button>
 
 <div class="bg"></div>
 
@@ -310,23 +327,7 @@ document.getElementById("enableSound").onclick = function () {
 };
 </script>
 <script>
-    <button id="enableSound"
-style="
-position:fixed;
-top:16px;
-right:16px;
-z-index:99999;
-padding:12px 16px;
-border-radius:14px;
-border:none;
-background:#22c55e;
-color:#fff;
-font-weight:700;
-font-size:14px;
-box-shadow:0 8px 20px rgba(0,0,0,.35);
-">
-🔊 Aktifkan Suara Live Ka'bah
-  </button>
+  
 let soundUnlocked = false;
 
 document.getElementById("enableSound").onclick = function () {
