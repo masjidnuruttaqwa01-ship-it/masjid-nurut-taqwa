@@ -45,15 +45,27 @@ body{
 }  
 /* ===== HEADER ===== */
 .header{
-  padding:14px 20px;
-  background:rgba(6,78,59,.85);
+  padding:18px 28px;
+  background:linear-gradient(135deg,#064e3b,#022c22);
   display:flex;
   justify-content:space-between;
   align-items:center;
+  box-shadow:0 6px 20px rgba(0,0,0,.4);
 }
-.header b{font-size:20px}
-.clock{font-size:38px;font-weight:700}
 
+.header b{
+  font-size:26px;
+  letter-spacing:.5px;
+  color:#fde68a;
+  text-shadow:0 0 10px rgba(253,230,138,.4);
+}
+
+.clock{
+  font-size:42px;
+  font-weight:700;
+  color:#ffffff;
+  text-shadow:0 0 12px rgba(34,197,94,.8);
+}
 /* ===== INFO ===== */
 .info{
   text-align:center;
@@ -126,19 +138,21 @@ body{
 
 /* ===== LIVE HARAMAIN (AMAN, TIDAK NUTUP JADWAL) ===== */
 .haramain-section{
-  position:absolute;
-  top:220px;              /* ⬅️ INI KUNCI UTAMA (turun di bawah header + jadwal) */
-  left:0;
-  right:0;
+  position:fixed;
+  top:130px;
+  left:50%;
+  transform:translateX(-50%);
+  width:78%;
+  max-width:1200px;
+  z-index:20;
 
-  z-index:10;             /* ⬅️ lebih rendah dari header & sholat */
-  display:flex;
-  justify-content:center;
-
-  background:transparent;
-  pointer-events:none;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(14px);
+  border-radius:28px;
+  padding:18px;
 
   opacity:0;
+  pointer-events:none;
   transition:opacity .6s ease;
 }
 
@@ -146,7 +160,6 @@ body{
   opacity:1;
   pointer-events:auto;
 }
-
 /* FRAME VIDEO */
 .haramain-frame{
   width:90%;
@@ -489,6 +502,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 });
+  </script>
+  <script>
+function highlightNextPrayer(){
+  const now = new Date();
+  let minDiff = 9999;
+  let target = null;
+
+  document.querySelectorAll(".sholat").forEach(el=>{
+    const [h,m] = el.dataset.time.split(":");
+    const t = new Date();
+    t.setHours(h,m,0);
+
+    const diff = (t - now) / 60000;
+    if(diff > 0 && diff < minDiff){
+      minDiff = diff;
+      target = el;
+    }
+  });
+
+  document.querySelectorAll(".sholat").forEach(e=>e.classList.remove("active"));
+  if(target) target.classList.add("active");
+}
+
+setInterval(highlightNextPrayer,60000);
   </script>
 </body>
 </html>
