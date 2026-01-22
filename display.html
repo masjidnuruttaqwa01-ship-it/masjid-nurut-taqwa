@@ -10,6 +10,7 @@
 <style>
 *{box-sizing:border-box}
 body{
+  
   margin:0;
   font-family:Poppins,sans-serif;
   color:#fff;
@@ -165,7 +166,73 @@ body{
   height:100%;
   border:0;
 }
+  <meta name="orientation" content="landscape">
+<meta name="screen-orientation" content="landscape">
+<meta name="x5-orientation" content="landscape">
+/* ===== MODE TV / ANDROID TV ===== */
+@media screen and (min-width: 1024px) {
+
+  body{
+    font-size:18px;
+  }
+
+  .header{
+    padding:18px 32px;
+  }
+
+  .header b{
+    font-size:26px;
+  }
+
+  .clock{
+    font-size:54px;
+  }
+
+  .info{
+    font-size:18px;
+    margin:12px 0;
+  }
+
+  .sholat-bar{
+    padding:16px 32px;
+    gap:12px;
+  }
+
+  .sholat{
+    padding:18px 8px;
+    border-radius:20px;
+  }
+
+  .sholat b{
+    font-size:22px;
+  }
+
+  .azan{
+    font-size:72px;
+    margin-top:20px;
+  }
+
+  .iqomah{
+    font-size:64px;
+  }
+
+  .marquee{
+    font-size:22px;
+    padding:14px;
+  }
+
+  /* LIVE HARAMAIN – POSISI AMAN DI TV */
+  .haramain-section{
+    top:260px;
+  }
+
+  .haramain-frame{
+    max-width:1280px;
+    border-radius:28px;
+  }
+  }
 </style>
+
 </head>
 
 <body onclick="openFullscreen()">
@@ -358,5 +425,23 @@ document.getElementById("enableSound").onclick = function () {
   }, 1500);
 };
 </script>
+  <script>
+/* ===== AUTO FULLSCREEN MODE TV ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  const ua = navigator.userAgent.toLowerCase();
+
+  if(
+    ua.includes("android tv") ||
+    ua.includes("smart-tv") ||
+    ua.includes("tv")
+  ){
+    setTimeout(() => {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      }
+    }, 1500);
+  }
+});
+  </script>
 </body>
 </html>
