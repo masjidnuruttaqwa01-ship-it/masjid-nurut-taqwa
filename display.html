@@ -59,7 +59,16 @@ body{
 }
 
 /* ===== VIDEO ===== */
-.video-area{
+<div id="wallpaperLayer"
+     style="
+       position:absolute;
+       inset:0;
+       background-size:cover;
+       background-position:center;
+       transition:opacity .8s ease;
+       z-index:2;">
+</div>
+  .video-area{
   flex:1;
   position:relative;
 }
