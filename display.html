@@ -433,6 +433,108 @@ body{
   font-size:20px;
   opacity:.85;
 } 
+  body{
+  margin:0;
+  background:#000;
+  font-family:Poppins,sans-serif;
+  overflow:hidden;
+}
+
+/* ===== HEADER ATAS ===== */
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:70px;
+  background:linear-gradient(90deg,#064e3b,#065f46);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 24px;
+  z-index:10;
+}
+.header b{
+  font-size:26px;
+  color:#fde68a;
+}
+.clock{
+  font-size:40px;
+  font-weight:700;
+}
+
+/* ===== TANGGAL ===== */
+.info{
+  position:fixed;
+  top:72px;
+  width:100%;
+  text-align:center;
+  font-size:18px;
+  z-index:10;
+}
+
+/* ===== VIDEO FULL (NUTUP ABU-ABU) ===== */
+.haramain-section{
+  position:fixed;
+  top:110px;
+  bottom:120px;
+  left:0;
+  right:0;
+  background:#000;
+  z-index:1;
+}
+.haramain-section iframe{
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+/* ===== JADWAL SHOLAT BAWAH ===== */
+.sholat-bottom{
+  position:fixed;
+  bottom:60px;
+  width:100%;
+  z-index:10;
+}
+.sholat-bar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+  padding:0 16px;
+}
+.sholat{
+  background:#0f766e;
+  border-radius:16px;
+  padding:14px;
+  text-align:center;
+}
+.sholat b{
+  display:block;
+  font-size:22px;
+}
+
+/* ===== RUNNING TEXT ===== */
+.marquee{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#064e3b;
+  color:#fff;
+  padding:12px;
+  font-size:18px;
+  overflow:hidden;
+  white-space:nowrap;
+  z-index:10;
+}
+.marquee span{
+  display:inline-block;
+  padding-left:100%;
+  animation:marquee 25s linear infinite;
+}
+@keyframes marquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(-100%)}
+}
 </style>
 
 </head>
@@ -458,42 +560,41 @@ box-shadow:0 8px 20px rgba(0,0,0,.35);
 
 <div class="bg"></div>
 
-<div class="overlay">
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <b>🕌 Masjid Nurut Taqwa</b>
+  <div class="clock" id="clock">00:00</div>
+</div>
 
-  <!-- HEADER -->
-  <div class="header">
-    <b>🕌 Masjid Nurut Taqwa</b>
-    <div class="clock" id="clock">00:00</div>
-  </div>
+<!-- ===== TANGGAL ===== -->
+<div class="info" id="tanggal"></div>
 
-  <!-- TANGGAL -->
-  <div class="info" id="tanggal"></div>
+<!-- ===== LIVE VIDEO FULL ===== -->
+<div class="haramain-section">
+  <iframe
+    id="haramainVideo"
+    src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
+</div>
 
-  <!-- AZAN / IQOMAH -->
-  <div class="azan" id="azanText">AZAN</div>
-  <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
-
-  <!-- JADWAL SHOLAT -->
+<!-- ===== JADWAL SHOLAT (PINDAH KE BAWAH) ===== -->
+<div class="sholat-bottom">
   <div class="sholat-bar" id="sholatBar"></div>
+</div>
 
-  <!-- ===== AREA TENGAH (WAJIB ADA) ===== -->
-  <div class="main-content">
+<!-- ===== RUNNING TEXT ===== -->
+<div class="marquee">
+  <span>
+    Selamat datang di Masjid Nurut Taqwa • Mohon matikan atau senyapkan HP • Jaga kekhusyukan ibadah
+  </span>
+</div>
 
-    <!-- LIVE HARAMAIN -->
-    <div class="haramain-section show" id="haramainSection">
-      <div class="haramain-title">🕋 Live Masjidil Haram – Makkah</div>
+<audio id="azanAudio"
+src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 
-      <div class="haramain-frame">
-        <iframe
-          id="haramainVideo"
-          src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1"
-          allow="autoplay; encrypted-media"
-          allowfullscreen>
-        </iframe>
-      </div>
-    </div>
 
-  </div>
   <!-- ===== END AREA TENGAH ===== -->
 
   <!-- RUNNING TEXT -->
