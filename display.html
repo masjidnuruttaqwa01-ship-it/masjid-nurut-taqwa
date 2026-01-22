@@ -271,25 +271,7 @@ function cekWaktu(){
   });
 }
 
-/* TOGGLE LIVE HARAMAIN */
 
-const haramain = document.getElementById("haramainSection");
-const video = document.getElementById("haramainVideo");
-
-let tampil = false;
-
-setInterval(() => {
-  tampil = !tampil;
-
-  if(tampil){
-    haramain.classList.add("show");
-    video.src =
-      "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1";
-  }else{
-    haramain.classList.remove("show");
-    video.src = "";
-  }
-}, 10000); // 10 detik
 </script>
 <!-- ===== TOMBOL AKTIFKAN SUARA ===== -->
 <button id="enableSound"
@@ -313,7 +295,43 @@ font-weight:700;
 document.getElementById("enableSound").onclick = function () {
   const video = document.getElementById("haramainVideo");
 
-  video.src =
+ <!-- ===== LIVE HARAMAIN ===== -->
+  <div class="haramain-section" id="haramainSection">
+    <div class="haramain-title">🕋 Live Masjidil Haram – Makkah</div>
+    <div class="haramain-frame">
+      <iframe allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPT UTAMA KAMU (jam, sholat, azan, dll) ===== -->
+  <script>
+    // script yang sudah ada (clock, sholat, azan, dsb)
+  </script>
+
+  <!-- ===== SCRIPT LIVE KA'BAH (TEMPEL DI SINI) ===== -->
+  <script>
+    const haramain = document.getElementById("haramainSection");
+    const iframe = haramain.querySelector("iframe");
+
+    const SHOW_TIME = 5 * 60 * 1000; // 5 menit
+    const GAP_TIME  = 1000;          // 1 detik
+
+    function showHaramain(){
+      haramain.style.display = "block";
+      iframe.src =
+        "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1";
+
+      setTimeout(hideHaramain, SHOW_TIME);
+    }
+
+    function hideHaramain(){
+      haramain.style.display = "none";
+      iframe.src = "";
+      setTimeout(showHaramain, GAP_TIME);
+    }
+
+    showHaramain();
+ video.src =
     "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0";
 
   this.style.display = "none";
