@@ -69,6 +69,20 @@ function remote(cmd){
   alert("Perintah dikirim: " + cmd);
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient(
+  "https://xntiicnhmhgpujeekmxt.supabase.co",
+  "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI"
+);
 
+async function remote(cmd){
+  await sb.from("tv_control")
+    .update({ command: cmd })
+    .eq("id", 1);
+
+  alert("Dikirim: " + cmd);
+}
+</script>
 </body>
 </html>
