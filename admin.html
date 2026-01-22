@@ -143,6 +143,30 @@ async function loadWallpaper(){
 
 loadWallpaper();
 </script>
+<script>
+async function loadGallery(){
+  const { data, error } = await supabase
+    .from("gallery")
+    .select("*")
+    .order("created_at", { ascending:false });
 
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  const box = document.getElementById("gallery");
+  box.innerHTML = "";
+
+  data.forEach(f=>{
+    const img = document.createElement("img");
+    img.src = f.url;
+    img.className = "slide-img";
+    box.appendChild(img);
+  });
+}
+
+loadGallery();
+</script>
 </body>
 </html>
