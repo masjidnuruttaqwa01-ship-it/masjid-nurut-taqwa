@@ -276,44 +276,23 @@ function cekWaktu(){
 const haramain = document.getElementById("haramainSection");
 const video = document.getElementById("haramainVideo");
 
-// URL LIVE KA'BAH
-const LIVE_URL =
-  "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1";
+let tampil = false;
 
-// DURASI
-const TAMPIL_LIVE = 5 * 60 * 1000; // 5 menit
-const TRANSISI = 1000;            // 1 detik
+setInterval(() => {
+  tampil = !tampil;
 
-function tampilkanLiveKabah(){
-  haramain.style.display = "block";
-  video.src = LIVE_URL;
-
-  // setelah 5 menit → sembunyikan
-  setTimeout(sembunyikanLiveKabah, TAMPIL_LIVE);
-}
-
-function sembunyikanLiveKabah(){
-  haramain.style.display = "none";
-  video.src = ""; // stop stream (WAJIB)
-
-  // tunggu 1 detik → tampilkan lagi
-  setTimeout(tampilkanLiveKabah, TRANSISI);
-}
-
-// MULAI LOOP
-tampilkanLiveKabah();
-  <script>
-const btn = document.getElementById("enableSound");
-const video = document.getElementById("haramainVideo");
-
-btn.onclick = () => {
-  video.src =
-    "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0";
-
-  btn.style.display = "none"; // hilangkan tombol
-};
+  if(tampil){
+    haramain.classList.add("show");
+    video.src =
+      "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1";
+  }else{
+    haramain.classList.remove("show");
+    video.src = "";
+  }
+}, 10000); // 10 detik
 </script>
-  <button id="enableSound"
+<!-- ===== TOMBOL AKTIFKAN SUARA ===== -->
+<button id="enableSound"
 style="
 position:fixed;
 top:10px;
@@ -329,5 +308,17 @@ font-weight:700;
 ">
 🔊 Aktifkan Suara
 </button>
+
+<script>
+document.getElementById("enableSound").onclick = function () {
+  const video = document.getElementById("haramainVideo");
+
+  video.src =
+    "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0";
+
+  this.style.display = "none";
+};
+</script>
+
 </body>
 </html>
