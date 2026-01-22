@@ -72,7 +72,21 @@ body{
   border:0;
   z-index:1;
 }
+<!-- WALLPAPER MODE -->
+<div id="wallpaperMode" class="wallpaper-mode">
+  <div class="wallpaper-text">
+    ﷽ <br>
+    “Sesungguhnya sholat itu adalah kewajiban yang ditentukan waktunya”
+    <br><small>(QS. An-Nisa: 103)</small>
+  </div>
+</div>
 
+<!-- AYAT / HADITS MODE -->
+<div id="ayatMode" class="ayat-mode">
+  <div class="ayat-text" id="ayatText">
+    “Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lain.”
+  </div>
+</div>
 /* ===== AZAN / IQOMAH ===== */
 .azan,
 .iqomah{
@@ -191,6 +205,39 @@ body{
   background-position:center;
   background-repeat:no-repeat;
 }
+  .wallpaper-mode,
+.ayat-mode{
+  position:absolute;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px;
+  backdrop-filter:blur(4px);
+}
+
+.wallpaper-mode{
+  background:rgba(255,255,255,0.15);
+}
+
+.wallpaper-text{
+  font-size:34px;
+  font-weight:600;
+  color:#0f172a;
+  text-shadow:0 4px 20px rgba(0,0,0,.25);
+}
+
+.ayat-mode{
+  background:rgba(15,23,42,0.65);
+}
+
+.ayat-text{
+  font-size:38px;
+  color:#ffffff;
+  font-weight:600;
+  line-height:1.4;
+}
 </style>
 </head>
 
@@ -281,7 +328,7 @@ function cekWaktu(){
       el.classList.add("active");
       azanText.style.display="block";
       azanAudio.play();
-
+aktifkanAzan();
       let sisa=600;
       iqomahText.style.display="block";
       const timer=setInterval(()=>{
@@ -295,6 +342,7 @@ function cekWaktu(){
           iqomahText.style.display="none";
         }
       },1000);
+      lanjutSetelahIbadah();
     }
   });
 }
@@ -354,6 +402,66 @@ document.addEventListener("click", () => {
     v.src = v.src.replace("mute=1","mute=0");
   }
 },{ once:true });
+</script>
+  <script>
+/* ===== ROTASI KONTEN CERDAS ===== */
+
+const video = document.getElementById("haramainVideo");
+const wallpaper = document.getElementById("wallpaperMode");
+const ayat = document.getElementById("ayatMode");
+
+let mode = 0; // 0=video,1=wallpaper,2=ayat
+let rotasiTimer = null;
+let azanAktif = false;
+
+/* DURASI (ms) */
+const DURASI_VIDEO = 5 * 60 * 1000; // 5 menit
+const DURASI_WALLPAPER = 60 * 1000; // 1 menit
+const DURASI_AYAT = 20 * 1000; // 20 detik
+
+function mulaiRotasi(){
+  if(azanAktif) return;
+
+  clearTimeout(rotasiTimer);
+
+  // SEMUA MATI DULU
+  video.style.display="none";
+  wallpaper.style.display="none";
+  ayat.style.display="none";
+
+  if(mode===0){
+    video.style.display="block";
+    video.src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0";
+    rotasiTimer=setTimeout(()=>{mode=1;mulaiRotasi()},DURASI_VIDEO);
+  }
+  else if(mode===1){
+    video.src="";
+    wallpaper.style.display="flex";
+    rotasiTimer=setTimeout(()=>{mode=2;mulaiRotasi()},DURASI_WALLPAPER);
+  }
+  else{
+    ayat.style.display="flex";
+    rotasiTimer=setTimeout(()=>{mode=0;mulaiRotasi()},DURASI_AYAT);
+  }
+}
+
+/* ===== HENTIKAN SAAT AZAN ===== */
+function aktifkanAzan(){
+  azanAktif=true;
+  clearTimeout(rotasiTimer);
+  video.src="";
+  wallpaper.style.display="none";
+  ayat.style.display="none";
+}
+
+/* ===== LANJUT SETELAH IQOMAH ===== */
+function lanjutSetelahIbadah(){
+  azanAktif=false;
+  mulaiRotasi();
+}
+
+/* JALANKAN PERTAMA KALI */
+mulaiRotasi();
 </script>
 </body>
 </html>
