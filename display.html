@@ -234,6 +234,22 @@ body{
 body.night{
   filter:brightness(.6) contrast(1.05);
 }
+  .video-area{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+
+#wallpaperLayer{
+  position:absolute;
+  inset:0;
+  background:url("https://images.unsplash.com/photo-1548013146-72479768bada")
+             center/cover no-repeat;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .8s ease;
+  z-index:5;
+}
 </style>
 </head>
 
@@ -252,18 +268,15 @@ body.night{
 
   <!-- VIDEO -->
   <div class="video-area">
+  <iframe
+    id="haramainVideo"
+    src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0&playsinline=1"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
 
-    <div class="azan" id="azanText">AZAN</div>
-    <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
-
-    <iframe id="haramainVideo"
-      src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
- <!-- WALLPAPER -->
-  <div class="slideshow" id="slideshow"></div>
-  </div>
+  <div id="wallpaperLayer"></div>
+</div>
 
   <!-- JADWAL SHOLAT -->
   <div class="sholat-bottom">
@@ -545,6 +558,25 @@ sb.channel("tv-control")
     jalankanPerintah(payload.new.command);
   })
   .subscribe();
+    <script>
+const wallpaper = document.getElementById("wallpaperLayer");
+
+// TAMPIL VIDEO 1 MENIT
+function showVideo(){
+  wallpaper.style.opacity = "0";
+}
+
+// TAMPIL WALLPAPER
+function showWallpaper(){
+  wallpaper.style.opacity = "1";
+}
+
+// LOOP: 1 menit video → 30 detik wallpaper
+setInterval(()=>{
+  showVideo();
+  setTimeout(showWallpaper, 60 * 1000);
+}, 90 * 1000);
+</script>
 </script>
 </body>
 </html>
