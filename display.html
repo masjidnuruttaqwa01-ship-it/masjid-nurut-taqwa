@@ -39,6 +39,9 @@ body{
   position:relative;
   z-index:1;
 }
+  .overlay{
+  position:relative;
+  }
 
 /* ===== HEADER ===== */
 .header{
@@ -121,28 +124,22 @@ body{
   100%{transform:translateX(-100%)}
 }
 
-/* ===== LIVE HARAMAIN (BACKGROUND NETRAL) ===== */
+/* ===== LIVE HARAMAIN (TIDAK NUTUP LAYOUT) ===== */
 .haramain-section{
-  position:fixed;
-  inset:0;
-  z-index:9999;
+  position:absolute;          /* ⬅️ BUKAN fixed */
+  top:140px;                  /* ⬅️ di bawah header + jadwal */
+  left:0;
+  right:0;
 
-  /* background NETRAL terang */
-  .haramain-section{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-
-  /* ✅ TRANSPARAN / NETRAL */
-  background:rgba(0,0,0,0);
-
+  z-index:50;                 /* ⬅️ aman, tidak menimpa header */
   display:flex;
-  flex-direction:column;
   justify-content:center;
-  align-items:center;
+  align-items:flex-start;
+
+  background:transparent;     /* ⬅️ transparan */
+  pointer-events:none;
 
   opacity:0;
-  pointer-events:none;
   transition:opacity .6s ease;
 }
 
@@ -150,17 +147,21 @@ body{
   opacity:1;
   pointer-events:auto;
 }
-  .haramain-frame{
-  width:90%;
-  max-width:1200px;
-  aspect-ratio:16/9;
-  border-radius:24px;
+
+/* FRAME VIDEO */
+.haramain-frame{
+  width:92%;
+  max-width:1100px;
+  aspect-ratio:16 / 9;
+  border-radius:22px;
   overflow:hidden;
 
-  /* efek mewah */
+  background:#000;
   box-shadow:0 25px 70px rgba(0,0,0,.35);
-  }
-  .haramain-frame iframe{
+}
+
+/* VIDEO */
+.haramain-frame iframe{
   width:100%;
   height:100%;
   border:0;
