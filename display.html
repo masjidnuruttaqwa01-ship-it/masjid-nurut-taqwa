@@ -3,435 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Display Masjid – Jadwal Sholat & Live Haramain</title>
+<title>Display Masjid Nurut Taqwa</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  
-  margin:0;
   font-family:Poppins,sans-serif;
+  background:#000;
   color:#fff;
   overflow:hidden;
 }
 
-/* ===== BACKGROUND ===== */
-.bg{
+/* ===== LAYOUT UTAMA TV ===== */
+.overlay{
   position:fixed;
   inset:0;
-  z-index:-2;
-  background-size:cover;
-  background-position:center;
-  animation:bgSlide 30s infinite;
-}
-@keyframes bgSlide{
-  0%{background-image:url('https://images.unsplash.com/photo-1585030179234-6d0f3a38d2f4')}
-  33%{background-image:url('https://images.unsplash.com/photo-1588072432836-e10032774350')}
-  66%{background-image:url('https://images.unsplash.com/photo-1600185365483-26d7c7f4c32c')}
-  100%{background-image:url('https://images.unsplash.com/photo-1585030179234-6d0f3a38d2f4')}
-}
-
-/* ===== OVERLAY ===== */
-.overlay{
-  background:rgba(0,0,0,.55);
-  min-height:100vh;
-  position:relative;
-  z-index:1;
-}
-.overlay{
-  position:relative;
-}  
-/* ===== HEADER ===== */
-.header{
-  padding:18px 28px;
-  background:linear-gradient(135deg,#064e3b,#022c22);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 6px 20px rgba(0,0,0,.4);
-}
-
-.header b{
-  font-size:26px;
-  letter-spacing:.5px;
-  color:#fde68a;
-  text-shadow:0 0 10px rgba(253,230,138,.4);
-}
-
-.clock{
-  font-size:42px;
-  font-weight:700;
-  color:#ffffff;
-  text-shadow:0 0 12px rgba(34,197,94,.8);
-}
-/* ===== INFO ===== */
-.info{
-  text-align:center;
-  margin:8px 0;
-  font-size:14px;
-}
-
-/* ===== SHOLAT ===== */
-.sholat-bar{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:6px;
-  padding:12px;
-}
-.sholat{
-  background:#0f766e;
-  padding:14px 6px;
-  border-radius:16px;
-  text-align:center;
-}
-.sholat b{display:block;font-size:18px}
-.active{
-  background:#7c3aed;
-  animation:pulse 1.2s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(124,58,237,.7)}
-  70%{box-shadow:0 0 0 25px rgba(124,58,237,0)}
-  100%{box-shadow:0 0 0 0 rgba(124,58,237,0)}
-}
-<!-- ===== JADWAL JUM'AT ===== -->
-<div class="jumat-section" id="jumatSection">
-  <div class="jumat-title">🕌 Jadwal Sholat Jum’at</div>
-
-  <div class="jumat-card">
-    <div class="jumat-item">
-      <span class="label">Hari / Tanggal</span>
-      <span class="value" id="jumatTanggal">–</span>
-    </div>
-
-    <div class="jumat-item">
-      <span class="label">Imam</span>
-      <span class="value" id="jumatImam">–</span>
-    </div>
-
-    <div class="jumat-item">
-      <span class="label">Khatib</span>
-      <span class="value" id="jumatKhatib">–</span>
-    </div>
-
-    <div class="jumat-item">
-      <span class="label">Muadzin</span>
-      <span class="value" id="jumatMuadzin">–</span>
-    </div>
-
-    <div class="jumat-item highlight">
-      <span class="label">Waktu</span>
-      <span class="value">11.45 WIB</span>
-    </div>
-  </div>
-</div>
-/* ===== AZAN ===== */
-.azan{
-  text-align:center;
-  font-size:46px;
-  font-weight:700;
-  color:#facc15;
-  display:none;
-}
-
-/* ===== IQOMAH ===== */
-.iqomah{
-  text-align:center;
-  font-size:42px;
-  font-weight:700;
-  color:#22c55e;
-  display:none;
-}
-
-/* ===== RUNNING TEXT ===== */
-.marquee{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  background:#064e3b;
-  padding:10px;
-  font-size:18px;
-  white-space:nowrap;
-  overflow:hidden;
-}
-.marquee span{
-  display:inline-block;
-  padding-left:100%;
-  animation:marquee 25s linear infinite;
-}
-@keyframes marquee{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(-100%)}
-}
-/* ===== VIDEO LIVE FULL TV ===== */
-.haramain-section{
-  position:fixed;
-  top:110px;          /* di bawah header */
-  left:0;
-  right:0;
-  bottom:120px;       /* sisakan untuk jadwal + running text */
-  background:#000;
-  z-index:1;
-}
-
-.haramain-section iframe{
-  width:100%;
-  height:100%;
-  border:0;
-  object-fit:cover;
-}
-
-  <meta name="orientation" content="landscape">
-<meta name="screen-orientation" content="landscape">
-<meta name="x5-orientation" content="landscape">
-/* ===== MODE TV / ANDROID TV ===== */
-@media screen and (min-width: 1024px) {
-
-  body{
-    font-size:18px;
-  }
-
-  .header{
-    padding:18px 32px;
-  }
-
-  .header b{
-    font-size:26px;
-  }
-
-  .clock{
-    font-size:54px;
-  }
-
-  .info{
-    font-size:18px;
-    margin:12px 0;
-  }
-
-  .sholat-bar{
-    padding:16px 32px;
-    gap:12px;
-  }
-
-  .sholat{
-    padding:18px 8px;
-    border-radius:20px;
-  }
-
-  .sholat b{
-    font-size:22px;
-  }
-
-  .azan{
-    font-size:72px;
-    margin-top:20px;
-  }
-
-  .iqomah{
-    font-size:64px;
-  }
-
-  .marquee{
-    font-size:22px;
-    padding:14px;
-  }
-
-  /* LIVE HARAMAIN – POSISI AMAN DI TV */
-  .haramain-section{
-    top:260px;
-  }
-
-  .haramain-frame{
-    max-width:1280px;
-    border-radius:28px;
-  }
-  }
-  .main-content{
-  min-height:calc(100vh - 180px); /* header + footer */
-  }
-  .main-content{
-  min-height:calc(100vh - 220px); /* header + jadwal + marquee */
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  padding-top:20px;
-}
-
-/* UBAH haramain-section */
-.haramain-section{
-  position:relative;
-  inset:auto;
-  background:transparent;
-  width:100%;
   display:flex;
   flex-direction:column;
-  align-items:center;
-  opacity:1;
-  pointer-events:auto;
-}
-  /* ===== JADWAL JUM'AT ===== */
-.jumat-section{
-  margin:18px 26px;
-  padding:20px 26px;
-  border-radius:26px;
-  background:linear-gradient(
-    135deg,
-    rgba(6,78,59,.85),
-    rgba(2,44,34,.9)
-  );
-  box-shadow:0 25px 60px rgba(0,0,0,.45);
-  display:none;
-}
-
-.jumat-title{
-  text-align:center;
-  font-size:26px;
-  font-weight:700;
-  color:#fde68a;
-  margin-bottom:16px;
-  letter-spacing:.5px;
-}
-
-.jumat-card{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
-}
-
-.jumat-item{
-  background:rgba(255,255,255,.1);
-  padding:14px 18px;
-  border-radius:18px;
-  backdrop-filter:blur(10px);
-}
-
-.jumat-item .label{
-  display:block;
-  font-size:14px;
-  opacity:.8;
-}
-
-.jumat-item .value{
-  font-size:22px;
-  font-weight:700;
-  margin-top:4px;
-}
-
-.jumat-item.highlight{
-  grid-column:span 2;
-  background:linear-gradient(135deg,#16a34a,#22c55e);
-  color:#022c22;
-}
-
-@media(max-width:768px){
-  .jumat-card{
-    grid-template-columns:1fr;
-  }
-}
-  .jumat-notif{
-  position:fixed;
-  bottom:80px;
-  left:50%;
-  transform:translateX(-50%);
-  background:linear-gradient(135deg,#facc15,#fde047);
-  color:#022c22;
-  padding:18px 26px;
-  border-radius:22px;
-  font-size:26px;
-  font-weight:700;
-  box-shadow:0 25px 60px rgba(0,0,0,.45);
-  display:none;
-  z-index:9000;
-  }
-  .friday-mode .header{
-  background:linear-gradient(135deg,#1e293b,#020617);
-}
-.friday-mode .sholat{
-  background:#334155;
-}
-.friday-mode .active{
-  background:#f59e0b;
-}
- /* ===== MODE KHUTBAH LIVE ===== */
-.khutbah-live{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(135deg,#020617,#064e3b);
-  z-index:99999;
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-
-.khutbah-live.show{
-  display:flex;
-}
-
-.khutbah-box{
-  text-align:center;
-  color:#f8fafc;
-  padding:60px 80px;
-  border-radius:36px;
-  background:rgba(0,0,0,.35);
-  backdrop-filter:blur(18px);
-  box-shadow:0 40px 120px rgba(0,0,0,.6);
-}
-
-.khutbah-box h1{
-  font-size:52px;
-  margin-bottom:10px;
-  color:#fde047;
-}
-
-.khutbah-box p{
-  font-size:22px;
-  opacity:.9;
-}
-
-.khutbah-info{
-  display:flex;
-  justify-content:center;
-  gap:80px;
-  margin:40px 0;
-  font-size:26px;
-}
-
-.khutbah-info span{
-  font-size:30px;
-  font-weight:700;
-  color:#22c55e;
-}
-
-.khutbah-note{
-  margin-top:30px;
-  font-size:20px;
-  opacity:.85;
-} 
-  body{
-  margin:0;
   background:#000;
-  font-family:Poppins,sans-serif;
-  overflow:hidden;
 }
 
-/* ===== HEADER ATAS ===== */
+/* ===== HEADER ===== */
 .header{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  height:70px;
+  height:72px;
   background:linear-gradient(90deg,#064e3b,#065f46);
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:0 24px;
-  z-index:10;
+  justify-content:space-between;
+  padding:0 28px;
+  flex-shrink:0;
 }
 .header b{
   font-size:26px;
+  font-weight:700;
   color:#fde68a;
 }
 .clock{
@@ -441,175 +47,149 @@ body{
 
 /* ===== TANGGAL ===== */
 .info{
-  position:fixed;
-  top:72px;
-  width:100%;
   text-align:center;
-  font-size:18px;
-  z-index:10;
+  padding:6px 0;
+  font-size:16px;
+  background:#022c22;
+  flex-shrink:0;
 }
 
-/* ===== VIDEO FULL (NUTUP ABU-ABU) ===== */
-.haramain-section{
-  position:fixed;
-  top:110px;
-  bottom:120px;
-  left:0;
-  right:0;
+/* ===== VIDEO FULL AREA ===== */
+.video-area{
+  flex:1;
+  position:relative;
   background:#000;
-  z-index:1;
 }
-.haramain-section iframe{
+
+.video-area iframe{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
   border:0;
 }
 
+/* ===== AZAN / IQOMAH ===== */
+.azan,
+.iqomah{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:64px;
+  font-weight:700;
+  display:none;
+  z-index:5;
+}
+.azan{color:#fde047}
+.iqomah{color:#22c55e}
+
 /* ===== JADWAL SHOLAT BAWAH ===== */
 .sholat-bottom{
-  position:fixed;
-  bottom:60px;
-  width:100%;
-  z-index:10;
+  background:#064e3b;
+  padding:12px 18px;
+  flex-shrink:0;
 }
+
 .sholat-bar{
   display:grid;
   grid-template-columns:repeat(7,1fr);
   gap:10px;
-  padding:0 16px;
 }
+
 .sholat{
   background:#0f766e;
+  padding:14px 8px;
   border-radius:16px;
-  padding:14px;
   text-align:center;
+  font-size:14px;
 }
 .sholat b{
   display:block;
-  font-size:22px;
+  font-size:20px;
+  margin-top:4px;
+}
+.sholat.active{
+  background:#7c3aed;
+  box-shadow:0 0 20px rgba(124,58,237,.7);
 }
 
 /* ===== RUNNING TEXT ===== */
 .marquee{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  background:#064e3b;
-  color:#fff;
-  padding:12px;
-  font-size:18px;
+  height:42px;
+  background:#022c22;
   overflow:hidden;
-  white-space:nowrap;
-  z-index:10;
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
 }
 .marquee span{
-  display:inline-block;
+  white-space:nowrap;
   padding-left:100%;
-  animation:marquee 25s linear infinite;
+  animation:marquee 22s linear infinite;
+  font-size:18px;
 }
 @keyframes marquee{
   from{transform:translateX(0)}
   to{transform:translateX(-100%)}
 }
-</style>
 
+/* ===== RESPONSIVE TV ===== */
+@media(max-width:768px){
+  .clock{font-size:30px}
+  .azan,.iqomah{font-size:42px}
+}
+</style>
 </head>
 
-<body onclick="openFullscreen()">
-  <button id="enableSound"
-style="
-position:fixed;
-top:16px;
-right:16px;
-z-index:99999;
-padding:12px 16px;
-border-radius:14px;
-border:none;
-background:#22c55e;
-color:#fff;
-font-weight:700;
-font-size:14px;
-box-shadow:0 8px 20px rgba(0,0,0,.35);
-">
-🔊 Aktifkan Suara Live Ka'bah
-  </button>
+<body onclick="document.documentElement.requestFullscreen()">
 
-<div class="bg"></div>
+<div class="overlay">
 
-<!-- ===== HEADER ===== -->
-<div class="header">
-  <b>🕌 Masjid Nurut Taqwa</b>
-  <div class="clock" id="clock">00:00</div>
-</div>
+  <!-- HEADER -->
+  <div class="header">
+    <b>🕌 Masjid Nurut Taqwa</b>
+    <div class="clock" id="clock">00:00</div>
+  </div>
 
-<!-- ===== TANGGAL ===== -->
-<div class="info" id="tanggal"></div>
+  <!-- TANGGAL -->
+  <div class="info" id="tanggal"></div>
 
-<!-- ===== LIVE VIDEO FULL ===== -->
-<div class="haramain-section">
-  <iframe
-    id="haramainVideo"
-    src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1"
-    allow="autoplay; encrypted-media"
-    allowfullscreen>
-  </iframe>
-</div>
+  <!-- VIDEO FULL -->
+  <div class="video-area">
 
-<!-- ===== JADWAL SHOLAT (PINDAH KE BAWAH) ===== -->
-<div class="sholat-bottom">
-  <div class="sholat-bar" id="sholatBar"></div>
-</div>
+    <div class="azan" id="azanText">AZAN</div>
+    <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
 
-<!-- ===== RUNNING TEXT ===== -->
-<div class="marquee">
-  <span>
-    Selamat datang di Masjid Nurut Taqwa • Mohon matikan atau senyapkan HP • Jaga kekhusyukan ibadah
-  </span>
-</div>
+    <iframe id="haramainVideo"
+      src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
 
-<audio id="azanAudio"
-src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
+  </div>
 
-
-  <!-- ===== END AREA TENGAH ===== -->
+  <!-- JADWAL SHOLAT -->
+  <div class="sholat-bottom">
+    <div class="sholat-bar" id="sholatBar"></div>
+  </div>
 
   <!-- RUNNING TEXT -->
   <div class="marquee">
     <span>
-      Selamat datang di Masjid • Mohon matikan atau senyapkan HP • Jaga kekhusyukan ibadah
+      Selamat datang di Masjid Nurut Taqwa • Mohon matikan atau senyapkan HP • Jaga kekhusyukan ibadah
     </span>
   </div>
 
-</div>
-<!-- ===== LIVE HARAMAIN ===== -->
-<div class="haramain-section" id="haramainSection">
-  <div class="haramain-title">🕋 Live Masjidil Haram – Makkah</div>
-
-  <div class="haramain-frame">
-    <iframe
-  id="haramainVideo"
-  src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1"
-  allow="autoplay; encrypted-media"
-  allowfullscreen>
-    </iframe>
-  </div>
 </div>
 
 <audio id="azanAudio"
 src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 
 <script>
-/* FULLSCREEN */
-function openFullscreen(){
-  if(document.documentElement.requestFullscreen){
-    document.documentElement.requestFullscreen();
-  }
-}
-
 /* JAM */
 function updateClock(){
-  const d=new Date();
-  clock.innerText=d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+  clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
 setInterval(updateClock,1000);updateClock();
 
@@ -640,10 +220,10 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
 });
 
 /* AZAN + IQOMAH */
-let iqomahTimer=null;
 function cekWaktu(){
   const now=new Date().toTimeString().slice(0,5);
   document.querySelectorAll(".sholat").forEach(el=>{
+    el.classList.remove("active");
     if(el.dataset.time===now){
       el.classList.add("active");
       azanText.style.display="block";
@@ -651,248 +231,21 @@ function cekWaktu(){
 
       let sisa=600;
       iqomahText.style.display="block";
-      iqomahTimer=setInterval(()=>{
+      const timer=setInterval(()=>{
         let m=Math.floor(sisa/60);
         let d=sisa%60;
         iqomahText.innerText=`IQOMAH ${m}:${d.toString().padStart(2,"0")}`;
         sisa--;
         if(sisa<0){
-          clearInterval(iqomahTimer);
-          iqomahText.style.display="none";
+          clearInterval(timer);
           azanText.style.display="none";
+          iqomahText.style.display="none";
         }
       },1000);
-    }else{
-      el.classList.remove("active");
     }
   });
 }
 </script>
-<script>
-/* ===== LIVE HARAMAIN (5 MENIT ON / 1 MENIT OFF) ===== */
 
-const haramain = document.getElementById("haramainSection");
-const video = document.getElementById("haramainVideo");
-
-// WAKTU (ms)
-const SHOW_TIME = 5 * 60 * 1000; // 5 menit ON
-const GAP_TIME  = 1 * 60 * 1000; // 1 menit OFF
-
-function showHaramain(){
-  haramain.classList.add("show");
-  video.src =
-    "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1";
-
-  setTimeout(hideHaramain, SHOW_TIME);
-}
-
-function hideHaramain(){
-  haramain.classList.remove("show");
-  video.src = ""; // STOP video
-  setTimeout(showHaramain, GAP_TIME);
-}
-
-// JALANKAN PERTAMA KALI
-showHaramain();
-</script>
-  
-<script>
-document.getElementById("enableSound").onclick = function () {
-  const video = document.getElementById("haramainVideo");
-
-  video.src =
-    "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0";
-
-  this.style.display = "none";
-};
-</script>
-<script>
-  
-let soundUnlocked = false;
-
-document.getElementById("enableSound").onclick = function () {
-  const video = document.getElementById("haramainVideo");
-
-  // reload iframe dengan suara aktif
-  video.src =
-  soundUnlocked
-    ? "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0"
-    : "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0";
-  soundUnlocked = true;
-  this.innerText = "🔊 Suara Aktif";
-  this.style.background = "#16a34a";
-
-  // sembunyikan tombol setelah aktif
-  setTimeout(() => {
-    this.style.display = "none";
-  }, 1500);
-};
-</script>
-  <script>
-/* ===== AUTO FULLSCREEN MODE TV ===== */
-document.addEventListener("DOMContentLoaded", () => {
-  const ua = navigator.userAgent.toLowerCase();
-
-  if(
-    ua.includes("android tv") ||
-    ua.includes("smart-tv") ||
-    ua.includes("tv")
-  ){
-    setTimeout(() => {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      }
-    }, 1500);
-  }
-});
-  </script>
- <script>
-function highlightNextPrayer(){
-  const now = new Date();
-  let minDiff = 9999;
-  let target = null;
-
-  document.querySelectorAll(".sholat").forEach(el=>{
-    const [h,m] = el.dataset.time.split(":");
-    const t = new Date();
-    t.setHours(h,m,0);
-
-    const diff = (t - now) / 60000;
-    if(diff > 0 && diff < minDiff){
-      minDiff = diff;
-      target = el;
-    }
-  });
-
-  document.querySelectorAll(".sholat").forEach(e=>e.classList.remove("active"));
-  if(target) target.classList.add("active");
-}
-
-setInterval(highlightNextPrayer,60000);
-</script> 
-  <script>
-const hour = new Date().getHours();
-if(hour >= 18 || hour <= 5){
-  document.body.style.filter = "brightness(0.8)";
-}
-  </script>
- <script>
-/* ===== DATA JUM'AT (UBAH DI SINI SAJA) ===== */
-const jadwalJumat = {
-  imam: "Ust.Muhammad Irfani S.pd",
-  khatib: "Ust.Muhammad Irfani S.pd",
-  muadzin: "Mohamad Sholeh"
-};
-
-/* ===== TAMPILKAN HANYA HARI JUMAT ===== */
-const today = new Date();
-const isFriday = today.getDay() === 5;
-
-if(isFriday){
-  const jumatBox = document.getElementById("jumatSection");
-  jumatBox.style.display = "block";
-
-  document.getElementById("jumatImam").innerText = jadwalJumat.imam;
-  document.getElementById("jumatKhatib").innerText = jadwalJumat.khatib;
-  document.getElementById("jumatMuadzin").innerText = jadwalJumat.muadzin;
-
-  document.getElementById("jumatTanggal").innerText =
-    today.toLocaleDateString("id-ID",{
-      weekday:"long",
-      day:"numeric",
-      month:"long",
-      year:"numeric"
-    });
-}
-</script> 
-  <div class="jumat-notif" id="jumatNotif">
-  🕌 <b>Perhatian Jamaah</b><br>
-  Sholat Jum’at akan dimulai dalam <span id="countdownJumat">10:00</span>
-  </div>
-  <script>
-/* ===== NOTIF 10 MENIT SEBELUM JUM'AT ===== */
-function cekNotifJumat(){
-  const now = new Date();
-  if(now.getDay() !== 5) return;
-
-  const target = new Date();
-  target.setHours(11,35,0,0); // 11:35 WIB
-
-  const diff = Math.floor((target - now)/1000);
-  if(diff <= 600 && diff > 0){
-    document.getElementById("jumatNotif").style.display="block";
-    const m = Math.floor(diff/60);
-    const s = diff % 60;
-    document.getElementById("countdownJumat").innerText =
-      `${m}:${s.toString().padStart(2,"0")}`;
-  }else{
-    document.getElementById("jumatNotif").style.display="none";
-  }
-}
-setInterval(cekNotifJumat,1000);
-  </script>
-  <script>
-/* ===== MODE JUM'AT ===== */
-if(new Date().getDay() === 5){
-  document.body.classList.add("friday-mode");
-}
-  </script>
-<!-- ===== MODE KHUTBAH LIVE ===== -->
-<div class="khutbah-live" id="khutbahLive">
-  <div class="khutbah-box">
-    <h1>Khutbah Jum’at</h1>
-    <p>Masjid Nurut Taqwa – Kota Cirebon</p>
-
-    <div class="khutbah-info">
-      <div>🧕 <b>Khatib</b><br><span id="namaKhatib">–</span></div>
-      <div>🕌 <b>Imam</b><br><span id="namaImam">–</span></div>
-    </div>
-
-    <div class="khutbah-note">
-      Mohon jamaah menjaga ketenangan dan kekhusyukan
-    </div>
-  </div>
-</div>  
-  <script>
-/* ===== MODE KHUTBAH LIVE OTOMATIS ===== */
-const khutbahBox = document.getElementById("khutbahLive");
-
-// JAM KHUTBAH
-const KHUTBAH_START = "11:45";
-const KHUTBAH_END   = "12:30";
-
-function cekKhutbah(){
-  const now = new Date();
-  if(now.getDay() !== 5) return; // hanya Jumat
-
-  const jam = now.toTimeString().slice(0,5);
-
-  if(jam >= KHUTBAH_START && jam <= KHUTBAH_END){
-    khutbahBox.classList.add("show");
-  }else{
-    khutbahBox.classList.remove("show");
-  }
-}
-
-setInterval(cekKhutbah,1000);
-</script>
-  <script>
-async function loadKhutbahData(){
-  const today = new Date().toISOString().slice(0,10);
-
-  const { data } = await sb
-    .from("jadwal_jumat")
-    .select("*")
-    .eq("tanggal", today)
-    .single();
-
-  if(!data) return;
-
-  document.getElementById("namaKhatib").innerText = data.khatib;
-  document.getElementById("namaImam").innerText  = data.imam;
-}
-
-loadKhutbahData();
-  </script>
 </body>
 </html>
