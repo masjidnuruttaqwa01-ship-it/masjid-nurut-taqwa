@@ -11,52 +11,49 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:Poppins,sans-serif;
-  background:#000;
+  background:#ffffff;
   overflow:hidden;
+  color:#111827;
 }
 
-/* ===== LAYOUT ===== */
+/* ===== LAYOUT UTAMA ===== */
 .overlay{
   position:fixed;
   inset:0;
   display:flex;
   flex-direction:column;
-  background:#000;
 }
 
 /* ===== HEADER ===== */
 .header{
   height:82px;
-  background:#ffffff;
+  background:#0b4aa2;
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 36px;
-  border-bottom:4px solid #f5c77a; /* emas */
-  box-shadow:0 6px 24px rgba(0,0,0,.15);
 }
 .header b{
   font-size:28px;
   font-weight:700;
-  color:#0b2a6f; /* biru royal */
+  color:#ffffff;
 }
 .clock{
   font-size:44px;
   font-weight:700;
-  color:#1236b1;
+  color:#ffffff;
 }
 
 /* ===== TANGGAL ===== */
 .info{
+  background:#1e5ed6;
+  color:#e5e7eb;
   text-align:center;
-  padding:8px 0;
+  padding:6px 0;
   font-size:16px;
-  background:#f8fafc;
-  color:#475569;
-  border-bottom:1px solid #e5e7eb;
 }
 
-/* ===== VIDEO ===== */
+/* ===== AREA VIDEO ===== */
 .video-area{
   flex:1;
   position:relative;
@@ -70,59 +67,54 @@ body{
   border:0;
 }
 
-/* ===== AZAN / IQOMAH ===== */
+/* ===== AZAN & IQOMAH ===== */
 .azan,
 .iqomah{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-size:74px;
+  font-size:72px;
   font-weight:700;
   display:none;
   z-index:10;
-  text-shadow:0 0 40px rgba(0,0,0,.6);
+  text-shadow:0 0 30px rgba(0,0,0,.6);
 }
-.azan{color:#f5c77a}      /* emas */
-.iqomah{color:#60a5fa}    /* biru muda */
+.azan{color:#fde047}
+.iqomah{color:#38bdf8}
 
 /* ===== JADWAL SHOLAT ===== */
 .sholat-bottom{
-  background:#ffffff;
-  padding:14px 22px;
-  border-top:4px solid #f5c77a;
+  background:#f8fafc;
+  padding:14px 20px;
 }
 .sholat-bar{
   display:grid;
   grid-template-columns:repeat(7,1fr);
-  gap:14px;
+  gap:12px;
 }
 .sholat{
-  background:#eef2ff; /* biru sangat muda */
-  border-radius:20px;
-  padding:16px 10px;
+  background:#22c1c3;
+  color:#ffffff;
+  padding:14px 8px;
+  border-radius:18px;
   text-align:center;
   font-size:14px;
-  color:#0f172a;
 }
 .sholat b{
   display:block;
   font-size:22px;
-  margin-top:6px;
+  margin-top:4px;
 }
 .sholat.active{
-  background:linear-gradient(135deg,#1d4ed8,#7c3aed);
-  color:#fff;
-  box-shadow:
-    0 0 28px rgba(245,199,122,.8),
-    inset 0 0 0 2px rgba(245,199,122,.8);
+  background:#8b5cf6;
+  box-shadow:0 0 30px rgba(139,92,246,.9);
 }
 
 /* ===== RUNNING TEXT ===== */
 .marquee{
-  height:46px;
-  background:#ffffff;
-  border-top:1px solid #e5e7eb;
+  height:44px;
+  background:#0b4aa2;
   overflow:hidden;
   display:flex;
   align-items:center;
@@ -132,7 +124,7 @@ body{
   padding-left:100%;
   animation:marquee 22s linear infinite;
   font-size:18px;
-  color:#1f2937;
+  color:#ffffff;
 }
 @keyframes marquee{
   from{transform:translateX(0)}
@@ -141,8 +133,8 @@ body{
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  .clock{font-size:32px}
-  .azan,.iqomah{font-size:46px}
+  .clock{font-size:30px}
+  .azan,.iqomah{font-size:44px}
 }
 </style>
 </head>
@@ -162,18 +154,19 @@ body{
 
   <!-- VIDEO -->
   <div class="video-area">
+
     <div class="azan" id="azanText">AZAN</div>
     <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
 
-    <iframe
-      id="haramainVideo"
+    <iframe id="haramainVideo"
       src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0"
       allow="autoplay; encrypted-media"
       allowfullscreen>
     </iframe>
+
   </div>
 
-  <!-- SHOLAT -->
+  <!-- JADWAL SHOLAT -->
   <div class="sholat-bottom">
     <div class="sholat-bar" id="sholatBar"></div>
   </div>
@@ -191,15 +184,18 @@ body{
 src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 
 <script>
+/* JAM */
 function updateClock(){
   clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
 setInterval(updateClock,1000);updateClock();
 
+/* TANGGAL */
 tanggal.innerText=new Date().toLocaleDateString("id-ID",{
   weekday:"long",day:"numeric",month:"long",year:"numeric"
 });
 
+/* JADWAL SHOLAT */
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
 .then(r=>r.json())
 .then(res=>{
@@ -220,6 +216,7 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
   setInterval(cekWaktu,30000);
 });
 
+/* AZAN + IQOMAH */
 function cekWaktu(){
   const now=new Date().toTimeString().slice(0,5);
   document.querySelectorAll(".sholat").forEach(el=>{
