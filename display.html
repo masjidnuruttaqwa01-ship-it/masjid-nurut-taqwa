@@ -32,8 +32,9 @@ body{
   align-items:center;
   justify-content:space-between;
   padding:0 36px;
-  background:rgba(255,255,255,.65);
-  backdrop-filter:blur(14px);
+
+  background:rgba(255,255,255,.35); /* LEBIH TRANSPARAN */
+  backdrop-filter:blur(10px);
 }
 .header b{
   font-size:28px;
@@ -104,32 +105,23 @@ body{
 
 /* ===== JADWAL SHOLAT ===== */
 .sholat-bottom{
-  background:rgba(255,255,255,.6);
-  backdrop-filter:blur(14px);
+  background:rgba(255,255,255,.25); /* TEMBUS WALLPAPER */
+  backdrop-filter:blur(8px);
   padding:14px 20px;
 }
-.sholat-bar{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:10px;
-}
+
 .sholat{
-  background:rgba(255,255,255,.75);
+  background:rgba(255,255,255,.45); /* SEMI TRANSPARAN */
   border-radius:18px;
   padding:14px 8px;
   text-align:center;
   font-size:14px;
+  color:#0f172a;
 }
-.sholat b{
-  display:block;
-  font-size:22px;
+  .header,
+.sholat-bottom{
+  box-shadow:0 8px 30px rgba(0,0,0,.15);
 }
-.sholat.active{
-  background:#f59e0b;
-  color:#fff;
-  box-shadow:0 0 30px rgba(245,158,11,.9);
-}
-
 /* ===== RUNNING TEXT ===== */
 .marquee{
   height:44px;
