@@ -477,5 +477,56 @@ function tampilDarurat(){
   wallpaper.innerHTML="<div class='wallpaper-text'>🚨 PERHATIAN<br>Mohon tetap tenang dan ikuti arahan DKM</div>";
 }
 </script>
+  <script>
+/* ===============================
+   TV MODE CONTROLLER
+================================ */
+
+let tvMode = "wallpaper"; 
+let rotasiTimer = null;
+
+/* EKSEKUSI PERINTAH */
+function jalankanPerintah(cmd){
+  console.log("TV COMMAND:", cmd);
+
+  if(cmd === "wallpaper"){
+    tvMode = "wallpaper";
+    tampilWallpaper();
+  }
+
+  if(cmd === "video"){
+    tvMode = "video";
+    tampilVideo();
+  }
+
+  if(cmd === "azan"){
+    azanText.style.display = "block";
+    azanAudio.play();
+  }
+
+  if(cmd === "reset"){
+    location.reload();
+  }
+}
+
+/* LISTEN DARI ADMIN */
+window.addEventListener("storage", e=>{
+  if(e.key === "tvCommand"){
+    jalankanPerintah(e.newValue);
+  }
+});
+
+/* ===== MODE ===== */
+function tampilWallpaper(){
+  document.body.classList.remove("mode-video");
+  document.getElementById("haramainVideo").style.display = "none";
+}
+
+function tampilVideo(){
+  const v = document.getElementById("haramainVideo");
+  v.style.display = "block";
+  v.src = "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0";
+}
+</script>
 </body>
 </html>
