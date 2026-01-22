@@ -313,25 +313,7 @@ tanggal.innerText=new Date().toLocaleDateString("id-ID",{
   weekday:"long",day:"numeric",month:"long",year:"numeric"
 });
   </script>  
-  <script>
-  /* ===== KALENDER HIJRIAH REALTIME ===== */
-function updateHijriah(){p
-  const today = new Date();
-  const hijri = today.toLocaleDateString("id-ID-u-ca-islamic", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
 
-  document.getElementById("hijriah").innerText =
-    hijri + " H";
-}
-
-updateHijriah();
-
-/* UPDATE SETIAP JAM (AMAN & RINGAN) */
-setInterval(updateHijriah, 60 * 60 * 1000);
-  </script>  
   <script>
 /* JADWAL SHOLAT */
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
@@ -498,5 +480,24 @@ function lanjutSetelahIbadah(){
 /* JALANKAN PERTAMA KALI */
 mulaiRotasi();
 </script>
+    <script>
+  /* ===== KALENDER HIJRIAH REALTIME ===== */
+function updateHijriah(){p
+  const today = new Date();
+  const hijri = today.toLocaleDateString("id-ID-u-ca-islamic", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  document.getElementById("hijriah").innerText =
+    hijri + " H";
+}
+
+updateHijriah();
+
+/* UPDATE SETIAP JAM (AMAN & RINGAN) */
+setInterval(updateHijriah, 60 * 60 * 1000);
+  </script>  
 </body>
 </html>
