@@ -354,6 +354,30 @@ body{
     grid-template-columns:1fr;
   }
 }
+  .jumat-notif{
+  position:fixed;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(135deg,#facc15,#fde047);
+  color:#022c22;
+  padding:18px 26px;
+  border-radius:22px;
+  font-size:26px;
+  font-weight:700;
+  box-shadow:0 25px 60px rgba(0,0,0,.45);
+  display:none;
+  z-index:9000;
+  }
+  .friday-mode .header{
+  background:linear-gradient(135deg,#1e293b,#020617);
+}
+.friday-mode .sholat{
+  background:#334155;
+}
+.friday-mode .active{
+  background:#f59e0b;
+}
 </style>
 
 </head>
@@ -649,5 +673,37 @@ if(isFriday){
     });
 }
 </script> 
+  <div class="jumat-notif" id="jumatNotif">
+  🕌 <b>Perhatian Jamaah</b><br>
+  Sholat Jum’at akan dimulai dalam <span id="countdownJumat">10:00</span>
+  </div>
+  <script>
+/* ===== NOTIF 10 MENIT SEBELUM JUM'AT ===== */
+function cekNotifJumat(){
+  const now = new Date();
+  if(now.getDay() !== 5) return;
+
+  const target = new Date();
+  target.setHours(11,35,0,0); // 11:35 WIB
+
+  const diff = Math.floor((target - now)/1000);
+  if(diff <= 600 && diff > 0){
+    document.getElementById("jumatNotif").style.display="block";
+    const m = Math.floor(diff/60);
+    const s = diff % 60;
+    document.getElementById("countdownJumat").innerText =
+      `${m}:${s.toString().padStart(2,"0")}`;
+  }else{
+    document.getElementById("jumatNotif").style.display="none";
+  }
+}
+setInterval(cekNotifJumat,1000);
+  </script>
+  <script>
+/* ===== MODE JUM'AT ===== */
+if(new Date().getDay() === 5){
+  document.body.classList.add("friday-mode");
+}
+  </script>
 </body>
 </html>
