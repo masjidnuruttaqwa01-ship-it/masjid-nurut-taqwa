@@ -12,7 +12,7 @@
 body{
   font-family:Poppins,sans-serif;
   background:#000;
-  color:#fff;
+  color:#000;
   overflow:hidden;
 }
 
@@ -28,7 +28,7 @@ body{
 /* ===== HEADER ===== */
 .header{
   height:72px;
-  background:linear-gradient(90deg,#064e3b,#065f46);
+  background:#ffffff;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -38,11 +38,12 @@ body{
 .header b{
   font-size:26px;
   font-weight:700;
-  color:#fde68a;
+  color:#111827;
 }
 .clock{
   font-size:40px;
   font-weight:700;
+  color:#111827;
 }
 
 /* ===== TANGGAL ===== */
@@ -50,7 +51,8 @@ body{
   text-align:center;
   padding:6px 0;
   font-size:16px;
-  background:#022c22;
+  background:#f3f4f6;
+  color:#1f2937;
   flex-shrink:0;
 }
 
@@ -80,13 +82,14 @@ body{
   font-weight:700;
   display:none;
   z-index:5;
+  text-shadow:0 0 30px rgba(0,0,0,.6);
 }
-.azan{color:#fde047}
+.azan{color:#facc15}
 .iqomah{color:#22c55e}
 
 /* ===== JADWAL SHOLAT BAWAH ===== */
 .sholat-bottom{
-  background:#064e3b;
+  background:#ffffff;
   padding:12px 18px;
   flex-shrink:0;
 }
@@ -98,11 +101,12 @@ body{
 }
 
 .sholat{
-  background:#0f766e;
+  background:#e5e7eb;
   padding:14px 8px;
   border-radius:16px;
   text-align:center;
   font-size:14px;
+  color:#111827;
 }
 .sholat b{
   display:block;
@@ -111,13 +115,14 @@ body{
 }
 .sholat.active{
   background:#7c3aed;
+  color:#ffffff;
   box-shadow:0 0 20px rgba(124,58,237,.7);
 }
 
 /* ===== RUNNING TEXT ===== */
 .marquee{
   height:42px;
-  background:#022c22;
+  background:#f3f4f6;
   overflow:hidden;
   display:flex;
   align-items:center;
@@ -128,6 +133,7 @@ body{
   padding-left:100%;
   animation:marquee 22s linear infinite;
   font-size:18px;
+  color:#111827;
 }
 @keyframes marquee{
   from{transform:translateX(0)}
@@ -187,18 +193,15 @@ body{
 src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 
 <script>
-/* JAM */
 function updateClock(){
   clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
 setInterval(updateClock,1000);updateClock();
 
-/* TANGGAL */
 tanggal.innerText=new Date().toLocaleDateString("id-ID",{
   weekday:"long",day:"numeric",month:"long",year:"numeric"
 });
 
-/* JADWAL SHOLAT */
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
 .then(r=>r.json())
 .then(res=>{
@@ -219,7 +222,6 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
   setInterval(cekWaktu,30000);
 });
 
-/* AZAN + IQOMAH */
 function cekWaktu(){
   const now=new Date().toTimeString().slice(0,5);
   document.querySelectorAll(".sholat").forEach(el=>{
