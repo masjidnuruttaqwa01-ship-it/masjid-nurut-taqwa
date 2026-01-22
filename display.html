@@ -347,5 +347,13 @@ setInterval(nextWallpaper, 8000); // ganti gambar tiap 8 detik
 /* START */
 showVideo();
 </script>
+  <script>
+document.addEventListener("click", () => {
+  const v = document.getElementById("haramainVideo");
+  if(v){
+    v.src = v.src.replace("mute=1","mute=0");
+  }
+},{ once:true });
+</script>
 </body>
 </html>
