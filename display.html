@@ -498,6 +498,56 @@ updateHijriah();
 
 /* UPDATE SETIAP JAM (AMAN & RINGAN) */
 setInterval(updateHijriah, 60 * 60 * 1000);
-  </script>  
+  </script> 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU";
+
+const supabase = supabaseJs.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+const wallpaperLayer = document.getElementById("wallpaperLayer");
+let wallpapers = [];
+let index = 0;
+
+// 🔹 Ambil file dari BUCKET wallpaper
+async function loadWallpapers(){
+  const { data, error } = await supabase
+    .storage
+    .from("wallpaper")
+    .list("", { limit: 100 });
+
+  if(error){
+    console.error("Gagal ambil wallpaper:", error);
+    return;
+  }
+
+  wallpapers = data
+    .filter(f => f.name.match(/\.(jpg|jpeg|png|webp)$/i))
+    .map(f =>
+      `${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`
+    );
+
+  console.log("Wallpaper loaded:", wallpapers);
+  if(wallpapers.length > 0){
+    wallpaperLayer.style.backgroundImage = `url('${wallpapers[0]}')`;
+  }
+}
+
+// 🔹 Ganti wallpaper
+function nextWallpaper(){
+  if(wallpapers.length === 0) return;
+  index = (index + 1) % wallpapers.length;
+  wallpaperLayer.style.backgroundImage = `url('${wallpapers[index]}')`;
+}
+
+// 🔹 Loop slideshow
+loadWallpapers();
+setInterval(nextWallpaper, 8000); // ganti tiap 8 detik
+</script>
 </body>
 </html>
