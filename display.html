@@ -420,8 +420,12 @@ document.addEventListener("click", () => {
 /* ===== REMOTE CONTROL VIA localStorage ===== */
 
 function remote(cmd){
+  // simpan ke storage (untuk device lain)
   localStorage.setItem("tvCommand", cmd);
   localStorage.setItem("tvCommandTime", Date.now());
+
+  // EKSEKUSI LANGSUNG (INI YANG PENTING)
+  jalankanPerintah(cmd);
 }
 
 /* LISTENER DI TV */
