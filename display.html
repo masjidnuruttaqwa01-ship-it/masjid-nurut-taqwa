@@ -238,6 +238,18 @@ body{
   font-weight:600;
   line-height:1.4;
 }
+  .hijri{
+  font-size:17px;
+  font-weight:600;
+  margin-top:4px;
+  letter-spacing:.6px;
+
+  color:#334155;
+
+  text-shadow:
+    0 1px 6px rgba(255,255,255,.6),
+    0 2px 10px rgba(0,0,0,.15);
+  }
 </style>
 </head>
 
@@ -252,7 +264,10 @@ body{
   </div>
 
   <!-- TANGGAL -->
-  <div class="info" id="tanggal"></div>
+<div class="info">
+  <div id="tanggal"></div>
+  <div id="hijriah" class="hijri"></div>
+</div>
 
   <!-- VIDEO -->
   <div class="video-area">
@@ -286,7 +301,25 @@ body{
 <audio id="azanAudio"
 src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 
-<script>
+  <script>
+/* ===== KALENDER HIJRIAH REALTIME ===== */
+function updateHijriah(){
+  const today = new Date();
+  const hijri = today.toLocaleDateString("id-ID-u-ca-islamic", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  document.getElementById("hijriah").innerText =
+    hijri + " H";
+}
+
+updateHijriah();
+
+/* UPDATE SETIAP JAM (AMAN & RINGAN) */
+setInterval(updateHijriah, 60 * 60 * 1000);
+</script>
 /* JAM */
 function updateClock(){
   clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
