@@ -96,7 +96,37 @@ body{
   70%{box-shadow:0 0 0 25px rgba(124,58,237,0)}
   100%{box-shadow:0 0 0 0 rgba(124,58,237,0)}
 }
+<!-- ===== JADWAL JUM'AT ===== -->
+<div class="jumat-section" id="jumatSection">
+  <div class="jumat-title">🕌 Jadwal Sholat Jum’at</div>
 
+  <div class="jumat-card">
+    <div class="jumat-item">
+      <span class="label">Hari / Tanggal</span>
+      <span class="value" id="jumatTanggal">–</span>
+    </div>
+
+    <div class="jumat-item">
+      <span class="label">Imam</span>
+      <span class="value" id="jumatImam">–</span>
+    </div>
+
+    <div class="jumat-item">
+      <span class="label">Khatib</span>
+      <span class="value" id="jumatKhatib">–</span>
+    </div>
+
+    <div class="jumat-item">
+      <span class="label">Muadzin</span>
+      <span class="value" id="jumatMuadzin">–</span>
+    </div>
+
+    <div class="jumat-item highlight">
+      <span class="label">Waktu</span>
+      <span class="value">11.45 WIB</span>
+    </div>
+  </div>
+</div>
 /* ===== AZAN ===== */
 .azan{
   text-align:center;
@@ -264,6 +294,65 @@ body{
   align-items:center;
   opacity:1;
   pointer-events:auto;
+}
+  /* ===== JADWAL JUM'AT ===== */
+.jumat-section{
+  margin:18px 26px;
+  padding:20px 26px;
+  border-radius:26px;
+  background:linear-gradient(
+    135deg,
+    rgba(6,78,59,.85),
+    rgba(2,44,34,.9)
+  );
+  box-shadow:0 25px 60px rgba(0,0,0,.45);
+  display:none;
+}
+
+.jumat-title{
+  text-align:center;
+  font-size:26px;
+  font-weight:700;
+  color:#fde68a;
+  margin-bottom:16px;
+  letter-spacing:.5px;
+}
+
+.jumat-card{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.jumat-item{
+  background:rgba(255,255,255,.1);
+  padding:14px 18px;
+  border-radius:18px;
+  backdrop-filter:blur(10px);
+}
+
+.jumat-item .label{
+  display:block;
+  font-size:14px;
+  opacity:.8;
+}
+
+.jumat-item .value{
+  font-size:22px;
+  font-weight:700;
+  margin-top:4px;
+}
+
+.jumat-item.highlight{
+  grid-column:span 2;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:#022c22;
+}
+
+@media(max-width:768px){
+  .jumat-card{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 
@@ -531,5 +620,34 @@ if(hour >= 18 || hour <= 5){
   document.body.style.filter = "brightness(0.8)";
 }
   </script>
+ <script>
+/* ===== DATA JUM'AT (UBAH DI SINI SAJA) ===== */
+const jadwalJumat = {
+  imam: "Ust. Ahmad Fauzi",
+  khatib: "KH. Muhammadun",
+  muadzin: "Bpk. Suparman"
+};
+
+/* ===== TAMPILKAN HANYA HARI JUMAT ===== */
+const today = new Date();
+const isFriday = today.getDay() === 5;
+
+if(isFriday){
+  const jumatBox = document.getElementById("jumatSection");
+  jumatBox.style.display = "block";
+
+  document.getElementById("jumatImam").innerText = jadwalJumat.imam;
+  document.getElementById("jumatKhatib").innerText = jadwalJumat.khatib;
+  document.getElementById("jumatMuadzin").innerText = jadwalJumat.muadzin;
+
+  document.getElementById("jumatTanggal").innerText =
+    today.toLocaleDateString("id-ID",{
+      weekday:"long",
+      day:"numeric",
+      month:"long",
+      year:"numeric"
+    });
+}
+</script> 
 </body>
 </html>
