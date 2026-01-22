@@ -5,182 +5,159 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Display Masjid Nurut Taqwa</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box}
 body{
+  margin:0;
   font-family:Poppins,sans-serif;
-  background:#000;
+  background:#2f2f2f;
   color:#fff;
   overflow:hidden;
 }
 
-/* ===== LAYOUT UTAMA TV ===== */
-.overlay{
-  position:fixed;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  background:#000;
-}
-
-/* ===== HEADER ===== */
+/* HEADER */
 .header{
-  height:72px;
-  background:linear-gradient(90deg,#064e3b,#065f46);
+  background:#0f5a43;
+  padding:18px 28px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  padding:0 28px;
-  flex-shrink:0;
+  align-items:center;
 }
-.header b{
-  font-size:26px;
-  font-weight:700;
-  color:#fde68a;
+.header .title{
+  font-size:30px;
+  font-weight:900;
+  color:#ffd966;
 }
 .clock{
-  font-size:40px;
-  font-weight:700;
+  font-size:56px;
+  font-weight:900;
 }
 
-/* ===== TANGGAL ===== */
-.info{
+/* TANGGAL */
+.date{
   text-align:center;
-  padding:6px 0;
+  font-size:20px;
+  margin:10px 0;
+  opacity:.9;
+}
+
+/* JADWAL SHOLAT */
+.sholat-bar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+  padding:18px 28px;
+}
+.sholat{
+  background:#138a7a;
+  border-radius:18px;
+  text-align:center;
+  padding:18px 10px;
+}
+.sholat span{
+  display:block;
   font-size:16px;
-  background:#022c22;
-  flex-shrink:0;
+}
+.sholat b{
+  font-size:26px;
+}
+.active{
+  background:#7c3aed;
+  box-shadow:0 0 25px rgba(124,58,237,.8);
 }
 
-/* ===== VIDEO FULL AREA ===== */
+/* AZAN */
+.azan{
+  text-align:center;
+  font-size:72px;
+  font-weight:900;
+  color:#facc15;
+  display:none;
+}
+
+/* IQOMAH */
+.iqomah{
+  text-align:center;
+  font-size:56px;
+  font-weight:900;
+  color:#22c55e;
+  display:none;
+}
+
+/* VIDEO AREA */
 .video-area{
-  flex:1;
-  position:relative;
-  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
 }
-
-.video-area iframe{
-  position:absolute;
-  inset:0;
+.video-box{
+  width:85%;
+  aspect-ratio:16/9;
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+.video-box iframe{
   width:100%;
   height:100%;
   border:0;
 }
 
-/* ===== AZAN / IQOMAH ===== */
-.azan,
-.iqomah{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:64px;
-  font-weight:700;
-  display:none;
-  z-index:5;
-}
-.azan{color:#fde047}
-.iqomah{color:#22c55e}
-
-/* ===== JADWAL SHOLAT BAWAH ===== */
-.sholat-bottom{
-  background:#064e3b;
-  padding:12px 18px;
-  flex-shrink:0;
-}
-
-.sholat-bar{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:10px;
-}
-
-.sholat{
-  background:#0f766e;
-  padding:14px 8px;
-  border-radius:16px;
-  text-align:center;
-  font-size:14px;
-}
-.sholat b{
-  display:block;
-  font-size:20px;
-  margin-top:4px;
-}
-.sholat.active{
-  background:#7c3aed;
-  box-shadow:0 0 20px rgba(124,58,237,.7);
-}
-
-/* ===== RUNNING TEXT ===== */
+/* RUNNING TEXT */
 .marquee{
-  height:42px;
-  background:#022c22;
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background:#0f5a43;
+  padding:12px;
+  font-size:20px;
+  white-space:nowrap;
   overflow:hidden;
-  display:flex;
-  align-items:center;
-  flex-shrink:0;
 }
 .marquee span{
-  white-space:nowrap;
+  display:inline-block;
   padding-left:100%;
-  animation:marquee 22s linear infinite;
-  font-size:18px;
+  animation:scroll 30s linear infinite;
 }
-@keyframes marquee{
-  from{transform:translateX(0)}
-  to{transform:translateX(-100%)}
-}
-
-/* ===== RESPONSIVE TV ===== */
-@media(max-width:768px){
-  .clock{font-size:30px}
-  .azan,.iqomah{font-size:42px}
+@keyframes scroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-100%)}
 }
 </style>
 </head>
 
 <body onclick="document.documentElement.requestFullscreen()">
 
-<div class="overlay">
+<div class="header">
+  <div class="title">🕌 Masjid Nurut Taqwa – Kota Cirebon</div>
+  <div class="clock" id="clock">00:00</div>
+</div>
 
-  <!-- HEADER -->
-  <div class="header">
-    <b>🕌 Masjid Nurut Taqwa</b>
-    <div class="clock" id="clock">00:00</div>
-  </div>
+<div class="date" id="tanggal"></div>
 
-  <!-- TANGGAL -->
-  <div class="info" id="tanggal"></div>
+<div class="azan" id="azanText">AZAN</div>
+<div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
 
-  <!-- VIDEO FULL -->
-  <div class="video-area">
+<div class="sholat-bar" id="sholatBar"></div>
 
-    <div class="azan" id="azanText">AZAN</div>
-    <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
-
-    <iframe id="haramainVideo"
+<div class="video-area">
+  <div class="video-box">
+    <iframe
+      id="live"
       src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0"
       allow="autoplay; encrypted-media"
       allowfullscreen>
     </iframe>
-
   </div>
+</div>
 
-  <!-- JADWAL SHOLAT -->
-  <div class="sholat-bottom">
-    <div class="sholat-bar" id="sholatBar"></div>
-  </div>
-
-  <!-- RUNNING TEXT -->
-  <div class="marquee">
-    <span>
-      Selamat datang di Masjid Nurut Taqwa • Mohon matikan atau senyapkan HP • Jaga kekhusyukan ibadah
-    </span>
-  </div>
-
+<div class="marquee">
+  <span>
+    Selamat datang di Masjid Nurut Taqwa • Mohon matikan atau senyapkan HP • Jaga kekhusyukan ibadah • Kajian Ahad Ba’da Subuh •
+  </span>
 </div>
 
 <audio id="azanAudio"
@@ -189,7 +166,8 @@ src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 <script>
 /* JAM */
 function updateClock(){
-  clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+  const d=new Date();
+  clock.innerText=d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
 setInterval(updateClock,1000);updateClock();
 
@@ -213,17 +191,19 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
     ["Isya",t.Isha]
   ];
   sholatBar.innerHTML=list.map(s=>`
-    <div class="sholat" data-time="${s[1]}">${s[0]}<b>${s[1]}</b></div>
+    <div class="sholat" data-time="${s[1]}">
+      <span>${s[0]}</span>
+      <b>${s[1]}</b>
+    </div>
   `).join("");
   cekWaktu();
   setInterval(cekWaktu,30000);
 });
 
-/* AZAN + IQOMAH */
+/* AZAN & IQOMAH */
 function cekWaktu(){
   const now=new Date().toTimeString().slice(0,5);
   document.querySelectorAll(".sholat").forEach(el=>{
-    el.classList.remove("active");
     if(el.dataset.time===now){
       el.classList.add("active");
       azanText.style.display="block";
@@ -238,10 +218,12 @@ function cekWaktu(){
         sisa--;
         if(sisa<0){
           clearInterval(timer);
-          azanText.style.display="none";
           iqomahText.style.display="none";
+          azanText.style.display="none";
         }
       },1000);
+    }else{
+      el.classList.remove("active");
     }
   });
 }
