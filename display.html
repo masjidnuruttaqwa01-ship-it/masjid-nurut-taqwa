@@ -95,7 +95,7 @@ body{
 
 .sholat-bar{
   display:grid;
-  grid-template-columns:repeat(7,1fr);
+  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
   gap:14px;
 }
 
@@ -204,14 +204,27 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
 .then(res=>{
   const t=res.data.timings;
   const list=[
-    ["Subuh",t.Fajr],["Dzuhur",t.Dhuhr],["Ashar",t.Asr],
-    ["Maghrib",t.Maghrib],["Isya",t.Isha]
-  ];
+  ["Imsak",t.Imsak],
+  ["Subuh",t.Fajr],
+  ["Terbit",t.Sunrise],
+  ["Dhuha", tambahMenit(t.Sunrise,20)],
+  ["Dzuhur",t.Dhuhr],
+  ["Ashar",t.Asr],
+  ["Maghrib",t.Maghrib],
+  ["Isya",t.Isha]
+];
   sholatBar.innerHTML=list.map(s=>`
     <div class="sholat">${s[0]}<b>${s[1]}</b></div>
   `).join("");
 });
-
+function tambahMenit(waktu, menit){
+  let [jam, mnt] = waktu.split(":").map(Number);
+  let total = jam * 60 + mnt + menit;
+  let h = Math.floor(total / 60) % 24;
+  let m = total % 60;
+  return h.toString().padStart(2,"0") + ":" + 
+         m.toString().padStart(2,"0");
+}
 /* ===============================
    SUPABASE WALLPAPER SYSTEM
 ================================ */
@@ -266,6 +279,18 @@ document.addEventListener("click",()=>{
   v.src=v.src.replace("mute=1","mute=0");
 },{once:true});
 </script>
+<script>
+/* ===== AUTO FULLSCREEN SAAT KLIK ===== */
+document.addEventListener("click", function () {
 
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(err => {
+      console.log("Fullscreen gagal:", err);
+    });
+  }
+
+}, { once: true });
+</script>
+  
 </body>
 </html>
