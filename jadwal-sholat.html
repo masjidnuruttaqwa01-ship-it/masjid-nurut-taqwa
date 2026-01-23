@@ -174,7 +174,63 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
       "Semua waktu hari ini telah lewat";
   }
 });
-</script>
+ function saveNotif(){
+  const selected = document.querySelector('input[name="notifType"]:checked');
+  if(!selected) return;
 
+  localStorage.setItem("notif_"+selectedPrayer, selected.value);
+
+  closeModal();
+}
+
+function loadSavedSetting(prayer){
+  const saved = localStorage.getItem("notif_"+prayer);
+  if(saved){
+    const radio = document.querySelector(`input[value="${saved}"]`);
+    if(radio) radio.checked = true;
+  }
+}
+
+function closeModal(){
+  document.getElementById("notifModal").style.display="none";
+} 
+  const nama = el.childNodes[0].textContent.trim();
+
+const setting = localStorage.getItem("notif_"+nama);
+
+// ❌ Tidak untuk Terbit & Dhuha
+if(nama.toLowerCase().includes("terbit") ||
+   nama.toLowerCase().includes("dhuha")){
+   return;
+}
+
+if(setting === "off") return;
+
+// === MAIN AUDIO SESUAI PILIHAN ===
+if(setting === "adzan"){
+  audioAdzan.currentTime = 0;
+  audioAdzan.play();
+}
+else if(setting === "alarm"){
+  audioAlarm.currentTime = 0;
+  audioAlarm.play();
+}
+else if(setting === "notif"){
+  audioNotif.currentTime = 0;
+  audioNotif.play();
+}
+else if(setting === "silent"){
+  alert("Waktu " + nama + " telah masuk");
+}
+  window.addEventListener("load",()=>{
+  audioAdzan.play().then(()=>audioAdzan.pause());
+});
+</script>
+<!-- AUDIO FILE -->
+<audio id="audioAdzan" src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
+
+<audio id="audioAlarm" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
+
+<audio id="audioNotif" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
 </body>
 </html>
