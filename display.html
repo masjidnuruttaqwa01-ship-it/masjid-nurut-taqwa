@@ -21,13 +21,23 @@ body{
    WALLPAPER FULL SCREEN
 ================================ */
 .slideshow{
-  position:fixed;
+  position:absolute;
   inset:0;
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
-  transition:opacity 1.5s ease, transform 8s ease;
-  z-index:-2;
+  z-index:0;
+  opacity:0;
+  transition:opacity 1s ease;
+}
+
+.video-area.show-wallpaper .slideshow{
+  opacity:1;
+}
+
+.video-area.show-wallpaper iframe{
+  opacity:0;
+  pointer-events:none;
 }
 
 /* Overlay soft */
@@ -211,10 +221,12 @@ body.night{
 
   <div class="video-area" id="videoArea">
     <iframe id="haramainVideo"
+
       src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0"
       allow="autoplay; encrypted-media"
       allowfullscreen>
     </iframe>
+    <div class="slideshow" id="slideshow"></div>
   </div>
 
   <div class="sholat-bottom">
@@ -317,19 +329,76 @@ function nextWallpaper(){
 
 loadWallpapers();
 setInterval(nextWallpaper,10000);
-
+</script>
+<script>
 /* ===============================
-   VIDEO ROTATION
+   WALLPAPER DARI SUPABASE
 ================================ */
-const videoArea=document.getElementById("videoArea");
-const video=document.getElementById("haramainVideo");
 
-function startVideoMode(){
-  videoArea.classList.add("show-video");
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU";
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const videoArea = document.getElementById("videoArea");
+const video = document.getElementById("haramainVideo");
+const slideshow = document.getElementById("slideshow");
+
+let wallpapers = [];
+let index = 0;
+
+/* Ambil semua gambar dari bucket wallpaper */
+async function loadWallpapers(){
+  const { data, error } = await sb
+    .storage
+    .from("wallpaper")
+    .list("", { limit: 100 });
+
+  if(error){
+    console.error("Gagal load wallpaper:", error);
+    return;
+  }
+
+  wallpapers = data
+    .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f.name))
+    .map(f =>
+      `${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`
+    );
+
+  if(wallpapers.length > 0){
+    slideshow.style.backgroundImage = `url('${wallpapers[0]}')`;
+  }
 }
 
-startVideoMode();
+/* Ganti wallpaper */
+function nextWallpaper(){
+  if(wallpapers.length === 0) return;
+  index = (index + 1) % wallpapers.length;
+  slideshow.style.backgroundImage = `url('${wallpapers[index]}')`;
+}
 
+/* Mode video */
+function showVideo(){
+  videoArea.classList.remove("show-wallpaper");
+  video.src =
+    "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0";
+
+  setTimeout(showWallpaper, 300000); // 5 menit video
+}
+
+/* Mode wallpaper */
+function showWallpaper(){
+  videoArea.classList.add("show-wallpaper");
+  setTimeout(showVideo, 60000); // 1 menit wallpaper
+}
+
+/* START */
+loadWallpapers().then(() => {
+  setInterval(nextWallpaper, 10000); // ganti gambar tiap 10 detik
+  showVideo();
+});
+</script>
+  <script>
 /* ===============================
    AUTO UNMUTE (User Interaction)
 ================================ */
