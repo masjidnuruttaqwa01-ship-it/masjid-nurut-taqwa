@@ -8,23 +8,31 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{
-  height:100%;
-  overflow:hidden;
+body{
   font-family:Poppins,sans-serif;
-  background:url("https://images.unsplash.com/photo-1584551246679-0daf3d275d0f") center/cover no-repeat fixed;
-  color:#fff;
+  height:100vh;
+  overflow:hidden;
+  color:white;
 }
 
-/* Glass Main */
+/* ===== BACKGROUND SLIDESHOW ===== */
+#bg{
+  position:fixed;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  transition:background-image 1.5s ease;
+  z-index:-1;
+}
+
+/* ===== GLASS CONTAINER ===== */
 .container{
   height:100vh;
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
-  backdrop-filter:blur(14px);
-  background:rgba(0,0,0,.55);
   padding:20px;
+  backdrop-filter:blur(8px);
+  background:rgba(0,0,0,.35);
 }
 
 /* HEADER */
@@ -32,133 +40,114 @@ html,body{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  margin-bottom:15px;
 }
-.header h1{
-  font-size:18px;
-  font-weight:600;
-}
-.clock{
-  font-size:22px;
-  font-weight:700;
-}
+.header h1{font-size:18px;font-weight:600}
+.clock{font-size:18px;font-weight:600}
 
 /* STATUS */
 .status{
   text-align:center;
-  margin:10px 0 15px;
+  margin-bottom:10px;
 }
-.status h2{
-  font-size:20px;
-  font-weight:600;
-}
-.status small{
-  color:#00eaff;
-}
+.status h2{font-size:18px}
 
-/* PRAYER GRID */
-.prayer-list{
-  flex:1;
+/* DATE */
+.date{
   display:flex;
-  flex-direction:column;
-  justify-content:space-evenly;
+  justify-content:space-between;
+  font-size:13px;
+  margin-bottom:15px;
+  opacity:.9;
 }
 
+/* PRAYER CARD */
 .prayer{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:14px 18px;
+  padding:16px;
+  margin-bottom:10px;
   border-radius:18px;
-  background:rgba(255,255,255,.08);
-  font-size:18px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(10px);
+  font-size:17px;
   cursor:pointer;
   transition:.3s;
 }
-
-.prayer:hover{
-  background:rgba(255,255,255,.18);
-}
-
 .prayer.active{
-  background:rgba(0,234,255,.25);
-  border-left:6px solid #00eaff;
+  background:rgba(255,255,255,.3);
+  border-left:5px solid #00e0ff;
 }
-
-.time{
-  font-weight:700;
-  font-size:20px;
-}
+.time{font-weight:700;font-size:18px}
 
 /* MODAL */
 .modal{
   position:fixed;
   inset:0;
+  background:rgba(0,0,0,.6);
   display:none;
-  background:rgba(0,0,0,.7);
   justify-content:center;
   align-items:center;
 }
-
-.modal-box{
-  width:90%;
-  max-width:350px;
-  background:#fff;
-  color:#000;
-  border-radius:22px;
+.modal-content{
+  background:white;
+  color:#111;
   padding:20px;
+  border-radius:20px;
+  width:85%;
 }
-
-.modal-box h3{margin-bottom:15px}
-
-.modal-box label{
+.modal-content h3{margin-bottom:10px}
+.modal-content label{
   display:block;
-  margin-bottom:10px;
-  font-size:14px;
+  margin:8px 0;
 }
-
-.modal-box button{
+.modal-content button{
   margin-top:10px;
   padding:8px 15px;
   border:none;
-  background:#00aaff;
-  color:#fff;
-  border-radius:12px;
-  cursor:pointer;
+  border-radius:10px;
+  background:#145374;
+  color:white;
 }
 </style>
 </head>
 <body>
 
+<div id="bg"></div>
+
 <div class="container">
 
-<div>
-  <div class="header">
-    <h1>📍 Kejaksan, Cirebon</h1>
-    <div class="clock" id="clock">00:00</div>
-  </div>
-
-  <div class="status">
-    <h2 id="statusText">Memuat jadwal...</h2>
-    <small id="statusSub"></small>
-  </div>
+<div class="header">
+  <h1>📍 Cirebon - Indonesia</h1>
+  <div class="clock" id="clock">00:00</div>
 </div>
 
-<div class="prayer-list" id="prayerList"></div>
+<div class="status">
+  <h2 id="statusText">Memuat jadwal...</h2>
+</div>
+
+<div class="date">
+  <div id="hijri"></div>
+  <div id="masehi"></div>
+</div>
+
+<div id="prayerList"></div>
 
 </div>
 
 <!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-box">
+<div id="notifModal" class="modal">
+  <div class="modal-content">
     <h3 id="modalTitle">Atur Notifikasi</h3>
 
-    <label><input type="radio" name="notif" value="adzan"> Suara Adzan</label>
-    <label><input type="radio" name="notif" value="alarm"> Suara Alarm</label>
-    <label><input type="radio" name="notif" value="notif"> Suara Notif</label>
-    <label><input type="radio" name="notif" value="silent"> Tanpa Suara</label>
-    <label><input type="radio" name="notif" value="off"> Nonaktifkan</label>
+    <label><input type="radio" name="notifType" value="adzan"> Adzan</label>
+    <label><input type="radio" name="notifType" value="alarm"> Alarm</label>
+    <label><input type="radio" name="notifType" value="notif"> Notif</label>
+    <label><input type="radio" name="notifType" value="silent"> Silent</label>
+    <label><input type="radio" name="notifType" value="off"> Off</label>
 
-    <button onclick="saveSetting()">Simpan</button>
+    <button onclick="saveNotif()">Simpan</button>
   </div>
 </div>
 
@@ -168,124 +157,192 @@ html,body{
 <audio id="audioNotif" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
 
 <script>
-let selectedPrayer="";
-let triggeredToday={};
-let maxVolume=0.9;
 
-/* FULLSCREEN AUTO */
-document.documentElement.requestFullscreen?.();
+/* ===========================
+   BACKGROUND SLIDESHOW GALERI
+=========================== */
 
-/* CLOCK */
+let photos=[];
+let bgIndex=0;
+
+const input=document.createElement("input");
+input.type="file";
+input.multiple=true;
+input.accept="image/*";
+input.style.display="none";
+document.body.appendChild(input);
+
+input.addEventListener("change",function(){
+  photos=[];
+  for(let file of this.files){
+    photos.push(URL.createObjectURL(file));
+  }
+  if(photos.length){
+    document.getElementById("bg").style.backgroundImage=`url('${photos[0]}')`;
+  }
+});
+
+document.body.addEventListener("dblclick",()=>input.click());
+
+setInterval(()=>{
+  if(photos.length){
+    bgIndex=(bgIndex+1)%photos.length;
+    document.getElementById("bg").style.backgroundImage=
+      `url('${photos[bgIndex]}')`;
+  }
+},8000);
+
+/* ===========================
+   JAM & TANGGAL
+=========================== */
 function updateClock(){
-  clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+  document.getElementById("clock").innerText=
+  new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
 setInterval(updateClock,1000);updateClock();
 
-/* FETCH JADWAL */
+document.getElementById("masehi").innerText=
+new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+
+document.getElementById("hijri").innerText=
+new Date().toLocaleDateString("id-ID-u-ca-islamic",
+{day:"numeric",month:"long",year:"numeric"})+" H";
+
+/* ===========================
+   JADWAL SHOLAT
+=========================== */
+
+let selectedPrayer=null;
+let lastTrigger=null;
+
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
 .then(r=>r.json())
-.then(res=>{
-  const t=res.data.timings;
+.then(data=>{
+
+  const t=data.data.timings;
 
   const prayers=[
     ["Imsak",t.Imsak],
     ["Subuh",t.Fajr],
     ["Terbit",t.Sunrise],
+    ["Dhuha",t.Sunrise],
     ["Dzuhur",t.Dhuhr],
     ["Ashar",t.Asr],
     ["Maghrib",t.Maghrib],
     ["Isya",t.Isha]
   ];
 
-  const list=document.getElementById("prayerList");
-
-  prayers.forEach(p=>{
-    const div=document.createElement("div");
-    div.className="prayer";
-    div.innerHTML=`<div>${p[0]}</div>
-                   <div class="time">${p[1]}</div>`;
-    div.onclick=()=>openModal(p[0]);
-    list.appendChild(div);
-  });
-
-  updateStatus(prayers);
-  setInterval(()=>updateStatus(prayers),30000);
-});
-
-/* STATUS + TRIGGER */
-function updateStatus(prayers){
+  const container=document.getElementById("prayerList");
   const now=new Date().toTimeString().slice(0,5);
 
   prayers.forEach(p=>{
-    if(p[1]===now){
-      if(triggeredToday[p[0]]) return;
-      triggeredToday[p[0]]=true;
+    const card=document.createElement("div");
+    card.className="prayer";
+    card.innerHTML=`
+      <div>${p[0]}</div>
+      <div class="time">${p[1]}</div>
+    `;
 
-      if(p[0]==="Terbit") return;
+    card.onclick=()=>{
+      selectedPrayer=p[0];
+      document.getElementById("modalTitle").innerText=
+      "Atur Notifikasi "+selectedPrayer;
+      loadSavedSetting(selectedPrayer);
+      document.getElementById("notifModal").style.display="flex";
+    };
 
-      const setting=localStorage.getItem("notif_"+p[0]);
+    if(now===p[1]){
+      card.classList.add("active");
+    }
+
+    container.appendChild(card);
+  });
+
+  setInterval(()=>cekWaktu(prayers),30000);
+});
+
+function cekWaktu(prayers){
+  const now=new Date().toTimeString().slice(0,5);
+
+  prayers.forEach(p=>{
+    if(now===p[1] && lastTrigger!==p[0]){
+
+      lastTrigger=p[0];
+
+      const nama=p[0];
+
+      if(nama==="Terbit"||nama==="Dhuha") return;
+
+      const setting=localStorage.getItem("notif_"+nama);
+
       if(setting==="off") return;
 
-      playSound(setting,p[0]);
+      if(setting==="adzan") playWithFade(audioAdzan);
+      else if(setting==="alarm") playWithFade(audioAlarm);
+      else if(setting==="notif") playWithFade(audioNotif);
+      else if(setting==="silent") alert("Waktu "+nama+" telah masuk");
+
+      setTimeout(stopAllAudio,600000); // auto stop 10 menit
     }
   });
 }
 
-/* PLAY SOUND */
-function playSound(type,name){
-  if(type==="adzan"){
-    fadeIn(audioAdzan);
-  }
-  else if(type==="alarm"){
-    fadeIn(audioAlarm);
-  }
-  else if(type==="notif"){
-    fadeIn(audioNotif);
-  }
-  else if(type==="silent"){
-    alert("Waktu "+name+" telah masuk");
-  }
-}
+/* ===========================
+   AUDIO CONTROL
+=========================== */
 
-/* FADE IN + AUTO STOP */
-function fadeIn(audio){
+function playWithFade(audio){
+  stopAllAudio();
   audio.volume=0;
   audio.play();
   let v=0;
   const fade=setInterval(()=>{
-    if(v>=maxVolume){
-      clearInterval(fade);
-    }else{
-      v+=0.05;
+    if(v<0.8){
+      v+=0.1;
       audio.volume=v;
+    }else{
+      clearInterval(fade);
     }
-  },200);
-
-  setTimeout(()=>{
-    audio.pause();
-    audio.currentTime=0;
-  },600000); // 10 menit iqomah
+  },300);
 }
 
-/* MODAL */
-function openModal(name){
-  selectedPrayer=name;
-  modalTitle.innerText="Atur Notifikasi "+name;
-  modal.style.display="flex";
+function stopAllAudio(){
+  [audioAdzan,audioAlarm,audioNotif].forEach(a=>{
+    a.pause();
+    a.currentTime=0;
+  });
 }
 
-function saveSetting(){
-  const val=document.querySelector('input[name="notif"]:checked');
-  if(!val) return;
-  localStorage.setItem("notif_"+selectedPrayer,val.value);
-  modal.style.display="none";
+/* ===========================
+   SAVE SETTING PER WAKTU
+=========================== */
+
+function saveNotif(){
+  const selected=document.querySelector('input[name="notifType"]:checked');
+  if(!selected) return;
+
+  localStorage.setItem("notif_"+selectedPrayer,selected.value);
+  closeModal();
 }
 
-window.onclick=e=>{
-  if(e.target.id==="modal"){
-    modal.style.display="none";
+function loadSavedSetting(prayer){
+  document.querySelectorAll('input[name="notifType"]').forEach(r=>r.checked=false);
+  const saved=localStorage.getItem("notif_"+prayer);
+  if(saved){
+    const radio=document.querySelector(`input[value="${saved}"]`);
+    if(radio) radio.checked=true;
   }
 }
+
+function closeModal(){
+  document.getElementById("notifModal").style.display="none";
+}
+
+/* AUTOPLAY FIX */
+window.addEventListener("load",()=>{
+  audioAdzan.play().then(()=>audioAdzan.pause()).catch(()=>{});
+});
+
 </script>
 
 </body>
