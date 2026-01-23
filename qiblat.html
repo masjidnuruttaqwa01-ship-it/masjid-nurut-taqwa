@@ -3,188 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kompas Qiblat - Masjid Nurut Taqwa</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Kompas Qiblat</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   height:100vh;
-  background:radial-gradient(circle at center,#145374,#0f9d58 70%);
+  background:linear-gradient(135deg,#0f9d58,#145374);
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  font-family:Poppins,sans-serif;
+  font-family:Poppins, sans-serif;
   color:white;
   text-align:center;
-  overflow:hidden;
 }
 
 /* TITLE */
-.header{
-  position:absolute;
-  top:25px;
-  width:100%;
-  text-align:center;
+h1{
+  margin-bottom:10px;
+  font-size:22px;
 }
 
-.header h2{
-  font-weight:600;
-  font-size:18px;
-  letter-spacing:1px;
+#degree{
+  margin-bottom:20px;
+  font-size:14px;
   opacity:.9;
 }
 
-.header h1{
-  font-size:24px;
-  font-weight:700;
-}
-
-/* COMPASS CONTAINER */
-.compass-wrapper{
-  position:relative;
-  width:320px;
-  height:320px;
-  perspective:1000px;
-}
-
+/* COMPASS */
 .compass{
-  width:100%;
-  height:100%;
+  position:relative;
+  width:260px;
+  height:260px;
   border-radius:50%;
-  background:
-    radial-gradient(circle at 50% 40%,rgba(255,255,255,.15),transparent 60%),
-    linear-gradient(145deg,#0f6b44,#0c2d48);
-  box-shadow:
-    inset 0 0 40px rgba(255,255,255,.1),
-    0 25px 60px rgba(0,0,0,.5);
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
   display:flex;
   justify-content:center;
   align-items:center;
-  transform-style:preserve-3d;
-  animation:float 6s ease-in-out infinite;
 }
 
-@keyframes float{
-  0%,100%{transform:rotateX(8deg)}
-  50%{transform:rotateX(-8deg)}
-}
-
-/* ARROW 3D */
 .arrow{
   position:absolute;
-  width:8px;
-  height:140px;
-  background:linear-gradient(to bottom,#ffd700,#c9a227);
-  border-radius:10px;
+  width:6px;
+  height:120px;
+  background:#ffd700;
+  border-radius:6px;
   transform-origin:50% 90%;
-  box-shadow:0 0 15px #ffd700;
-  transition:transform .2s linear;
-}
-
-/* CENTER CALLIGRAPHY */
-.calligraphy{
-  position:absolute;
-  font-size:60px;
-  font-weight:700;
-  color:#ffd700;
-  text-shadow:0 0 20px rgba(255,215,0,.6);
-  animation:pulse 3s infinite;
-}
-
-@keyframes pulse{
-  0%,100%{transform:scale(1);opacity:1}
-  50%{transform:scale(1.1);opacity:.8}
+  transition:transform .3s ease-out;
 }
 
 .center-dot{
-  position:absolute;
-  width:20px;
-  height:20px;
+  width:18px;
+  height:18px;
   background:white;
   border-radius:50%;
-  box-shadow:0 0 10px white;
+  position:absolute;
 }
 
-/* INFO */
-#degree{
-  margin-top:25px;
-  font-size:15px;
-  opacity:.9;
-}
-
+/* STATUS */
 #status{
-  margin-top:5px;
-  font-size:13px;
-  opacity:.7;
+  margin-top:20px;
+  font-size:14px;
+  opacity:.8;
 }
 
 /* BUTTON */
 button{
-  margin-top:20px;
-  padding:10px 25px;
+  margin-top:25px;
+  padding:10px 20px;
   border:none;
-  border-radius:30px;
-  background:linear-gradient(135deg,#ffd700,#c9a227);
+  border-radius:20px;
+  background:#ffd700;
   color:#1b1b1b;
   font-weight:600;
-  cursor:pointer;
-  box-shadow:0 5px 20px rgba(0,0,0,.4);
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <h2>Kompas Qiblat</h2>
-  <h1>Masjid Nurut Taqwa</h1>
+<h1>🧭 Kompas Qiblat</h1>
+<div id="degree">Mencari arah...</div>
+
+<div class="compass">
+  <div class="arrow" id="arrow"></div>
+  <div class="center-dot"></div>
 </div>
 
-<div class="compass-wrapper">
-  <div class="compass">
-    <div class="arrow" id="arrow"></div>
-    <div class="calligraphy">ﷲ</div>
-    <div class="center-dot"></div>
-  </div>
-</div>
-
-<div id="degree">Menentukan arah...</div>
-<div id="status">Izinkan lokasi & sensor</div>
-
+<div id="status">Izinkan sensor & lokasi</div>
 <button onclick="requestAccess()">Aktifkan Kompas</button>
 
 <script>
-const KAABA={lat:21.4225,lng:39.8262};
-let userLat,userLng,qiblatDegree=0;
+const KAABA = {
+  lat:21.4225,
+  lng:39.8262
+};
+
+let userLat,userLng;
+let qiblatDegree=0;
 
 function toRad(d){return d*Math.PI/180}
 function toDeg(r){return r*180/Math.PI}
 
 function calculateQiblat(){
-  const dLon=toRad(KAABA.lng-userLng);
-  const lat1=toRad(userLat);
-  const lat2=toRad(KAABA.lat);
-  const y=Math.sin(dLon);
-  const x=Math.cos(lat1)*Math.tan(lat2)-Math.sin(lat1)*Math.cos(dLon);
-  let brng=toDeg(Math.atan2(y,x));
-  qiblatDegree=(brng+360)%360;
+  const dLon = toRad(KAABA.lng - userLng);
+  const lat1 = toRad(userLat);
+  const lat2 = toRad(KAABA.lat);
+
+  const y = Math.sin(dLon);
+  const x = Math.cos(lat1)*Math.tan(lat2) - Math.sin(lat1)*Math.cos(dLon);
+  let brng = toDeg(Math.atan2(y,x));
+  qiblatDegree = (brng + 360) % 360;
 }
 
 function requestAccess(){
+
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(pos=>{
       userLat=pos.coords.latitude;
       userLng=pos.coords.longitude;
       calculateQiblat();
-      status.innerText="Arah kiblat siap";
+      status.innerText="Arah kiblat ditemukan";
     });
   }
 
-  if(typeof DeviceOrientationEvent.requestPermission==="function"){
+  if(typeof DeviceOrientationEvent.requestPermission === "function"){
     DeviceOrientationEvent.requestPermission()
-    .then(res=>{
-      if(res==="granted"){
-        window.addEventListener("deviceorientation
+    .then(response=>{
+      if(response==="granted"){
+        window.addEventListener("deviceorientation",handleOrientation);
+      }
+    });
+  }else{
+    window.addEventListener("deviceorientationabsolute",handleOrientation,true);
+  }
+}
+
+function handleOrientation(event){
+  const heading = event.alpha;
+  if(heading===null) return;
+
+  const rotation = qiblatDegree - heading;
+  arrow.style.transform = `rotate(${rotation}deg)`;
+  degree.innerText = "Arah Kiblat: " + qiblatDegree.toFixed(1) + "°";
+}
+</script>
+
+</body>
+</html>
