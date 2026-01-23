@@ -257,41 +257,31 @@ body{
 }
 
 .action-row{
-  margin-top:18px;
+  margin-top:15px;
   display:flex;
-  gap:12px;
+  justify-content:space-between; /* kiri & kanan */
   align-items:center;
 }
 
-.website-link{
+.website-btn{
   background:rgba(255,255,255,.15);
   padding:8px 14px;
-  border-radius:25px;
+  border-radius:20px;
   text-decoration:none;
   color:white;
-  font-size:12px;
+  font-size:13px;
   font-weight:600;
   backdrop-filter:blur(6px);
-  transition:.3s;
-}
-
-.website-link:hover{
-  background:rgba(255,255,255,.3);
 }
 
 .qiblat-btn{
   background:white;
   color:black;
   padding:8px 16px;
-  border-radius:25px;
-  text-decoration:none;
+  border-radius:22px;
   font-weight:600;
-  font-size:12px;
-  transition:.3s;
-}
-
-.qiblat-btn:hover{
-  transform:scale(1.05);
+  font-size:13px;
+  text-decoration:none;
 }
 </style>
 </head>
@@ -329,13 +319,8 @@ body{
     <div id="masehiDate">23 Januari 2026</div>
   </div>
 <div class="action-row">
-  <a href="index.html" class="website-link">
-    🌐 Website
-  </a>
-
-  <a href="qiblat.html" class="qiblat-btn">
-    🧭 QIBLAT
-  </a>
+  <a href="index.html" class="website-btn">🌐 Website</a>
+  <a href="qiblat.html" class="qiblat-btn">🧭 QIBLAT</a>
 </div>
 
 </div>
