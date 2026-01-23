@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadwal Sholat - Masjid Nurut Taqwa</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(to bottom,#0c2d48,#145374);
+  color:white;
+  padding:20px;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+.header h1{
+  font-size:22px;
+  font-weight:600;
+}
+.clock{
+  font-size:20px;
+  font-weight:600;
+}
+
+/* STATUS */
+.status{
+  text-align:center;
+  margin-bottom:20px;
+}
+.status h2{
+  font-size:22px;
+  font-weight:600;
+}
+.status small{
+  color:#00e0ff;
+  font-size:14px;
+}
+
+/* DATE */
+.date{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:20px;
+  font-size:14px;
+  opacity:.9;
+}
+
+/* CARD LIST */
+.prayer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px;
+  margin-bottom:12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(6px);
+  font-size:18px;
+}
+
+.prayer.active{
+  background:rgba(255,255,255,.25);
+  border-left:6px solid #00e0ff;
+}
+
+.time{
+  font-weight:700;
+  font-size:20px;
+}
+
+.icon{
+  font-size:20px;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .prayer{font-size:16px}
+  .time{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📍 Kejaksan, Cirebon - Indonesia</h1>
+  <div class="clock" id="clock">00:00</div>
+</div>
+
+<div class="status">
+  <h2 id="statusText">Memuat jadwal...</h2>
+  <small id="statusSub"></small>
+</div>
+
+<div class="date">
+  <div id="hijri"></div>
+  <div id="masehi"></div>
+</div>
+
+<div id="prayerList"></div>
+
+<script>
+/* JAM REALTIME */
+function updateClock(){
+  document.getElementById("clock").innerText =
+    new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+}
+setInterval(updateClock,1000);updateClock();
+
+/* TANGGAL */
+document.getElementById("masehi").innerText =
+  new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+
+document.getElementById("hijri").innerText =
+  new Date().toLocaleDateString("id-ID-u-ca-islamic",
+  {day:"numeric",month:"long",year:"numeric"}) + " H";
+
+/* FETCH JADWAL */
+fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
+.then(res=>res.json())
+.then(data=>{
+  const t=data.data.timings;
+
+  const prayers=[
+    ["Imsak",t.Imsak],
+    ["Subuh",t.Fajr],
+    ["Terbit",t.Sunrise],
+    ["Dzuhur",t.Dhuhr],
+    ["Ashar",t.Asr],
+    ["Maghrib",t.Maghrib],
+    ["Isya",t.Isha]
+  ];
+
+  const container=document.getElementById("prayerList");
+  const now=new Date().toTimeString().slice(0,5);
+
+  let nextPrayer=null;
+
+  prayers.forEach(p=>{
+    const card=document.createElement("div");
+    card.className="prayer";
+    card.innerHTML=`
+      <div>${p[0]}</div>
+      <div class="time">${p[1]}</div>
+      <div class="icon">⏰</div>
+    `;
+
+    if(now===p[1]){
+      card.classList.add("active");
+    }
+
+    if(!nextPrayer && p[1] > now){
+      nextPrayer=p;
+    }
+
+    container.appendChild(card);
+  });
+
+  if(nextPrayer){
+    document.getElementById("statusText").innerText =
+      "Menuju waktu " + nextPrayer[0];
+    document.getElementById("statusSub").innerText =
+      "Pukul " + nextPrayer[1];
+  }else{
+    document.getElementById("statusText").innerText =
+      "Semua waktu hari ini telah lewat";
+  }
+});
+</script>
+
+</body>
+</html>
