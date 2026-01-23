@@ -10,6 +10,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
+  <div id="wallpaperBg"></div>
   font-family:Poppins,sans-serif;
   background:#000;
   color:#0f172a;
@@ -31,18 +32,18 @@ body{
   align-items:center;
   justify-content:space-between;
   padding:0 36px;
-  background:rgba(255,255,255,.55);
+  background:rgba(255,255,255,.08);
   backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.15);
 }
-.header b{font-size:28px;font-weight:700}
-.clock{font-size:44px;font-weight:700}
 
 /* ===== TANGGAL ===== */
 .info{
   text-align:center;
   padding:6px 0;
   font-size:16px;
-  background:rgba(255,255,255,.4);
+  background:rgba(255,255,255,.05);
   backdrop-filter:blur(10px);
 }
 .hijri{
@@ -81,7 +82,7 @@ body{
 
 /* ===== JADWAL SHOLAT ===== */
 .sholat-bottom{
-  background:rgba(255,255,255,.5);
+  background:rgba(255,255,255,.08);
   backdrop-filter:blur(14px);
   padding:14px 20px;
 }
@@ -91,11 +92,12 @@ body{
   gap:10px;
 }
 .sholat{
-  background:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.15);
   border-radius:18px;
   padding:14px 8px;
   text-align:center;
   font-size:14px;
+  color:#fff;
 }
 .sholat b{
   display:block;
@@ -132,6 +134,12 @@ body{
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
   .clock{font-size:30px}
+}
+  #wallpaperBg{
+  position:fixed;
+  inset:0;
+  background:url("https://images.unsplash.com/photo-1548013146-72479768bada") center/cover no-repeat;
+  z-index:-1;
 }
 </style>
 </head>
@@ -315,5 +323,11 @@ sbRemote
   })
   .subscribe();
     </script>
+  <script>
+document.addEventListener("click",function(){
+  const v=document.getElementById("haramainVideo");
+  v.src=v.src.replace("mute=1","mute=0");
+},{once:true});
+</script>
 </body>
 </html>
