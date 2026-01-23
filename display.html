@@ -257,6 +257,63 @@ function startRotation(){
 
 loadGallery().then(startRotation);
 </script>
+<script>
+/* ===============================
+   TV REMOTE REALTIME (SUPABASE)
+================================ */
 
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI";
+
+const sbRemote = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* EKSEKUSI PERINTAH */
+function jalankanPerintah(cmd){
+  console.log("TV CMD:", cmd);
+
+  const video = document.getElementById("haramainVideo");
+  const videoArea = document.getElementById("videoArea");
+
+  if(cmd === "video"){
+    videoArea.classList.remove("show-wallpaper");
+  }
+
+  if(cmd === "wallpaper"){
+    videoArea.classList.add("show-wallpaper");
+  }
+
+  if(cmd === "mute"){
+    video.src = video.src.replace("mute=0","mute=1");
+  }
+
+  if(cmd === "unmute"){
+    video.src = video.src.replace("mute=1","mute=0");
+  }
+
+  if(cmd === "night"){
+    document.body.style.filter="brightness(.6)";
+  }
+
+  if(cmd === "normal"){
+    document.body.style.filter="none";
+  }
+
+  if(cmd === "reset"){
+    location.reload();
+  }
+}
+
+/* LISTEN REALTIME */
+sbRemote
+  .channel("tv-remote")
+  .on("postgres_changes",{
+    event:"UPDATE",
+    schema:"public",
+    table:"tv_control"
+  },payload=>{
+    jalankanPerintah(payload.new.command);
+  })
+  .subscribe();
+    </script>
 </body>
 </html>
