@@ -237,37 +237,51 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
 });
 
 /* ===== SUPABASE WALLPAPER ===== */
-const SUPABASE_URL="https://xntiicnhmhgpujeekmxt.supabase.co";
-const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_ANON_KEY = "PASTE_ANON_KEY_KAMU_DI_SINI";
 
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-let wallpapers=[],idx=0;
+const slideshow = document.getElementById("slideshow");
+
+let wallpapers = [];
+let index = 0;
 
 async function loadWallpapers(){
-  const {data,error}=await sb.storage.from("wallpaper").list("",{limit:100});
-  if(error)return;
+  const { data, error } = await sb
+    .storage
+    .from("wallpaper")
+    .list("", { limit: 100 });
 
-  wallpapers=data
-  .filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f.name))
-  .map(f=>`${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`);
+  if(error){
+    console.error("ERROR:", error);
+    return;
+  }
 
-  if(wallpapers.length){
-    document.body.style.backgroundImage=
-      `linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url('${wallpapers[0]}')`;
+  wallpapers = data
+    .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f.name))
+    .map(f =>
+      `${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`
+    );
+
+  if(wallpapers.length > 0){
+    slideshow.style.backgroundImage = `url('${wallpapers[0]}')`;
   }
 }
 
 function nextWallpaper(){
-  if(!wallpapers.length)return;
-  idx=(idx+1)%wallpapers.length;
-  document.body.style.backgroundImage=
-    `linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url('${wallpapers[idx]}')`;
+  if(wallpapers.length === 0) return;
+  index = (index + 1) % wallpapers.length;
+  slideshow.style.backgroundImage = `url('${wallpapers[index]}')`;
 }
 
 loadWallpapers();
-setInterval(nextWallpaper,15000);
-
+setInterval(nextWallpaper, 8000);
+</script>
+  <script>
 /* ===== UNMUTE SAAT DIKLIK ===== */
 document.addEventListener("click",()=>{
   const v=document.getElementById("haramainVideo");
