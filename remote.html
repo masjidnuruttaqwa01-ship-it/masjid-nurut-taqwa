@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<title>Remote TV Masjid</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:Poppins;padding:20px}
+button{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  font-size:16px;
+  border-radius:12px;
+  border:none;
+}
+</style>
+</head>
+<body>
+
+<h2>📺 Remote TV Masjid</h2>
+
+<button onclick="send('video')">▶️ Video Makkah</button>
+<button onclick="send('wallpaper')">🖼️ Wallpaper</button>
+<button onclick="send('mute')">🔇 Mute</button>
+<button onclick="send('unmute')">🔊 Unmute</button>
+<button onclick="send('night')">🌙 Mode Malam</button>
+<button onclick="send('normal')">☀️ Normal</button>
+<button onclick="send('reset')">🔄 Reset TV</button>
+
+<script>
+const sb = supabase.createClient(
+  "https://xntiicnhmhgpujeekmxt.supabase.co",
+  "PASTE_ANON_KEY_KAMU_DI_SINI"
+);
+
+function send(cmd){
+  sb.from("tv_control")
+    .update({command:cmd,updated_at:new Date()})
+    .eq("id",1);
+}
+</script>
+
+</body>
+</html>
