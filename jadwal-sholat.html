@@ -8,123 +8,142 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
+html,body{
+  height:100%;
+  overflow:hidden;
   font-family:Poppins,sans-serif;
   background:url("https://images.unsplash.com/photo-1584551246679-0daf3d275d0f") center/cover no-repeat fixed;
   color:#fff;
+}
+
+/* Glass Main */
+.container{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  backdrop-filter:blur(14px);
+  background:rgba(0,0,0,.55);
   padding:20px;
 }
 
-/* Glass Layer */
-.glass{
-  background:rgba(0,0,0,.45);
-  backdrop-filter:blur(12px);
-  border-radius:20px;
-  padding:20px;
-}
-
-/* Header */
+/* HEADER */
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:20px;
 }
-.header h1{font-size:20px}
-.clock{font-size:22px;font-weight:600}
+.header h1{
+  font-size:18px;
+  font-weight:600;
+}
+.clock{
+  font-size:22px;
+  font-weight:700;
+}
 
-/* Status */
+/* STATUS */
 .status{
   text-align:center;
-  margin-bottom:20px;
+  margin:10px 0 15px;
 }
-.status h2{font-size:20px}
-.status small{color:#00eaff}
+.status h2{
+  font-size:20px;
+  font-weight:600;
+}
+.status small{
+  color:#00eaff;
+}
 
-/* Prayer List */
+/* PRAYER GRID */
+.prayer-list{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-evenly;
+}
+
 .prayer{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:18px;
-  margin-bottom:12px;
-  border-radius:16px;
+  padding:14px 18px;
+  border-radius:18px;
   background:rgba(255,255,255,.08);
+  font-size:18px;
   cursor:pointer;
   transition:.3s;
 }
+
 .prayer:hover{
   background:rgba(255,255,255,.18);
 }
+
 .prayer.active{
+  background:rgba(0,234,255,.25);
   border-left:6px solid #00eaff;
-  background:rgba(255,255,255,.25);
-}
-.time{font-weight:700;font-size:20px}
-
-/* Volume */
-.volume{
-  margin:15px 0;
-  text-align:center;
-}
-.volume input{
-  width:100%;
 }
 
-/* Modal */
+.time{
+  font-weight:700;
+  font-size:20px;
+}
+
+/* MODAL */
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
   display:none;
-  align-items:center;
+  background:rgba(0,0,0,.7);
   justify-content:center;
+  align-items:center;
 }
+
 .modal-box{
-  background:#fff;
-  color:#000;
   width:90%;
   max-width:350px;
-  border-radius:20px;
+  background:#fff;
+  color:#000;
+  border-radius:22px;
   padding:20px;
 }
+
 .modal-box h3{margin-bottom:15px}
+
 .modal-box label{
   display:block;
   margin-bottom:10px;
+  font-size:14px;
 }
+
 .modal-box button{
-  margin-top:15px;
+  margin-top:10px;
   padding:8px 15px;
   border:none;
   background:#00aaff;
   color:#fff;
-  border-radius:10px;
+  border-radius:12px;
   cursor:pointer;
 }
 </style>
 </head>
 <body>
 
-<div class="glass">
+<div class="container">
 
-<div class="header">
-  <h1>📍 Kejaksan, Cirebon</h1>
-  <div class="clock" id="clock">00:00</div>
+<div>
+  <div class="header">
+    <h1>📍 Kejaksan, Cirebon</h1>
+    <div class="clock" id="clock">00:00</div>
+  </div>
+
+  <div class="status">
+    <h2 id="statusText">Memuat jadwal...</h2>
+    <small id="statusSub"></small>
+  </div>
 </div>
 
-<div class="status">
-  <h2 id="statusText">Memuat jadwal...</h2>
-  <small id="statusSub"></small>
-</div>
-
-<div class="volume">
-  🔊 Volume
-  <input type="range" min="0" max="1" step="0.1"
-  value="0.8" onchange="setVolume(this.value)">
-</div>
-
-<div id="prayerList"></div>
+<div class="prayer-list" id="prayerList"></div>
 
 </div>
 
@@ -150,15 +169,11 @@ body{
 
 <script>
 let selectedPrayer="";
-let volumeLevel=0.8;
 let triggeredToday={};
+let maxVolume=0.9;
 
-function setVolume(v){
-  volumeLevel=v;
-  audioAdzan.volume=v;
-  audioAlarm.volume=v;
-  audioNotif.volume=v;
-}
+/* FULLSCREEN AUTO */
+document.documentElement.requestFullscreen?.();
 
 /* CLOCK */
 function updateClock(){
@@ -166,7 +181,7 @@ function updateClock(){
 }
 setInterval(updateClock,1000);updateClock();
 
-/* FETCH */
+/* FETCH JADWAL */
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
 .then(r=>r.json())
 .then(res=>{
@@ -182,7 +197,7 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
     ["Isya",t.Isha]
   ];
 
-  const container=document.getElementById("prayerList");
+  const list=document.getElementById("prayerList");
 
   prayers.forEach(p=>{
     const div=document.createElement("div");
@@ -190,15 +205,15 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
     div.innerHTML=`<div>${p[0]}</div>
                    <div class="time">${p[1]}</div>`;
     div.onclick=()=>openModal(p[0]);
-    container.appendChild(div);
+    list.appendChild(div);
   });
 
-  checkWaktu(prayers);
-  setInterval(()=>checkWaktu(prayers),30000);
+  updateStatus(prayers);
+  setInterval(()=>updateStatus(prayers),30000);
 });
 
-/* STATUS & TRIGGER */
-function checkWaktu(prayers){
+/* STATUS + TRIGGER */
+function updateStatus(prayers){
   const now=new Date().toTimeString().slice(0,5);
 
   prayers.forEach(p=>{
@@ -216,6 +231,7 @@ function checkWaktu(prayers){
   });
 }
 
+/* PLAY SOUND */
 function playSound(type,name){
   if(type==="adzan"){
     fadeIn(audioAdzan);
@@ -231,38 +247,43 @@ function playSound(type,name){
   }
 }
 
-/* FADE IN */
+/* FADE IN + AUTO STOP */
 function fadeIn(audio){
   audio.volume=0;
   audio.play();
   let v=0;
   const fade=setInterval(()=>{
-    if(v>=volumeLevel){
+    if(v>=maxVolume){
       clearInterval(fade);
     }else{
       v+=0.05;
       audio.volume=v;
     }
   },200);
+
+  setTimeout(()=>{
+    audio.pause();
+    audio.currentTime=0;
+  },600000); // 10 menit iqomah
 }
 
 /* MODAL */
 function openModal(name){
   selectedPrayer=name;
-  document.getElementById("modalTitle").innerText="Atur Notifikasi "+name;
-  document.getElementById("modal").style.display="flex";
+  modalTitle.innerText="Atur Notifikasi "+name;
+  modal.style.display="flex";
 }
 
 function saveSetting(){
   const val=document.querySelector('input[name="notif"]:checked');
   if(!val) return;
   localStorage.setItem("notif_"+selectedPrayer,val.value);
-  document.getElementById("modal").style.display="none";
+  modal.style.display="none";
 }
 
 window.onclick=e=>{
   if(e.target.id==="modal"){
-    document.getElementById("modal").style.display="none";
+    modal.style.display="none";
   }
 }
 </script>
