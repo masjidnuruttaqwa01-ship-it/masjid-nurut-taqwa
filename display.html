@@ -214,8 +214,50 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
   ["Isya",t.Isha]
 ];
   sholatBar.innerHTML=list.map(s=>`
-    <div class="sholat">${s[0]}<b>${s[1]}</b></div>
+    <div class="sholat" data-time="${s[1]}">${s[0]}<b>${s[1]}</b></div>
   `).join("");
+  function cekWaktu(){
+  const now = new Date().toTimeString().slice(0,5);
+
+  document.querySelectorAll(".sholat").forEach(el=>{
+    el.classList.remove("active");
+
+    if(el.dataset.time === now){
+
+  el.classList.add("active");
+
+  const nama = el.childNodes[0].textContent.trim().toLowerCase();
+
+  if(nama.includes("terbit") || nama.includes("dhuha")){
+    return;
+  }
+
+  azanText.style.display="block";
+  azanAudio.play();
+
+      let sisa = 600; // 10 menit iqomah
+      iqomahText.style.display = "block";
+
+      const timer = setInterval(()=>{
+        let m = Math.floor(sisa/60);
+        let d = sisa%60;
+
+        iqomahText.innerText =
+          `IQOMAH ${m}:${d.toString().padStart(2,"0")}`;
+
+        sisa--;
+
+        if(sisa < 0){
+          clearInterval(timer);
+          azanText.style.display = "none";
+          iqomahText.style.display = "none";
+        }
+      },1000);
+    }
+  });
+  }
+  cekWaktu();
+setInterval(cekWaktu,30000);
 });
 function tambahMenit(waktu, menit){
   let [jam, mnt] = waktu.split(":").map(Number);
