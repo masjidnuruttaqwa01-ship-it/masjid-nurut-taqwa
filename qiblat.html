@@ -3,152 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kompas Qiblat</title>
+<title>Qiblat - Masjid Nurut Taqwa</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  height:100vh;
-  background:linear-gradient(135deg,#0f9d58,#145374);
+  font-family:Poppins,sans-serif;
+  background:#f3f3f3;
   display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
-  font-family:Poppins, sans-serif;
-  color:white;
+  min-height:100vh;
+}
+
+.card{
+  width:95%;
+  max-width:430px;
+  background:white;
+  border-radius:25px;
+  padding:25px;
+  box-shadow:0 10px 40px rgba(0,0,0,.15);
   text-align:center;
 }
 
-/* TITLE */
 h1{
-  margin-bottom:10px;
-  font-size:22px;
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:5px;
 }
 
-#degree{
-  margin-bottom:20px;
+.location{
   font-size:14px;
-  opacity:.9;
+  opacity:.7;
+  margin-bottom:20px;
 }
 
-/* COMPASS */
 .compass{
-  position:relative;
   width:260px;
   height:260px;
+  margin:0 auto;
   border-radius:50%;
-  background:rgba(255,255,255,.1);
-  backdrop-filter:blur(10px);
-  box-shadow:0 10px 30px rgba(0,0,0,.4);
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  border:14px solid #0f9d58;
+  position:relative;
+  background:#fff;
+  box-shadow:0 15px 40px rgba(0,0,0,.2);
 }
 
-.arrow{
+.needle{
   position:absolute;
-  width:6px;
+  width:4px;
   height:120px;
-  background:#ffd700;
-  border-radius:6px;
-  transform-origin:50% 90%;
-  transition:transform .3s ease-out;
+  background:red;
+  top:50%;
+  left:50%;
+  transform-origin:50% 100%;
+  transform:translate(-50%,-100%) rotate(0deg);
+  border-radius:4px;
 }
 
 .center-dot{
-  width:18px;
-  height:18px;
-  background:white;
-  border-radius:50%;
   position:absolute;
+  width:14px;
+  height:14px;
+  background:#0f9d58;
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
 }
 
-/* STATUS */
-#status{
+.info{
   margin-top:20px;
   font-size:14px;
-  opacity:.8;
 }
 
-/* BUTTON */
+.distance{
+  margin-top:5px;
+  opacity:.7;
+  font-size:13px;
+}
+
 button{
-  margin-top:25px;
-  padding:10px 20px;
+  margin-top:20px;
+  padding:12px 20px;
   border:none;
-  border-radius:20px;
+  border-radius:25px;
   background:#ffd700;
-  color:#1b1b1b;
   font-weight:600;
+  cursor:pointer;
 }
 </style>
 </head>
-
 <body>
 
-<h1>🧭 Kompas Qiblat</h1>
-<div id="degree">Mencari arah...</div>
+<div class="card">
 
-<div class="compass">
-  <div class="arrow" id="arrow"></div>
-  <div class="center-dot"></div>
+  <h1>Masjid Nurut Taqwa</h1>
+  <div class="location" id="locationText">Mendeteksi lokasi...</div>
+
+  <div class="compass">
+    <div class="needle" id="needle"></div>
+    <div class="center-dot"></div>
+  </div>
+
+  <div class="info" id="degreeText">Menghitung arah...</div>
+  <div class="distance" id="distanceText"></div>
+
+  <button onclick="initCompass()">Aktifkan Kompas</button>
+
 </div>
 
-<div id="status">Izinkan sensor & lokasi</div>
-<button onclick="requestAccess()">Aktifkan Kompas</button>
-
 <script>
-const KAABA = {
-  lat:21.4225,
-  lng:39.8262
-};
+let qiblaDirection=0;
+let smoothHeading=0;
 
-let userLat,userLng;
-let qiblatDegree=0;
+function calculateQibla(lat,lon){
 
-function toRad(d){return d*Math.PI/180}
-function toDeg(r){return r*180/Math.PI}
+  const kaabaLat=21.4225*Math.PI/180;
+  const kaabaLon=39.8262*Math.PI/180;
 
-function calculateQiblat(){
-  const dLon = toRad(KAABA.lng - userLng);
-  const lat1 = toRad(userLat);
-  const lat2 = toRad(KAABA.lat);
+  const userLat=lat*Math.PI/180;
+  const userLon=lon*Math.PI/180;
 
-  const y = Math.sin(dLon);
-  const x = Math.cos(lat1)*Math.tan(lat2) - Math.sin(lat1)*Math.cos(dLon);
-  let brng = toDeg(Math.atan2(y,x));
-  qiblatDegree = (brng + 360) % 360;
+  const dLon=kaabaLon-userLon;
+
+  const y=Math.sin(dLon);
+  const x=Math.cos(userLat)*Math.tan(kaabaLat)-
+          Math.sin(userLat)*Math.cos(dLon);
+
+  const brng=Math.atan2(y,x);
+  return (brng*180/Math.PI+360)%360;
 }
 
-function requestAccess(){
+function calculateDistance(lat,lon){
+  const R=6371;
+  const dLat=(21.4225-lat)*Math.PI/180;
+  const dLon=(39.8262-lon)*Math.PI/180;
 
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(pos=>{
-      userLat=pos.coords.latitude;
-      userLng=pos.coords.longitude;
-      calculateQiblat();
-      status.innerText="Arah kiblat ditemukan";
-    });
-  }
+  const a=Math.sin(dLat/2)*Math.sin(dLat/2)+
+          Math.cos(lat*Math.PI/180)*
+          Math.cos(21.4225*Math.PI/180)*
+          Math.sin(dLon/2)*Math.sin(dLon/2);
 
-  if(typeof DeviceOrientationEvent.requestPermission === "function"){
+  const c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c;
+}
+
+function initCompass(){
+
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat=pos.coords.latitude;
+    const lon=pos.coords.longitude;
+
+    document.getElementById("locationText").innerText=
+      "Kejaksan, Cirebon";
+
+    qiblaDirection=calculateQibla(lat,lon);
+
+    const distance=calculateDistance(lat,lon);
+    document.getElementById("distanceText").innerText=
+      "Jarak ke Ka'bah ± "+distance.toFixed(0)+" KM";
+
+  });
+
+  if(typeof DeviceOrientationEvent.requestPermission==="function"){
     DeviceOrientationEvent.requestPermission()
-    .then(response=>{
-      if(response==="granted"){
+    .then(permission=>{
+      if(permission==="granted"){
         window.addEventListener("deviceorientation",handleOrientation);
       }
     });
   }else{
     window.addEventListener("deviceorientationabsolute",handleOrientation,true);
+    window.addEventListener("deviceorientation",handleOrientation,true);
   }
 }
 
-function handleOrientation(event){
-  const heading = event.alpha;
-  if(heading===null) return;
+function handleOrientation(e){
 
-  const rotation = qiblatDegree - heading;
-  arrow.style.transform = `rotate(${rotation}deg)`;
-  degree.innerText = "Arah Kiblat: " + qiblatDegree.toFixed(1) + "°";
+  let heading;
+
+  if(e.webkitCompassHeading){
+    heading=e.webkitCompassHeading;
+  }else if(e.alpha){
+    heading=360-e.alpha;
+  }else{
+    return;
+  }
+
+  smoothHeading=smoothHeading*0.9+heading*0.1;
+
+  const diff=(qiblaDirection-smoothHeading+360)%360;
+
+  needle.style.transform=
+    `translate(-50%,-100%) rotate(${diff}deg)`;
+
+  degreeText.innerText=
+    "Qiblat "+qiblaDirection.toFixed(2)+"° dari Utara";
+
+  if(Math.abs(diff)<3){
+    navigator.vibrate?.(100);
+  }
 }
 </script>
 
