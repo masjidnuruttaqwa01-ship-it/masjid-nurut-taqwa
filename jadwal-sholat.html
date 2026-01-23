@@ -197,20 +197,26 @@ body{
 @keyframes fadeOut{
   to{opacity:0;visibility:hidden}
 }
-  .website-link{
-  background:rgba(255,255,255,.2);
-  padding:10px 16px;
-  border-radius:20px;
+  .appbar-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.website-link{
+  background:rgba(255,255,255,.15);
+  padding:8px 14px;
+  border-radius:16px;
   text-decoration:none;
   color:white;
-  font-size:13px;
+  font-size:12px;
   font-weight:600;
-  backdrop-filter:blur(8px);
+  backdrop-filter:blur(6px);
   transition:.3s;
 }
 
 .website-link:hover{
-  background:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.3);
   transform:scale(1.05);
 }
 </style>
@@ -225,14 +231,17 @@ body{
   </div>
 </div>
 <div class="appbar">
-  <div>
+
+  <div class="appbar-top">
     <h1>🕌 Masjid Nurut Taqwa</h1>
-    <div class="clock" id="clock">00:00</div>
+
+    <a href="index.html" class="website-link">
+      🌐 Website
+    </a>
   </div>
 
-  <a href="index.html" class="website-link">
-    🌐 Website Masjid Nurut Taqwa
-  </a>
+  <div class="clock" id="clock">00:00</div>
+
 </div>
 
 <div class="content">
