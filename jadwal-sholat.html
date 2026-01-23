@@ -3,58 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jadwal Sholat - Masjid Nurut Taqwa</title>
+<title>Jadwal Sholat Premium</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:Poppins,sans-serif;
-  background:linear-gradient(to bottom,#0c2d48,#145374);
-  color:white;
+  background:url("https://images.unsplash.com/photo-1584551246679-0daf3d275d0f") center/cover no-repeat fixed;
+  color:#fff;
   padding:20px;
 }
 
-/* HEADER */
+/* Glass Layer */
+.glass{
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(12px);
+  border-radius:20px;
+  padding:20px;
+}
+
+/* Header */
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:25px;
+  margin-bottom:20px;
 }
-.header h1{
-  font-size:22px;
-  font-weight:600;
-}
-.clock{
-  font-size:20px;
-  font-weight:600;
-}
+.header h1{font-size:20px}
+.clock{font-size:22px;font-weight:600}
 
-/* STATUS */
+/* Status */
 .status{
   text-align:center;
   margin-bottom:20px;
 }
-.status h2{
-  font-size:22px;
-  font-weight:600;
-}
-.status small{
-  color:#00e0ff;
-  font-size:14px;
-}
+.status h2{font-size:20px}
+.status small{color:#00eaff}
 
-/* DATE */
-.date{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:20px;
-  font-size:14px;
-  opacity:.9;
-}
-
-/* CARD LIST */
+/* Prayer List */
 .prayer{
   display:flex;
   justify-content:space-between;
@@ -63,35 +50,66 @@ body{
   margin-bottom:12px;
   border-radius:16px;
   background:rgba(255,255,255,.08);
-  backdrop-filter:blur(6px);
-  font-size:18px;
+  cursor:pointer;
+  transition:.3s;
 }
-
+.prayer:hover{
+  background:rgba(255,255,255,.18);
+}
 .prayer.active{
+  border-left:6px solid #00eaff;
   background:rgba(255,255,255,.25);
-  border-left:6px solid #00e0ff;
+}
+.time{font-weight:700;font-size:20px}
+
+/* Volume */
+.volume{
+  margin:15px 0;
+  text-align:center;
+}
+.volume input{
+  width:100%;
 }
 
-.time{
-  font-weight:700;
-  font-size:20px;
+/* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
 }
-
-.icon{
-  font-size:20px;
+.modal-box{
+  background:#fff;
+  color:#000;
+  width:90%;
+  max-width:350px;
+  border-radius:20px;
+  padding:20px;
 }
-
-/* RESPONSIVE */
-@media(max-width:600px){
-  .prayer{font-size:16px}
-  .time{font-size:18px}
+.modal-box h3{margin-bottom:15px}
+.modal-box label{
+  display:block;
+  margin-bottom:10px;
+}
+.modal-box button{
+  margin-top:15px;
+  padding:8px 15px;
+  border:none;
+  background:#00aaff;
+  color:#fff;
+  border-radius:10px;
+  cursor:pointer;
 }
 </style>
 </head>
 <body>
 
+<div class="glass">
+
 <div class="header">
-  <h1>📍 Kejaksan, Cirebon - Indonesia</h1>
+  <h1>📍 Kejaksan, Cirebon</h1>
   <div class="clock" id="clock">00:00</div>
 </div>
 
@@ -100,34 +118,59 @@ body{
   <small id="statusSub"></small>
 </div>
 
-<div class="date">
-  <div id="hijri"></div>
-  <div id="masehi"></div>
+<div class="volume">
+  🔊 Volume
+  <input type="range" min="0" max="1" step="0.1"
+  value="0.8" onchange="setVolume(this.value)">
 </div>
-<input type="range" min="0" max="1" step="0.1"
-value="0.8" onchange="setVolume(this.value)">
+
 <div id="prayerList"></div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Atur Notifikasi</h3>
+
+    <label><input type="radio" name="notif" value="adzan"> Suara Adzan</label>
+    <label><input type="radio" name="notif" value="alarm"> Suara Alarm</label>
+    <label><input type="radio" name="notif" value="notif"> Suara Notif</label>
+    <label><input type="radio" name="notif" value="silent"> Tanpa Suara</label>
+    <label><input type="radio" name="notif" value="off"> Nonaktifkan</label>
+
+    <button onclick="saveSetting()">Simpan</button>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="audioAdzan" src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
+<audio id="audioAlarm" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
+<audio id="audioNotif" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+
 <script>
-/* JAM REALTIME */
+let selectedPrayer="";
+let volumeLevel=0.8;
+let triggeredToday={};
+
+function setVolume(v){
+  volumeLevel=v;
+  audioAdzan.volume=v;
+  audioAlarm.volume=v;
+  audioNotif.volume=v;
+}
+
+/* CLOCK */
 function updateClock(){
-  document.getElementById("clock").innerText =
-    new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+  clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
 setInterval(updateClock,1000);updateClock();
 
-/* TANGGAL */
-document.getElementById("masehi").innerText =
-  new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
-
-document.getElementById("hijri").innerText =
-  new Date().toLocaleDateString("id-ID-u-ca-islamic",
-  {day:"numeric",month:"long",year:"numeric"}) + " H";
-
-/* FETCH JADWAL */
+/* FETCH */
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
-.then(res=>res.json())
-.then(data=>{
-  const t=data.data.timings;
+.then(r=>r.json())
+.then(res=>{
+  const t=res.data.timings;
 
   const prayers=[
     ["Imsak",t.Imsak],
@@ -140,202 +183,89 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
   ];
 
   const container=document.getElementById("prayerList");
-  const now=new Date().toTimeString().slice(0,5);
-
-  let nextPrayer=null;
 
   prayers.forEach(p=>{
-    const card=document.createElement("div");
-    card.className="prayer";
-    card.innerHTML=`
-      <div>${p[0]}</div>
-      <div class="time">${p[1]}</div>
-      <div class="icon">⏰</div>
-    `;
-
-    if(now===p[1]){
-      card.classList.add("active");
-    }
-
-    if(!nextPrayer && p[1] > now){
-      nextPrayer=p;
-    }
-
-    container.appendChild(card);
+    const div=document.createElement("div");
+    div.className="prayer";
+    div.innerHTML=`<div>${p[0]}</div>
+                   <div class="time">${p[1]}</div>`;
+    div.onclick=()=>openModal(p[0]);
+    container.appendChild(div);
   });
 
-  if(nextPrayer){
-    document.getElementById("statusText").innerText =
-      "Menuju waktu " + nextPrayer[0];
-    document.getElementById("statusSub").innerText =
-      "Pukul " + nextPrayer[1];
-  }else{
-    document.getElementById("statusText").innerText =
-      "Semua waktu hari ini telah lewat";
-  }
+  checkWaktu(prayers);
+  setInterval(()=>checkWaktu(prayers),30000);
 });
-</script>
-<script>
 
-/* =====================================================
-   PREMIUM AUDIO ADZAN ENGINE
-===================================================== */
+/* STATUS & TRIGGER */
+function checkWaktu(prayers){
+  const now=new Date().toTimeString().slice(0,5);
 
-const audioAdzan = document.getElementById("audioAdzan");
-const audioAlarm = document.getElementById("audioAlarm");
-const audioNotif = document.getElementById("audioNotif");
+  prayers.forEach(p=>{
+    if(p[1]===now){
+      if(triggeredToday[p[0]]) return;
+      triggeredToday[p[0]]=true;
 
-/* ========================
-   GLOBAL CONFIG
-======================== */
-let GLOBAL_VOLUME = 0.8;      // volume default (0 - 1)
-let IQOMAH_DURATION = 600;    // 10 menit
-let sudahTrigger = false;
-let activeAudio = null;
-let iqomahTimer = null;
+      if(p[0]==="Terbit") return;
 
-/* ========================
-   SET VOLUME GLOBAL
-======================== */
-function setVolume(v){
-  GLOBAL_VOLUME = v;
-  [audioAdzan,audioAlarm,audioNotif].forEach(a=>{
-    a.volume = GLOBAL_VOLUME;
+      const setting=localStorage.getItem("notif_"+p[0]);
+      if(setting==="off") return;
+
+      playSound(setting,p[0]);
+    }
   });
 }
 
-/* ========================
-   FADE IN HALUS
-======================== */
-function fadeIn(audio){
-  audio.volume = 0;
-  audio.play();
-  activeAudio = audio;
+function playSound(type,name){
+  if(type==="adzan"){
+    fadeIn(audioAdzan);
+  }
+  else if(type==="alarm"){
+    fadeIn(audioAlarm);
+  }
+  else if(type==="notif"){
+    fadeIn(audioNotif);
+  }
+  else if(type==="silent"){
+    alert("Waktu "+name+" telah masuk");
+  }
+}
 
-  let vol = 0;
-  const fade = setInterval(()=>{
-    if(vol >= GLOBAL_VOLUME){
+/* FADE IN */
+function fadeIn(audio){
+  audio.volume=0;
+  audio.play();
+  let v=0;
+  const fade=setInterval(()=>{
+    if(v>=volumeLevel){
       clearInterval(fade);
-    } else {
-      vol += 0.05;
-      audio.volume = vol;
+    }else{
+      v+=0.05;
+      audio.volume=v;
     }
   },200);
 }
 
-/* ========================
-   STOP AUDIO
-======================== */
-function stopAudio(){
-  if(activeAudio){
-    activeAudio.pause();
-    activeAudio.currentTime = 0;
-    activeAudio = null;
+/* MODAL */
+function openModal(name){
+  selectedPrayer=name;
+  document.getElementById("modalTitle").innerText="Atur Notifikasi "+name;
+  document.getElementById("modal").style.display="flex";
+}
+
+function saveSetting(){
+  const val=document.querySelector('input[name="notif"]:checked');
+  if(!val) return;
+  localStorage.setItem("notif_"+selectedPrayer,val.value);
+  document.getElementById("modal").style.display="none";
+}
+
+window.onclick=e=>{
+  if(e.target.id==="modal"){
+    document.getElementById("modal").style.display="none";
   }
 }
-
-/* ========================
-   AUTO STOP SAAT IQOMAH
-======================== */
-function startIqomahCountdown(){
-  let sisa = IQOMAH_DURATION;
-
-  iqomahTimer = setInterval(()=>{
-    sisa--;
-    if(sisa <= 0){
-      clearInterval(iqomahTimer);
-      stopAudio();
-      sudahTrigger = false;
-    }
-  },1000);
-}
-
-/* ========================
-   AUTOPLAY UNLOCK
-======================== */
-window.addEventListener("load",()=>{
-  audioAdzan.play().then(()=>{
-    audioAdzan.pause();
-    audioAdzan.currentTime = 0;
-  }).catch(()=>{});
-});
-
-/* ========================
-   CEK WAKTU SHOLAT
-======================== */
-function cekWaktuPremium(){
-
-  const now = new Date().toTimeString().slice(0,5);
-
-  document.querySelectorAll(".prayer").forEach(card=>{
-
-    card.classList.remove("active");
-
-    if(card.dataset.time === now){
-
-      card.classList.add("active");
-
-      const nama = card.dataset.name.toLowerCase();
-
-      /* ❌ Tidak bunyi untuk Terbit & Dhuha */
-      if(nama.includes("terbit") || nama.includes("dhuha")){
-        return;
-      }
-
-      /* Anti double trigger */
-      if(sudahTrigger) return;
-      sudahTrigger = true;
-
-      const setting = localStorage.getItem("notif_"+nama);
-
-      if(setting === "off") return;
-
-      if(setting === "adzan"){
-        fadeIn(audioAdzan);
-      }
-      else if(setting === "alarm"){
-        fadeIn(audioAlarm);
-      }
-      else if(setting === "notif"){
-        fadeIn(audioNotif);
-      }
-      else if(setting === "silent"){
-        alert("Waktu " + nama + " telah masuk");
-      }
-
-      startIqomahCountdown();
-    }
-
-  });
-}
-
-/* ========================
-   RUN CHECK LOOP
-======================== */
-setInterval(cekWaktuPremium,30000);
-
-
-/* ========================
-   CONTOH SAVE SETTING
-======================== */
-// localStorage.setItem("notif_subuh","adzan");
-// localStorage.setItem("notif_dzuhur","alarm");
-// localStorage.setItem("notif_ashar","silent");
-// localStorage.setItem("notif_isya","off");
-
-/* ========================
-   CONTOH CONTROL VOLUME
-======================== */
-// setVolume(0.5); // 50% volume
-
 </script>
-  <audio id="audioAdzan"
-src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 
-<audio id="audioAlarm"
-src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
-
-<audio id="audioNotif"
-src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
 </body>
 </html>
