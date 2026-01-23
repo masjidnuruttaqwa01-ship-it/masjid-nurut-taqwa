@@ -256,10 +256,17 @@ body{
   align-items:center;
 }
 
+.action-row{
+  margin-top:18px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
 .website-link{
   background:rgba(255,255,255,.15);
   padding:8px 14px;
-  border-radius:16px;
+  border-radius:25px;
   text-decoration:none;
   color:white;
   font-size:12px;
@@ -270,28 +277,20 @@ body{
 
 .website-link:hover{
   background:rgba(255,255,255,.3);
-  transform:scale(1.05);
-}
-  .website-row{
-  margin-top:12px;
-  text-align:center;
 }
 
-.website-link{
-  display:inline-block;
-  background:rgba(255,255,255,.15);
-  padding:10px 18px;
-  border-radius:20px;
+.qiblat-btn{
+  background:white;
+  color:black;
+  padding:8px 16px;
+  border-radius:25px;
   text-decoration:none;
-  color:white;
-  font-size:13px;
   font-weight:600;
-  backdrop-filter:blur(8px);
+  font-size:12px;
   transition:.3s;
 }
 
-.website-link:hover{
-  background:rgba(255,255,255,.3);
+.qiblat-btn:hover{
   transform:scale(1.05);
 }
 </style>
@@ -329,14 +328,15 @@ body{
     <div id="hijriDate">5 Sya'ban 1447H</div>
     <div id="masehiDate">23 Januari 2026</div>
   </div>
- <div class="website-row">
+<div class="action-row">
   <a href="index.html" class="website-link">
-    🌐 Website Masjid Nurut Taqwa
+    🌐 Website
   </a>
-</div> 
-  <div class="qiblat-btn">
+
+  <a href="qiblat.html" class="qiblat-btn">
     🧭 QIBLAT
-  </div>
+  </a>
+</div>
 
 </div>
 <div class="content">
