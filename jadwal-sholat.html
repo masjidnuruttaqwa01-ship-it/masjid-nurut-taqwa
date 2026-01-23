@@ -3,37 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jadwal Sholat - Masjid Nurut Taqwa</title>
+<title>Masjid Nurut Taqwa</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f9d58">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:Poppins,sans-serif;
-  background:#f1f8f4;
   height:100vh;
   overflow:hidden;
   display:flex;
   flex-direction:column;
-}
-
-/* HEADER APP STYLE */
-.appbar{
-  background:#0f9d58;
+  background:linear-gradient(135deg,#0f9d58,#145374);
   color:white;
-  padding:18px;
-  border-bottom-left-radius:25px;
-  border-bottom-right-radius:25px;
-  box-shadow:0 4px 20px rgba(0,0,0,.15);
 }
 
+/* MATERIAL 3 APP BAR */
+.appbar{
+  padding:20px;
+  background:linear-gradient(135deg,#0f9d58,#1b5e20);
+  border-bottom-left-radius:30px;
+  border-bottom-right-radius:30px;
+  box-shadow:0 8px 30px rgba(0,0,0,.3);
+}
 .appbar h1{
-  font-size:18px;
+  font-size:20px;
   font-weight:600;
 }
-
 .clock{
-  font-size:22px;
+  font-size:26px;
   font-weight:700;
   margin-top:5px;
 }
@@ -44,56 +46,55 @@ body{
   padding:15px;
   display:flex;
   flex-direction:column;
+  gap:12px;
 }
 
-/* STATUS */
+/* STATUS CARD */
 .status{
-  background:#fff;
+  background:linear-gradient(135deg,#ffd700,#c9a227);
+  color:#1b1b1b;
+  padding:14px;
   border-radius:18px;
-  padding:12px;
-  margin-bottom:12px;
-  box-shadow:0 4px 15px rgba(0,0,0,.08);
-  font-size:14px;
-  color:#333;
+  font-weight:600;
+  text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,.2);
 }
 
-/* CARD LIST */
+/* PRAYER CARD */
 .list{
-  flex:1;
-  overflow:hidden;
   display:flex;
   flex-direction:column;
   gap:10px;
 }
 
 .prayer{
-  background:white;
-  border-radius:18px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(10px);
   padding:16px;
+  border-radius:20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
   font-size:16px;
   cursor:pointer;
   transition:.3s;
 }
 
 .prayer.active{
-  border-left:6px solid #fbbc05;
-  background:#e8f5e9;
+  border-left:6px solid #ffd700;
+  background:rgba(255,255,255,.25);
 }
 
 .time{
   font-weight:700;
-  color:#0f9d58;
+  font-size:18px;
 }
 
 /* MODAL */
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.5);
+  background:rgba(0,0,0,.6);
   display:none;
   justify-content:center;
   align-items:center;
@@ -101,14 +102,15 @@ body{
 
 .modal-box{
   background:white;
+  color:#222;
   width:85%;
-  border-radius:20px;
+  border-radius:25px;
   padding:20px;
 }
 
 .modal-box h3{
-  margin-bottom:10px;
   color:#0f9d58;
+  margin-bottom:12px;
 }
 
 .modal-box label{
@@ -118,10 +120,10 @@ body{
 
 .modal-box button{
   margin-top:15px;
-  padding:10px;
+  padding:12px;
   width:100%;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
   background:#0f9d58;
   color:white;
   font-weight:600;
@@ -131,27 +133,28 @@ body{
 #azanScreen{
   position:fixed;
   inset:0;
-  background:linear-gradient(135deg,#0f9d58,#145374);
+  background:linear-gradient(135deg,#ffd700,#c9a227);
   display:none;
   justify-content:center;
   align-items:center;
-  color:white;
   flex-direction:column;
-  z-index:20;
+  color:#1b1b1b;
+  z-index:10;
 }
 
 #azanScreen h1{
-  font-size:30px;
+  font-size:28px;
   animation:pulse 2s infinite;
 }
 
 @keyframes pulse{
   0%{transform:scale(1)}
-  50%{transform:scale(1.05)}
+  50%{transform:scale(1.07)}
   100%{transform:scale(1)}
 }
 </style>
 </head>
+
 <body>
 
 <div class="appbar">
@@ -162,7 +165,7 @@ body{
 <div class="content">
 
 <div class="status" id="statusText">
-Memuat jadwal sholat...
+Memuat jadwal...
 </div>
 
 <div class="list" id="prayerList"></div>
@@ -182,22 +185,18 @@ Memuat jadwal sholat...
   </div>
 </div>
 
-<!-- AZAN SCREEN -->
 <div id="azanScreen">
   <h1>🕌 WAKTU SHOLAT TELAH TIBA</h1>
 </div>
 
-<!-- AUDIO -->
 <audio id="audioAdzan" src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 <audio id="audioAlarm" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
 <audio id="audioNotif" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
 
 <script>
-
 /* JAM */
 function updateClock(){
-  document.getElementById("clock").innerText=
-  new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
 setInterval(updateClock,1000);updateClock();
 
@@ -208,111 +207,103 @@ let lastTrigger=null;
 fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
 .then(res=>res.json())
 .then(data=>{
-  const t=data.data.timings;
+const t=data.data.timings;
 
-  const prayers=[
-    ["Imsak",t.Imsak],
-    ["Subuh",t.Fajr],
-    ["Terbit",t.Sunrise],
-    ["Dhuha",t.Sunrise],
-    ["Dzuhur",t.Dhuhr],
-    ["Ashar",t.Asr],
-    ["Maghrib",t.Maghrib],
-    ["Isya",t.Isha]
-  ];
+const prayers=[
+["Imsak",t.Imsak],
+["Subuh",t.Fajr],
+["Terbit",t.Sunrise],
+["Dhuha",t.Sunrise],
+["Dzuhur",t.Dhuhr],
+["Ashar",t.Asr],
+["Maghrib",t.Maghrib],
+["Isya",t.Isha]
+];
 
-  const container=document.getElementById("prayerList");
+const container=document.getElementById("prayerList");
 
-  prayers.forEach(p=>{
-    const div=document.createElement("div");
-    div.className="prayer";
-    div.innerHTML=`<div>${p[0]}</div><div class="time">${p[1]}</div>`;
+prayers.forEach(p=>{
+const div=document.createElement("div");
+div.className="prayer";
+div.innerHTML=`<div>${p[0]}</div><div class="time">${p[1]}</div>`;
 
-    div.onclick=()=>{
-      selectedPrayer=p[0];
-      document.getElementById("modalTitle").innerText=
-      "Atur Notifikasi "+selectedPrayer;
-      loadSavedSetting(selectedPrayer);
-      document.getElementById("notifModal").style.display="flex";
-    };
+div.onclick=()=>{
+selectedPrayer=p[0];
+modalTitle.innerText="Atur Notifikasi "+p[0];
+loadSavedSetting(p[0]);
+notifModal.style.display="flex";
+};
 
-    container.appendChild(div);
-  });
+container.appendChild(div);
+});
 
-  setInterval(()=>cekWaktu(prayers),30000);
+setInterval(()=>cekWaktu(prayers),30000);
 });
 
 function cekWaktu(prayers){
-  const now=new Date().toTimeString().slice(0,5);
+const now=new Date().toTimeString().slice(0,5);
 
-  prayers.forEach(p=>{
-    if(now===p[1] && lastTrigger!==p[0]){
+prayers.forEach(p=>{
+if(now===p[1] && lastTrigger!==p[0]){
+lastTrigger=p[0];
 
-      lastTrigger=p[0];
+if(p[0]==="Terbit"||p[0]==="Dhuha") return;
 
-      if(p[0]==="Terbit"||p[0]==="Dhuha") return;
+const setting=localStorage.getItem("notif_"+p[0]);
+if(setting==="off") return;
 
-      const setting=localStorage.getItem("notif_"+p[0]);
-      if(setting==="off") return;
+showAzan();
 
-      showAzan();
+if(setting==="adzan") fade(audioAdzan);
+else if(setting==="alarm") fade(audioAlarm);
+else if(setting==="notif") fade(audioNotif);
+else if(setting==="silent") alert("Waktu "+p[0]);
 
-      if(setting==="adzan") fade(audioAdzan);
-      else if(setting==="alarm") fade(audioAlarm);
-      else if(setting==="notif") fade(audioNotif);
-      else if(setting==="silent") alert("Waktu "+p[0]+" telah masuk");
-
-      setTimeout(()=>{stopAudio();hideAzan()},600000);
-    }
-  });
+setTimeout(()=>{stopAudio();hideAzan()},600000);
+}
+});
 }
 
-/* AUDIO */
+/* AUDIO FADE */
 function fade(audio){
-  stopAudio();
-  audio.volume=0;
-  audio.play();
-  let v=0;
-  const i=setInterval(()=>{
-    if(v<0.8){v+=0.1;audio.volume=v;}
-    else clearInterval(i);
-  },300);
+stopAudio();
+audio.volume=0;
+audio.play();
+let v=0;
+const i=setInterval(()=>{
+if(v<0.9){v+=0.1;audio.volume=v;}
+else clearInterval(i);
+},300);
 }
-
 function stopAudio(){
-  [audioAdzan,audioAlarm,audioNotif].forEach(a=>{
-    a.pause();a.currentTime=0;
-  });
+[audioAdzan,audioAlarm,audioNotif].forEach(a=>{
+a.pause();a.currentTime=0;
+});
 }
 
-/* AZAN SCREEN */
-function showAzan(){
-  document.getElementById("azanScreen").style.display="flex";
-}
-function hideAzan(){
-  document.getElementById("azanScreen").style.display="none";
-}
+function showAzan(){azanScreen.style.display="flex";}
+function hideAzan(){azanScreen.style.display="none";}
 
-/* SAVE */
 function saveNotif(){
-  const selected=document.querySelector('input[name="notifType"]:checked');
-  if(!selected) return;
-  localStorage.setItem("notif_"+selectedPrayer,selected.value);
-  document.getElementById("notifModal").style.display="none";
+const selected=document.querySelector('input[name="notifType"]:checked');
+if(!selected) return;
+localStorage.setItem("notif_"+selectedPrayer,selected.value);
+notifModal.style.display="none";
 }
 
 function loadSavedSetting(prayer){
-  document.querySelectorAll('input[name="notifType"]').forEach(r=>r.checked=false);
-  const saved=localStorage.getItem("notif_"+prayer);
-  if(saved){
-    const radio=document.querySelector(`input[value="${saved}"]`);
-    if(radio) radio.checked=true;
-  }
+document.querySelectorAll('input[name="notifType"]').forEach(r=>r.checked=false);
+const saved=localStorage.getItem("notif_"+prayer);
+if(saved){
+const radio=document.querySelector(`input[value="${saved}"]`);
+if(radio) radio.checked=true;
+}
 }
 
-window.addEventListener("load",()=>{
-  audioAdzan.play().then(()=>audioAdzan.pause()).catch(()=>{});
-});
+/* PWA */
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("sw.js");
+}
 </script>
 
 </body>
