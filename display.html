@@ -12,12 +12,7 @@
 
 body{
   font-family:Poppins,sans-serif;
-  background:
-    linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.18)),
-    url("https://images.unsplash.com/photo-1548013146-72479768bada");
-  background-size:cover;
-  background-position:center;
-  background-attachment:fixed;
+  background:#000;
   overflow:hidden;
   color:#0f172a;
 }
@@ -250,6 +245,14 @@ body{
     0 1px 6px rgba(255,255,255,.6),
     0 2px 10px rgba(0,0,0,.15);
   }
+  #wallpaperLayer{
+  position:absolute;
+  inset:0;
+  background:#000 center/cover no-repeat;
+  opacity:1;
+  z-index:2;
+  transition:opacity 1s ease;
+  }
 </style>
 </head>
 
@@ -271,19 +274,16 @@ body{
 
   <!-- VIDEO -->
   <div class="video-area">
+  <iframe
+    id="haramainVideo"
+    src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=0&controls=0&rel=0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
 
-    <div class="azan" id="azanText">AZAN</div>
-    <div class="iqomah" id="iqomahText">IQOMAH 10:00</div>
-
-    <iframe id="haramainVideo"
-      src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
- <!-- WALLPAPER -->
-  <div class="slideshow" id="slideshow"></div>
-  </div>
-
+  <!-- WALLPAPER DARI GALERI -->
+  <div id="wallpaperLayer"></div>
+</div>
   <!-- JADWAL SHOLAT -->
   <div class="sholat-bottom">
     <div class="sholat-bar" id="sholatBar"></div>
@@ -498,31 +498,26 @@ updateHijriah();
 
 /* UPDATE SETIAP JAM (AMAN & RINGAN) */
 setInterval(updateHijriah, 60 * 60 * 1000);
-  </script> 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
 const SUPABASE_ANON_KEY =
 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU";
 
-const supabase = supabaseJs.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const wallpaperLayer = document.getElementById("wallpaperLayer");
-let wallpapers = [];
-let index = 0;
 
-// 🔹 Ambil file dari BUCKET wallpaper
-async function loadWallpapers(){
-  const { data, error } = await supabase
+let wallpapers = [];
+let idx = 0;
+
+async function loadGallery(){
+  const { data, error } = await sb
     .storage
     .from("wallpaper")
     .list("", { limit: 100 });
 
   if(error){
-    console.error("Gagal ambil wallpaper:", error);
+    console.error("Gagal load wallpaper:", error);
     return;
   }
 
@@ -532,21 +527,18 @@ async function loadWallpapers(){
       `${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`
     );
 
-  console.log("Wallpaper loaded:", wallpapers);
-  if(wallpapers.length > 0){
+  if(wallpapers.length){
     wallpaperLayer.style.backgroundImage = `url('${wallpapers[0]}')`;
   }
 }
 
-// 🔹 Ganti wallpaper
 function nextWallpaper(){
-  if(wallpapers.length === 0) return;
-  index = (index + 1) % wallpapers.length;
-  wallpaperLayer.style.backgroundImage = `url('${wallpapers[index]}')`;
+  if(!wallpapers.length) return;
+  idx = (idx + 1) % wallpapers.length;
+  wallpaperLayer.style.backgroundImage = `url('${wallpapers[idx]}')`;
 }
 
-// 🔹 Loop slideshow
-loadWallpapers();
+loadGallery();
 setInterval(nextWallpaper, 8000); // ganti tiap 8 detik
 </script>
 </body>
