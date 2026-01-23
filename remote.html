@@ -22,6 +22,7 @@ button{
 
 <button onclick="send('video')">▶️ Video Makkah</button>
 <button onclick="send('wallpaper')">🖼️ Wallpaper</button>
+<button onclick="send('azan')">🔊 Azan</button>
 <button onclick="send('mute')">🔇 Mute</button>
 <button onclick="send('unmute')">🔊 Unmute</button>
 <button onclick="send('night')">🌙 Mode Malam</button>
@@ -31,13 +32,13 @@ button{
 <script>
 const sb = supabase.createClient(
   "https://xntiicnhmhgpujeekmxt.supabase.co",
-  "sb_publishable_UPlHKhBcNEYT5aLmLojV4Q_syk6dJUI"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU"
 );
 
 function send(cmd){
   sb.from("tv_control")
-    .update({command:cmd,updated_at:new Date()})
-    .eq("id",1);
+    .update({ command: cmd, updated_at: new Date() })
+    .eq("id", 1);
 }
 </script>
 
