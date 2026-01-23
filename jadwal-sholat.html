@@ -305,8 +305,8 @@ body{
   </div>
 
   <div class="date-row">
-    <div id="hijriDate">5 Sya'ban 1447H</div>
-    <div id="masehiDate">23 Januari 2026</div>
+   <div id="hijriDate"></div>
+<div id="masehiDate"></div>
   </div>
 <div class="action-row">
   <a href="index.html" class="website-btn">🌐 Website</a>
@@ -371,7 +371,32 @@ document.addEventListener("click",enterFullscreen,{once:true});
 let selectedPrayer=null;
 let lastTrigger=null;
 let prayersGlobal=[];
+function updateTanggalDashboard(){
+  const now = new Date();
 
+  // Tanggal Masehi
+  const masehi = now.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  document.getElementById("masehiDate").innerText = masehi;
+
+  // Tanggal Hijriyah
+  const hijri = now.toLocaleDateString(
+    "id-ID-u-ca-islamic",
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }
+  ) + " H";
+
+  document.getElementById("hijriDate").innerText = hijri;
+}
+
+updateTanggalDashboard();
 /* ===============================
    LOAD JADWAL (ANTI FAIL)
 =================================*/
