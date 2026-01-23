@@ -23,23 +23,63 @@ body{
 }
 
 /* MATERIAL 3 APP BAR */
-.appbar{
+.top-dashboard{
+  position:relative;
   padding:20px;
-  background:linear-gradient(135deg,#0f9d58,#1b5e20);
-  border-bottom-left-radius:30px;
-  border-bottom-right-radius:30px;
-  box-shadow:0 8px 30px rgba(0,0,0,.3);
-}
-.appbar h1{
-  font-size:20px;
-  font-weight:600;
-}
-.clock{
-  font-size:26px;
-  font-weight:700;
-  margin-top:5px;
+  padding-bottom:25px;
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=1200&q=60');
+  background-size:cover;
+  background-position:center;
+  color:white;
 }
 
+.top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14px;
+  opacity:.9;
+}
+
+.top-icons span{
+  margin-left:12px;
+  font-size:18px;
+}
+
+.status-main{
+  margin-top:25px;
+  font-size:22px;
+  font-weight:600;
+  text-align:center;
+}
+
+.status-sub{
+  margin-top:6px;
+  text-align:center;
+  color:#00e0ff;
+  font-size:14px;
+}
+
+.date-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
+  font-size:14px;
+  opacity:.9;
+}
+
+.qiblat-btn{
+  margin-top:15px;
+  display:inline-block;
+  background:white;
+  color:black;
+  padding:8px 14px;
+  border-radius:20px;
+  font-weight:600;
+  font-size:13px;
+}
 /* CONTENT */
 .content{
   flex:1;
@@ -230,20 +270,36 @@ body{
     <p>RW.01 • Sukapura</p>
   </div>
 </div>
-<div class="appbar">
+<div class="top-dashboard">
 
-  <div class="appbar-top">
-    <h1>🕌 Masjid Nurut Taqwa</h1>
+  <div class="top-row">
+    <div class="location">📍 Kejaksan</div>
 
-    <a href="index.html" class="website-link">
-      🌐 Website
-    </a>
+    <div class="top-icons">
+      <span>📅</span>
+      <span>🧭</span>
+      <span>⚙️</span>
+    </div>
   </div>
 
-  <div class="clock" id="clock">00:00</div>
+  <div class="status-main" id="statusMain">
+    Waktu Isya Sudah Lewat
+  </div>
+
+  <div class="status-sub" id="statusSub">
+    + 3 jam 15 menit yang lalu
+  </div>
+
+  <div class="date-row">
+    <div id="hijriDate">5 Sya'ban 1447H</div>
+    <div id="masehiDate">23 Januari 2026</div>
+  </div>
+
+  <div class="qiblat-btn">
+    🧭 QIBLAT
+  </div>
 
 </div>
-
 <div class="content">
 
 <div class="status" id="statusText">
