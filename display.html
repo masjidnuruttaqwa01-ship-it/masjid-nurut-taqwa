@@ -148,6 +148,72 @@ body{
 /* ===== WALLPAPER MODE ===== */
 .mode-wallpaper .slideshow{opacity:1}
 .mode-wallpaper iframe{opacity:0;pointer-events:none}
+/* ===========================
+   RESPONSIVE MODE HP
+=========================== */
+@media (max-width: 900px){
+
+  body{
+    overflow:auto;
+  }
+
+  .overlay{
+    position:relative;
+  }
+
+  /* Header mengecil */
+  .header{
+    height:60px;
+    padding:0 16px;
+  }
+
+  .header b{
+    font-size:18px;
+  }
+
+  .clock{
+    font-size:26px;
+  }
+
+  /* Tanggal */
+  .info{
+    font-size:14px;
+    padding:4px 0;
+  }
+
+  /* Video lebih pendek */
+  .video-area{
+    height:220px;
+    flex:none;
+  }
+
+  /* Grid jadi 2 kolom kecil */
+  .sholat-bar{
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    padding:10px;
+  }
+
+  .sholat{
+    padding:12px 6px;
+    font-size:13px;
+    border-radius:16px;
+  }
+
+  .sholat b{
+    font-size:20px;
+  }
+
+  /* Running text lebih kecil */
+  .marquee{
+    height:36px;
+  }
+
+  .marquee span{
+    font-size:14px;
+  }
+
+}
 </style>
 </head>
 
