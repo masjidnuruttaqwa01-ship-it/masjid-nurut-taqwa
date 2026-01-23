@@ -108,15 +108,23 @@ let qiblatDegree=0;
 function toRad(d){return d*Math.PI/180}
 function toDeg(r){return r*180/Math.PI}
 
-function calculateQiblat(){
-  const dLon = toRad(KAABA.lng - userLng);
-  const lat1 = toRad(userLat);
-  const lat2 = toRad(KAABA.lat);
+function calculateQibla(lat, lon){
+
+  const kaabaLat = 21.4225 * Math.PI/180;
+  const kaabaLon = 39.8262 * Math.PI/180;
+
+  const userLat = lat * Math.PI/180;
+  const userLon = lon * Math.PI/180;
+
+  const dLon = kaabaLon - userLon;
 
   const y = Math.sin(dLon);
-  const x = Math.cos(lat1)*Math.tan(lat2) - Math.sin(lat1)*Math.cos(dLon);
-  let brng = toDeg(Math.atan2(y,x));
-  qiblatDegree = (brng + 360) % 360;
+  const x = Math.cos(userLat)*Math.tan(kaabaLat) -
+            Math.sin(userLat)*Math.cos(dLon);
+
+  const brng = Math.atan2(y,x);
+
+  return (brng*180/Math.PI + 360) % 360;
 }
 
 function requestAccess(){
@@ -142,13 +150,29 @@ function requestAccess(){
   }
 }
 
-function handleOrientation(event){
-  const heading = event.alpha;
-  if(heading===null) return;
+let smoothHeading = 0;
 
-  const rotation = qiblatDegree - heading;
-  arrow.style.transform = `rotate(${rotation}deg)`;
-  degree.innerText = "Arah Kiblat: " + qiblatDegree.toFixed(1) + "°";
+function handleOrientation(e){
+
+  let heading;
+
+  if (e.webkitCompassHeading) {
+    heading = e.webkitCompassHeading;
+  } else if (e.alpha) {
+    heading = 360 - e.alpha;
+  } else {
+    return;
+  }
+
+  // smoothing filter
+  smoothHeading = smoothHeading * 0.9 + heading * 0.1;
+
+  const diff = (qiblaDirection - smoothHeading + 360) % 360;
+
+  needle.style.transform = `rotate(${diff}deg)`;
+
+  degreeText.innerText = "Arah Kiblat: " + qiblaDirection.toFixed(1) + "°";
+
 }
 </script>
 
