@@ -104,9 +104,9 @@ body{
   <div id="hijri"></div>
   <div id="masehi"></div>
 </div>
-
+<input type="range" min="0" max="1" step="0.1"
+value="0.8" onchange="setVolume(this.value)">
 <div id="prayerList"></div>
-
 <script>
 /* JAM REALTIME */
 function updateClock(){
@@ -174,63 +174,168 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
       "Semua waktu hari ini telah lewat";
   }
 });
- function saveNotif(){
-  const selected = document.querySelector('input[name="notifType"]:checked');
-  if(!selected) return;
+</script>
+<script>
 
-  localStorage.setItem("notif_"+selectedPrayer, selected.value);
+/* =====================================================
+   PREMIUM AUDIO ADZAN ENGINE
+===================================================== */
 
-  closeModal();
+const audioAdzan = document.getElementById("audioAdzan");
+const audioAlarm = document.getElementById("audioAlarm");
+const audioNotif = document.getElementById("audioNotif");
+
+/* ========================
+   GLOBAL CONFIG
+======================== */
+let GLOBAL_VOLUME = 0.8;      // volume default (0 - 1)
+let IQOMAH_DURATION = 600;    // 10 menit
+let sudahTrigger = false;
+let activeAudio = null;
+let iqomahTimer = null;
+
+/* ========================
+   SET VOLUME GLOBAL
+======================== */
+function setVolume(v){
+  GLOBAL_VOLUME = v;
+  [audioAdzan,audioAlarm,audioNotif].forEach(a=>{
+    a.volume = GLOBAL_VOLUME;
+  });
 }
 
-function loadSavedSetting(prayer){
-  const saved = localStorage.getItem("notif_"+prayer);
-  if(saved){
-    const radio = document.querySelector(`input[value="${saved}"]`);
-    if(radio) radio.checked = true;
+/* ========================
+   FADE IN HALUS
+======================== */
+function fadeIn(audio){
+  audio.volume = 0;
+  audio.play();
+  activeAudio = audio;
+
+  let vol = 0;
+  const fade = setInterval(()=>{
+    if(vol >= GLOBAL_VOLUME){
+      clearInterval(fade);
+    } else {
+      vol += 0.05;
+      audio.volume = vol;
+    }
+  },200);
+}
+
+/* ========================
+   STOP AUDIO
+======================== */
+function stopAudio(){
+  if(activeAudio){
+    activeAudio.pause();
+    activeAudio.currentTime = 0;
+    activeAudio = null;
   }
 }
 
-function closeModal(){
-  document.getElementById("notifModal").style.display="none";
-} 
-  const nama = el.childNodes[0].textContent.trim();
+/* ========================
+   AUTO STOP SAAT IQOMAH
+======================== */
+function startIqomahCountdown(){
+  let sisa = IQOMAH_DURATION;
 
-const setting = localStorage.getItem("notif_"+nama);
-
-// ❌ Tidak untuk Terbit & Dhuha
-if(nama.toLowerCase().includes("terbit") ||
-   nama.toLowerCase().includes("dhuha")){
-   return;
+  iqomahTimer = setInterval(()=>{
+    sisa--;
+    if(sisa <= 0){
+      clearInterval(iqomahTimer);
+      stopAudio();
+      sudahTrigger = false;
+    }
+  },1000);
 }
 
-if(setting === "off") return;
-
-// === MAIN AUDIO SESUAI PILIHAN ===
-if(setting === "adzan"){
-  audioAdzan.currentTime = 0;
-  audioAdzan.play();
-}
-else if(setting === "alarm"){
-  audioAlarm.currentTime = 0;
-  audioAlarm.play();
-}
-else if(setting === "notif"){
-  audioNotif.currentTime = 0;
-  audioNotif.play();
-}
-else if(setting === "silent"){
-  alert("Waktu " + nama + " telah masuk");
-}
-  window.addEventListener("load",()=>{
-  audioAdzan.play().then(()=>audioAdzan.pause());
+/* ========================
+   AUTOPLAY UNLOCK
+======================== */
+window.addEventListener("load",()=>{
+  audioAdzan.play().then(()=>{
+    audioAdzan.pause();
+    audioAdzan.currentTime = 0;
+  }).catch(()=>{});
 });
+
+/* ========================
+   CEK WAKTU SHOLAT
+======================== */
+function cekWaktuPremium(){
+
+  const now = new Date().toTimeString().slice(0,5);
+
+  document.querySelectorAll(".prayer").forEach(card=>{
+
+    card.classList.remove("active");
+
+    if(card.dataset.time === now){
+
+      card.classList.add("active");
+
+      const nama = card.dataset.name.toLowerCase();
+
+      /* ❌ Tidak bunyi untuk Terbit & Dhuha */
+      if(nama.includes("terbit") || nama.includes("dhuha")){
+        return;
+      }
+
+      /* Anti double trigger */
+      if(sudahTrigger) return;
+      sudahTrigger = true;
+
+      const setting = localStorage.getItem("notif_"+nama);
+
+      if(setting === "off") return;
+
+      if(setting === "adzan"){
+        fadeIn(audioAdzan);
+      }
+      else if(setting === "alarm"){
+        fadeIn(audioAlarm);
+      }
+      else if(setting === "notif"){
+        fadeIn(audioNotif);
+      }
+      else if(setting === "silent"){
+        alert("Waktu " + nama + " telah masuk");
+      }
+
+      startIqomahCountdown();
+    }
+
+  });
+}
+
+/* ========================
+   RUN CHECK LOOP
+======================== */
+setInterval(cekWaktuPremium,30000);
+
+
+/* ========================
+   CONTOH SAVE SETTING
+======================== */
+// localStorage.setItem("notif_subuh","adzan");
+// localStorage.setItem("notif_dzuhur","alarm");
+// localStorage.setItem("notif_ashar","silent");
+// localStorage.setItem("notif_isya","off");
+
+/* ========================
+   CONTOH CONTROL VOLUME
+======================== */
+// setVolume(0.5); // 50% volume
+
 </script>
-<!-- AUDIO FILE -->
-<audio id="audioAdzan" src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
+  <audio id="audioAdzan"
+src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"></audio>
 
-<audio id="audioAlarm" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
+<audio id="audioAlarm"
+src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
 
-<audio id="audioNotif" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+<audio id="audioNotif"
+src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
 </body>
 </html>
