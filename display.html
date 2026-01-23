@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TV Display Masjid Nurut Taqwa</title>
+<title>Display Masjid Nurut Taqwa</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -17,96 +17,61 @@ body{
   color:#fff;
 }
 
-/* ===============================
-   WALLPAPER FULL SCREEN
-================================ */
+/* ===== BACKGROUND SLIDESHOW FULL SCREEN ===== */
 .slideshow{
-  position:absolute;
+  position:fixed;
   inset:0;
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
+  transition:opacity 1.5s ease;
   z-index:0;
   opacity:0;
-  transition:opacity 1s ease;
 }
 
-.video-area.show-wallpaper .slideshow{
-  opacity:1;
-}
-
-.video-area.show-wallpaper iframe{
-  opacity:0;
-  pointer-events:none;
-}
-
-/* Overlay soft */
-.wallpaper-overlay{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(
-    rgba(0,0,0,.25),
-    rgba(0,0,0,.35)
-  );
-  z-index:-1;
-}
-
-/* ===============================
-   LAYOUT
-================================ */
+/* ===== OVERLAY CONTAINER ===== */
 .overlay{
   position:fixed;
   inset:0;
   display:flex;
   flex-direction:column;
+  z-index:5;
 }
 
-/* ===============================
-   HEADER GLASS
-================================ */
+/* ===== HEADER PREMIUM GLASS ===== */
 .header{
-  height:85px;
+  height:90px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 40px;
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.25);
 }
 
 .header b{
   font-size:30px;
   font-weight:700;
-  letter-spacing:.5px;
+  color:#fff;
 }
 
 .clock{
   font-size:48px;
   font-weight:700;
+  color:#fff;
 }
 
-/* ===============================
-   TANGGAL
-================================ */
+/* ===== TANGGAL ===== */
 .info{
   text-align:center;
   padding:10px 0;
-  background:rgba(255,255,255,.05);
-  backdrop-filter:blur(12px);
-  font-size:17px;
-  letter-spacing:.5px;
+  font-size:18px;
+  background:rgba(255,255,255,0.10);
+  backdrop-filter:blur(15px);
 }
 
-.hijri{
-  margin-top:4px;
-  font-weight:600;
-  opacity:.9;
-}
-
-/* ===============================
-   VIDEO AREA
-================================ */
+/* ===== VIDEO AREA ===== */
 .video-area{
   flex:1;
   position:relative;
@@ -118,20 +83,13 @@ body{
   width:100%;
   height:100%;
   border:0;
-  opacity:0;
-  transition:opacity 1s ease;
+  z-index:1;
 }
 
-.video-area.show-video iframe{
-  opacity:1;
-}
-
-/* ===============================
-   JADWAL SHOLAT
-================================ */
+/* ===== JADWAL SHOLAT GLASS ===== */
 .sholat-bottom{
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(18px);
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(20px);
   padding:18px 25px;
 }
 
@@ -142,35 +100,32 @@ body{
 }
 
 .sholat{
-  background:rgba(255,255,255,.12);
+  background:rgba(255,255,255,.25);
   border-radius:20px;
-  padding:16px 10px;
+  padding:15px 10px;
   text-align:center;
-  transition:.3s ease;
+  font-size:16px;
+  color:#fff;
+  backdrop-filter:blur(8px);
 }
 
 .sholat b{
   display:block;
-  font-size:22px;
+  font-size:24px;
   margin-top:6px;
 }
 
 .sholat.active{
   background:#f59e0b;
-  color:#fff;
-  box-shadow:0 0 30px rgba(245,158,11,.8);
-  transform:scale(1.05);
+  box-shadow:0 0 25px rgba(245,158,11,.8);
 }
 
-/* ===============================
-   RUNNING TEXT
-================================ */
+/* ===== RUNNING TEXT ===== */
 .marquee{
   height:48px;
   display:flex;
   align-items:center;
-  background:rgba(0,0,0,.5);
-  backdrop-filter:blur(8px);
+  background:rgba(0,0,0,.6);
   overflow:hidden;
 }
 
@@ -178,7 +133,7 @@ body{
   white-space:nowrap;
   padding-left:100%;
   animation:marquee 25s linear infinite;
-  font-size:18px;
+  font-size:20px;
 }
 
 @keyframes marquee{
@@ -186,88 +141,60 @@ body{
   to{transform:translateX(-100%)}
 }
 
-/* ===============================
-   MODE MALAM
-================================ */
-body.night{
-  filter:brightness(.65);
-}
+/* ===== VIDEO MODE ===== */
+.mode-video .slideshow{opacity:0}
+.mode-video iframe{opacity:1}
 
-/* Responsive */
-@media(max-width:768px){
-  .clock{font-size:32px}
-  .header b{font-size:20px}
-}
+/* ===== WALLPAPER MODE ===== */
+.mode-wallpaper .slideshow{opacity:1}
+.mode-wallpaper iframe{opacity:0;pointer-events:none}
 </style>
 </head>
 
 <body>
 
-<!-- WALLPAPER -->
 <div class="slideshow" id="slideshow"></div>
-<div class="wallpaper-overlay"></div>
 
 <div class="overlay">
 
-  <div class="header">
-    <b>🕌 Masjid Nurut Taqwa</b>
-    <div class="clock" id="clock">00:00</div>
-  </div>
+<div class="header">
+  <b>🕌 Masjid Nurut Taqwa</b>
+  <div class="clock" id="clock">00:00</div>
+</div>
 
-  <div class="info">
-    <div id="tanggal"></div>
-    <div id="hijriah" class="hijri"></div>
-  </div>
+<div class="info">
+  <div id="tanggal"></div>
+  <div id="hijriah"></div>
+</div>
 
-  <div class="video-area" id="videoArea">
-    <iframe id="haramainVideo"
+<div class="video-area">
+  <iframe id="haramainVideo"
+    src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0&playsinline=1"
+    allow="autoplay; encrypted-media"
+    allowfullscreen></iframe>
+</div>
 
-      src="https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
-    <div class="slideshow" id="slideshow"></div>
-  </div>
+<div class="sholat-bottom">
+  <div class="sholat-bar" id="sholatBar"></div>
+</div>
 
-  <div class="sholat-bottom">
-    <div class="sholat-bar" id="sholatBar"></div>
-  </div>
-
-  <div class="marquee">
-    <span>
-      Selamat datang di Masjid Nurut Taqwa • Mohon matikan HP • Jaga kekhusyukan ibadah
-    </span>
-  </div>
+<div class="marquee">
+  <span>Selamat datang di Masjid Nurut Taqwa • Scan QR untuk donasi • Ikuti kajian rutin setiap Jumat malam</span>
+</div>
 
 </div>
 
 <script>
 /* ===============================
-   JAM
+   JAM & TANGGAL
 ================================ */
 function updateClock(){
   clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
 setInterval(updateClock,1000);updateClock();
 
-/* ===============================
-   TANGGAL & HIJRIAH
-================================ */
-function updateTanggal(){
-  tanggal.innerText=new Date().toLocaleDateString("id-ID",{
-    weekday:"long",day:"numeric",month:"long",year:"numeric"
-  });
-}
-updateTanggal();
-
-function updateHijriah(){
-  const h=new Date().toLocaleDateString("id-ID-u-ca-islamic",{
-    day:"numeric",month:"long",year:"numeric"
-  });
-  hijriah.innerText=h+" H";
-}
-updateHijriah();
-setInterval(updateHijriah,3600000);
+tanggal.innerText=new Date().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+hijriah.innerText=new Date().toLocaleDateString("id-ID-u-ca-islamic",{day:"numeric",month:"long",year:"numeric"})+" H";
 
 /* ===============================
    JADWAL SHOLAT API
@@ -277,133 +204,66 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&m
 .then(res=>{
   const t=res.data.timings;
   const list=[
-    ["Imsak",t.Imsak],["Subuh",t.Fajr],["Terbit",t.Sunrise],
-    ["Dzuhur",t.Dhuhr],["Ashar",t.Asr],["Maghrib",t.Maghrib],["Isya",t.Isha]
+    ["Subuh",t.Fajr],["Dzuhur",t.Dhuhr],["Ashar",t.Asr],
+    ["Maghrib",t.Maghrib],["Isya",t.Isha]
   ];
   sholatBar.innerHTML=list.map(s=>`
-    <div class="sholat" data-time="${s[1]}">${s[0]}<b>${s[1]}</b></div>
+    <div class="sholat">${s[0]}<b>${s[1]}</b></div>
   `).join("");
-  cekWaktu();
-  setInterval(cekWaktu,30000);
 });
 
-function cekWaktu(){
-  const now=new Date().toTimeString().slice(0,5);
-  document.querySelectorAll(".sholat").forEach(el=>{
-    el.classList.toggle("active",el.dataset.time===now);
-  });
-}
-
 /* ===============================
-   SUPABASE WALLPAPER
+   SUPABASE WALLPAPER SYSTEM
 ================================ */
 const SUPABASE_URL="https://xntiicnhmhgpujeekmxt.supabase.co";
-const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU";
+const SUPABASE_ANON_KEY="PASTE_ANON_KEY_KAMU";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-
-const slideshow=document.getElementById("slideshow");
 let wallpapers=[];
-let idx=0;
+let index=0;
 
 async function loadWallpapers(){
-  const {data,error}=await sb.storage.from("wallpaper").list("",{limit:100});
-  if(error)return console.error(error);
-
+  const {data}=await sb.storage.from("wallpaper").list("",{limit:100});
   wallpapers=data
-  .filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f.name))
-  .map(f=>`${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`);
-
-  if(wallpapers.length>0){
+    .filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f.name))
+    .map(f=>`${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`);
+  if(wallpapers.length){
     slideshow.style.backgroundImage=`url('${wallpapers[0]}')`;
   }
 }
 
 function nextWallpaper(){
-  if(wallpapers.length===0)return;
-  idx=(idx+1)%wallpapers.length;
-  slideshow.style.backgroundImage=`url('${wallpapers[idx]}')`;
-  slideshow.style.transform="scale(1.05)";
-  setTimeout(()=>slideshow.style.transform="scale(1)",5000);
+  if(!wallpapers.length)return;
+  index=(index+1)%wallpapers.length;
+  slideshow.style.backgroundImage=`url('${wallpapers[index]}')`;
 }
 
-loadWallpapers();
-setInterval(nextWallpaper,10000);
-</script>
-<script>
 /* ===============================
-   WALLPAPER DARI SUPABASE
+   MODE VIDEO ↔ WALLPAPER
 ================================ */
-
-const SUPABASE_URL = "https://xntiicnhmhgpujeekmxt.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU";
-
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const videoArea = document.getElementById("videoArea");
-const video = document.getElementById("haramainVideo");
-const slideshow = document.getElementById("slideshow");
-
-let wallpapers = [];
-let index = 0;
-
-/* Ambil semua gambar dari bucket wallpaper */
-async function loadWallpapers(){
-  const { data, error } = await sb
-    .storage
-    .from("wallpaper")
-    .list("", { limit: 100 });
-
-  if(error){
-    console.error("Gagal load wallpaper:", error);
-    return;
-  }
-
-  wallpapers = data
-    .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f.name))
-    .map(f =>
-      `${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`
-    );
-
-  if(wallpapers.length > 0){
-    slideshow.style.backgroundImage = `url('${wallpapers[0]}')`;
-  }
-}
-
-/* Ganti wallpaper */
-function nextWallpaper(){
-  if(wallpapers.length === 0) return;
-  index = (index + 1) % wallpapers.length;
-  slideshow.style.backgroundImage = `url('${wallpapers[index]}')`;
-}
-
-/* Mode video */
 function showVideo(){
-  videoArea.classList.remove("show-wallpaper");
-  video.src =
-    "https://www.youtube.com/embed/qvTI4bKqucs?autoplay=1&mute=1&controls=0&rel=0";
-
-  setTimeout(showWallpaper, 300000); // 5 menit video
+  document.body.classList.add("mode-video");
+  document.body.classList.remove("mode-wallpaper");
+  setTimeout(showWallpaper,300000); // 5 menit video
 }
 
-/* Mode wallpaper */
 function showWallpaper(){
-  videoArea.classList.add("show-wallpaper");
-  setTimeout(showVideo, 60000); // 1 menit wallpaper
+  document.body.classList.add("mode-wallpaper");
+  document.body.classList.remove("mode-video");
+  setTimeout(showVideo,60000); // 1 menit slideshow
 }
 
-/* START */
-loadWallpapers().then(() => {
-  setInterval(nextWallpaper, 10000); // ganti gambar tiap 10 detik
+loadWallpapers().then(()=>{
+  setInterval(nextWallpaper,8000); // ganti 8 detik
   showVideo();
 });
-</script>
-  <script>
+
 /* ===============================
-   AUTO UNMUTE (User Interaction)
+   UNMUTE SEKALI KLIK
 ================================ */
 document.addEventListener("click",()=>{
-  video.src=video.src.replace("mute=1","mute=0");
+  const v=document.getElementById("haramainVideo");
+  v.src=v.src.replace("mute=1","mute=0");
 },{once:true});
 </script>
 
