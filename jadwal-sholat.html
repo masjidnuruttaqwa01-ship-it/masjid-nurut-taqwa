@@ -194,219 +194,197 @@ Memuat jadwal...
 <audio id="audioNotif" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
 
 <script>
-/* JAM */
+/* ===============================
+   CLOCK
+=================================*/
 function updateClock(){
-clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+  clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 }
-setInterval(updateClock,1000);updateClock();
+setInterval(updateClock,1000);
+updateClock();
 
-/* JADWAL */
+/* ===============================
+   FULLSCREEN AUTO
+=================================*/
+function enterFullscreen(){
+  const el=document.documentElement;
+  if(el.requestFullscreen) el.requestFullscreen();
+}
+window.addEventListener("load",enterFullscreen);
+document.addEventListener("click",enterFullscreen,{once:true});
+
+/* ===============================
+   GLOBAL
+=================================*/
 let selectedPrayer=null;
 let lastTrigger=null;
+let prayersGlobal=[];
 
-fetch("https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20")
-.then(res=>res.json())
-.then(data=>{
-const t=data.data.timings;
-
-const prayers=[
-["Imsak",t.Imsak],
-["Subuh",t.Fajr],
-["Terbit",t.Sunrise],
-["Dhuha",t.Sunrise],
-["Dzuhur",t.Dhuhr],
-["Ashar",t.Asr],
-["Maghrib",t.Maghrib],
-["Isya",t.Isha]
-];
-
-const container=document.getElementById("prayerList");
-
-prayers.forEach(p=>{
-const div=document.createElement("div");
-div.className="prayer";
-div.innerHTML=`<div>${p[0]}</div><div class="time">${p[1]}</div>`;
-
-div.onclick=()=>{
-selectedPrayer=p[0];
-modalTitle.innerText="Atur Notifikasi "+p[0];
-loadSavedSetting(p[0]);
-notifModal.style.display="flex";
-};
-
-container.appendChild(div);
-});
-
-setInterval(()=>cekWaktu(prayers),30000);
-});
-
-function cekWaktu(prayers){
-const now=new Date().toTimeString().slice(0,5);
-
-prayers.forEach(p=>{
-if(now===p[1] && lastTrigger!==p[0]){
-lastTrigger=p[0];
-
-if(p[0]==="Terbit"||p[0]==="Dhuha") return;
-
-const setting=localStorage.getItem("notif_"+p[0]);
-if(setting==="off") return;
-
-showAzan();
-
-if(setting==="adzan") fade(audioAdzan);
-else if(setting==="alarm") fade(audioAlarm);
-else if(setting==="notif") fade(audioNotif);
-else if(setting==="silent") alert("Waktu "+p[0]);
-
-setTimeout(()=>{stopAudio();hideAzan()},600000);
-}
-});
-}
-
-/* AUDIO FADE */
-function fade(audio){
-stopAudio();
-audio.volume=0;
-audio.play();
-let v=0;
-const i=setInterval(()=>{
-if(v<0.9){v+=0.1;audio.volume=v;}
-else clearInterval(i);
-},300);
-}
-function stopAudio(){
-[audioAdzan,audioAlarm,audioNotif].forEach(a=>{
-a.pause();a.currentTime=0;
-});
-}
-
-function showAzan(){azanScreen.style.display="flex";}
-function hideAzan(){azanScreen.style.display="none";}
-
-function saveNotif(){
-const selected=document.querySelector('input[name="notifType"]:checked');
-if(!selected) return;
-localStorage.setItem("notif_"+selectedPrayer,selected.value);
-notifModal.style.display="none";
-}
-
-function loadSavedSetting(prayer){
-document.querySelectorAll('input[name="notifType"]').forEach(r=>r.checked=false);
-const saved=localStorage.getItem("notif_"+prayer);
-if(saved){
-const radio=document.querySelector(`input[value="${saved}"]`);
-if(radio) radio.checked=true;
-}
-}
-
-/* PWA */
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("sw.js");
-}
-  <script>
-function enterFullscreen(){
-  const el = document.documentElement;
-
-  if (el.requestFullscreen) {
-    el.requestFullscreen();
-  } else if (el.webkitRequestFullscreen) {
-    el.webkitRequestFullscreen();
-  } else if (el.msRequestFullscreen) {
-    el.msRequestFullscreen();
-  }
-}
-
-/* AUTO saat halaman load */
-window.addEventListener("load", () => {
-  enterFullscreen();
-});
-
-/* Backup: klik sekali layar */
-document.addEventListener("click", () => {
-  enterFullscreen();
-}, { once: true });
-</script>
-<script>
-const statusBox = document.getElementById("statusText");
-const statusSub = document.getElementById("statusSub");
-const prayerList = document.getElementById("prayerList");
-
+/* ===============================
+   LOAD JADWAL (ANTI FAIL)
+=================================*/
 async function loadJadwal(){
   try{
-    statusBox.innerText = "Memuat jadwal...";
-    statusSub.innerText = "Mohon tunggu sebentar";
+    statusText.innerText="Memuat jadwal...";
 
-    const response = await fetch(
+    const res=await fetch(
       "https://api.aladhan.com/v1/timingsByCity?city=Cirebon&country=Indonesia&method=20"
     );
 
-    if(!response.ok){
-      throw new Error("Gagal ambil data");
-    }
+    if(!res.ok) throw new Error();
 
-    const data = await response.json();
-    const t = data.data.timings;
+    const data=await res.json();
+    const t=data.data.timings;
 
-    const prayers = [
-      ["Imsak", t.Imsak],
-      ["Subuh", t.Fajr],
-      ["Terbit", t.Sunrise],
-      ["Dhuha", tambahMenit(t.Sunrise, 20)],
-      ["Dzuhur", t.Dhuhr],
-      ["Ashar", t.Asr],
-      ["Maghrib", t.Maghrib],
-      ["Isya", t.Isha]
+    prayersGlobal=[
+      ["Imsak",t.Imsak],
+      ["Subuh",t.Fajr],
+      ["Terbit",t.Sunrise],
+      ["Dhuha",tambahMenit(t.Sunrise,20)],
+      ["Dzuhur",t.Dhuhr],
+      ["Ashar",t.Asr],
+      ["Maghrib",t.Maghrib],
+      ["Isya",t.Isha]
     ];
 
-    prayerList.innerHTML = "";
+    renderJadwal();
+    setInterval(cekWaktu,30000);
 
-    const now = new Date().toTimeString().slice(0,5);
-    let nextPrayer = null;
-
-    prayers.forEach(p=>{
-      const div = document.createElement("div");
-      div.className = "prayer";
-      div.innerHTML = `
-        <div>${p[0]}</div>
-        <div class="time">${p[1]}</div>
-      `;
-
-      if(now === p[1]){
-        div.classList.add("active");
-      }
-
-      if(!nextPrayer && p[1] > now){
-        nextPrayer = p;
-      }
-
-      prayerList.appendChild(div);
-    });
-
-    if(nextPrayer){
-      statusBox.innerText = "Menuju waktu " + nextPrayer[0];
-      statusSub.innerText = "Pukul " + nextPrayer[1];
-    }else{
-      statusBox.innerText = "Semua waktu hari ini telah lewat";
-      statusSub.innerText = "";
-    }
-
-  }catch(error){
-    statusBox.innerText = "❌ Gagal memuat jadwal";
-    statusSub.innerText = "Periksa koneksi internet";
-    console.error(error);
+  }catch(e){
+    statusText.innerText="❌ Gagal memuat jadwal";
   }
 }
 
-/* Helper tambah menit */
-function tambahMenit(waktu, menit){
-  let [jam, mnt] = waktu.split(":").map(Number);
-  let total = jam * 60 + mnt + menit;
-  let h = Math.floor(total / 60) % 24;
-  let m = total % 60;
-  return h.toString().padStart(2,"0") + ":" + m.toString().padStart(2,"0");
+function renderJadwal(){
+  prayerList.innerHTML="";
+  const now=new Date().toTimeString().slice(0,5);
+  let next=null;
+
+  prayersGlobal.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="prayer";
+    div.innerHTML=`<div>${p[0]}</div><div class="time">${p[1]}</div>`;
+
+    if(now===p[1]) div.classList.add("active");
+
+    if(!next && p[1]>now) next=p;
+
+    div.onclick=()=>{
+      selectedPrayer=p[0];
+      modalTitle.innerText="Atur Notifikasi "+p[0];
+      loadSavedSetting(p[0]);
+      notifModal.style.display="flex";
+    };
+
+    prayerList.appendChild(div);
+  });
+
+  if(next){
+    statusText.innerText="Menuju waktu "+next[0]+" • "+next[1];
+  }else{
+    statusText.innerText="Semua waktu hari ini telah lewat";
+  }
 }
 
+/* ===============================
+   CEK WAKTU (ANTI DOUBLE)
+=================================*/
+function cekWaktu(){
+  const now=new Date().toTimeString().slice(0,5);
+
+  prayersGlobal.forEach(p=>{
+    if(now===p[1] && lastTrigger!==p[0]){
+
+      lastTrigger=p[0];
+
+      if(p[0]==="Terbit"||p[0]==="Dhuha") return;
+
+      const setting=localStorage.getItem("notif_"+p[0]);
+      if(setting==="off") return;
+
+      showAzan();
+
+      if(setting==="adzan") fade(audioAdzan);
+      else if(setting==="alarm") fade(audioAlarm);
+      else if(setting==="notif") fade(audioNotif);
+      else if(setting==="silent") alert("Waktu "+p[0]);
+
+      setTimeout(()=>{
+        stopAudio();
+        hideAzan();
+      },600000);
+
+    }
+  });
+}
+
+/* ===============================
+   AUDIO SYSTEM
+=================================*/
+function fade(audio){
+  stopAudio();
+  audio.volume=0;
+  audio.play();
+  let v=0;
+  const i=setInterval(()=>{
+    if(v<0.9){
+      v+=0.1;
+      audio.volume=v;
+    }else clearInterval(i);
+  },300);
+}
+
+function stopAudio(){
+  [audioAdzan,audioAlarm,audioNotif].forEach(a=>{
+    a.pause();
+    a.currentTime=0;
+  });
+}
+
+/* ===============================
+   AZAN SCREEN
+=================================*/
+function showAzan(){azanScreen.style.display="flex";}
+function hideAzan(){azanScreen.style.display="none";}
+
+/* ===============================
+   MODAL SYSTEM
+=================================*/
+function saveNotif(){
+  const selected=document.querySelector('input[name="notifType"]:checked');
+  if(!selected) return;
+  localStorage.setItem("notif_"+selectedPrayer,selected.value);
+  notifModal.style.display="none";
+}
+
+function loadSavedSetting(prayer){
+  document.querySelectorAll('input[name="notifType"]').forEach(r=>r.checked=false);
+  const saved=localStorage.getItem("notif_"+prayer);
+  if(saved){
+    const radio=document.querySelector(`input[value="${saved}"]`);
+    if(radio) radio.checked=true;
+  }
+}
+
+/* ===============================
+   HELPER
+=================================*/
+function tambahMenit(waktu,menit){
+  let [j,m]=waktu.split(":").map(Number);
+  let total=j*60+m+menit;
+  let h=Math.floor(total/60)%24;
+  let mm=total%60;
+  return h.toString().padStart(2,"0")+":"+mm.toString().padStart(2,"0");
+}
+
+/* ===============================
+   PWA
+=================================*/
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js");
+}
+
+/* START */
 loadJadwal();
 </script>
 </body>
