@@ -267,6 +267,22 @@ body{
 .home-btn:hover{
   background:rgba(255,255,255,.35);
 }
+.website-link{
+  background:rgba(255,255,255,.2);
+  padding:10px 16px;
+  border-radius:20px;
+  text-decoration:none;
+  color:white;
+  font-size:13px;
+  font-weight:600;
+  backdrop-filter:blur(8px);
+  transition:.3s;
+}
+
+.website-link:hover{
+  background:rgba(255,255,255,.35);
+  transform:scale(1.05);
+}  
 </style>
 </head>
 
@@ -279,11 +295,16 @@ body{
   </div>
 </div>
   
-<div class="appbar">
-  <div class="appbar-left">
+<<div class="appbar">
+  <div>
     <h1>🕌 Masjid Nurut Taqwa</h1>
-    <small class="subtitle">Website Resmi Masjid Nurut Taqwa</small>
+    <div class="clock" id="clock">00:00</div>
   </div>
+
+  <a href="index.html" class="website-link">
+    🌐 Website Masjid Nurut Taqwa
+  </a>
+</div>
 
   <div class="appbar-right">
     <div class="clock" id="clock">00:00</div>
