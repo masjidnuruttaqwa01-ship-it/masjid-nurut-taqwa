@@ -333,6 +333,25 @@ document.addEventListener("click", function () {
 
 }, { once: true });
 </script>
-  
+  <audio id="azanAudio"
+src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3"
+preload="auto"></audio>
+  <script>
+const azanAudio = document.getElementById("azanAudio");
+
+/* Unlock autoplay supaya tidak perlu klik */
+window.addEventListener("load", async () => {
+  try {
+    azanAudio.muted = true;
+    await azanAudio.play();
+    azanAudio.pause();
+    azanAudio.currentTime = 0;
+    azanAudio.muted = false;
+    console.log("Audio siap dipakai");
+  } catch(e){
+    console.log("Autoplay diblok browser");
+  }
+});
+</script>
 </body>
 </html>
