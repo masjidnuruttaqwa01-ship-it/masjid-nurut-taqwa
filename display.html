@@ -262,6 +262,8 @@ function updateTanggal() {
 
 updateTanggal();
 setInterval(updateTanggal, 60000);
+</script>
+  <script>
 /* ===============================
    JADWAL SHOLAT API
 ================================ */
@@ -333,6 +335,8 @@ function tambahMenit(waktu, menit){
   return h.toString().padStart(2,"0") + ":" + 
          m.toString().padStart(2,"0");
 }
+    </script>
+  <script>
 /* ===============================
    SUPABASE WALLPAPER SYSTEM
 ================================ */
@@ -358,7 +362,8 @@ function nextWallpaper(){
   index=(index+1)%wallpapers.length;
   slideshow.style.backgroundImage=`url('${wallpapers[index]}')`;
 }
-
+</script>
+  <script>
 /* ===============================
    MODE VIDEO ↔ WALLPAPER
 ================================ */
@@ -378,7 +383,8 @@ loadWallpapers().then(()=>{
   setInterval(nextWallpaper,8000); // ganti 8 detik
   showVideo();
 });
-
+</script>
+  <script>
 /* ===============================
    UNMUTE SEKALI KLIK
 ================================ */
