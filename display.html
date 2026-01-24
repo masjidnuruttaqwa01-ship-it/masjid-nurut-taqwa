@@ -237,14 +237,31 @@ body{
 /* ===============================
    JAM & TANGGAL
 ================================ */
-function updateClock(){
-  clock.innerText=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+function updateTanggal() {
+  const now = new Date();
+
+  // Tanggal Masehi
+  const masehi = now.toLocaleDateString('id-ID', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
+  document.getElementById("masehiDate").innerText = masehi;
+
+  // Tanggal Hijriyah (BENAR)
+  const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(now);
+
+  document.getElementById("hijriDate").innerText = hijri;
 }
-setInterval(updateClock,1000);updateClock();
 
-tanggal.innerText=new Date().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-hijriah.innerText=new Date().toLocaleDateString("id-ID-u-ca-islamic",{day:"numeric",month:"long",year:"numeric"})+" H";
-
+updateTanggal();
+setInterval(updateTanggal, 60000);
 /* ===============================
    JADWAL SHOLAT API
 ================================ */
