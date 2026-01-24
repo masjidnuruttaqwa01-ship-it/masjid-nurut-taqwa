@@ -444,6 +444,21 @@ window.addEventListener("load", async () => {
     console.log("Autoplay diblok browser");
   }
 });
+    document.addEventListener("visibilitychange", function () {
+  const iframe = document.querySelector("iframe");
+  if (!document.hidden) {
+    iframe.src = iframe.src; // reload ringan agar lanjut
+  }
+});
+    if ('wakeLock' in navigator) {
+  let wakeLock = null;
+  const requestWakeLock = async () => {
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+    } catch (err) {}
+  };
+  requestWakeLock();
+    }
 </script>
 </body>
 </html>
