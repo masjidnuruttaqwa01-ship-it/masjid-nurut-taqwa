@@ -234,13 +234,24 @@ body{
 </div>
 
 <script>
-/* ===============================
-   JAM & TANGGAL
-================================ */
-function updateTanggal() {
+/* =================================
+   JAM & TANGGAL OTOMATIS
+================================= */
+
+function updateJamTanggal() {
   const now = new Date();
 
-  // Tanggal Masehi
+  // ===== JAM =====
+  const jam = now.toLocaleTimeString('id-ID', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+
+  const jamEl = document.getElementById("clock");
+  if (jamEl) jamEl.innerText = jam;
+
+  // ===== TANGGAL MASEHI =====
   const masehi = now.toLocaleDateString('id-ID', {
     weekday: 'long',
     day: 'numeric',
@@ -248,20 +259,25 @@ function updateTanggal() {
     year: 'numeric'
   });
 
-  document.getElementById("masehiDate").innerText = masehi;
+  const masehiEl = document.getElementById("masehiDate");
+  if (masehiEl) masehiEl.innerText = masehi;
 
-  // Tanggal Hijriyah (BENAR)
+  // ===== TANGGAL HIJRIYAH (FIX SYA'BAN, DLL) =====
   const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   }).format(now);
 
-  document.getElementById("hijriDate").innerText = hijri;
+  const hijriEl = document.getElementById("hijriDate");
+  if (hijriEl) hijriEl.innerText = hijri + " H";
 }
 
-updateTanggal();
-setInterval(updateTanggal, 60000);
+// Jalankan pertama kali
+updateJamTanggal();
+
+// Update setiap 1 detik agar jam realtime
+setInterval(updateJamTanggal, 1000);
 </script>
   <script>
 /* ===============================
