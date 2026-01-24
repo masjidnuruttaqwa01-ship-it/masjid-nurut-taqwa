@@ -281,7 +281,7 @@ body{
   <div class="splash-content">
     <img src="icon-192.png" class="splash-logo">
     <h1>Masjid Nurut Taqwa</h1>
-    <p>RW.01 • SUKAPURA</p>
+    <p>RW.01 • Sukapura</p>
   </div>
 </div>
 <div class="top-dashboard">
@@ -375,10 +375,12 @@ function updateTanggalDashboard(){
   const now = new Date();
 
   // Tanggal Masehi
-function updateTanggal() {
+async function updateTanggal() {
   const sekarang = new Date();
 
-  /* ===== MASEHI ===== */
+  /* =========================
+     MASEHI
+  ========================== */
   const bulanMasehi = [
     "Januari","Februari","Maret","April","Mei","Juni",
     "Juli","Agustus","September","Oktober","November","Desember"
@@ -391,18 +393,35 @@ function updateTanggal() {
   document.getElementById("masehiDate").innerText =
     `${hari} ${bulan} ${tahun}`;
 
-  /* ===== HIJRIYAH ===== */
-  const hijri = new Intl.DateTimeFormat("id-TN-u-ca-islamic", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  }).format(sekarang);
+  /* =========================
+     HIJRIYAH API (UMMUL QURA)
+  ========================== */
+  try {
+    const res = await fetch(
+      `https://api.aladhan.com/v1/gToH?date=${hari}-${sekarang.getMonth()+1}-${tahun}`
+    );
+    const data = await res.json();
 
-  document.getElementById("hijriDate").innerText = hijri + " H";
+    const h = data.data.hijri;
+    document.getElementById("hijriDate").innerText =
+      `${h.day} ${h.month.en} ${h.year} H`;
+
+  } catch (e) {
+
+    /* =========================
+       FALLBACK (Jika Offline)
+    ========================== */
+    const hijri = new Intl.DateTimeFormat(
+      "id-TN-u-ca-islamic",
+      { day: "numeric", month: "long", year: "numeric" }
+    ).format(sekarang);
+
+    document.getElementById("hijriDate").innerText = hijri + " H";
+  }
 }
 
 updateTanggal();
-setInterval(updateTanggal, 60000);
+setInterval(updateTanggal, 3600000); // refresh tiap 1 jam
 
 /* ===============================
    LOAD JADWAL (ANTI FAIL)
