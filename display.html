@@ -235,50 +235,52 @@ body{
 </div>
 
 <script>
-/* =================================
-   JAM & TANGGAL OTOMATIS
-================================= */
+document.addEventListener("DOMContentLoaded", function () {
 
-function updateJamTanggal() {
-  const now = new Date();
+  function updateJamTanggal() {
+    const now = new Date();
 
-  // ===== JAM =====
-  const jam = now.toLocaleTimeString('id-ID', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
+    // ===== JAM =====
+    const jam = now.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    });
 
-  const jamEl = document.getElementById("clock");
-  if (jamEl) jamEl.innerText = jam;
+    const clockEl = document.getElementById("clock");
+    if (clockEl) clockEl.innerText = jam;
 
-  // ===== TANGGAL MASEHI =====
-  const masehi = now.toLocaleDateString('id-ID', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
+    // ===== MASEHI =====
+    const masehi = now.toLocaleDateString("id-ID", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
 
-  const masehiEl = document.getElementById("masehiDate");
-  if (masehiEl) masehiEl.innerText = masehi;
+    const masehiEl = document.getElementById("masehiDate");
+    if (masehiEl) masehiEl.innerText = masehi;
 
-  // ===== TANGGAL HIJRIYAH (FIX SYA'BAN, DLL) =====
-  const hijri = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  }).format(now);
+    // ===== HIJRIYAH (fallback aman) =====
+    let hijriText = "";
 
-  const hijriEl = document.getElementById("hijriDate");
-  if (hijriEl) hijriEl.innerText = hijri + " H";
-}
+    try {
+      hijriText = new Intl.DateTimeFormat(
+        "id-ID-u-ca-islamic",
+        { day: "numeric", month: "long", year: "numeric" }
+      ).format(now) + " H";
+    } catch (e) {
+      hijriText = "Tanggal Hijriyah tidak didukung browser";
+    }
 
-// Jalankan pertama kali
-updateJamTanggal();
+    const hijriEl = document.getElementById("hijriDate");
+    if (hijriEl) hijriEl.innerText = hijriText;
+  }
 
-// Update setiap 1 detik agar jam realtime
-setInterval(updateJamTanggal, 1000);
+  updateJamTanggal();
+  setInterval(updateJamTanggal, 1000);
+
+});
 </script>
   <script>
 /* ===============================
