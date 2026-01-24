@@ -12,7 +12,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:Poppins,sans-serif;
-  background:#000;
+  background:linear-gradient(135deg,#064e3b,#065f46,#047857);
   overflow:hidden;
   color:#fff;
 }
@@ -27,6 +27,7 @@ body{
   transition:opacity 1.5s ease;
   z-index:0;
   opacity:0;
+  filter:brightness(.5);
 }
 
 /* ===== OVERLAY CONTAINER ===== */
@@ -38,16 +39,16 @@ body{
   z-index:5;
 }
 
-/* ===== HEADER PREMIUM GLASS ===== */
+/* ===== HEADER PREMIUM HIJAU ===== */
 .header{
   height:90px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 40px;
-  background:rgba(255,255,255,0.15);
+  background:rgba(16,185,129,.35);
   backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,255,255,.25);
+  border-bottom:1px solid rgba(255,255,255,.15);
 }
 
 .header b{
@@ -67,8 +68,9 @@ body{
   text-align:center;
   padding:10px 0;
   font-size:18px;
-  background:rgba(255,255,255,0.10);
+  background:rgba(6,95,70,.6);
   backdrop-filter:blur(15px);
+  border-bottom:1px solid rgba(255,255,255,.1);
 }
 
 /* ===== VIDEO AREA ===== */
@@ -86,9 +88,9 @@ body{
   z-index:1;
 }
 
-/* ===== JADWAL SHOLAT GLASS ===== */
+/* ===== JADWAL SHOLAT GLASS HIJAU ===== */
 .sholat-bottom{
-  background:rgba(255,255,255,0.15);
+  background:rgba(6,78,59,.85);
   backdrop-filter:blur(20px);
   padding:18px 25px;
 }
@@ -100,13 +102,14 @@ body{
 }
 
 .sholat{
-  background:rgba(255,255,255,.25);
+  background:linear-gradient(135deg,#0f766e,#115e59);
   border-radius:20px;
   padding:15px 10px;
   text-align:center;
   font-size:16px;
   color:#fff;
-  backdrop-filter:blur(8px);
+  box-shadow:0 8px 25px rgba(0,0,0,.4);
+  transition:.3s;
 }
 
 .sholat b{
@@ -116,8 +119,9 @@ body{
 }
 
 .sholat.active{
-  background:#f59e0b;
-  box-shadow:0 0 25px rgba(245,158,11,.8);
+  background:linear-gradient(135deg,#facc15,#f59e0b);
+  color:#000;
+  box-shadow:0 0 30px rgba(250,204,21,.8);
 }
 
 /* ===== RUNNING TEXT ===== */
@@ -125,7 +129,7 @@ body{
   height:48px;
   display:flex;
   align-items:center;
-  background:rgba(0,0,0,.6);
+  background:linear-gradient(90deg,#065f46,#047857);
   overflow:hidden;
 }
 
@@ -148,46 +152,34 @@ body{
 /* ===== WALLPAPER MODE ===== */
 .mode-wallpaper .slideshow{opacity:1}
 .mode-wallpaper iframe{opacity:0;pointer-events:none}
+
 /* ===========================
    RESPONSIVE MODE HP
 =========================== */
 @media (max-width: 900px){
 
-  body{
-    overflow:auto;
-  }
+  body{overflow:auto}
 
-  .overlay{
-    position:relative;
-  }
+  .overlay{position:relative}
 
-  /* Header mengecil */
   .header{
     height:60px;
     padding:0 16px;
   }
 
-  .header b{
-    font-size:18px;
-  }
+  .header b{font-size:18px}
+  .clock{font-size:26px}
 
-  .clock{
-    font-size:26px;
-  }
-
-  /* Tanggal */
   .info{
     font-size:14px;
     padding:4px 0;
   }
 
-  /* Video lebih pendek */
   .video-area{
     height:220px;
     flex:none;
   }
 
-  /* Grid jadi 2 kolom kecil */
   .sholat-bar{
     grid-template-columns:repeat(2,1fr);
     gap:12px;
@@ -200,19 +192,10 @@ body{
     border-radius:16px;
   }
 
-  .sholat b{
-    font-size:20px;
-  }
+  .sholat b{font-size:20px}
 
-  /* Running text lebih kecil */
-  .marquee{
-    height:36px;
-  }
-
-  .marquee span{
-    font-size:14px;
-  }
-
+  .marquee{height:36px}
+  .marquee span{font-size:14px}
 }
 </style>
 </head>
