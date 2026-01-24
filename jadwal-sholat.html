@@ -281,7 +281,7 @@ body{
   <div class="splash-content">
     <img src="icon-192.png" class="splash-logo">
     <h1>Masjid Nurut Taqwa</h1>
-    <p>RW.01 • Sukapura</p>
+    <p>RW.01 • SUKAPURA</p>
   </div>
 </div>
 <div class="top-dashboard">
@@ -301,7 +301,7 @@ body{
   </div>
 
   <div class="status-sub" id="statusSub">
-    RW.01 Sukapura, Kota Cirebon
+    Rw.01 Sukapura, Kota Cirebon
   </div>
 
   <div class="date-row">
@@ -365,7 +365,8 @@ function enterFullscreen(){
 }
 window.addEventListener("load",enterFullscreen);
 document.addEventListener("click",enterFullscreen,{once:true});
-
+</script>
+  <script>
 /* ===============================
    GLOBAL
 =================================*/
@@ -379,7 +380,8 @@ function updateTanggalDashboard(){
   // Tanggal Masehi
 async function updateTanggal() {
   const sekarang = new Date();
-
+</script>
+  <script>
   /* =========================
      MASEHI
   ========================== */
@@ -491,8 +493,9 @@ function renderJadwal(){
     statusText.innerText="Semua waktu hari ini telah lewat";
   }
 }
-
-/* ===============================
+</script>
+  <script>
+/* ==============================
    CEK WAKTU (ANTI DOUBLE)
 =================================*/
 function cekWaktu(){
@@ -523,7 +526,8 @@ function cekWaktu(){
     }
   });
 }
-
+</script>
+  <script>
 /* ===============================
    AUDIO SYSTEM
 =================================*/
@@ -546,13 +550,15 @@ function stopAudio(){
     a.currentTime=0;
   });
 }
-
+</script>
+  <script>
 /* ===============================
    AZAN SCREEN
 =================================*/
 function showAzan(){azanScreen.style.display="flex";}
 function hideAzan(){azanScreen.style.display="none";}
-
+</script>
+  <script>
 /* ===============================
    MODAL SYSTEM
 =================================*/
@@ -571,7 +577,8 @@ function loadSavedSetting(prayer){
     if(radio) radio.checked=true;
   }
 }
-
+</script>
+  <script>
 /* ===============================
    HELPER
 =================================*/
@@ -582,7 +589,8 @@ function tambahMenit(waktu,menit){
   let mm=total%60;
   return h.toString().padStart(2,"0")+":"+mm.toString().padStart(2,"0");
 }
-
+</script>
+  <script>
 /* ===============================
    PWA
 =================================*/
