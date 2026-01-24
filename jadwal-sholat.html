@@ -572,5 +572,46 @@ window.addEventListener("load",()=>{
   },3000);
 });
   </script>
+<script>
+/* =========================
+   AUTO REFRESH SYSTEM TV
+========================= */
+
+// 1️⃣ Auto refresh setiap 5 menit
+setInterval(() => {
+  console.log("Refresh jadwal tanpa reload");
+  loadJadwal();
+}, 300000);
+
+// 2️⃣ Auto refresh jika jadwal gagal load
+async function safeLoad() {
+  try {
+    await loadJadwal();
+  } catch (e) {
+    console.log("Error load jadwal, reload...");
+    location.reload();
+  }
+}
+safeLoad();
+
+
+// 3️⃣ Auto refresh saat ganti hari
+let lastDate = new Date().getDate();
+
+setInterval(() => {
+  const now = new Date();
+  if (now.getDate() !== lastDate) {
+    console.log("Ganti hari, reload...");
+    location.reload();
+  }
+}, 60000); // cek tiap 1 menit
+
+
+// 4️⃣ Auto reload jika internet kembali
+window.addEventListener("online", () => {
+  console.log("Internet kembali, reload...");
+  location.reload();
+});
+</script>
 </body>
 </html>
