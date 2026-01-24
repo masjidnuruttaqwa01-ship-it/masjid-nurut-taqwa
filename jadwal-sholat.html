@@ -273,6 +273,28 @@ body{
   font-size:13px;
   text-decoration:none;
 }
+  .action-row{
+  margin-top:15px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.tv-btn{
+  padding:8px 16px;
+  border-radius:25px;
+  font-weight:600;
+  font-size:13px;
+  text-decoration:none;
+  background:linear-gradient(135deg,#ffd700,#c9a227);
+  color:#1b1b1b;
+  box-shadow:0 4px 15px rgba(0,0,0,.3);
+  transition:.3s;
+}
+
+.tv-btn:hover{
+  transform:scale(1.05);
+}
 </style>
 </head>
 
@@ -311,6 +333,7 @@ body{
 <div class="action-row">
   <a href="index.html" class="website-btn">🌐 Website</a>
   <a href="qiblat.html" class="qiblat-btn">🧭 QIBLAT</a>
+  <a href="display.html" class="tv-btn">📺 Mode TV</a>
 </div>
 
 </div>
@@ -648,6 +671,14 @@ setInterval(() => {
 window.addEventListener("online", () => {
   console.log("Internet kembali, reload...");
   location.reload();
+});
+</script>
+  <script>
+window.addEventListener("load", () => {
+  const el = document.documentElement;
+  if (el.requestFullscreen) {
+    el.requestFullscreen();
+  }
 });
 </script>
 </body>
