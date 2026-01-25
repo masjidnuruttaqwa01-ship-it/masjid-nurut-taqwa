@@ -1,11 +1,9 @@
-const CACHE_NAME = "nurut-taqwa-v2";
+const CACHE_NAME = "nurut-taqwa-v3";
 const BASE_PATH = "/masjid-nurut-taqwa/";
-
-const OFFLINE_URL = BASE_PATH + "index.html";
 
 const FILES_TO_CACHE = [
   BASE_PATH,
-  BASE_PATH + "index.html",
+  BASE_PATH + "jadwal-sholat.html",
   BASE_PATH + "manifest.json",
   BASE_PATH + "icon-192.png",
   BASE_PATH + "icon-512.png"
@@ -24,9 +22,9 @@ self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys.map(k => {
-          if (k !== CACHE_NAME) {
-            return caches.delete(k);
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
           }
         })
       )
@@ -37,6 +35,8 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(OFFLINE_URL))
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });
