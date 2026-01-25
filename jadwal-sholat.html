@@ -6,7 +6,7 @@
 <title>Masjid Nurut Taqwa</title>
 
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f9d58">
+<meta name="theme-color" content="#0f6b44">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -682,6 +682,11 @@ window.addEventListener("load", () => {
     el.requestFullscreen();
   }
 });
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
 </script>
 </body>
 </html>
