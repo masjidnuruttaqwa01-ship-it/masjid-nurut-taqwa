@@ -461,5 +461,30 @@ window.addEventListener("load", async () => {
   requestWakeLock();
     }
 </script>
+  <script>
+window.addEventListener("load", function(){
+
+  const iframe = document.getElementById("ytVideo");
+
+  // Tunggu 3 detik
+  setTimeout(function(){
+
+    // Kirim perintah unmute ke YouTube Player
+    iframe.contentWindow.postMessage(JSON.stringify({
+      event: "command",
+      func: "unMute",
+      args: []
+    }), "*");
+
+    iframe.contentWindow.postMessage(JSON.stringify({
+      event: "command",
+      func: "setVolume",
+      args: [100]
+    }), "*");
+
+  }, 3000);
+
+});
+</script>
 </body>
 </html>
