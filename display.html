@@ -486,5 +486,11 @@ window.addEventListener("load", function(){
 
 });
 </script>
+ <script>
+document.addEventListener("click", function () {
+  const iframe = document.getElementById("ytVideo");
+  iframe.src = iframe.src.replace("mute=1", "mute=0");
+}, { once: true });
+</script> 
 </body>
 </html>
