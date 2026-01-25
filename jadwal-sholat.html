@@ -404,11 +404,14 @@ function updateTanggalDashboard(){
   const now = new Date();
 </script>
   <script>
-  // Tanggal Masehi
+/* =========================
+   UPDATE TANGGAL FIX TOTAL
+========================= */
+
 async function updateTanggal() {
+
   const sekarang = new Date();
-</script>
-  <script>
+
   /* =========================
      MASEHI
   ========================== */
@@ -431,29 +434,29 @@ async function updateTanggal() {
     const res = await fetch(
       `https://api.aladhan.com/v1/gToH?date=${hari}-${sekarang.getMonth()+1}-${tahun}`
     );
-    const data = await res.json();
 
+    const data = await res.json();
     const h = data.data.hijri;
+
     document.getElementById("hijriDate").innerText =
       `${h.day} ${h.month.en} ${h.year} H`;
 
   } catch (e) {
 
-    /* =========================
-       FALLBACK (Jika Offline)
-    ========================== */
+    // fallback jika offline
     const hijri = new Intl.DateTimeFormat(
-      "id-TN-u-ca-islamic",
+      "id-ID-u-ca-islamic",
       { day: "numeric", month: "long", year: "numeric" }
     ).format(sekarang);
 
-    document.getElementById("hijriDate").innerText = hijri + " H";
+    document.getElementById("hijriDate").innerText =
+      hijri + " H";
   }
 }
 
 updateTanggal();
 setInterval(updateTanggal, 3600000); // refresh tiap 1 jam
-  </script>
+</script>
   <script>
 /* ===============================
    LOAD JADWAL (ANTI FAIL)
