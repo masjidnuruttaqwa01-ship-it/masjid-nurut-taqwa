@@ -393,16 +393,13 @@ function enterFullscreen(){
 window.addEventListener("load",enterFullscreen);
 document.addEventListener("click",enterFullscreen,{once:true});
 </script>
-  <script>
 /* ===============================
    GLOBAL
 =================================*/
 let selectedPrayer=null;
 let lastTrigger=null;
 let prayersGlobal=[];
-function updateTanggalDashboard(){
-  const now = new Date();
-</script>
+
   <script>
 /* =========================
    UPDATE TANGGAL FIX TOTAL
@@ -629,6 +626,9 @@ if("serviceWorker" in navigator){
 }
 
 /* START */
+   document.body.addEventListener("click", () => {
+  audioAdzan.play().then(()=>audioAdzan.pause()).catch(()=>{});
+}, { once:true }); 
 loadJadwal();
 </script>
   <script>
