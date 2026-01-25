@@ -1,4 +1,4 @@
-const CACHE_NAME = "nurut-taqwa-v3";
+const CACHE_NAME = "masjid-v2";
 const BASE_PATH = "/masjid-nurut-taqwa/";
 
 const FILES_TO_CACHE = [
