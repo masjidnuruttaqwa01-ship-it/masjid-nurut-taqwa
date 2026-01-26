@@ -33,13 +33,27 @@ body{
 /* MATERIAL 3 APP BAR */
 .top-dashboard{
   position:relative;
-  padding:40px 24px 60px; /* atas diperbesar */
-  background:url("images/masjiddepan1.png");
-  background-size:cover;
-  background-position:center;
+  padding:80px 20px 100px;
+  background:url("images/nasjiddepan1.png");
+  background-size:cover;        /* penting */
+  background-position:center;   /* penting */
   background-repeat:no-repeat;
   color:white;
-  text-align:center; /* semua konten rata tengah */
+  text-align:center;
+}
+  .top-dashboard{
+  min-height:100vh;
+  }
+  .top-dashboard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+}
+
+.top-dashboard *{
+  position:relative;
+  z-index:2;
 }
 .top-icons{
   display:flex;
@@ -251,20 +265,26 @@ body{
 }
 
 .action-row{
-  margin-top:15px;
+  margin-top:30px;
   display:flex;
-  justify-content:space-between; /* kiri & kanan */
+  justify-content:center;
   align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
 }
-
-.website-btn{
-  background:white;
-  color:black;
-  padding:8px 16px;
-  border-radius:22px;
+.web-btn,
+.qiblat-btn,
+.tv-btn{
+  padding:12px 24px;
+  border-radius:30px;
   font-weight:600;
-  font-size:13px;
+  font-size:15px;
   text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:150px;
+  justify-content:center;
 }
 
 .qiblat-btn{
