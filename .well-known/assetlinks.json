@@ -3,9 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.masjid.nuruttaqwa",
+      "package_name": "com.example.masjidnuruttaqwa",
       "sha256_cert_fingerprints": [
-        "ISI_SHA256_DARI_APK_DI_SINI"
+        "2B:EE:DE:6F:0A:B0:D6:4F:EC:C9:7F:69:2F:37:5C:9F:7C:04:5F:5A:30:1F:E7:68:84:89:0A:18:CE:0A:88:77"
       ]
     }
   }
