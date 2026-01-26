@@ -2,11 +2,11 @@
   "name": "Masjid Nurut Taqwa",
   "short_name": "Nurut Taqwa",
   "description": "Jadwal Sholat Masjid Nurut Taqwa Kejaksan Kota Cirebon",
-  "start_url": "/masjid-nurut-taqwa/index.html",
+  "start_url": "/masjid-nurut-taqwa/jadwal-sholat.html",
   "scope": "/masjid-nurut-taqwa/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0f6b44",
+  "background_color": "#ffffff",
   "theme_color": "#0f6b44",
   "icons": [
     {
