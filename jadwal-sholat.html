@@ -33,45 +33,46 @@ body{
 /* MATERIAL 3 APP BAR */
 .top-dashboard{
   position:relative;
-  padding:30px 20px 40px;
-  background:url('images/masjiddepan.png');
+  padding:40px 24px 60px; /* atas diperbesar */
+  background:url("images/masjiddepan.jpg");
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
   color:white;
-}
+  text-align:center; /* semua konten rata tengah */
 }
 
 .top-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  max-width:1000px;
+  margin:0 auto 20px auto; /* center horizontal */
   font-size:15px;
-  margin-bottom:15px;
-  padding:0 5px;
+}
+.location{
+  font-weight:600;
 }
 
+.clock{
+  font-weight:700;
+}
 .top-icons span{
   margin-left:12px;
   font-size:18px;
 }
 
 .status-main{
-  margin-top:10px;
+  margin-top:20px;
   font-size:26px;
   font-weight:700;
-  text-align:center;
-  text-shadow:0 4px 15px rgba(0,0,0,.4);
+  letter-spacing:1px;
 }
 
 .status-sub{
   margin-top:8px;
-  text-align:center;
   font-size:16px;
-  color:#ffffff;
-  text-shadow:0 3px 10px rgba(0,0,0,.4);
 }
-
 .date-row{
   display:flex;
   justify-content:center;
