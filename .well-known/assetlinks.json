@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.example.masjidnuruttaqwa",
+      "package_name": "io.github.masjidnuruttaqwa01_ship_it.twa",
       "sha256_cert_fingerprints": [
         "45:57:CD:8B:5F:98:29:77:24:94:E8:79:7D:F5:D9:62:87:1E:F8:C9:CD:F6:31:E0:7B:09:8A:71:E0:C3:3C:1C"
       ]
