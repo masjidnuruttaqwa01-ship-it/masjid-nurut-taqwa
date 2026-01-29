@@ -216,7 +216,28 @@ body{
 #soundBtn:hover{
   transform:scale(1.05);
 }
+  .tanggal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#tapSoundBtn {
+  background: #f4c430;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+#tapSoundBtn:active {
+  transform: scale(0.95);
+}
 </style>
+
 </head>
 
 <body>
@@ -233,10 +254,11 @@ body{
 <div class="info">
   <div id="clock"></div>
 <div id="masehiDate"></div>
-<div id="hijriDate"></div>
+<div class="tanggal-wrapper">
+  <div id="hijriDate"></div>
+  <button id="tapSoundBtn">🔊</button>
 </div>
-<div id="soundBtn" onclick="unmuteLive()">
-  🔊 Tap to Sound
+
 </div>
 <div class="video-area">
   <iframe
