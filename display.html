@@ -277,23 +277,16 @@ body{
 </div>
 
 </div>
-
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+function updateJam() {
+  const now = new Date();
+  const jam = now.getHours().toString().padStart(2,'0');
+  const menit = now.getMinutes().toString().padStart(2,'0');
+  document.getElementById("clock").innerText = jam + ":" + menit;
+}
 
-  function updateJamTanggal() {
-    const now = new Date();
-
-    // ===== JAM =====
-    const jam = now.toLocaleTimeString("id-ID", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false
-    });
-
-    const clockEl = document.getElementById("clock");
-    if (clockEl) clockEl.innerText = jam;
-
+updateJam();
+setInterval(updateJam,1000);
 </script>
   <script>
 /* ===============================
