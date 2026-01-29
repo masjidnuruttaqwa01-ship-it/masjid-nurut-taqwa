@@ -273,37 +273,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const clockEl = document.getElementById("clock");
     if (clockEl) clockEl.innerText = jam;
 
-    // ===== MASEHI =====
-    const masehi = now.toLocaleDateString("id-ID", {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-
-    const masehiEl = document.getElementById("masehiDate");
-    if (masehiEl) masehiEl.innerText = masehi;
-
-    // ===== HIJRIYAH (fallback aman) =====
-    let hijriText = "";
-
-    try {
-      hijriText = new Intl.DateTimeFormat(
-        "id-ID-u-ca-islamic",
-        { day: "numeric", month: "long", year: "numeric" }
-      ).format(now) + " H";
-    } catch (e) {
-      hijriText = "Tanggal Hijriyah tidak didukung browser";
-    }
-
-    const hijriEl = document.getElementById("hijriDate");
-    if (hijriEl) hijriEl.innerText = hijriText;
-  }
-
-  updateJamTanggal();
-  setInterval(updateJamTanggal, 1000);
-
-});
 </script>
   <script>
 /* ===============================
