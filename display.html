@@ -283,12 +283,29 @@ body{
   background-image:
   url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 0 L65 25 L100 35 L65 50 L50 85 L35 50 L0 35 L35 25 Z'/%3E%3C/g%3E%3C/svg%3E");
 } 
+  .prayer{
+  border:1px solid rgba(255,215,0,0.2);
+}
+
+.header{
+  border-bottom:2px solid rgba(255,215,0,0.3);
+}
+  .ornament-top{
+  height:8px;
+  background: repeating-linear-gradient(
+    45deg,
+    #d4af37,
+    #d4af37 10px,
+    #0c4f33 10px,
+    #0c4f33 20px
+  );
+}
 </style>
 
 </head>
 
 <body>
-
+<div class="ornament-top"></div>
 <div class="slideshow" id="slideshow"></div>
 
 <div class="overlay">
