@@ -513,5 +513,55 @@ document.addEventListener("click", function () {
   iframe.src = iframe.src.replace("mute=1", "mute=0");
 }, { once: true });
 </script> 
+  <script>
+async function updateTanggalHijriyah(){
+
+  const now = new Date();
+  const tanggal = now.getDate();
+  const bulan = now.getMonth() + 1;
+  const tahun = now.getFullYear();
+
+  try {
+
+    const response = await fetch(
+      `https://api.aladhan.com/v1/gToH?date=${tanggal}-${bulan}-${tahun}`
+    );
+
+    const data = await response.json();
+
+    const hijri = data.data.hijri;
+
+    // Ubah nama bulan ke Indonesia
+    const bulanHijriID = {
+      "Muharram":"Muharram",
+      "Safar":"Safar",
+      "Rabi' al-awwal":"Rabiul Awal",
+      "Rabi' al-thani":"Rabiul Akhir",
+      "Jumada al-awwal":"Jumadil Awal",
+      "Jumada al-thani":"Jumadil Akhir",
+      "Rajab":"Rajab",
+      "Sha'ban":"Sya'ban",
+      "Ramadan":"Ramadhan",
+      "Shawwal":"Syawal",
+      "Dhu al-Qi'dah":"Dzulqa'dah",
+      "Dhu al-Hijjah":"Dzulhijjah"
+    };
+
+    const bulanFinal = bulanHijriID[hijri.month.en] || hijri.month.en;
+
+    document.getElementById("hijriDate").innerText =
+      `${hijri.day} ${bulanFinal} ${hijri.year} H`;
+
+  } catch(e){
+
+    document.getElementById("hijriDate").innerText =
+      "Tanggal Hijriyah tidak tersedia";
+
+  }
+}
+
+updateTanggalHijriyah();
+setInterval(updateTanggalHijriyah, 3600000);
+  </script>
 </body>
 </html>
