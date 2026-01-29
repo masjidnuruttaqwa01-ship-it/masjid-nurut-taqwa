@@ -272,26 +272,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const masehiEl = document.getElementById("masehiDate");
     if (masehiEl) masehiEl.innerText = masehi;
 
-    // ===== HIJRIYAH (fallback aman) =====
-    let hijriText = "";
+    // ===== HIJRIYAH (fallback aman) =====z
+    <script>
+async function updateTanggalHijriah(){
+try{
+const today = new Date();
+const res = await fetch(
+`https://api.aladhan.com/v1/gToH?date=${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`
+);
 
-    try {
-      hijriText = new Intl.DateTimeFormat(
-        "id-ID-u-ca-islamic",
-        { day: "numeric", month: "long", year: "numeric" }
-      ).format(now) + " H";
-    } catch (e) {
-      hijriText = "Tanggal Hijriyah tidak didukung browser";
-    }
+const data = await res.json();
+const h = data.data.hijri;
 
-    const hijriEl = document.getElementById("hijriDate");
-    if (hijriEl) hijriEl.innerText = hijriText;
-  }
+document.getElementById("hijriDate").innerText =
+`${h.day} ${h.month.en} ${h.year} H`;
 
-  updateJamTanggal();
-  setInterval(updateJamTanggal, 1000);
+}catch(e){
+document.getElementById("hijriDate").innerText = "Tanggal Hijriah";
+}
+}
 
-});
+updateTanggalHijriah();
 </script>
   <script>
 /* ===============================
