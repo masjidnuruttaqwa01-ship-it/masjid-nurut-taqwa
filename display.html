@@ -197,6 +197,25 @@ body{
   .marquee{height:36px}
   .marquee span{font-size:14px}
 }
+  #soundBtn{
+  position:absolute;
+  top:15px;
+  right:20px;
+  background:#facc15;
+  color:#000;
+  padding:6px 14px;
+  border-radius:25px;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+  z-index:999;
+  transition:.3s;
+}
+
+#soundBtn:hover{
+  transform:scale(1.05);
+}
 </style>
 </head>
 
@@ -216,12 +235,8 @@ body{
 <div id="masehiDate"></div>
 <div id="hijriDate"></div>
 </div>
-<div class="header">
-  <div class="title">Masjid Nurut Taqwa</div>
-  <div class="date-time">
-     <span id="tanggal">Kamis, 29 Januari 2026</span>
-     <span id="jam">14:52</span>
-  <button id="btnSound" class="sound-mini">🔊</button>
+<div id="soundBtn" onclick="unmuteLive()">
+  🔊 Tap to Sound
 </div>
 <div class="video-area">
   <iframe
@@ -269,27 +284,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const masehiEl = document.getElementById("masehiDate");
     if (masehiEl) masehiEl.innerText = masehi;
 
-    // ===== HIJRIYAH (fallback aman) =====z
-    <script>
-async function updateTanggalHijriah(){
-try{
-const today = new Date();
-const res = await fetch(
-`https://api.aladhan.com/v1/gToH?date=${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`
-);
+    // ===== HIJRIYAH (fallback aman) =====
+    let hijriText = "";
 
-const data = await res.json();
-const h = data.data.hijri;
+    try {
+      hijriText = new Intl.DateTimeFormat(
+        "id-ID-u-ca-islamic",
+        { day: "numeric", month: "long", year: "numeric" }
+      ).format(now) + " H";
+    } catch (e) {
+      hijriText = "Tanggal Hijriyah tidak didukung browser";
+    }
 
-document.getElementById("hijriDate").innerText =
-`${h.day} ${h.month.en} ${h.year} H`;
+    const hijriEl = document.getElementById("hijriDate");
+    if (hijriEl) hijriEl.innerText = hijriText;
+  }
 
-}catch(e){
-document.getElementById("hijriDate").innerText = "Tanggal Hijriah";
-}
-}
+  updateJamTanggal();
+  setInterval(updateJamTanggal, 1000);
 
-updateTanggalHijriah();
+});
 </script>
   <script>
 /* ===============================
