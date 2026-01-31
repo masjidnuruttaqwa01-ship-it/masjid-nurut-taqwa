@@ -16,15 +16,7 @@ body{
   overflow:hidden;
   color:#fff;
 }
-  margin:0;
-  font-family:'Poppins', sans-serif;
-  background-color:#0c4f33;
 
-  background-image:
-  url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M60 0 L75 30 L105 45 L75 60 L60 90 L45 60 L15 45 L45 30 Z'/%3E%3C/g%3E%3C/svg%3E");
-
-  background-repeat:repeat;
-}
 /* ===== BACKGROUND SLIDESHOW FULL SCREEN ===== */
 .slideshow{
   position:fixed;
@@ -205,107 +197,11 @@ body{
   .marquee{height:36px}
   .marquee span{font-size:14px}
 }
-  #soundBtn{
-  position:absolute;
-  top:15px;
-  right:20px;
-  background:#facc15;
-  color:#000;
-  padding:6px 14px;
-  border-radius:25px;
-  font-size:12px;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 4px 12px rgba(0,0,0,.4);
-  z-index:999;
-  transition:.3s;
-}
-
-#soundBtn:hover{
-  transform:scale(1.05);
-}
-  .tanggal-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-#tapSoundBtn {
-  background: #f4c430;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 12px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-#tapSoundBtn:active {
-  transform: scale(0.95);
-}
-  .header{
-  background: linear-gradient(135deg,#0f6b44,#083d28);
-  position:relative;
-  overflow:hidden;
-}
-
-.header::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-image:
-  url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='100' cy='100' r='80'/%3E%3C/g%3E%3C/svg%3E");
-}
- .prayer{
-  background:
-    linear-gradient(145deg,#0f6b44,#0c4f33);
-
-  border-radius:25px;
-  padding:25px;
-  color:white;
-  position:relative;
-  overflow:hidden;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-}
-
-.prayer::after{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-image:
-  url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 0 L65 25 L100 35 L65 50 L50 85 L35 50 L0 35 L35 25 Z'/%3E%3C/g%3E%3C/svg%3E");
-} 
-  .prayer{
-  border:1px solid rgba(255,215,0,0.2);
-}
-
-.header{
-  border-bottom:2px solid rgba(255,215,0,0.3);
-}
-  .ornament-top{
-  height:8px;
-  background: repeating-linear-gradient(
-    45deg,
-    #d4af37,
-    #d4af37 10px,
-    #0c4f33 10px,
-    #0c4f33 20px
-  );
-}
 </style>
-
 </head>
 
 <body>
-<div class="ornament-top"></div>
+
 <div class="slideshow" id="slideshow"></div>
 
 <div class="overlay">
@@ -316,13 +212,11 @@ body{
 </div>
 
 <div class="info">
+  <div id="clock"></div>
 <div id="masehiDate"></div>
-<div class="tanggal-wrapper">
-  <div id="hijriDate"></div>
-  <button id="tapSoundBtn">🔊</button>
+<div id="hijriDate"></div>
 </div>
 
-</div>
 <div class="video-area">
   <iframe
   id="ytVideo"
@@ -341,16 +235,54 @@ body{
 </div>
 
 </div>
-<script>
-function updateJam() {
-  const now = new Date();
-  const jam = now.getHours().toString().padStart(2,'0');
-  const menit = now.getMinutes().toString().padStart(2,'0');
-  document.getElementById("clock").innerText = jam + ":" + menit;
-}
 
-updateJam();
-setInterval(updateJam,1000);
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  function updateJamTanggal() {
+    const now = new Date();
+
+    // ===== JAM =====
+    const jam = now.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    });
+
+    const clockEl = document.getElementById("clock");
+    if (clockEl) clockEl.innerText = jam;
+
+    // ===== MASEHI =====
+    const masehi = now.toLocaleDateString("id-ID", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+
+    const masehiEl = document.getElementById("masehiDate");
+    if (masehiEl) masehiEl.innerText = masehi;
+
+    // ===== HIJRIYAH (fallback aman) =====
+    let hijriText = "";
+
+    try {
+      hijriText = new Intl.DateTimeFormat(
+        "id-ID-u-ca-islamic",
+        { day: "numeric", month: "long", year: "numeric" }
+      ).format(now) + " H";
+    } catch (e) {
+      hijriText = "Tanggal Hijriyah tidak didukung browser";
+    }
+
+    const hijriEl = document.getElementById("hijriDate");
+    if (hijriEl) hijriEl.innerText = hijriText;
+  }
+
+  updateJamTanggal();
+  setInterval(updateJamTanggal, 1000);
+
+});
 </script>
   <script>
 /* ===============================
@@ -560,55 +492,5 @@ document.addEventListener("click", function () {
   iframe.src = iframe.src.replace("mute=1", "mute=0");
 }, { once: true });
 </script> 
-  <script>
-async function updateTanggalHijriyah(){
-
-  const now = new Date();
-  const tanggal = now.getDate();
-  const bulan = now.getMonth() + 1;
-  const tahun = now.getFullYear();
-
-  try {
-
-    const response = await fetch(
-      `https://api.aladhan.com/v1/gToH?date=${tanggal}-${bulan}-${tahun}`
-    );
-
-    const data = await response.json();
-
-    const hijri = data.data.hijri;
-
-    // Ubah nama bulan ke Indonesia
-    const bulanHijriID = {
-      "Muharram":"Muharram",
-      "Safar":"Safar",
-      "Rabi' al-awwal":"Rabiul Awal",
-      "Rabi' al-thani":"Rabiul Akhir",
-      "Jumada al-awwal":"Jumadil Awal",
-      "Jumada al-thani":"Jumadil Akhir",
-      "Rajab":"Rajab",
-      "Sha'ban":"Sya'ban",
-      "Ramadan":"Ramadhan",
-      "Shawwal":"Syawal",
-      "Dhu al-Qi'dah":"Dzulqa'dah",
-      "Dhu al-Hijjah":"Dzulhijjah"
-    };
-
-    const bulanFinal = bulanHijriID[hijri.month.en] || hijri.month.en;
-
-    document.getElementById("hijriDate").innerText =
-      `${hijri.day} ${bulanFinal} ${hijri.year} H`;
-
-  } catch(e){
-
-    document.getElementById("hijriDate").innerText =
-      "Tanggal Hijriyah tidak tersedia";
-
-  }
-}
-
-updateTanggalHijriyah();
-setInterval(updateTanggalHijriyah, 3600000);
-  </script>
 </body>
 </html>
