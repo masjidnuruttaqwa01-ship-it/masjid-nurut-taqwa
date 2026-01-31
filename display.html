@@ -424,53 +424,77 @@ function tambahMenit(waktu, menit){
          m.toString().padStart(2,"0");
 }
     </script>
-  <script>
-/* ===============================
-   SUPABASE WALLPAPER SYSTEM
-================================ */
+<script>
 const SUPABASE_URL="https://xntiicnhmhgpujeekmxt.supabase.co";
-const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU";
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const SUPABASE_ANON_KEY="ISI_KEY_KAMU";
+const sb = supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 let wallpapers=[];
 let index=0;
+const slideshow = document.getElementById("slideshow");
 
 async function loadWallpapers(){
-  const {data}=await sb.storage.from("wallpaper").list("",{limit:100});
-  wallpapers=data
-    .filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f.name))
-    .map(f=>`${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`);
-  if(wallpapers.length){
-    slideshow.style.backgroundImage=`url('${wallpapers[0]}')`;
+  try{
+    const {data,error} = await sb
+      .storage
+      .from("wallpaper")
+      .list();
+
+    if(error){
+      console.log("Error load wallpaper:",error);
+      return;
+    }
+
+    wallpapers = data
+      .filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f.name))
+      .map(f=>`${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`);
+
+    console.log("Wallpaper ditemukan:", wallpapers);
+
+    if(wallpapers.length){
+      slideshow.style.backgroundImage = `url('${wallpapers[0]}')`;
+      slideshow.style.opacity = "1";
+    } else {
+      console.log("Tidak ada wallpaper di bucket.");
+    }
+
+  }catch(e){
+    console.log("Gagal ambil wallpaper",e);
   }
 }
 
 function nextWallpaper(){
-  if(!wallpapers.length)return;
-  index=(index+1)%wallpapers.length;
-  slideshow.style.backgroundImage=`url('${wallpapers[index]}')`;
+  if(!wallpapers.length) return;
+  index = (index+1) % wallpapers.length;
+  slideshow.style.backgroundImage = `url('${wallpapers[index]}')`;
 }
+
+loadWallpapers().then(()=>{
+  setInterval(nextWallpaper,8000);
+});
 </script>
-  <script>
-/* ===============================
-   MODE VIDEO ↔ WALLPAPER
-================================ */
+<script>
 function showVideo(){
   document.body.classList.add("mode-video");
   document.body.classList.remove("mode-wallpaper");
-  setTimeout(showWallpaper,60000); // 1 menit video
 }
 
 function showWallpaper(){
   document.body.classList.add("mode-wallpaper");
   document.body.classList.remove("mode-video");
-  setTimeout(showVideo,60000); // 1 menit slideshow
 }
 
-loadWallpapers().then(()=>{
-  setInterval(nextWallpaper,8000); // ganti 8 detik
-  showVideo();
-});
+// Mulai dari wallpaper dulu biar kelihatan
+showWallpaper();
+
+// Ganti tiap 1 menit
+setInterval(()=>{
+  if(document.body.classList.contains("mode-video")){
+    showWallpaper();
+  } else {
+    showVideo();
+  }
+},8000);
 </script>
   <script>
 /* ===============================
