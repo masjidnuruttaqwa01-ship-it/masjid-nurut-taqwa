@@ -475,44 +475,7 @@ loadWallpapers().then(()=>{
 });
 </script>
 <script>
-/* ===============================
-   MODE VIDEO ↔ WALLPAPER (FIXED)
-================================ */
 
-function showVideo(){
-  document.body.classList.remove("mode-wallpaper");
-  document.body.classList.add("mode-video");
-}
-
-function showWallpaper(){
-  document.body.classList.remove("mode-video");
-  document.body.classList.add("mode-wallpaper");
-}
-
-// Tunggu wallpaper load dulu
-loadWallpapers().then(()=>{
-  if(wallpapers.length){
-    showWallpaper(); // mulai dari slideshow dulu
-    setInterval(nextWallpaper,8000); // ganti tiap 8 detik
-
-    // 1 menit slideshow → pindah video
-    setTimeout(()=>{
-      showVideo();
-
-      // setelah 1 menit video → balik slideshow lagi
-      setInterval(()=>{
-        showWallpaper();
-        setTimeout(showVideo,60000);
-      },120000);
-
-    },60000);
-  } else {
-    // kalau wallpaper kosong langsung video
-    showVideo();
-  }
-});
-</script>
-  <script>
 /* ===============================
    UNMUTE SEKALI KLIK
 ================================ */
@@ -649,5 +612,53 @@ async function updateTanggalHijriyah(){
 updateTanggalHijriyah();
 setInterval(updateTanggalHijriyah, 3600000);
   </script>
+  <script>
+const SUPABASE_URL="https://xntiicnhmhgpujeekmxt.supabase.co";
+const SUPABASE_ANON_KEY="PASTE_ANON_KEY_KAMU_YANG_ASLI";
+const sb = supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
+let wallpapers=[];
+let index=0;
+const slideshow = document.getElementById("slideshow");
+
+async function startSlideshow(){
+
+  try{
+    const {data,error} = await sb.storage
+      .from("wallpaper")
+      .list("",{limit:100});
+
+    if(error){
+      console.log("Error:",error);
+      return;
+    }
+
+    wallpapers = data
+      .filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f.name))
+      .map(f =>
+        `${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`
+      );
+
+    if(!wallpapers.length){
+      console.log("Wallpaper kosong");
+      return;
+    }
+
+    // TAMPILKAN SLIDESHOW
+    slideshow.style.backgroundImage = `url('${wallpapers[0]}')`;
+    slideshow.style.opacity = "1";
+
+    setInterval(()=>{
+      index = (index+1) % wallpapers.length;
+      slideshow.style.backgroundImage = `url('${wallpapers[index]}')`;
+    },8000);
+
+  }catch(e){
+    console.log("Gagal load:",e);
+  }
+}
+
+window.addEventListener("load", startSlideshow);
+</script>
 </body>
 </html>
