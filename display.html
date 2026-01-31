@@ -424,56 +424,7 @@ function tambahMenit(waktu, menit){
          m.toString().padStart(2,"0");
 }
     </script>
-<script>
-const SUPABASE_URL="https://xntiicnhmhgpujeekmxt.supabase.co";
-const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU";
-const sb = supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-let wallpapers=[];
-let index=0;
-const slideshow = document.getElementById("slideshow");
-
-async function loadWallpapers(){
-  try{
-    const slideshow = document.getElementById("slideshow");
-    const {data,error} = await sb
-      .storage
-      .from("wallpaper")
-      .list();
-
-    if(error){
-      console.log("Error load wallpaper:",error);
-      return;
-    }
-
-    wallpapers = data
-      .filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f.name))
-      .map(f=>`${SUPABASE_URL}/storage/v1/object/public/wallpaper/${f.name}`);
-
-    console.log("Wallpaper ditemukan:", wallpapers);
-
-    if(wallpapers.length){
-      slideshow.style.backgroundImage = `url('${wallpapers[0]}')`;
-      slideshow.style.opacity = "1";
-    } else {
-      console.log("Tidak ada wallpaper di bucket.");
-    }
-
-  }catch(e){
-    console.log("Gagal ambil wallpaper",e);
-  }
-}
-
-function nextWallpaper(){
-  if(!wallpapers.length) return;
-  index = (index+1) % wallpapers.length;
-  slideshow.style.backgroundImage = `url('${wallpapers[index]}')`;
-}
-
-loadWallpapers().then(()=>{
-  setInterval(nextWallpaper,8000);
-});
-</script>
 <script>
 
 /* ===============================
@@ -614,7 +565,7 @@ setInterval(updateTanggalHijriyah, 3600000);
   </script>
   <script>
 const SUPABASE_URL="https://xntiicnhmhgpujeekmxt.supabase.co";
-const SUPABASE_ANON_KEY="PASTE_ANON_KEY_KAMU_YANG_ASLI";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudGlpY25obWhncHVqZWVrbXh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1OTI5MzgsImV4cCI6MjA4NDE2ODkzOH0.JAIAnUgflSHE1oEQ8pKyWk_3F283oh4kiemSumwC-cU";
 const sb = supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 let wallpapers=[];
