@@ -435,6 +435,7 @@ const slideshow = document.getElementById("slideshow");
 
 async function loadWallpapers(){
   try{
+    const slideshow = document.getElementById("slideshow");
     const {data,error} = await sb
       .storage
       .from("wallpaper")
@@ -474,27 +475,42 @@ loadWallpapers().then(()=>{
 });
 </script>
 <script>
+/* ===============================
+   MODE VIDEO ↔ WALLPAPER (FIXED)
+================================ */
+
 function showVideo(){
-  document.body.classList.add("mode-video");
   document.body.classList.remove("mode-wallpaper");
+  document.body.classList.add("mode-video");
 }
 
 function showWallpaper(){
-  document.body.classList.add("mode-wallpaper");
   document.body.classList.remove("mode-video");
+  document.body.classList.add("mode-wallpaper");
 }
 
-// Mulai dari wallpaper dulu biar kelihatan
-showWallpaper();
+// Tunggu wallpaper load dulu
+loadWallpapers().then(()=>{
+  if(wallpapers.length){
+    showWallpaper(); // mulai dari slideshow dulu
+    setInterval(nextWallpaper,8000); // ganti tiap 8 detik
 
-// Ganti tiap 1 menit
-setInterval(()=>{
-  if(document.body.classList.contains("mode-video")){
-    showWallpaper();
+    // 1 menit slideshow → pindah video
+    setTimeout(()=>{
+      showVideo();
+
+      // setelah 1 menit video → balik slideshow lagi
+      setInterval(()=>{
+        showWallpaper();
+        setTimeout(showVideo,60000);
+      },120000);
+
+    },60000);
   } else {
+    // kalau wallpaper kosong langsung video
     showVideo();
   }
-},8000);
+});
 </script>
   <script>
 /* ===============================
