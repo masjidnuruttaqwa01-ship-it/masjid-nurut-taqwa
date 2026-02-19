@@ -908,21 +908,67 @@ footer{
   font-size:18px;
   opacity:.9;
 }
+  .hero-masjid{
+  position:relative;
+  height:260px;
+  background:url("FOTO-MASJID-KAMU.jpg") center/cover no-repeat;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.6));
+}
+
+.hero-bar{
+  position:absolute;
+  bottom:18px;
+  left:18px;
+  right:18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:rgba(0,80,50,.75);
+  padding:10px 14px;
+  border-radius:12px;
+  backdrop-filter:blur(6px);
+}
+
+.hero-logo{
+  width:40px;
+  height:40px;
+  border-radius:6px;
+}
+
+.hero-info b{
+  display:block;
+  font-size:16px;
+  letter-spacing:1px;
+}
+
+.hero-info span{
+  font-size:13px;
+  opacity:.85;
+}
 </style>
 </head>
 <body>
 <!-- ================= HEADER ================= -->
-<div class="hero-masjid">
+<header class="hero-masjid">
+
   <div class="hero-overlay">
 
-    <div class="hero-top">
-      <div class="hero-lokasi" id="heroLokasi">
-        Kejaksan • Kota Cirebon
+    <div class="hero-bar">
+      <img src="logo.png" class="hero-logo">
+      <div class="hero-info">
+        <b>MASJID NURUT TAQWA</b>
+        <span>RW.01 Sukapura – Kota Cirebon</span>
       </div>
+    </div>
 
-      <div class="hero-jam" id="heroJam">
-        00:00
-      </div>
+  </div>
+
+</header>
     </div>
 
     <h1 class="hero-title">MASJID NURUT TAQWA</h1>
