@@ -915,6 +915,68 @@ footer{
     font-size:15px;
   }
 }
+  /* ================= DESKTOP HERO FIX ================= */
+@media (min-width:900px){
+
+  /* HERO FULL TINGGI */
+  .hero{
+    height:520px;              /* bikin tinggi */
+    padding:0;                 /* buang padding biar full */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+  }
+
+  /* OVERLAY GRADIENT AGAR TEKS TETAP TERBACA */
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+      rgba(0,0,0,0.25),
+      rgba(0,0,0,0.55)
+    );
+  }
+
+  /* PASTIKAN TEKS DI ATAS OVERLAY */
+  .hero *{
+    position:relative;
+    z-index:2;
+  }
+
+  /* TEKS TENGAH SEMUA */
+  .hero,
+  section,
+  .card,
+  .program-card,
+  .accordion-content,
+  .kontak-card{
+    text-align:center;
+  }
+
+  /* BATASI LEBAR TEKS AGAR RAPI */
+  section,
+  .program-section{
+    max-width:900px;
+    margin:auto;
+  }
+
+  /* CARD DI DESKTOP JADI TENGAH */
+  .card{
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  /* LIST JADWAL SHOLAT TETAP RAPI */
+  #jadwalSholat li{
+    justify-content:center;
+    gap:20px;
+  }
+
+}
 </style>
 </head>
 <body>
