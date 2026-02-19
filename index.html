@@ -862,17 +862,74 @@ footer{
 .notif.show{
   transform:translateX(-50%) translateY(0);
 }
+  .hero-masjid{
+  position:relative;
+  height:260px;
+  background:url("masjid.jpg") center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.3),
+    rgba(0,0,0,0.6)
+  );
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.hero-top{
+  position:absolute;
+  top:15px;
+  left:20px;
+  right:20px;
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  opacity:.9;
+}
+
+.hero-title{
+  font-size:38px;
+  font-weight:700;
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
+
+.hero-sub{
+  font-size:18px;
+  opacity:.9;
+}
 </style>
 </head>
 <body>
 <!-- ================= HEADER ================= -->
-<header><div class="running-text">
-  <div class="running-track">
-    📢 Pengumuman: Kajian rutin Ibu-Ibu setiap hari Sabtu• 
-    Sholat berjamaah 5 waktu •Rutinan baca surat Yasin Malam Jum'at•Sholat Jum'at •
-    Mari makmurkan Masjid Nurut Taqwa • 
-    Infaq & sedekah dapat disalurkan melalui DKM
+<div class="hero-masjid">
+  <div class="hero-overlay">
+
+    <div class="hero-top">
+      <div class="hero-lokasi" id="heroLokasi">
+        Kejaksan • Kota Cirebon
+      </div>
+
+      <div class="hero-jam" id="heroJam">
+        00:00
+      </div>
+    </div>
+
+    <h1 class="hero-title">MASJID NURUT TAQWA</h1>
+    <div class="hero-sub">RW.01 Sukapura, Kota Cirebon</div>
+
   </div>
+</div>
 </div>
 <div class="logo">
   <img src="images/icon-masjid.png" class="icon-masjid">
@@ -1687,6 +1744,20 @@ sliderEl.addEventListener("touchend", () => {
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/sw.js");
 }
+</script>
+    <script>
+function updateHeroJam(){
+  const now = new Date();
+  const jam = now.toLocaleTimeString("id-ID",{
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+
+  const el = document.getElementById("heroJam");
+  if(el) el.innerText = jam;
+}
+updateHeroJam();
+setInterval(updateHeroJam,1000);
 </script>
   </body>
 </html>
