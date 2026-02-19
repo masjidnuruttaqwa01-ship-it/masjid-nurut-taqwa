@@ -158,21 +158,55 @@ header{
 
 /* ================== HERO ================== */
 .hero{
-  width:100%;
-  height:auto;
-  aspect-ratio:16/9; /* biar proporsional di semua layar */
-
+  position:relative;
   background:url("https://raw.githubusercontent.com/masjidnuruttaqwa01-ship-it/masjid-nurut-taqwa/main/images/masjiddepan1.png")
-             center/contain no-repeat;
+    center/cover no-repeat;
+  color:#ffffff;
+  padding:120px 20px 140px;
+  text-align:center;
+  border-radius:0 0 48px 48px;
+  overflow:hidden;
+}
 
-  background-color:#e9f2ee; /* warna belakang kalau ada kosong */
+/* overlay gradasi biar tulisan kebaca tapi gambar tetap jelas */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.35) 0%,
+    rgba(0,0,0,0.25) 40%,
+    rgba(0,0,0,0.12) 70%,
+    rgba(255,255,255,0.9) 100%
+  );
+}
+
+.hero *{
+  position:relative;
+  z-index:2;
+}
+
+.hero h1{
+  font-family:"Playfair Display", serif;
+  font-size:42px;
+  letter-spacing:1px;
+  margin-bottom:16px;
+  text-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+
+.hero p{
+  font-size:18px;
+  max-width:900px;
+  margin:0 auto;
+  opacity:.95;
 }
 /* ================== SECTION ================== */
 section{
   padding:48px 18px;
 }
 .section-title{
- font-size:22px;
+  font-size:22px;
   font-weight:700;
   color:#0f6b44;
   margin-bottom:22px;
