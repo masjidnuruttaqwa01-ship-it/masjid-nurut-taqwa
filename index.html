@@ -845,6 +845,76 @@ footer{
 .notif.show{
   transform:translateX(-50%) translateY(0);
 }
+  /* ================= DESKTOP MODE ================= */
+@media (min-width: 900px){
+
+  body{
+    font-size:17px;
+  }
+
+  /* HERO FULL LEBAR & PROPORSIONAL */
+  .hero{
+    height:460px;
+    border-radius:0 0 70px 70px;
+  }
+
+  /* KONTEN TENGAHKAN */
+  section,
+  .program-section,
+  footer{
+    max-width:1100px;
+    margin:auto;
+  }
+
+  /* GRID PROGRAM LEBIH RAPI */
+  .program-grid{
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+  }
+
+  /* CARD LEBIH BESAR DI DESKTOP */
+  .card{
+    padding:32px;
+    border-radius:24px;
+  }
+
+  /* ACCORDION LEBIH LEBAR */
+  .accordion-header{
+    padding:20px 26px;
+    font-size:17px;
+  }
+
+  .accordion-content{
+    padding:26px;
+    font-size:16px;
+  }
+
+  /* JADWAL SHOLAT BESAR */
+  #jadwalSholat li{
+    font-size:18px;
+  }
+
+  .digital-time{
+    font-size:22px;
+    padding:8px 18px;
+  }
+
+  /* GALERI LEBIH TINGGI */
+  .gallery-slider{
+    height:380px;
+  }
+
+  /* KONTAK MAP LEBIH BESAR */
+  .kontak-card iframe{
+    height:300px;
+  }
+
+  /* FOOTER LEBIH LEGA */
+  footer{
+    padding:50px 20px;
+    font-size:15px;
+  }
+}
 </style>
 </head>
 <body>
